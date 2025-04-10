@@ -155,8 +155,8 @@ const LandingPage = () => {
             />
           </div>
           <div className={'flex items-center justify-center gap-x-[95px]'}>
-            <p className={'body-l-1 text-[var(--gary-400)]'}>원하는 조건</p>
-            <p className={'body-l-1 text-[var(--gary-400)]'}>케이크 가게</p>
+            <p className={'body-l-1 text-[var(--gray-400)]'}>원하는 조건</p>
+            <p className={'body-l-1 text-[var(--gray-400)]'}>케이크 가게</p>
           </div>
         </motion.div>
 
@@ -217,6 +217,7 @@ const LandingPage = () => {
                 priority
                 style={{ width: 287, height: 409 }}
               />
+              <div className={'absolute top-72 border-[1.3px] border-[var(--gray-300)] py-[10px] px-[10px] w-[310px] rounded-[10px] bg-[var(--white)] button-m'}>혜수야 21번째 생일을 축하해 :)</div>
             </motion.div>
           </div>
         </div>
@@ -231,7 +232,9 @@ const LandingPage = () => {
           <p className="key-visual-l text-[#BC1416]">“Cake it easy”</p>
         </motion.section>
 
-        <section className={'mt-[32px] flex gap-x-[8px] p-[16px]'}>
+        <div className={"h-[100px]"} />
+
+        <section className={'fixed bottom-0 mt-[32px] flex gap-x-[8px] p-[16px] bg-[var(--background)] p-[16px]'}>
           <button
             onClick={() => {
               setIsNoModalOpen(!isNoModalOpen);
