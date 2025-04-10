@@ -41,7 +41,7 @@ export default function RootLayout({
                 function gtag(){dataLayer.push(arguments);}
                 window.gtag = gtag;
                 gtag('js', new Date());
-                gtag('config', ${process.env.NEXT_PUBLIC_GA_ID}, {
+                gtag('config', '${process.env.NEXT_PUBLIC_GA_ID}', {
                   page_path: window.location.pathname,
                 });
               `,
