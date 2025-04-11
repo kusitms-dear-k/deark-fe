@@ -31,7 +31,7 @@ const LandingPage = () => {
             </>
           }
           headingText={'앗! 혹시 이유를 알 수 있을까요?'}
-          url={'https://forms.gle/8HUsefcT4XFW7Tia7'}
+          url={'https://docs.google.com/forms/d/e/1FAIpQLSeW7VzejSgDLA8mkQXidGqhqWv4KoznXxbJ9qvEtoEz4vnM_w/viewform'}
           setIsOpen={setIsNoModalOpen}
         />
       )}
