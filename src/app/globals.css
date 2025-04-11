@@ -8,6 +8,11 @@
     src: url("/fonts/PretendardVariable.ttf") format("opentype");
     font-style: normal;
 }
+@font-face {
+    font-family: "Handsome Pro";
+    src: url("/fonts/HandsomePro-Regular.otf") format("opentype");
+    font-style: normal;
+}
 
 @font-face {
     font-family: "Handsome Pro";
