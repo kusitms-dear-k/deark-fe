@@ -7,6 +7,20 @@ const LandingPage = () => {
   const [isNoModalOpen, setIsNoModalOpen] = useState<boolean>(false);
   const [isYesModalOpen, setIsYesModalOpen] = useState<boolean>(false);
 
+  const handleClick = (type: 'no' | 'yes') => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'landing_button_click', {
+        button_type: type, // yes 또는 no
+      });
+    }
+
+    if (type === 'no') {
+      setIsNoModalOpen(true);
+    } else {
+      setIsYesModalOpen(true);
+    }
+  };
+
   return (
     <div className={'flex flex-col items-center justify-center'}>
       {isNoModalOpen && (
@@ -17,7 +31,7 @@ const LandingPage = () => {
             </>
           }
           headingText={'앗! 혹시 이유를 알 수 있을까요?'}
-          url={'https://forms.gle/8HUsefcT4XFW7Tia7'}
+          url={'https://docs.google.com/forms/d/e/1FAIpQLSeW7VzejSgDLA8mkQXidGqhqWv4KoznXxbJ9qvEtoEz4vnM_w/viewform'}
           setIsOpen={setIsNoModalOpen}
         />
       )}
@@ -155,8 +169,8 @@ const LandingPage = () => {
             />
           </div>
           <div className={'flex items-center justify-center gap-x-[95px]'}>
-            <p className={'body-l-1 text-[var(--gary-400)]'}>원하는 조건</p>
-            <p className={'body-l-1 text-[var(--gary-400)]'}>케이크 가게</p>
+            <p className={'body-l-1 text-[var(--gray-400)]'}>원하는 조건</p>
+            <p className={'body-l-1 text-[var(--gray-400)]'}>케이크 가게</p>
           </div>
         </motion.div>
 
@@ -217,6 +231,7 @@ const LandingPage = () => {
                 priority
                 style={{ width: 287, height: 409 }}
               />
+              <div className={'absolute top-72 border-[1.3px] border-[var(--gray-300)] py-[10px] px-[10px] w-[310px] rounded-[10px] bg-[var(--white)] button-m'}>혜수야 21번째 생일을 축하해 :)</div>
             </motion.div>
           </div>
         </div>
@@ -231,10 +246,12 @@ const LandingPage = () => {
           <p className="key-visual-l text-[#BC1416]">“Cake it easy”</p>
         </motion.section>
 
-        <section className={'mt-[32px] flex gap-x-[8px] p-[16px]'}>
+        <div className={"h-[100px]"} />
+
+        <section className={'fixed bottom-0 mt-[32px] flex gap-x-[8px] p-[16px] bg-[var(--background)] p-[16px]'}>
           <button
             onClick={() => {
-              setIsNoModalOpen(!isNoModalOpen);
+              handleClick('no')
             }}
             className={
               'button-l h-[49px] w-[160px] cursor-pointer appearance-none rounded-[12px] border-none bg-[#757575] text-[var(--white)] transition hover:scale-105'
@@ -244,7 +261,7 @@ const LandingPage = () => {
           </button>
           <button
             onClick={() => {
-              setIsYesModalOpen(!isYesModalOpen);
+              handleClick('yes')
             }}
             className={
               'button-l h-[49px] w-[160px] cursor-pointer appearance-none rounded-[12px] border-none bg-[#0C70FA] text-[var(--white)] transition hover:scale-105'
