@@ -82,7 +82,7 @@ const LandingPage = () => {
               <span className="text-[var(--main)] before:absolute before:top-[-20px] before:left-6 before:content-['•']">
                 떤
               </span>{' '}
-              <span className="text-[var(--main)] before:absolute before:top-[-20px] before:left-12 before:content-['•']">
+              <span className="text-[var(--main)] before:absolute before:top-[-20px] before:left-13 before:content-['•']">
                 가
               </span>
               <span className="text-[var(--main)] before:absolute before:top-[-20px] before:left-18 before:content-['•']">
@@ -231,7 +231,7 @@ const LandingPage = () => {
                 priority
                 style={{ width: 287, height: 409 }}
               />
-              <div className={'absolute top-72 border-[1.3px] border-[var(--gray-300)] py-[10px] px-[10px] w-[310px] rounded-[10px] bg-[var(--white)] button-m'}>혜수야 21번째 생일을 축하해 :)</div>
+              <div className={'absolute top-72 border-[1.3px] border-[var(--gray-300)] py-[10px] px-[10px] w-[310px] rounded-[10px] bg-[var(--white)] body-m'}>혜수야 21번째 생일을 축하해 :)</div>
             </motion.div>
           </div>
         </div>
