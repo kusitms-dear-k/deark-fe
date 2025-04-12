@@ -30,7 +30,12 @@ const LandingPage = () => {
               어떤 점이 아쉬웠는지 알려주시면 <br />꼭 참고해서 더 나은 서비스로 찾아올게요!
             </>
           }
-          headingText={'앗! 혹시 이유를 알 수 있을까요?'}
+          headingText={
+            <>
+              앗! 혹시<br />
+              이유를 알 수 있을까요?
+            </>
+          }
           url={'https://docs.google.com/forms/d/e/1FAIpQLSeW7VzejSgDLA8mkQXidGqhqWv4KoznXxbJ9qvEtoEz4vnM_w/viewform'}
           setIsOpen={setIsNoModalOpen}
         />
@@ -43,7 +48,11 @@ const LandingPage = () => {
               검토 후 최대한 반영해볼게요!
             </>
           }
-          headingText={'앗! 아직 준비 중이에요'}
+          headingText={
+          <>
+            앗! 아직 준비 중이에요
+          </>
+        }
           url={'https://forms.gle/8HUsefcT4XFW7Tia7'}
           setIsOpen={setIsYesModalOpen}
         />
@@ -231,7 +240,13 @@ const LandingPage = () => {
                 priority
                 style={{ width: 287, height: 409 }}
               />
-              <div className={'absolute top-72 border-[1.3px] border-[var(--gray-300)] py-[10px] px-[10px] w-[310px] rounded-[10px] bg-[var(--white)] body-m'}>혜수야 21번째 생일을 축하해 :)</div>
+              <div
+                className={
+                  'body-m absolute top-72 w-[310px] rounded-[10px] border-[1.3px] border-[var(--gray-300)] bg-[var(--white)] px-[10px] py-[10px]'
+                }
+              >
+                혜수야 21번째 생일을 축하해 :)
+              </div>
             </motion.div>
           </div>
         </div>
@@ -246,12 +261,12 @@ const LandingPage = () => {
           <p className="key-visual-l text-[#BC1416]">“Cake it easy”</p>
         </motion.section>
 
-        <div className={"h-[100px]"} />
+        <div className={'h-[100px]'} />
 
-        <section className={'fixed bottom-0 mt-[32px] flex gap-x-[8px] p-[16px] bg-[var(--background)] p-[16px]'}>
+        <section className={'fixed bottom-0 mt-[32px] flex gap-x-[8px] bg-[var(--background)] p-[16px]'}>
           <button
             onClick={() => {
-              handleClick('no')
+              handleClick('no');
             }}
             className={
               'button-l h-[49px] w-[160px] cursor-pointer appearance-none rounded-[12px] border-none bg-[#757575] text-[var(--white)] transition hover:scale-105'
@@ -261,7 +276,7 @@ const LandingPage = () => {
           </button>
           <button
             onClick={() => {
-              handleClick('yes')
+              handleClick('yes');
             }}
             className={
               'button-l h-[49px] w-[160px] cursor-pointer appearance-none rounded-[12px] border-none bg-[#0C70FA] text-[var(--white)] transition hover:scale-105'

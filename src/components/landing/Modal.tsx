@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { Dispatch, ReactNode, SetStateAction } from 'react';
 
 interface Props {
-  headingText: string;
+  headingText: ReactNode;
   content: ReactNode;
   url: string;
   setIsOpen: Dispatch<SetStateAction<boolean>>;
@@ -23,7 +23,7 @@ const Modal = (props: Props) => {
     <div
       className={'fixed inset-0 z-50 flex flex-col items-center gap-y-2 justify-center bg-[rgba(0,0,0,0.7)] px-8 min-h-screen'}>
       <motion.div
-        className="flex flex-col justify-center items-center absolute bottom-0 bg-[var(--background)] w-[360px] p-[20px] rounded-t-[20px]"
+        className="flex flex-col justify-center items-center absolute bg-[var(--background)] w-[300px] p-[20px] rounded-[20px]"
         initial="hidden"
         animate="visible"
         exit="exit"
@@ -50,7 +50,7 @@ const Modal = (props: Props) => {
           height={56}
           style={{ width: 56, height: 56 }}
         />
-        <h2 className="text-[var(--main)] headline-m mt-[19px]">{headingText}</h2>
+        <h2 className="text-[var(--main)] headline-m mt-[19px] text-center">{headingText}</h2>
         <p className="body-l-1 text-[var(--gray-600)]">🍰서비스 출시 준비 중🍰</p>
         <p className="body-l-1 text-[var(--gray-600)] mt-[24px] text-center">{content}</p>
         <div className="bg-[var(--background)] w-full mt-[41px]">
