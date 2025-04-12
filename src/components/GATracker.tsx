@@ -43,8 +43,6 @@ export default function GATracker() {
                 value: Math.floor(maxScrollRatio * 100), // 예: 34%
               });
             }
-
-            console.log(`[GA] Max scroll ratio: ${(maxScrollRatio * 100).toFixed(1)}%`);
           }
 
           ticking = false;
