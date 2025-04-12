@@ -23,7 +23,7 @@ const Modal = (props: Props) => {
     <div
       className={'fixed inset-0 z-50 flex flex-col items-center gap-y-2 justify-center bg-[rgba(0,0,0,0.7)] px-8 min-h-screen'}>
       <motion.div
-        className="flex flex-col justify-center items-center absolute bg-[var(--background)] w-[300px] p-[20px] rounded-[20px]"
+        className="flex flex-col justify-center items-center absolute bg-[var(--background)] w-[320px] p-[20px] rounded-[20px]"
         initial="hidden"
         animate="visible"
         exit="exit"
