@@ -338,19 +338,19 @@ body {
     border: 1px solid var(--gray-200);
     background: var(--white);
     outline-color: var(--blue-400);
-    caret-color: var(--blue-400); /* ✅ 커서 색깔 추가 */
+    caret-color: var(--blue-400);
     color: var(--gray-900, #191919);
     font-family: Pretendard, serif;
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 160%; /* 22.4px */
+    line-height: 160%;
 }
 /* input 컴포넌트 스타일 */
 .default-input::placeholder {
     justify-content: center;
     align-items: center;
-    color: var(--gray-400); /* 예시: 연한 회색 */
+    color: var(--gray-400);
     font-family: Pretendard, serif;
     font-weight: 400;
     font-size: 14px;
@@ -375,7 +375,7 @@ body {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 160%; /* 22.4px */
+    line-height: 160%;
 }
 
 .completed-input {
@@ -394,5 +394,5 @@ body {
     font-size: 14px;
     font-style: normal;
     font-weight: 400;
-    line-height: 160%; /* 22.4px */
+    line-height: 160%;
 }
