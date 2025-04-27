@@ -38,6 +38,28 @@
     --gray-900: #191919;
     --white: #FFFFFF;
     --black: #000000;
+
+    --red-100: #F9E3E3;
+    --red-200: #F2C1C1;
+    --red-300: #E06D6D;
+    --red-400: #D22E2F;
+    --red-500: #932021;
+    --red-600: #691718;
+    --red-700: #4E1112;
+
+    --blue-100: #ECF5FE;
+    --blue-200: #C5E0FD;
+    --blue-300: #9ECBFC;
+    --blue-400: #3E98F9;
+    --blue-500: #327AC7;
+    --blue-600: #255B95;
+    --blue-700: #193D64;
+
+    --bg-100: #FFFBF5;
+    --bg-200: #FFFAF1;
+    --bg-300: #FFF8EB;
+    --bg-400: #F2ECDF;
+    --bg-500: #E5DFD3;
 }
 
 /* 전역 폰트 스타일 */
