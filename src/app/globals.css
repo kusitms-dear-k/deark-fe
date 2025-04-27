@@ -39,6 +39,7 @@
     --white: #FFFFFF;
     --black: #000000;
 }
+
 /* 전역 폰트 스타일 */
 body {
     font-family: 'Handsome Pro', Pretendard, "Pretendard Variable", sans-serif ;
