@@ -16,8 +16,10 @@ const NavBar = (props: Props) => {
       case 'PICKER':
         return (PICKER_MENU_LIST.map((menu) => {
           return (
-            <Link href={menu.path} key={menu.id}
-                  className="flex w-[98px] py-4 flex-col items-center justify-center">
+            <Link
+              href={menu.path}
+              key={menu.id}
+              className="flex w-[98px] py-4 flex-col items-center justify-center">
               {'/' + paramsName.split('/')[1] === menu.path ? (
                 <div
                   className="relative flex h-[36px] flex-col items-center justify-center gap-y-2"
@@ -50,8 +52,10 @@ const NavBar = (props: Props) => {
       case 'MAKER':
         return (MAKER_MENU_LIST.map((menu) => {
             return (
-              <Link href={menu.path} key={menu.id}
-                    className="flex w-[98px] py-4 flex-col items-center justify-center">
+              <Link
+                href={menu.path}
+                key={menu.id}
+                className="flex w-[98px] py-4 flex-col items-center justify-center">
                 {'/' + paramsName.split('/')[1] === menu.path ? (
                   <div
                     className="relative flex h-[36px] flex-col items-center justify-center gap-y-2"
@@ -86,9 +90,7 @@ const NavBar = (props: Props) => {
 
   return (
     <nav
-      style={{
-        boxShadow: '0px -6px 16px 0px rgba(134, 134, 134, 0.05)',
-      }}
+      style={{ boxShadow: '0px -6px 16px 0px rgba(134, 134, 134, 0.05)' }}
       className="fixed z-20 bottom-0 mb-[20px] flex w-full justify-center items-center bg-white rounded-[16px]">
       {renderNavBar(navType)}
     </nav>
