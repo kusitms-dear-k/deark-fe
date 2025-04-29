@@ -9,18 +9,15 @@ interface Props {
   navType?: UserRoleType;
 }
 const NavBar = (props: Props) => {
-  const {navType = 'PICKER'} = props;
+  const { navType = 'PICKER' } = props;
   const paramsName = usePathname();
 
   const renderNavBar = (navType: UserRoleType) => {
     switch (navType) {
       case 'PICKER':
-        return (PICKER_MENU_LIST.map((menu) => {
+        return PICKER_MENU_LIST.map((menu) => {
           return (
-            <Link
-              href={menu.path}
-              key={menu.id}
-              className="flex w-[98px] py-4 flex-col items-center justify-center">
+            <Link href={menu.path} key={menu.id} className="flex w-[98px] flex-col items-center justify-center py-4">
               {'/' + paramsName.split('/')[1] === menu.path ? (
                 <div
                   className="relative flex h-[36px] flex-col items-center justify-center gap-y-2"
@@ -48,53 +45,49 @@ const NavBar = (props: Props) => {
               )}
             </Link>
           );
-        })
-      )
+        });
       case 'MAKER':
-        return (MAKER_MENU_LIST.map((menu) => {
-            return (
-              <Link
-                href={menu.path}
-                key={menu.id}
-                className="flex w-[98px] py-4 flex-col items-center justify-center">
-                {'/' + paramsName.split('/')[1] === menu.path ? (
-                  <div
-                    className="relative flex h-[36px] flex-col items-center justify-center gap-y-2"
-                    style={{
-                      background: 'radial-gradient(circle at center, rgba(210,46,47,0.1) 0%, rgba(210,46,47,0) 70%)',
-                      borderRadius: '50%',
-                    }}
-                  >
-                    <div className="flex h-6 w-6 items-center justify-center">
-                      <menu.ClickedIcon />
-                    </div>
-                    <div className={'h-[4px] w-[4px] rounded-full bg-[var(--red-400)]'} />
+        return MAKER_MENU_LIST.map((menu) => {
+          return (
+            <Link href={menu.path} key={menu.id} className="flex w-[98px] flex-col items-center justify-center py-4">
+              {'/' + paramsName.split('/')[1] === menu.path ? (
+                <div
+                  className="relative flex h-[36px] flex-col items-center justify-center gap-y-2"
+                  style={{
+                    background: 'radial-gradient(circle at center, rgba(210,46,47,0.1) 0%, rgba(210,46,47,0) 70%)',
+                    borderRadius: '50%',
+                  }}
+                >
+                  <div className="flex h-6 w-6 items-center justify-center">
+                    <menu.ClickedIcon />
                   </div>
-                ) : (
-                  <div className={'flex h-[36px] flex-col gap-y-2'}>
-                    <Image
-                      src={menu.unClickedIcon}
-                      width={24}
-                      height={24}
-                      alt={'unClickedIcon'}
-                      style={{ width: 24, height: 24 }}
-                    />
-                    <div className={'h-[4px] w-[4px] rounded-full bg-[var(--white)]'}></div>
-                  </div>
-                )}
-              </Link>
-            );
-          })
-        )
+                  <div className={'h-[4px] w-[4px] rounded-full bg-[var(--red-400)]'} />
+                </div>
+              ) : (
+                <div className={'flex h-[36px] flex-col gap-y-2'}>
+                  <Image
+                    src={menu.unClickedIcon}
+                    width={24}
+                    height={24}
+                    alt={'unClickedIcon'}
+                    style={{ width: 24, height: 24 }}
+                  />
+                  <div className={'h-[4px] w-[4px] rounded-full bg-[var(--white)]'}></div>
+                </div>
+              )}
+            </Link>
+          );
+        });
     }
-  }
+  };
 
   return (
     <nav
       style={{ boxShadow: '0px -6px 16px 0px rgba(134, 134, 134, 0.05)' }}
-      className="fixed z-20 bottom-0 mb-[20px] flex w-full justify-center items-center bg-white rounded-[16px]">
+      className="fixed bottom-0 z-20 mb-[20px] flex w-full items-center justify-center rounded-[16px] bg-white"
+    >
       {renderNavBar(navType)}
     </nav>
-  )
-}
-export default NavBar
+  );
+};
+export default NavBar;
