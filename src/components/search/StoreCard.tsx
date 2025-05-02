@@ -62,6 +62,6 @@ const StoreCard = () => {
         <div className={'caption-l w-fit rounded-[2px] bg-[var(--gray-150)] px-[6px] py-[2px]'}>도시락 케이크</div>
       </section>
     </div>
-  )
+  );
 }
 export default StoreCard
