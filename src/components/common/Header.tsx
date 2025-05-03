@@ -15,7 +15,7 @@ const Header = (props: Props) => {
     switch (headerType) {
       case 'DEFAULT':
         return (
-          <section className={'absolute top-10 left-5 w-[90%]'}>
+          <div className={'absolute top-10 left-5 w-[90%]'}>
             <div className={'flex w-full justify-between'}>
               <h1 className={'key-visual-m text-[var(--red-400)]'}>Cake is easy</h1>
               <div className={'flex items-center gap-x-3'}>
@@ -45,7 +45,7 @@ const Header = (props: Props) => {
             <div className={'body-el'}>
               안녕하세요, <span className={'headline-s text-[var(--gray-900)]'}>리무진님!</span>{' '}
             </div>
-          </section>
+          </div>
         )
       case 'DYNAMIC':
         return (
@@ -84,9 +84,9 @@ const Header = (props: Props) => {
     }
   }
   return (
-    <section className={'flex items-center pt-[66px] w-full'}>
+    <header className={'flex items-center pt-[66px] w-full'}>
       {renderHeaderType(headerType)}
-    </section>
+    </header>
   )
 }
 export default Header
