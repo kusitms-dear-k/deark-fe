@@ -1,3 +1,4 @@
+import { HeartIcon, HeartIconFill } from '@/assets/svgComponents'
 import Image from 'next/image'
 
 interface DesignCardProps {
@@ -41,9 +42,9 @@ const DesignCard = ({
 
           <div className={'relative h-[24px] w-[24px]'}>
             {isHeart ? (
-              <Image className={'bottom-0 object-cover'} src={'/common/heart_icon_fill.svg'} fill alt={'heart'} />
+              <HeartIconFill className="bottom-0 object-cover" width="100%" height="100%" />
             ) : (
-              <Image className={'bottom-0 object-cover'} src={'/common/heart_icon.svg'} fill alt={'heart'} />
+              <HeartIcon className="bottom-0 object-cover" width="100%" height="100%" />
             )}
           </div>
         </div>

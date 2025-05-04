@@ -6,6 +6,7 @@ import Image from 'next/image'
 import RecommendCard from '@/components/search/RecommendCard'
 import { useState } from 'react'
 import MiddleModal from '../common/MiddleModal'
+import { KakaoIcon } from '@/assets/svgComponents'
 
 const designData = [
   {
@@ -119,7 +120,7 @@ const DesignSearchResult = (props: Props) => {
               setIsGoLoginModal(false)
             }}
           >
-            <Image src={'/common/kakao_icon.svg'} alt="kakao icon" width={19} height={17} />
+            <KakaoIcon width={19} height={17} />
             카카오톡으로 쉬운 시작
           </button>
         </div>
