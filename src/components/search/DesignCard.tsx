@@ -10,6 +10,7 @@ interface DesignCardProps {
   startPrice: string
   heartCount: string
   location: string
+  onHeartClick?: () => void
 }
 
 const DesignCard = ({
@@ -21,6 +22,7 @@ const DesignCard = ({
   startPrice,
   heartCount,
   location,
+  onHeartClick,
 }: DesignCardProps) => {
   return (
     <div className={'w-full'}>
@@ -40,7 +42,7 @@ const DesignCard = ({
             </div>
           )}
 
-          <div className={'relative h-[24px] w-[24px]'}>
+          <div className={'relative h-[24px] w-[24px] cursor-pointer'} onClick={onHeartClick}>
             {isHeart ? (
               <HeartIconFill className="bottom-0 object-cover" width="100%" height="100%" />
             ) : (
