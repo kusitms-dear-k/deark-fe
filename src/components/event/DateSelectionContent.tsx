@@ -70,6 +70,7 @@ const DateSelectionContent = ({ onSelect, onCancel }: DateSelectionContentProps)
         />
       </div>
 
+      <hr className="w-full border-t border-gray-200" />
       <EventButtons
         onCancel={onCancel}
         onClickActiveBtn={handleConfirm}

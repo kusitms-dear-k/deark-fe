@@ -73,6 +73,7 @@ const NewEventContent = ({
         </button>
       </div>
 
+      <hr className="w-full border-t border-gray-200" />
       <EventButtons onCancel={onCancel} onClickActiveBtn={onSave} eventValue={event.name} activeBtnText="저장하기" />
     </div>
   )
