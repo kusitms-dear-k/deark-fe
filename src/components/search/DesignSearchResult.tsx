@@ -111,10 +111,10 @@ const DesignSearchResult = (props: Props) => {
         <div className="flex flex-col">
           <div>
             <p className="mb-1 text-center text-[1rem] font-bold">찜하기는 로그인 후 이용이 가능해요.</p>
-            <p className="text-center text-xs font-normal">30초만에 로그인하고 계속 해볼까요?</p>
+            <p className="body-s text-center">30초만에 로그인하고 계속 해볼까요?</p>
           </div>
           <button
-            className="flex w-full items-center justify-center rounded-lg bg-[#FADD0E] py-3 text-sm font-semibold text-black"
+            className="bg-kakao flex w-full items-center justify-center rounded-lg py-3 text-sm font-semibold text-black"
             onClick={() => {
               // 카카오 로그인 로직
               setIsGoLoginModal(false)
