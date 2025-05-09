@@ -552,7 +552,7 @@ body {
   gap: 2px;
   border-radius: 20px;
   border: 1px solid var(--gray-200);
-  background: var(--white, #FFF);
+  background: var(--white, #fff);
   color: var(--gray-500);
   font-family: Pretendard, serif;
   font-size: 14px;
@@ -595,4 +595,3 @@ body {
   font-weight: 500;
   line-height: 160%; /* 22.4px */
 }
-
