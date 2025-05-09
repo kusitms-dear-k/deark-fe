@@ -2,7 +2,7 @@ import Image from 'next/image';
 
 const StoreInfo = () => {
   return (
-    <div className={'flex w-full flex-col gap-y-[28px] px-5 pt-6'}>
+    <div className={'flex w-full flex-col gap-y-[28px] px-5 pt-6  overflow-y-scroll'}>
       <section className={'flex flex-col gap-y-2'}>
         <p className="title-l">가게 소개</p>
         <section className={'mt-[6px] flex gap-x-1'}>
@@ -34,6 +34,16 @@ const StoreInfo = () => {
         <div>
           <p className={'title-l'}>영업시간</p>
           <p className={'body-m text-[var(--gray-800)]'}>월요일 ~ 일요일 : 10:00~22:00</p>
+        </div>
+        <div>
+          <p className={'title-l'}>주문가능시간</p>
+          <p className={'body-m text-[var(--gray-800)]'}>월요일 ~ 일요일 : 10:00~20:00</p>
+        </div>
+        <div>
+          <p className={'title-l'}>대표자명: 김혜연</p>
+          <p className={'body-m text-[var(--gray-800)]'}>사업자 등록번호: 201-319-202913</p>
+          <p className={'body-m text-[var(--gray-800)]'}>상호명: 메리고라운드</p>
+
         </div>
       </section>
     </div>
