@@ -25,8 +25,8 @@ const SearchPage = () => {
   const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
   const [sort, setSort] = useState<'정확도' | '최신순' | '인기순'>('정확도')
   const [sortModalOpen, setSortModalOpen] = useState(false)
-  const [isStoreDetailModalOpen, setIsStoreDetailModalOpen] = useState(false)
-  const [isDesignDetailModalOpen, setIsDesignDetailModalOpen] = useState(true)
+  const [isStoreDetailModalOpen, setIsStoreDetailModalOpen] = useState(true)
+  const [isDesignDetailModalOpen, setIsDesignDetailModalOpen] = useState(false)
 
   const [storeDetailMenu, setStoreDetailMenu] = useState<'가게 정보' | '디자인' | '리뷰'>('가게 정보')
 
