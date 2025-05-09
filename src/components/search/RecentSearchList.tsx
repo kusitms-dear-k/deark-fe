@@ -7,6 +7,7 @@ interface Props {
 
 const RecentSearchList = (props: Props) => {
   const { recentSearchList } = props
+
   return (
     <section className={'flex flex-col gap-y-3'}>
       <div className={'flex justify-between'}>
