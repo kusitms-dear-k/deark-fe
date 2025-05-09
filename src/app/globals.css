@@ -299,10 +299,49 @@ body {
   line-height: 160%;
   letter-spacing: 0;
 }
-@utility caption-l {
+@utility body-s {
   font-family: Pretendard, serif;
   font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  letter-spacing: 0;
+}
+@utility chip-m-bold {
+  font-family: Pretendard, serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+  letter-spacing: 0;
+}
+@utility chip-m {
+  font-family: Pretendard, serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%;
+  letter-spacing: 0;
+}
+@utility chip-s-bold {
+  font-family: Pretendard, serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+}
+@utility chip-s {
+  font-family: Pretendard, serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: 0;
+}
+@utility caption-l {
+  font-family: Pretendard, serif;
   font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
   line-height: 160%;
   letter-spacing: 0;
 }
