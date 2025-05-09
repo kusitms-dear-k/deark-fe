@@ -1,25 +1,45 @@
 'use client'
 
-import { useState } from 'react';
+import { useState } from 'react'
 
-import { FilterType } from '@/types/common';
-import Header from '@/components/common/Header';
-import SearchMenu from '@/components/search/SearchMenu';
-import FilterPanel from '@/components/search/FilterPanel';
-import DesignSearchResult from '@/components/search/DesignSearchResult';
-import StoreSearchResult from '@/components/search/StoreSearchResult';
-import SearchSummaryPanel from '@/components/search/SearchSummaryPanel';
-import Filter from '@/components/common/Filter';
-import AddressFilterContent from '@/components/search/AddressFilterContent';
-import PriceFilterContent from '@/components/search/PriceFilterContent';
-import SortFilterContent from '@/components/search/SortFilterContent';
+import { FilterType } from '@/types/common'
+import Header from '@/components/common/Header'
+import SearchMenu from '@/components/search/SearchMenu'
+import FilterPanel from '@/components/search/FilterPanel'
+import DesignSearchResult from '@/components/search/DesignSearchResult'
+import StoreSearchResult from '@/components/search/StoreSearchResult'
+import SearchSummaryPanel from '@/components/search/SearchSummaryPanel'
+import Filter from '@/components/common/Filter'
+import AddressFilterContent from '@/components/search/AddressFilterContent'
+import PriceFilterContent from '@/components/search/PriceFilterContent'
+import SortFilterContent from '@/components/search/SortFilterContent'
 import BottomModal from '@/components/common/BottomModal'
+import StoreProfile from '@/components/search/StoreProfile'
+import StoreDetailMenu from '@/components/search/StoreDetailMenu'
+import StoreReview from '@/components/search/StoreReview'
+import StoreDesign from '@/components/search/StoreDesign'
+import StoreInfo from '@/components/search/StoreInfo'
+import Image from 'next/image'
 
 const SearchPage = () => {
-  const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인');
-  const [sort, setSort] = useState<'정확도' | '최신순' | '인기순'>('정확도');
-  const [sortModalOpen, setSortModalOpen] = useState(false);
-  const [isStoreDetailModalOpen, setIsStoreDetailModalOpen] = useState(true);
+  const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
+  const [sort, setSort] = useState<'정확도' | '최신순' | '인기순'>('정확도')
+  const [sortModalOpen, setSortModalOpen] = useState(false)
+  const [isStoreDetailModalOpen, setIsStoreDetailModalOpen] = useState(false)
+  const [isDesignDetailModalOpen, setIsDesignDetailModalOpen] = useState(true)
+
+  const [storeDetailMenu, setStoreDetailMenu] = useState<'가게 정보' | '디자인' | '리뷰'>('가게 정보')
+
+  const renderContent = (storeDetailMenu: '가게 정보' | '디자인' | '리뷰') => {
+    switch (storeDetailMenu) {
+      case '리뷰':
+        return <StoreReview />
+      case '디자인':
+        return <StoreDesign />
+      default:
+        return <StoreInfo />
+    }
+  }
 
   const renderFilterContent = (filter: FilterType) => {
     switch (filter) {
@@ -28,7 +48,7 @@ const SearchPage = () => {
           <section className="flex flex-col px-[24px]">
             <SortFilterContent />
           </section>
-        );
+        )
       case 'ADDRESS':
         return (
           <section>
@@ -36,14 +56,14 @@ const SearchPage = () => {
             <AddressFilterContent />
             <Filter.BottomButton />
           </section>
-        );
+        )
       case 'DATE':
         return (
           <section>
             <Filter.Menu />
             <Filter.BottomButton />
           </section>
-        );
+        )
       case 'PRICE':
         return (
           <section className="flex flex-col justify-start gap-y-[2px] py-[7px]">
@@ -51,9 +71,9 @@ const SearchPage = () => {
             <PriceFilterContent />
             <Filter.BottomButton />
           </section>
-        );
+        )
     }
-  };
+  }
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -135,6 +155,6 @@ const SearchPage = () => {
       <DesignSearchResult searchMenu={searchMenu} />
       <StoreSearchResult />
     </main>
-  );
-};
-export default SearchPage;
+  )
+}
+export default SearchPage
