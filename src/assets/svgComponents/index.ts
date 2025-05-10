@@ -1,3 +1,5 @@
+import TermsOfUseRightArrowIcon from '@/assets/svgComponents/TermsOfUseRightArrowIcon'
+
 export { default as ChevronLeftIcon } from './ChevronLeftIcon'
 export { default as ChevronRightIcon } from './ChevronRightIcon'
 export { default as DropUpIcon } from './DropUpIcon'
@@ -25,3 +27,11 @@ export { default as RedSearchIcon } from './RedSearchIcon'
 export { default as SearchIconGray } from './SearchIconGray'
 export { default as SearchIconRed } from './SearchIconRed'
 export { default as SimpleCalendarIcon } from './SimpleCalendarIcon'
+export { default as CakeIcon } from './CakeIcon'
+export { default as StoreIcon } from './StoreIcon'
+export { default as BlueCheckIcon } from './BlueCheckIcon'
+export { default as GrayCheckIcon } from './GrayCheckIcon'
+export { default as TermsOfUseRightArrowIcon } from './TermsOfUseRightArrowIcon'
+
+
+
