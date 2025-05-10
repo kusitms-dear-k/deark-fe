@@ -2,6 +2,7 @@ import { JSX } from 'react';
 
 export type UserRoleType = 'PICKER' | 'MAKER';
 export type HeaderType = 'DEFAULT' | 'DYNAMIC' | 'SEARCH';
+export type UserLoginRoleType = 'GUEST' | 'OWNER' | 'CUSTOMER' // 백엔드 로그인 이후 유저 타입
 export type FilterType = 'SORT' | 'ADDRESS' | 'PRICE' | 'DATE';
 export interface MenuListType {
   id: number;
@@ -19,4 +20,14 @@ export interface AddressType {
   full_addr: string;
   x_coor: string;
   y_coor: string;
+}
+
+/**
+ * 백엔드 요청 Type
+ */
+export interface ResponseType<T = any> {
+  isSuccess: true,
+  code: "REQUEST_OK",
+  message: "요청이 승인되었습니다.",
+  results: T
 }
