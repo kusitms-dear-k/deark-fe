@@ -65,6 +65,6 @@ const SearchPage = () => {
       <DesignSearchResult searchMenu={searchMenu} />
       <StoreSearchResult />
     </main>
-  );
-};
-export default SearchPage;
+  )
+}
+export default SearchPage

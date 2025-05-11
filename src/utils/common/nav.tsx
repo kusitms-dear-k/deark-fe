@@ -1,16 +1,10 @@
-import * as React from "react";
-import type { SVGProps } from "react";
+import * as React from 'react'
+import type { SVGProps } from 'react'
 
-import { MenuListType } from '@/types/common';
+import { MenuListType } from '@/types/common'
 
 const ClickedHomeIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={23}
-    height={22}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={23} height={22} fill="none" {...props}>
     <path
       fill="#D22E2F"
       fillRule="evenodd"
@@ -18,24 +12,12 @@ const ClickedHomeIcon = (props: SVGProps<SVGSVGElement>) => (
       clipRule="evenodd"
     />
     <path fill="#D22E2F" d="M11.503 17.058v-3z" />
-    <path
-      stroke="#D22E2F"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      strokeWidth={1.8}
-      d="M11.503 17.058v-3"
-    />
+    <path stroke="#D22E2F" strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.8} d="M11.503 17.058v-3" />
   </svg>
-);
+)
 
 const ClickedSearchIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={20}
-    height={20}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} fill="none" {...props}>
     <path
       fill="#D22E2F"
       fillRule="evenodd"
@@ -43,16 +25,10 @@ const ClickedSearchIcon = (props: SVGProps<SVGSVGElement>) => (
       clipRule="evenodd"
     />
   </svg>
-);
+)
 
 const ClickedHeartIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={23}
-    height={20}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={23} height={20} fill="none" {...props}>
     <path
       fill="#D22E2F"
       fillRule="evenodd"
@@ -60,15 +36,9 @@ const ClickedHeartIcon = (props: SVGProps<SVGSVGElement>) => (
       clipRule="evenodd"
     />
   </svg>
-);
+)
 const ClickedMyPageIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={20}
-    height={20}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} fill="none" {...props}>
     <path
       fill="#D22E2F"
       fillRule="evenodd"
@@ -76,16 +46,10 @@ const ClickedMyPageIcon = (props: SVGProps<SVGSVGElement>) => (
       clipRule="evenodd"
     />
   </svg>
-);
+)
 
 const ClickedOrderIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={19}
-    height={22}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={19} height={22} fill="none" {...props}>
     <path
       fill="#D22E2F"
       d="M5.5 7.319a.9.9 0 1 0 0 1.8h8a.9.9 0 0 0 0-1.8zM5.5 11.319a.9.9 0 1 0 0 1.8h6a.9.9 0 0 0 0-1.8zM5.5 15.319a.9.9 0 1 0 0 1.8h2a.9.9 0 0 0 0-1.8z"
@@ -97,16 +61,10 @@ const ClickedOrderIcon = (props: SVGProps<SVGSVGElement>) => (
       clipRule="evenodd"
     />
   </svg>
-);
+)
 
 const ClickedStoreIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg
-    xmlns="http://www.w3.org/2000/svg"
-    width={20}
-    height={20}
-    fill="none"
-    {...props}
-  >
+  <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} fill="none" {...props}>
     <path
       fill="#D22E2F"
       fillRule="evenodd"
@@ -114,18 +72,18 @@ const ClickedStoreIcon = (props: SVGProps<SVGSVGElement>) => (
       clipRule="evenodd"
     />
   </svg>
-);
+)
 
 export const PICKER_MENU_LIST: MenuListType[] = [
-  { id: 1, unClickedIcon: '/common/gray_home.svg', ClickedIcon: ClickedHomeIcon, path: '/home' },
-  { id: 2, unClickedIcon: '/common/gray_search.svg', ClickedIcon: ClickedSearchIcon, path: '/search' },
-  { id: 3, unClickedIcon: '/common/gray_heart.svg', ClickedIcon: ClickedHeartIcon, path: '/like' },
-  { id: 4, unClickedIcon: '/common/gray_mypage.svg', ClickedIcon: ClickedMyPageIcon, path: '/mypage' },
-];
+  { id: 1, unClickedIcon: '/common/gray_home_icon.svg', ClickedIcon: ClickedHomeIcon, path: '/home' },
+  { id: 2, unClickedIcon: '/common/gray_search_icon.svg', ClickedIcon: ClickedSearchIcon, path: '/search' },
+  { id: 3, unClickedIcon: '/common/gray_heart_icon.svg', ClickedIcon: ClickedHeartIcon, path: '/like' },
+  { id: 4, unClickedIcon: '/common/gray_mypage_icon.svg', ClickedIcon: ClickedMyPageIcon, path: '/mypage' },
+]
 
 export const MAKER_MENU_LIST: MenuListType[] = [
-  { id: 1, unClickedIcon: '/common/gray_home.svg', ClickedIcon: ClickedHomeIcon, path: '/home' },
-  { id: 2, unClickedIcon: '/common/gray_search.svg', ClickedIcon: ClickedSearchIcon, path: '/search' },
-  { id: 3, unClickedIcon: '/common/gray_order.svg', ClickedIcon: ClickedOrderIcon, path: '/order' },
-  { id: 4, unClickedIcon: '/common/gray_store.svg', ClickedIcon: ClickedStoreIcon, path: '/store' },
-];
+  { id: 1, unClickedIcon: '/common/gray_home_icon.svg', ClickedIcon: ClickedHomeIcon, path: '/home' },
+  { id: 2, unClickedIcon: '/common/gray_search_icon.svg', ClickedIcon: ClickedSearchIcon, path: '/search' },
+  { id: 3, unClickedIcon: '/common/gray_order_icon.svg', ClickedIcon: ClickedOrderIcon, path: '/order' },
+  { id: 4, unClickedIcon: '/common/gray_store_icon.svg', ClickedIcon: ClickedStoreIcon, path: '/store' },
+]
