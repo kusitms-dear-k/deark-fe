@@ -19,18 +19,35 @@ import StoreDetailMenu from '@/components/search/StoreDetailMenu'
 import StoreReview from '@/components/search/StoreReview'
 import StoreDesign from '@/components/search/StoreDesign'
 import StoreInfo from '@/components/search/StoreInfo'
-import Image from 'next/image'
+import { useSearchStore } from '@/store/search'
+import DesignDetailContent from '@/components/search/DesignDetailContent'
 
 const SearchPage = () => {
   const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
-  const [sort, setSort] = useState<'정확도' | '최신순' | '인기순'>('정확도')
-  const [sortModalOpen, setSortModalOpen] = useState(false)
-  const [isStoreDetailModalOpen, setIsStoreDetailModalOpen] = useState(true)
+  // 모달 관련 state
+  const [isStoreDetailModalOpen, setIsStoreDetailModalOpen] = useState(false)
   const [isDesignDetailModalOpen, setIsDesignDetailModalOpen] = useState(false)
-
+  // 필터 관련 state
+  const [sort, setSort] = useState<'정확도' | '최신순' | '인기순'>('정확도')
+  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
+  const [selectedFilterType, setSelectedFilterType] = useState<FilterType>('ADDRESS')
+  const [selectedFilterContents, setSelectedFilterContents] = useState<string[]>([]) //위치 필터 값
+  const [minPrice, setMinPrice] = useState<null | number>(null) //최소 가격 필터 값
+  const [maxPrice, setMaxPrice] = useState<null | number>(null) //최대 가격 필터 값
+  //가게 상세보기
   const [storeDetailMenu, setStoreDetailMenu] = useState<'가게 정보' | '디자인' | '리뷰'>('가게 정보')
+  // zustand 전역 상태
+  const sortType = useSearchStore((state) => state.sortType)
+  const totalCount = useSearchStore((state) => state.totalCount)
+  const locationFilterResultCount = useSearchStore((state) => state.locationFilterResultCount)
+  const priceFilterResultCount = useSearchStore((state) => state.priceFilterResultCount)
+  const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
-  const renderContent = (storeDetailMenu: '가게 정보' | '디자인' | '리뷰') => {
+  /**
+   * 가게 상세 페이지
+   * @param storeDetailMenu 가게 상세 페이지 메뉴
+   */
+  const renderStoreDetailContent = (storeDetailMenu: '가게 정보' | '디자인' | '리뷰') => {
     switch (storeDetailMenu) {
       case '리뷰':
         return <StoreReview />
@@ -41,35 +58,80 @@ const SearchPage = () => {
     }
   }
 
+  /**
+   * 필터 페이지
+   * @param filter 정렬, 위치, 날짜, 가격대
+   */
   const renderFilterContent = (filter: FilterType) => {
     switch (filter) {
       case 'SORT':
         return (
-          <section className="flex flex-col px-[24px]">
-            <SortFilterContent />
+          <section className="flex flex-col px-[1.5rem]">
+            <SortFilterContent setIsFilterModalOpen={setIsFilterModalOpen} />
           </section>
         )
       case 'ADDRESS':
         return (
           <section>
-            <Filter.Menu />
-            <AddressFilterContent />
-            <Filter.BottomButton />
+            <Filter.Menu
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+              setIsFilterModalOpen={setIsFilterModalOpen}
+            />
+            <AddressFilterContent
+              selectedFilterContents={selectedFilterContents}
+              setSelectedFilterContents={setSelectedFilterContents}
+            />
+            <Filter.BottomButton
+              reset={() => {
+                setSearchParams({ locationList: null })
+                setIsFilterModalOpen(false)
+              }}
+              apply={() => {
+                setSearchParams({ locationList: selectedFilterContents })
+                setIsFilterModalOpen(false)
+              }}
+              totalResultCount={locationFilterResultCount}
+            />
           </section>
         )
       case 'DATE':
         return (
           <section>
-            <Filter.Menu />
-            <Filter.BottomButton />
+            <Filter.Menu
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+            />
           </section>
         )
       case 'PRICE':
         return (
-          <section className="flex flex-col justify-start gap-y-[2px] py-[7px]">
-            <Filter.Menu />
-            <PriceFilterContent />
-            <Filter.BottomButton />
+          <section className="flex flex-col justify-start gap-y-[0.125rem] py-[0.438rem]">
+            <Filter.Menu
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+            />
+            <PriceFilterContent
+              minPrice={minPrice}
+              setMinPrice={setMinPrice}
+              setMaxPrice={setMaxPrice}
+              maxPrice={maxPrice}
+            />
+            <Filter.BottomButton
+              reset={() => {
+                setMinPrice(null)
+                setMaxPrice(null)
+                setSearchParams({ minPrice: null, maxPrice: null })
+                setIsFilterModalOpen(false)
+              }}
+              apply={() => {
+                setSearchParams({ minPrice: minPrice, maxPrice: maxPrice })
+                setIsFilterModalOpen(false)
+              }}
+              totalResultCount={priceFilterResultCount}
+            />
           </section>
         )
     }
@@ -77,83 +139,50 @@ const SearchPage = () => {
 
   return (
     <main className="flex min-h-screen flex-col">
-      {sortModalOpen && <Filter>{renderFilterContent('ADDRESS')}</Filter>}
+      {/* 필터 모달 */}
+      {isFilterModalOpen && (
+        <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
+      )}
+
+      {/* 가게 상세 페이지 모달 */}
       {isStoreDetailModalOpen && (
         <BottomModal>
           <>
             <StoreProfile />
             <StoreDetailMenu storeDetailMenu={storeDetailMenu} setStoreDetailMenu={setStoreDetailMenu} />
-            {renderContent(storeDetailMenu)}
-            <div className={'bottom-0 w-full border-t border-[var(--gray-150)] bg-[var(--white)] px-5 pt-5'}>
-              <button className={'button-l w-full rounded-[4px] bg-[var(--blue-400)] py-3 text-[var(--white)]'}>
+            {renderStoreDetailContent(storeDetailMenu)}
+            <div className={'border-gray-150 bottom-0 w-full border-t bg-white px-[1.25rem] pt-[1.25rem]'}>
+              <button className={'button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white'}>
                 주문하러 가기
               </button>
             </div>
           </>
         </BottomModal>
       )}
+
+      {/* 디자인 상세 페이지 모달 */}
       {isDesignDetailModalOpen && (
         <BottomModal>
-          <div className={'flex w-full flex-col overflow-y-scroll'}>
-            <h3 className="title-m my-3 flex w-full items-center justify-center">메리고라운드</h3>
-            <div className="relative h-[360px]">
-              <Image src="/common/cake1.png" alt="케이크" fill className="object-cover" />
-            </div>
-            <section className="border-gray-150 border-b p-5">
-              <div className="flex items-center justify-between">
-                <h4 className="title-l">블루리안 케이크</h4>
-                <p className="caption-m text-gray-700">1,452</p>
-              </div>
-              <p className="body-m mt-1 text-gray-800">
-                아이들에게 인기만점! 여러가지 수채화 색깔로 디자인해 상큼한 맛과 분위기가 매력적인 케이크입니다.
-              </p>
-              <p className="title-xl">20000원~</p>
-            </section>
-            <section className="p-5">
-              <h4 className="title-l">케이크 옵션</h4>
-              <div className="mt-4 flex flex-col gap-y-[18px]">
-                <div className="flex gap-x-[21px]">
-                  <p className="title-s text-gray-700">크기</p>
-                  <div className="flex items-center gap-x-[6px]">
-                    <div className="chip-s bg-gray-150 rounded-[2.4px] px-[7.2px] py-[3.5px]">한 입 케이크</div>
-                    <div className="chip-s bg-gray-150 rounded-[2.4px] px-[7.2px] py-[3.5px]">도시락 케이크</div>
-                    <div className="chip-s bg-gray-150 rounded-[2.4px] px-[7.2px] py-[3.5px]">1호</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-x-2">
-                  <p className="title-s text-gray-700">크림 맛</p>
-                  <div className="flex items-center gap-x-[6px]">
-                    <div className="chip-s bg-gray-150 rounded-[2.4px] px-[7.2px] py-[3.5px]">생크림</div>
-                    <div className="chip-s bg-gray-150 rounded-[2.4px] px-[7.2px] py-[3.5px]">딸기크림</div>
-                    <div className="chip-s bg-gray-150 rounded-[2.4px] px-[7.2px] py-[3.5px]">초코크림</div>
-                  </div>
-                </div>
-                <div className="flex items-center gap-x-2">
-                  <p className="title-s text-gray-700">시트 맛</p>
-                  <div className="flex items-center gap-x-[6px]">
-                    <div className="chip-s bg-gray-150 rounded-[2.4px] px-[7.2px] py-[3.5px]">기본</div>
-                    <div className="chip-s bg-gray-150 rounded-[2.4px] px-[7.2px] py-[3.5px]">바나나</div>
-                    <div className="chip-s bg-gray-150 rounded-[2.4px] px-[7.2px] py-[3.5px]">얼그레이</div>
-                  </div>
-                </div>
-              </div>
-            </section>
-          </div>
-          <div className={'bottom-0 w-full border-t border-[var(--gray-150)] bg-[var(--white)] px-5 pt-5'}>
-            <button className={'button-l w-full rounded-[4px] bg-[var(--blue-400)] py-3 text-[var(--white)]'}>
-              주문하러 가기
-            </button>
-          </div>
+          <DesignDetailContent />
         </BottomModal>
       )}
-      <div className="px-5">
+      <div className="px-[1.25rem]">
         <Header headerType="SEARCH" />
       </div>
       <SearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
-      <FilterPanel />
-      <SearchSummaryPanel sort={sort} setSortModalOpen={setSortModalOpen} />
-      <DesignSearchResult searchMenu={searchMenu} />
-      <StoreSearchResult />
+      <FilterPanel
+        isFilterModalOpen={isFilterModalOpen}
+        selectedFilterType={selectedFilterType}
+        setIsFilterModalOpen={setIsFilterModalOpen}
+        setSelectedFilterType={setSelectedFilterType}
+      />
+      <SearchSummaryPanel
+        totalCount={totalCount}
+        sortType={sortType}
+        setSelectedFilterType={setSelectedFilterType}
+        setSortModalOpen={setIsFilterModalOpen}
+      />
+      {searchMenu === '스토어' ? <StoreSearchResult /> : <DesignSearchResult />}
     </main>
   )
 }
