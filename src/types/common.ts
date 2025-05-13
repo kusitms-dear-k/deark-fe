@@ -31,3 +31,9 @@ export interface ResponseType<T = any> {
   message: "요청이 승인되었습니다.",
   results: T
 }
+
+export interface PageNationType {
+  totalCount: number;
+  page: number;
+  hasNext: boolean;
+}
