@@ -1,6 +1,6 @@
 'use client'
 import SelectRole from '@/components/authentication/SelectRole'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { UserLoginRoleType } from '@/types/common'
 import SignUp from '@/components/authentication/SignUp'
 import { StepType } from '@/types/authentication'
@@ -35,4 +35,11 @@ const AuthenticationPage = () => {
     </>
   )
 }
-export default AuthenticationPage
+
+export default function SignUpPage() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <AuthenticationPage />
+    </Suspense>
+  )
+}
