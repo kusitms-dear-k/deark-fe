@@ -31,7 +31,7 @@ const AuthenticationPage = () => {
   return (
     <>
       {step === 'SelectRole' && <SelectRole role={role} handleRoleClick={handleRoleClick} setStep={setStep} />}
-      {step === 'SignUp' && <SignUp role={role as UserLoginRoleType} setStep={setStep} />}
+      {step === 'SignUp' && role && <SignUp role={role as UserLoginRoleType} setStep={setStep} />}
     </>
   )
 }
