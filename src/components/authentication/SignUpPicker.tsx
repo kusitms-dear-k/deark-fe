@@ -1,51 +1,87 @@
-import { Dispatch, SetStateAction } from 'react'
-import { StepType } from '@/types/authentication'
+import { Dispatch, FormEvent, SetStateAction, useRef, useState } from 'react'
+import { CustomerSignUpType, StepType } from '@/types/authentication'
 import Header from '@/components/common/Header'
 import Image from 'next/image'
 import { useLoginStore } from '@/store/authStore'
 import TermsOfUseCheckbox from '@/components/authentication/TermsOfUseCheckbox'
-import useSignUpPicker from '@/hooks/useSignUpPicker'
+import { useRouter } from 'next/navigation'
+import { CameraIcon } from '@/assets/svgComponents'
 
 interface Props {
   setStep: Dispatch<SetStateAction<StepType>>
 }
+
 const SignUpPicker = (props: Props) => {
-  const {} = props
+  const { setStep } = props
+  const router = useRouter()
+  const [pickerSignUpInfo, setPickerSignUpInfo] = useState<CustomerSignUpType | null>(null)
+  const imgRef = useRef<HTMLInputElement>(null)
+  const [uploadImage, setUploadImage] = useState<string | ArrayBuffer | null>()
+  const [nickNameValidationResult, setNickNameValidationResult] = useState<boolean | null>(null) // true: 중복된게 잇는거,
+  const user = useLoginStore((state) => state.user)
+  const validationNickname = useLoginStore((state) => state.validationNickname)
+  const customerSignUp = useLoginStore((state) => state.customerSignUp)
+  //이용약관 state
+  const [allOptions, setAllOptions] = useState(false)
+  const [termsOfServiceOptions, setTermsOfServiceOptions] = useState(false)
+  const [personalInformation, setPersonalInformation] = useState(false)
+  const [marketingInformation, setMarketingInformation] = useState(false)
+  const [thirdPartyAgreementConsent, setThirdPartyAgreementConsent] = useState(false)
+  //다음버튼 유효성 검사
+  const isInvalid = nickNameValidationResult !== false || !termsOfServiceOptions || !personalInformation
 
-  const {
-    formState, // 상태 묶어서 반환
-    handleImagePreview,
-    handleSubmit,
-  } = useSignUpPicker()
+  // 이미지 미리보기 설정
+  const handleImagePreview = async () => {
+    const files = imgRef.current?.files
+    let reader = new FileReader()
+    if (files) {
+      reader.readAsDataURL(files[0])
+      reader.onloadend = () => {
+        setUploadImage(reader.result)
+      }
+    }
+  }
 
-  const {
-    pickerSignUpInfo,
-    setPickerSignUpInfo,
-    imgRef,
-    uploadImage,
-    user,
-    allOptions,
-    setAllOptions,
-    termsOfServiceOptions,
-    setTermsOfServiceOptions,
-    personalInformation,
-    setPersonalInformation,
-    marketingInformation,
-    setMarketingInformation,
-    nickNameValidationResult,
-    setNickNameValidationResult,
-    thirdPartyAgreementConsent,
-    setThirdPartyAgreementConsent,
-    isInvalid,
-  } = formState
+  /**
+   * form 형식 제출 함수
+   */
+  const handleSubmit = async (e: FormEvent) => {
+    e.preventDefault() // 새로고침 방지
+
+    if (!pickerSignUpInfo) return
+
+    // 마케팅, 3자 동의 상태 변경
+    const fullSignUpInfo = {
+      ...pickerSignUpInfo,
+      isMarketingAgreement: marketingInformation,
+      isThridPartyAgreement: thirdPartyAgreementConsent,
+    }
+
+    const formData = new FormData()
+
+    if (imgRef.current && imgRef.current.files && imgRef.current.files[0]) {
+      formData.append('file', imgRef.current.files[0]) // 이미지 첨부
+    }
+
+    formData.append(
+      'request',
+      new Blob([JSON.stringify(fullSignUpInfo)], {
+        type: 'application/json',
+      })
+    )
+
+    // 전송
+    customerSignUp(formData)
+    router.push('/home')
+  }
 
   return (
     <>
-      <form onSubmit={handleSubmit} className="relative min-h-screen w-full">
+      <form onSubmit={handleSubmit} className="relative w-full">
         <Header headerType={'DYNAMIC'} />
         {/* 프로필 */}
-        <section className="absolute top-12 flex w-full flex-col items-center justify-center gap-y-3">
-          <div onClick={() => imgRef.current?.click()} className="relative w-fit cursor-pointer">
+        <section className="mt-20 flex w-full flex-col items-center justify-center gap-y-3">
+          <div onClick={() => imgRef.current?.click()} className="relative w-fit cursor-pointer p-1">
             <div className="relative h-[60px] w-[60px]">
               <Image
                 src={
@@ -60,6 +96,11 @@ const SignUpPicker = (props: Props) => {
                 className="rounded-full object-cover"
               />
             </div>
+            <label htmlFor="input-file">
+              <div className="absolute right-0 bottom-0 flex h-[24px] w-[24px] items-center justify-center rounded-full bg-gray-300">
+                <CameraIcon />
+              </div>
+            </label>
             <input
               type="file"
               id={'input-file'}
@@ -72,15 +113,15 @@ const SignUpPicker = (props: Props) => {
 
           <p className="title-l text-gray-900">디어케이에 오신 것을 환영합니다!</p>
         </section>
-
         {/* 닉네임 */}
-        <section className="mx-5 mt-[100px] flex flex-col">
+        <section className="mx-5 mt-5 flex flex-col gap-y-[10px]">
           <section className="flex w-full flex-col gap-y-1">
             <p className="title-l text-gray-800">
               닉네임 <span className="text-blue-400">*</span>
             </p>
             <div className="flex justify-between gap-x-2">
               <input
+                value={pickerSignUpInfo?.nickname ?? ''}
                 onChange={(e) => {
                   setPickerSignUpInfo((prevState) => ({ ...prevState!, nickname: e.target.value }))
                   setNickNameValidationResult(null)
@@ -96,9 +137,7 @@ const SignUpPicker = (props: Props) => {
                 disabled={!pickerSignUpInfo || pickerSignUpInfo?.nickname === ''}
                 onClick={async () => {
                   if (pickerSignUpInfo && pickerSignUpInfo.nickname) {
-                    setNickNameValidationResult(
-                      await useLoginStore.getState().validationNickname(pickerSignUpInfo.nickname)
-                    )
+                    setNickNameValidationResult(await validationNickname(pickerSignUpInfo.nickname))
                   }
                 }}
                 className={
@@ -188,7 +227,7 @@ const SignUpPicker = (props: Props) => {
           />
         </section>
 
-        <div className="absolute bottom-0 w-full bg-white p-5">
+        <div className="fixed bottom-0 w-full bg-white p-5">
           <button
             type="submit"
             disabled={isInvalid}
