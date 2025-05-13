@@ -14,6 +14,8 @@ interface Props {
 const SelectRole = (props: Props) => {
   const { role, handleRoleClick, setStep } = props
 
+  const changeRole = useLoginStore((state) => state.changeRole)
+
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center">
       <section className="flex flex-col items-center justify-center gap-y-[5px]">
@@ -48,7 +50,7 @@ const SelectRole = (props: Props) => {
       <div className="absolute bottom-0 w-full bg-white p-5">
         <button
           onClick={() => {
-            useLoginStore.getState().changeRole(role as UserLoginRoleType)
+            changeRole(role as UserLoginRoleType)
             setStep('SignUp')
           }}
           disabled={!role}
