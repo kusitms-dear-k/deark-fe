@@ -1,6 +1,5 @@
 'use client'
 
-import DesignCard from '@/components/search/DesignCard'
 import { useEffect, useRef, useState } from 'react'
 import MiddleModal from '../common/MiddleModal'
 import { KakaoIcon } from '@/assets/svgComponents'
@@ -13,8 +12,10 @@ import ToastMsg from '../event/ToastMsg'
 import { DesignListResponseType, DesignType } from '@/types/search'
 import { useInfiniteDesignSearch } from '@/api/hooks/search/useInfiniteDesignSearch'
 import { useSearchStore } from '@/store/search'
-import NoSearchResults from '@/components/search/NoSearchResults'
 import { ResponseType } from '@/types/common'
+import DesignCardSkeleton from '@/components/skeleton/DesignCardSkeleton'
+import DesignCard from '@/components/search/DesignCard'
+import NoSearchResults from '@/components/search/NoSearchResults'
 
 type ModalViewType = 'eventList' | 'newEvent' | 'dateSelect' | 'locationSelect' | null
 
@@ -76,7 +77,7 @@ const DesignSearchResult = () => {
   }, [data, hasNextPage, fetchNextPage, isFetchingNextPage])
 
   // 디자인 검색 결과
-  const searchResults: ResponseType<DesignListResponseType>[] = data?.pages ?? []
+  const searchResults: ResponseType<DesignListResponseType>[] | undefined = data ? data.pages : undefined
 
   // 전체 컴포넌트 갯수
   useEffect(() => {
@@ -193,30 +194,39 @@ const DesignSearchResult = () => {
     <div>
       <section>
         {searchResults ? (
-          <section className={'grid grid-cols-2 gap-[2px] gap-y-5'}>
-            {searchResults.map((item, pageIndex) => {
-              return item.results.designList.map((design: DesignType, designIndex: number) => {
-                return (
-                  <div key={design.designId} ref={observerRef}>
-                    <DesignCard
-                      key={design.designId}
-                      img={design.designImageUrl}
-                      enableDayOrder={design.isSameDayOrder}
-                      storeName={design.storeName}
-                      isHeart={design.isLiked}
-                      description={design.designName}
-                      startPrice={design.price}
-                      heartCount={design.likeCount}
-                      location={design.address}
-                      onHeartClick={() => handleHeartClick(design.designId)}
-                    />
-                  </div>
-                )
-              })
+          searchResults.length > 0 ? (
+            <section className={'grid grid-cols-2 gap-[2px] gap-y-5'}>
+              {searchResults.map((item, pageIndex) => {
+                return item.results.designList.map((design: DesignType, designIndex: number) => {
+                  return (
+                    <div key={design.designId} ref={observerRef}>
+                      <DesignCard
+                        key={design.designId}
+                        img={design.designImageUrl}
+                        enableDayOrder={design.isSameDayOrder}
+                        storeName={design.storeName}
+                        isHeart={design.isLiked}
+                        description={design.designName}
+                        startPrice={design.price}
+                        heartCount={design.likeCount}
+                        location={design.address}
+                        onHeartClick={() => handleHeartClick(design.designId)}
+                      />
+                    </div>
+                  )
+                })
+              })}
+            </section>
+          ) : (
+            <NoSearchResults />
+          )
+        ) : (
+          // skeleton-ui
+          <section className="grid grid-cols-2 gap-[2px] gap-y-5">
+            {[1, 2, 3, 4].map((i) => {
+              return <DesignCardSkeleton key={i} />
             })}
           </section>
-        ) : (
-          <NoSearchResults />
         )}
       </section>
 
