@@ -1,7 +1,7 @@
 import SearchInput from '@/components/home/SearchInput'
 import { useRouter } from 'next/navigation'
 import { HeaderType } from '@/types/common'
-import { LeftArrowIcon, MessageIcon, ProfileIcon, SearchIconRed } from '@/assets/svgComponents'
+import { BellIcon, LeftArrowIcon, ProfileIcon, SearchIconRed } from '@/assets/svgComponents'
 
 interface Props {
   onBack?: () => void
@@ -21,8 +21,8 @@ const Header = (props: Props) => {
             <div className="flex w-full justify-between">
               <h1 className="key-visual-m text-red-400">Cake is easy</h1>
               <div className="flex items-center gap-x-[0.75rem]">
-                <div className="relative p-[0.25rem]">
-                  <MessageIcon width={24} height={24} />
+                <div className="relative p-[0.125rem]">
+                  <BellIcon width={24} height={24} />
                   <div className="absolute top-0 right-0 h-[0.375rem] w-[0.375rem] rounded-full bg-red-400"></div>
                 </div>
 
