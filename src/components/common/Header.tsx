@@ -17,13 +17,13 @@ const Header = (props: Props) => {
     switch (headerType) {
       case 'DEFAULT':
         return (
-          <div className={'absolute top-10 left-5 w-[90%]'}>
-            <div className={'flex w-full justify-between'}>
-              <h1 className={'key-visual-m text-[var(--red-400)]'}>Cake is easy</h1>
-              <div className={'flex items-center gap-x-3'}>
-                <div className={'relative p-1'}>
+          <div className="absolute top-10 left-5 w-[90%]">
+            <div className="flex w-full justify-between">
+              <h1 className="key-visual-m text-red-400">Cake is easy</h1>
+              <div className="flex items-center gap-x-[0.75rem]">
+                <div className="relative p-[0.25rem]">
                   <MessageIcon width={24} height={24} />
-                  <div className={'absolute top-0 right-0 h-[6px] w-[6px] rounded-full bg-[var(--red-400)]'}></div>
+                  <div className="absolute top-0 right-0 h-[0.375rem] w-[0.375rem] rounded-full bg-red-400"></div>
                 </div>
 
                 <ProfileIcon
@@ -35,14 +35,14 @@ const Header = (props: Props) => {
                 />
               </div>
             </div>
-            <div className={'body-el'}>
-              안녕하세요, <span className={'headline-s text-[var(--gray-900)]'}>리무진님!</span>{' '}
+            <div className="body-el">
+              안녕하세요, <span className="headline-s text-gray-900">리무진님!</span>{' '}
             </div>
           </div>
         )
       case 'DYNAMIC':
         return (
-          <div className={'absolute top-10 left-5 w-[90%]'}>
+          <div className="absolute top-10 left-5 w-[90%]">
             <LeftArrowIcon
               width={24}
               height={24}
@@ -55,7 +55,7 @@ const Header = (props: Props) => {
         )
       case 'SEARCH':
         return (
-          <div className={'flex w-full items-center gap-x-2'}>
+          <div className="flex w-full items-center gap-x-[0.5rem]">
             <LeftArrowIcon
               width={24}
               height={24}
@@ -67,8 +67,8 @@ const Header = (props: Props) => {
             <SearchInput
               keyword={keyword ? keyword : null}
               RightIcon={
-                <div className={'flex items-center gap-x-4'}>
-                  <div className={'h-[16px] border-l border-[var(--gray-300)]'} />
+                <div className="flex items-center gap-x-[0.75rem]">
+                  <div className="h-[1rem] border-l border-gray-300" />
                   <SearchIconRed width={24} height={24} />
                 </div>
               }
@@ -77,6 +77,6 @@ const Header = (props: Props) => {
         )
     }
   }
-  return <header className={'flex w-full items-center pt-[66px]'}>{renderHeaderType(headerType)}</header>
+  return <header className="flex w-full items-center pt-[4.125rem]">{renderHeaderType(headerType)}</header>
 }
 export default Header
