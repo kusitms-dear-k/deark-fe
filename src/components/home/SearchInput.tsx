@@ -3,11 +3,12 @@ import { useSearchStore } from '@/store/search'
 interface Props {
   RightIcon?: React.ReactNode
   LeftIcon?: React.ReactNode
-  keyword: null | string
+  keyword?: null | string
+  onClick?: () => void
 }
 
 const SearchInput = (props: Props) => {
-  const { keyword, LeftIcon, RightIcon } = props
+  const { keyword, LeftIcon, RightIcon, onClick } = props
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   return (
@@ -17,6 +18,7 @@ const SearchInput = (props: Props) => {
     >
       {LeftIcon && LeftIcon}
       <input
+        onClick={onClick ? onClick : undefined}
         value={keyword ?? ''}
         onChange={(e) => setSearchParams({ keyword: e.target.value })}
         placeholder="어린이날 공주 케이크, 어떠세요?"
