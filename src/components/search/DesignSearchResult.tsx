@@ -191,7 +191,7 @@ const DesignSearchResult = () => {
   }
 
   return (
-    <div>
+    <div className="pb-[6.25rem]">
       <section>
         {searchResults ? (
           searchResults.length > 0 ? (

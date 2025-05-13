@@ -25,14 +25,14 @@ const SearchSummaryPanel = (props: Props) => {
   }
 
   return (
-    <div className={'flex justify-between border-t border-[var(--gray-150)] px-5 py-1'}>
-      <div className={'caption-l py-[7px] text-[var(--gray-400)]'}>총 {totalCount}개</div>
+    <div className="mt-[15rem] flex justify-between px-[1.25rem] py-[0.25rem]">
+      <div className="caption-l py-[0.438rem] text-gray-400">총 {totalCount}개</div>
       <button
         onClick={() => {
           setSelectedFilterType('SORT')
           setSortModalOpen(true)
         }}
-        className={'body-s flex items-center px-3 py-[6px] text-[var(--gray-900)]'}
+        className="body-s flex items-center px-[0.75rem] py-[0.375rem] text-gray-900"
       >
         {renderSortTypeByKor(sortType)}순
         <FillDropDownIcon width={20} height={20} />

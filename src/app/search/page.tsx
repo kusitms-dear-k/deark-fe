@@ -168,9 +168,7 @@ const SearchPage = () => {
           <DesignDetailContent />
         </BottomModal>
       )}
-      <div className="px-[1.25rem]">
-        <Header headerType="SEARCH" keyword={keyword} />
-      </div>
+      <Header headerType="SEARCH" keyword={keyword} />
       <SearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
       <FilterPanel
         isFilterModalOpen={isFilterModalOpen}

@@ -55,7 +55,7 @@ const Header = (props: Props) => {
         )
       case 'SEARCH':
         return (
-          <div className="flex w-full items-center gap-x-[0.5rem]">
+          <div className="flex w-full items-center gap-x-[0.5rem] px-[1.25rem] pb-4">
             <LeftArrowIcon
               width={24}
               height={24}
@@ -77,6 +77,10 @@ const Header = (props: Props) => {
         )
     }
   }
-  return <header className="flex w-full items-center pt-[4.125rem]">{renderHeaderType(headerType)}</header>
+  return (
+    <header className="fixed top-0 z-30 flex w-full items-center bg-white pt-[4.125rem]">
+      {renderHeaderType(headerType)}
+    </header>
+  )
 }
 export default Header

@@ -36,7 +36,7 @@ const FilterPanel = (props: Props) => {
   }
 
   return (
-    <section className="flex w-full items-center gap-x-[0.5rem] overflow-x-scroll py-[0.75rem] pl-[1.25rem]">
+    <section className="border-gray-150 fixed top-[11.063rem] z-30 flex w-full items-center gap-x-[0.5rem] overflow-x-scroll border-b bg-white py-[0.75rem] pl-[1.25rem]">
       <button
         onClick={() => {
           setSearchParams({ isSameDayOrder: !searchState.isSameDayOrder })
