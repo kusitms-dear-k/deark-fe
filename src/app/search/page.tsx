@@ -21,6 +21,7 @@ import StoreDesign from '@/components/search/StoreDesign'
 import StoreInfo from '@/components/search/StoreInfo'
 import { useSearchStore } from '@/store/search'
 import DesignDetailContent from '@/components/search/DesignDetailContent'
+import { AnimatePresence } from 'framer-motion'
 
 const SearchPage = () => {
   const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
@@ -139,9 +140,11 @@ const SearchPage = () => {
   return (
     <main className="flex min-h-screen flex-col">
       {/* 필터 모달 */}
-      {isFilterModalOpen && (
-        <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
-      )}
+      <AnimatePresence>
+        {isFilterModalOpen && (
+          <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
+        )}
+      </AnimatePresence>
 
       {/* 가게 상세 페이지 모달 */}
       {isStoreDetailModalOpen && (

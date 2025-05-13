@@ -1,6 +1,7 @@
 import { Dispatch, SetStateAction } from 'react'
 import { FilterType } from '@/types/common'
 import { CancelIcon } from '@/assets/svgComponents'
+import { motion } from 'framer-motion'
 
 const Filter = ({
   children,
@@ -14,14 +15,18 @@ const Filter = ({
       onClick={() => {
         setIsFilterModalOpen(false)
       }}
-      className={'fixed inset-0 z-50 flex min-h-screen flex-col gap-y-2 bg-[rgba(0,0,0,0.6)]'}
+      className="fixed inset-0 z-50 flex min-h-screen flex-col gap-y-2 bg-[rgba(0,0,0,0.6)]"
     >
-      <div
+      <motion.div
         onClick={(e) => e.stopPropagation()}
-        className={'absolute bottom-0 min-h-[326px] w-full rounded-t-[16px] bg-[var(--white)] py-[20px]'}
+        className="absolute bottom-0 min-h-[20.375rem] w-full rounded-t-[1rem] bg-white py-[1.25rem]"
+        initial={{ y: '100%' }}
+        animate={{ y: 0 }}
+        exit={{ y: '100%' }}
+        transition={{ type: 'tween', duration: 0.2 }}
       >
         {children}
-      </div>
+      </motion.div>
     </div>
   )
 }
@@ -37,8 +42,8 @@ const Menu = ({
   setIsFilterModalOpen: Dispatch<SetStateAction<boolean>>
 }) => {
   return (
-    <div className={'border-gray-150 flex items-center justify-between border-b px-[1.25rem] pb-[1rem]'}>
-      <div className={'flex items-center gap-x-[1.5rem]'}>
+    <div className="border-gray-150 flex items-center justify-between border-b px-[1.25rem] pb-[1rem]">
+      <div className="flex items-center gap-x-[1.5rem]">
         <button
           onClick={() => {
             setSelectedFilterType('ADDRESS')
