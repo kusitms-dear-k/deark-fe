@@ -1,23 +1,4 @@
-import * as React from 'react'
-import type { SVGProps } from 'react'
-const BlueCheckIcon = (props: SVGProps<SVGSVGElement>) => (
-  <svg xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" {...props}>
-    <mask
-      id="a"
-      width={16}
-      height={16}
-      x={0}
-      y={0}
-      maskUnits="userSpaceOnUse"
-      style={{
-        maskType: 'alpha',
-      }}
-    >
-      <path fill="#D9D9D9" d="M0 0h15.996v15.996H0z" />
-    </mask>
-    <g mask="url(#a)">
-      <path fill="#3E98F9" d="M6.366 12 2.567 8.2l.95-.95 2.85 2.85 6.115-6.116.95.95z" />
-    </g>
-  </svg>
-)
-export default BlueCheckIcon
+import * as React from "react";
+import type { SVGProps } from "react";
+const SvgBlueCheckIcon = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 17 12" {...props}><path stroke="#3E98F9" strokeLinecap="round" strokeWidth={2} d="m1.197 5.167 4.867 5.304a.64.64 0 0 0 .956-.014L15.197 1" /></svg>;
+export default SvgBlueCheckIcon;
