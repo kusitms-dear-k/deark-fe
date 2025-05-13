@@ -14,6 +14,14 @@ interface Props {
 
 const PriceFilterContent = (props: Props) => {
   const { minPrice, maxPrice, setMinPrice, setMaxPrice } = props
+  // zustand 상태
+  const keyword = useSearchStore((state) => state.keyword)
+  const locationList = useSearchStore((state) => state.locationList)
+  const startDate = useSearchStore((state) => state.startDate)
+  const endDate = useSearchStore((state) => state.endDate)
+  const isSameDayOrder = useSearchStore((state) => state.isSameDayOrder)
+  const isLunchBoxCake = useSearchStore((state) => state.isLunchBoxCake)
+  const isSelfService = useSearchStore((state) => state.isSelfService)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   const priceContents = [
@@ -29,10 +37,17 @@ const PriceFilterContent = (props: Props) => {
       pageParam: 0,
       count: 4,
       sortType: 'ACCURACY',
-      minPrice: minPrice,
+      keyword: keyword,
+      endDate: endDate,
+      startDate: startDate,
+      isSameDayOrder: isSameDayOrder,
+      isLunchBoxCake: isLunchBoxCake,
+      isSelfService: isSelfService,
       maxPrice: maxPrice,
+      minPrice: minPrice,
+      locationList: locationList,
     }).then((res: ResponseType<DesignListResponseType>) => {
-      setSearchParams({ priceFilterResultCount: res.results.totalCount })
+      setSearchParams({ totalCount: res.results.totalCount })
     })
   }, [minPrice, maxPrice])
 

@@ -39,8 +39,6 @@ const SearchPage = () => {
   // zustand 전역 상태
   const sortType = useSearchStore((state) => state.sortType)
   const totalCount = useSearchStore((state) => state.totalCount)
-  const locationFilterResultCount = useSearchStore((state) => state.locationFilterResultCount)
-  const priceFilterResultCount = useSearchStore((state) => state.priceFilterResultCount)
   const keyword = useSearchStore((state) => state.keyword)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
@@ -92,7 +90,7 @@ const SearchPage = () => {
                 setSearchParams({ locationList: selectedFilterContents })
                 setIsFilterModalOpen(false)
               }}
-              totalResultCount={locationFilterResultCount}
+              totalResultCount={totalCount}
             />
           </section>
         )
@@ -131,7 +129,7 @@ const SearchPage = () => {
                 setSearchParams({ minPrice: minPrice, maxPrice: maxPrice })
                 setIsFilterModalOpen(false)
               }}
-              totalResultCount={priceFilterResultCount}
+              totalResultCount={totalCount}
             />
           </section>
         )

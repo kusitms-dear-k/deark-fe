@@ -20,6 +20,15 @@ const AddressFilterContent = (props: Props) => {
   const [towns, setTowns] = useState<AddressType[]>([]) //동/읍/면 ex) 증포동, 개포통
   const [selectedProvinceAddrName, setSelectedProvinceAddrName] = useState<string>('서울특별시')
   const [selectedDistrictAddrName, setSelectedDistrictAddrName] = useState<string>('')
+  // zustand 상태
+  const keyword = useSearchStore((state) => state.keyword)
+  const startDate = useSearchStore((state) => state.startDate)
+  const endDate = useSearchStore((state) => state.endDate)
+  const isSameDayOrder = useSearchStore((state) => state.isSameDayOrder)
+  const isLunchBoxCake = useSearchStore((state) => state.isLunchBoxCake)
+  const isSelfService = useSearchStore((state) => state.isSelfService)
+  const minPrice = useSearchStore((state) => state.minPrice)
+  const maxPrice = useSearchStore((state) => state.maxPrice)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   // 00 결과 보기 에서 00을 계산하는 코드
@@ -29,12 +38,20 @@ const AddressFilterContent = (props: Props) => {
         pageParam: 0,
         count: 4,
         sortType: 'ACCURACY',
+        keyword: keyword,
+        endDate: endDate,
+        startDate: startDate,
+        isSameDayOrder: isSameDayOrder,
+        isLunchBoxCake: isLunchBoxCake,
+        isSelfService: isSelfService,
+        maxPrice: maxPrice,
+        minPrice: minPrice,
         locationList: selectedFilterContents,
       }).then((res: ResponseType<DesignListResponseType>) => {
-        setSearchParams({ locationFilterResultCount: res.results.totalCount })
+        setSearchParams({ totalCount: res.results.totalCount })
       })
     } else {
-      setSearchParams({ locationFilterResultCount: 0 })
+      setSearchParams({ totalCount: 0 })
     }
   }, [selectedFilterContents])
 

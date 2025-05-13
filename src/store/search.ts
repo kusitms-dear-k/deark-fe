@@ -17,8 +17,6 @@ interface SearchStoreType {
   isLunchBoxCake: boolean | null
   isSelfService: boolean | null
   totalCount: number
-  locationFilterResultCount: number
-  priceFilterResultCount: number
   setSearchParams: (params: {
     isLoading?: boolean
     error?: boolean | null
@@ -35,8 +33,6 @@ interface SearchStoreType {
     isLunchBoxCake?: boolean | null
     isSelfService?: boolean | null
     totalCount?: number
-    locationFilterResultCount?: number
-    priceFilterResultCount?: number
   }) => void
 }
 
@@ -58,8 +54,6 @@ export const useSearchStore = create<SearchStoreType>((set) => ({
   isSelfService: null,
   //data-state
   totalCount: 0,
-  locationFilterResultCount: 0,
-  priceFilterResultCount: 0,
 
   // 검색 조건 상태 업데이트 함수 추가
   setSearchParams: (params: {
@@ -78,8 +72,6 @@ export const useSearchStore = create<SearchStoreType>((set) => ({
     isLunchBoxCake?: boolean | null
     isSelfService?: boolean | null
     totalCount?: number
-    locationFilterResultCount?: number
-    priceFilterResultCount?: number
   }) => {
     set((state) => ({
       ...state,
