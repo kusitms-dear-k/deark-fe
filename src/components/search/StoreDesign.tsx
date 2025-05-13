@@ -1,10 +1,9 @@
-import Image from 'next/image';
 import DesignCard from '@/components/search/DesignCard'
 
 const StoreDesign = () => {
   return (
     <>
-      <section className={'flex justify-start w-full gap-x-2 py-3 px-5'}>
+      <section className={'flex w-full justify-start gap-x-2 px-5 py-3'}>
         <button className="blue-chip">전체</button>
         <button className="gray-chip">도시락 케이크</button>
         <button className="gray-chip">1호 케이크</button>
@@ -15,10 +14,10 @@ const StoreDesign = () => {
           description={'설명'}
           location={'경기도 이천시 증포동'}
           img={'/common/cake1.png'}
-          heartCount={'1'}
+          heartCount={1}
           isHeart={true}
           storeName={'유림이집'}
-          startPrice={'10000'}
+          startPrice={10000}
           enableDayOrder={true}
           onHeartClick={() => {}}
         />
@@ -26,10 +25,10 @@ const StoreDesign = () => {
           description={'설명'}
           location={'경기도 이천시 증포동'}
           img={'/common/cake1.png'}
-          heartCount={'1'}
+          heartCount={1}
           isHeart={true}
           storeName={'유림이집'}
-          startPrice={'10000'}
+          startPrice={10000}
           enableDayOrder={true}
           onHeartClick={() => {}}
         />
@@ -37,10 +36,10 @@ const StoreDesign = () => {
           description={'설명'}
           location={'경기도 이천시 증포동'}
           img={'/common/cake1.png'}
-          heartCount={'1'}
+          heartCount={1}
           isHeart={true}
           storeName={'유림이집'}
-          startPrice={'10000'}
+          startPrice={10000}
           enableDayOrder={true}
           onHeartClick={() => {}}
         />
@@ -48,10 +47,10 @@ const StoreDesign = () => {
           description={'설명'}
           location={'경기도 이천시 증포동'}
           img={'/common/cake1.png'}
-          heartCount={'1'}
+          heartCount={1}
           isHeart={true}
           storeName={'유림이집'}
-          startPrice={'10000'}
+          startPrice={10000}
           enableDayOrder={true}
           onHeartClick={() => {}}
         />
