@@ -7,8 +7,8 @@ interface DesignCardProps {
   storeName: string
   isHeart: boolean
   description: string
-  startPrice: string
-  heartCount: string
+  startPrice: number
+  heartCount: number
   location: string
   onHeartClick?: () => void
 }
@@ -29,7 +29,7 @@ const DesignCard = ({
       <div className={'relative h-[194px] w-full'}>
         <Image src={img} alt={'arrow'} fill className={'object-cover'} />
         <div className={'absolute bottom-[8px] flex w-full justify-between pr-[12px] pl-[8px]'}>
-          {enableDayOrder && (
+          {enableDayOrder ? (
             <div
               className={
                 'z-20 flex h-[22px] w-fit items-center justify-center gap-x-1 rounded-[2px] bg-[var(--blue-400)] px-2 text-white'
@@ -40,6 +40,8 @@ const DesignCard = ({
               </div>
               <p className={'caption-m'}>당일 주문</p>
             </div>
+          ) : (
+            <div />
           )}
 
           <div className={'relative h-[24px] w-[24px] cursor-pointer'} onClick={onHeartClick}>
