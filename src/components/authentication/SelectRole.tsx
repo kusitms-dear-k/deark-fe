@@ -1,8 +1,9 @@
-import { CakeIcon, StoreIcon } from '@/assets/svgComponents'
 import { UserLoginRoleType } from '@/types/common'
 import { StepType } from '@/types/authentication'
 import { Dispatch, SetStateAction } from 'react'
 import { useLoginStore } from '@/store/authStore'
+import CakeIcon from '@/assets/svgComponents/CakeIcon'
+import StoreIcon from '@/assets/svgComponents/StoreIcon'
 
 interface Props {
   role: UserLoginRoleType | undefined
