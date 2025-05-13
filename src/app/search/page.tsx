@@ -41,6 +41,7 @@ const SearchPage = () => {
   const totalCount = useSearchStore((state) => state.totalCount)
   const locationFilterResultCount = useSearchStore((state) => state.locationFilterResultCount)
   const priceFilterResultCount = useSearchStore((state) => state.priceFilterResultCount)
+  const keyword = useSearchStore((state) => state.keyword)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   /**
@@ -167,7 +168,7 @@ const SearchPage = () => {
         </BottomModal>
       )}
       <div className="px-[1.25rem]">
-        <Header headerType="SEARCH" />
+        <Header headerType="SEARCH" keyword={keyword} />
       </div>
       <SearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
       <FilterPanel

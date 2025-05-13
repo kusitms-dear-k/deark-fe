@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import SearchInput from '@/components/home/SearchInput'
 import { useRouter } from 'next/navigation'
 import { HeaderType } from '@/types/common'
@@ -7,11 +6,13 @@ import { LeftArrowIcon, MessageIcon, ProfileIcon, SearchIconRed } from '@/assets
 interface Props {
   onBack?: () => void
   headerType: HeaderType
+  keyword?: null | string
 }
 
 const Header = (props: Props) => {
-  const { onBack, headerType } = props
+  const { onBack, headerType, keyword } = props
   const router = useRouter()
+
   const renderHeaderType = (headerType: HeaderType) => {
     switch (headerType) {
       case 'DEFAULT':
@@ -25,16 +26,6 @@ const Header = (props: Props) => {
                   <div className={'absolute top-0 right-0 h-[6px] w-[6px] rounded-full bg-[var(--red-400)]'}></div>
                 </div>
 
-                {/* <Image
-                  onClick={() => {
-                    router.push('/mypage')
-                  }}
-                  src={'/common/profile.svg'}
-                  width={32}
-                  height={32}
-                  alt={'프로필'}
-                  style={{ width: 32, height: 32 }}
-                /> */}
                 <ProfileIcon
                   onClick={() => {
                     router.push('/mypage')
@@ -74,6 +65,7 @@ const Header = (props: Props) => {
               }}
             />
             <SearchInput
+              keyword={keyword ? keyword : null}
               RightIcon={
                 <div className={'flex items-center gap-x-4'}>
                   <div className={'h-[16px] border-l border-[var(--gray-300)]'} />
