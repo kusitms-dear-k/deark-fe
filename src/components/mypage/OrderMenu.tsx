@@ -1,14 +1,18 @@
-import { Dispatch, SetStateAction } from 'react'
+import { OrderMenuKorType, OrderMenuType } from '@/types/mypage'
+import { useOrderStore } from '@/store/orderStore'
 
-interface Props {
-  orderMenu: '응답 대기' | '수락' | '반려'
-  setOrderMenu: Dispatch<SetStateAction<'응답 대기' | '수락' | '반려'>>
-}
+const OrderMenu = () => {
+  const orderMenu = useOrderStore((state) => state.status)
+  const setState = useOrderStore((state) => state.setState)
 
-const OrderMenu = (props: Props) => {
-  const { orderMenu, setOrderMenu } = props
-
-  const menuContents: ('응답 대기' | '수락' | '반려')[] = ['응답 대기', '수락', '반려']
+  const menuContents: { kor: OrderMenuKorType; eng: OrderMenuType }[] = [
+    { kor: '응답 대기', eng: 'PENDING' },
+    {
+      kor: '수락',
+      eng: 'ACCEPTED',
+    },
+    { kor: '반려', eng: 'REJECTED' },
+  ]
 
   return (
     <div className="w-full px-[1.25rem]">
@@ -16,16 +20,17 @@ const OrderMenu = (props: Props) => {
         {menuContents.map((menuContent) => {
           return (
             <button
+              key={menuContent.kor}
               onClick={() => {
-                setOrderMenu(menuContent)
+                setState({ status: menuContent.eng })
               }}
               className={
-                orderMenu === menuContent
+                orderMenu === menuContent.eng
                   ? 'title-m box-shadow w-[7.125rem] rounded-[0.125rem] bg-white py-[0.625rem]'
                   : 'body-m-m bg-gray-150 w-[7.125rem] text-gray-400'
               }
             >
-              {menuContent}
+              {menuContent.kor}
             </button>
           )
         })}
