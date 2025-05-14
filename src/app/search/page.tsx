@@ -19,7 +19,7 @@ import StoreDetailMenu from '@/components/search/StoreDetailMenu'
 import StoreReview from '@/components/search/StoreReview'
 import StoreDesign from '@/components/search/StoreDesign'
 import StoreInfo from '@/components/search/StoreInfo'
-import { useSearchStore } from '@/store/search'
+import { useSearchStore } from '@/store/searchStore'
 import DesignDetailContent from '@/components/search/DesignDetailContent'
 import { AnimatePresence } from 'framer-motion'
 

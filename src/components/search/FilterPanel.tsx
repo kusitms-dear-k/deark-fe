@@ -10,7 +10,7 @@ import {
 } from '@/assets/svgComponents'
 import { Dispatch, SetStateAction } from 'react'
 import { FilterType } from '@/types/common'
-import { useSearchStore } from '@/store/search'
+import { useSearchStore } from '@/store/searchStore'
 
 interface Props {
   isFilterModalOpen: boolean
