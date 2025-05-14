@@ -7,9 +7,9 @@ interface DesignCardProps {
   storeName: string
   isHeart: boolean
   description: string
-  startPrice: number
-  heartCount: number
-  location: string
+  startPrice?: number
+  heartCount?: number
+  location?: string
   onHeartClick?: () => void
 }
 
@@ -65,21 +65,23 @@ const DesignCard = ({
 
           <div className={'body-m text-[var(--gray-800)]'}>{description}</div>
         </div>
-        <div>
+        {startPrice && (
           <div className={'title-l text-[var(--gray-900)]'}>
             {startPrice}
             <span className={'body-s'}>원~</span>
           </div>
-        </div>
-        <section className={'flex gap-x-[4px]'}>
-          <div className={'flex items-center gap-x-[2px]'}>
-            <div className={'relative h-[12px] w-[12px]'}>
-              <Image className={'object-cover'} src={'/search/gray-fill-heart.svg'} fill alt={'heart'} />
-            </div>
-            <div className={'caption-m text-[var(--gray-400)]'}>{heartCount}</div>
-          </div>
+        )}
 
-          <div className={'caption-m text-[var(--gray-400)]'}>{location}</div>
+        <section className={'flex gap-x-[4px]'}>
+          {heartCount && (
+            <div className={'flex items-center gap-x-[2px]'}>
+              <div className={'relative h-[12px] w-[12px]'}>
+                <Image className={'object-cover'} src={'/search/gray-fill-heart.svg'} fill alt={'heart'} />
+              </div>
+              <div className={'caption-m text-[var(--gray-400)]'}>{heartCount}</div>
+            </div>
+          )}
+          {location && <div className={'caption-m text-[var(--gray-400)]'}>{location}</div>}
         </section>
       </section>
     </div>
