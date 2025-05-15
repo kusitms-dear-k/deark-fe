@@ -80,6 +80,14 @@ export interface StoreDesignDetailType {
   isLiked: boolean
 }
 
+export interface RecommendType {
+  designId: number
+  designName: string
+  designImageUrl: string
+  storeName: string
+  isLiked: boolean
+}
+
 export interface DesignListResponseType extends PageNationType {
   designList: DesignType[]
 }

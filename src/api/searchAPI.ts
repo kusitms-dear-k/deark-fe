@@ -184,3 +184,18 @@ export const getStoreDesignDetailData = async (
   const data = await response.json()
   return data
 }
+
+/**
+ * 디자인 추천 리스트 불러오는 API
+ */
+export const getDesignRecommendData = async (count: number) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/design/recommend?count=${count}`, {
+    method: 'GET',
+    headers: {
+      Authorization: Cookies.get('ACCESS_TOKEN') as string,
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
