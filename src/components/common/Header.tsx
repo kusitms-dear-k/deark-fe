@@ -34,7 +34,7 @@ const Header = (props: Props) => {
                   height={32}
                   alt={'프로필'}
                   style={{ width: 32, height: 32 }}
-                /> */}
+                  /> */}
                 <ProfileIcon
                   onClick={() => {
                     router.push('/mypage')
@@ -50,7 +50,7 @@ const Header = (props: Props) => {
           </div>
         )
       case 'DYNAMIC':
-        return <div></div>
+       return <div></div>
       case 'SEARCH':
         return (
           <div className={'flex w-full items-center gap-x-2'}>
@@ -74,6 +74,7 @@ const Header = (props: Props) => {
         )
     }
   }
-  return <header className={'flex w-full items-center pt-[66px]'}>{renderHeaderType(headerType)}</header>
+                  
+return <header className={'flex w-full items-center pt-[66px]'}>{renderHeaderType(headerType)}</header>
 }
 export default Header
