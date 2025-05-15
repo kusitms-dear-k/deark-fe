@@ -49,3 +49,19 @@ export interface AddressType {
   x_coor: string;
   y_coor: string;
 }
+
+/**
+ * 백엔드 요청 Type
+ */
+export interface ResponseType<T = any> {
+  isSuccess: true,
+  code: "REQUEST_OK",
+  message: "요청이 승인되었습니다.",
+  results: T
+}
+
+export interface PageNationType {
+  totalCount: number;
+  page: number;
+  hasNext: boolean;
+}

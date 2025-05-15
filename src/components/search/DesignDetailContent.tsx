@@ -1,4 +1,5 @@
 import Image from 'next/image'
+
 import { DesignDetailType } from '@/types/search'
 import { HeartIcon, HeartIconFill } from '@/assets/svgComponents'
 

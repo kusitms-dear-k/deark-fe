@@ -90,6 +90,16 @@ const StoreInfo = (props: Props) => {
           <p className="body-m text-gray-800">사업자 등록번호: {businessNumber}</p>
           <p className="body-m text-gray-800">상호명: {storeName}</p>
         </div>
+        <div>
+          <p className={'title-l'}>주문가능시간</p>
+          <p className={'body-m text-[var(--gray-800)]'}>월요일 ~ 일요일 : 10:00~20:00</p>
+        </div>
+        <div>
+          <p className={'title-l'}>대표자명: 김혜연</p>
+          <p className={'body-m text-[var(--gray-800)]'}>사업자 등록번호: 201-319-202913</p>
+          <p className={'body-m text-[var(--gray-800)]'}>상호명: 메리고라운드</p>
+
+        </div>
       </section>
     </div>
   )
