@@ -1,12 +1,13 @@
 import UnCheckBoxIcon from '@/assets/svgComponents/UnCheckBoxIcon'
 import BlueCheckIcon from '../../assets/svgComponents/BlueCheckIcon'
-import { GrayCheckIcon, TermsOfUseRightArrowIcon } from '@/assets/svgComponents'
-import { Dispatch, SetStateAction, useEffect, useState } from 'react'
+import { Dispatch, SetStateAction, useEffect } from 'react'
 import TermsOfService from '@/components/authentication/TermsOfService'
 import PersonalInformation from '@/components/authentication/PersonalInformation'
 import MarketingInformation from '@/components/authentication/MarketingInformation'
 import ThirdPartyAgreementConsent from '@/components/authentication/ThirdPartyAgreementConsent'
 import CheckBoxIcon from '@/assets/svgComponents/CheckBoxIcon'
+import GrayCheckIcon from '@/assets/svgComponents/GrayCheckIcon'
+import TermsOfUseRightArrowIcon from '@/assets/svgComponents/TermsOfUseRightArrowIcon'
 
 interface Props {
   allOptions: boolean

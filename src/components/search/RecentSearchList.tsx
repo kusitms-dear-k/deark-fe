@@ -27,7 +27,7 @@ const RecentSearchList = (props: Props) => {
                   <div className={'body-m text-[var(--gray-900)]'}>{recentSearchText}</div>
                 </div>
 
-                <Image src={'/cancel.svg'} width={24} height={24} alt={'삭제'} style={{ width: 24, height: 24 }} />
+                <Image src={'/cancel-icon.svg'} width={24} height={24} alt={'삭제'} style={{ width: 24, height: 24 }} />
               </div>
             </div>
           )

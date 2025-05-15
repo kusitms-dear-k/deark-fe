@@ -1,8 +1,9 @@
-import { CakeIcon, StoreIcon } from '@/assets/svgComponents'
 import { UserLoginRoleType } from '@/types/common'
 import { StepType } from '@/types/authentication'
 import { Dispatch, SetStateAction } from 'react'
 import { useLoginStore } from '@/store/authStore'
+import CakeIcon from '@/assets/svgComponents/CakeIcon'
+import StoreIcon from '@/assets/svgComponents/StoreIcon'
 
 interface Props {
   role: UserLoginRoleType | undefined
@@ -12,6 +13,8 @@ interface Props {
 
 const SelectRole = (props: Props) => {
   const { role, handleRoleClick, setStep } = props
+
+  const changeRole = useLoginStore((state) => state.changeRole)
 
   return (
     <main className="relative flex min-h-screen flex-col items-center justify-center">
@@ -47,7 +50,7 @@ const SelectRole = (props: Props) => {
       <div className="absolute bottom-0 w-full bg-white p-5">
         <button
           onClick={() => {
-            useLoginStore.getState().changeRole(role as UserLoginRoleType)
+            changeRole(role as UserLoginRoleType)
             setStep('SignUp')
           }}
           disabled={!role}

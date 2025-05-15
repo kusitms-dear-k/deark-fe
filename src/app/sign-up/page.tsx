@@ -1,6 +1,6 @@
 'use client'
 import SelectRole from '@/components/authentication/SelectRole'
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { UserLoginRoleType } from '@/types/common'
 import SignUp from '@/components/authentication/SignUp'
 import { StepType } from '@/types/authentication'
@@ -31,8 +31,15 @@ const AuthenticationPage = () => {
   return (
     <>
       {step === 'SelectRole' && <SelectRole role={role} handleRoleClick={handleRoleClick} setStep={setStep} />}
-      {step === 'SignUp' && <SignUp role={role as UserLoginRoleType} setStep={setStep} />}
+      {step === 'SignUp' && role && <SignUp role={role as UserLoginRoleType} setStep={setStep} />}
     </>
   )
 }
-export default AuthenticationPage
+
+export default function SignUpPage() {
+  return (
+    <Suspense fallback={<div>로딩 중...</div>}>
+      <AuthenticationPage />
+    </Suspense>
+  )
+}

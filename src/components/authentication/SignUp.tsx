@@ -5,9 +5,10 @@ import { Dispatch, SetStateAction } from 'react'
 import { StepType } from '@/types/authentication'
 
 interface Props {
-  role: UserLoginRoleType;
+  role: UserLoginRoleType
   setStep: Dispatch<SetStateAction<StepType>>
 }
+
 const SignUp = (props: Props) => {
   const { role, setStep } = props
 
