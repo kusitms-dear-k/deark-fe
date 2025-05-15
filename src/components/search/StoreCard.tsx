@@ -1,11 +1,13 @@
 import { DropDownIcon } from '@/assets/svgComponents'
 import Image from 'next/image'
 
+
 const StoreCard = () => {
   return (
     <div className={'border-b border-[var(--gray-150)] pb-4'}>
       <section className={'flex items-center justify-between pr-5'}>
         <section className={'flex items-center gap-x-[12px]'}>
+
           <div className={'relative h-[58px] w-[58px]'}>
             <Image src={'/landing/cake_img.png'} alt={'cake'} className={'rounded-full object-cover'} fill />
           </div>

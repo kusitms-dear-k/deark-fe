@@ -38,3 +38,14 @@ export interface PageNationType {
   page: number
   hasNext: boolean
 }
+
+/**
+ * 우리나라 도로명 불러오는 공공 API 타입
+ */
+export interface AddressType {
+  addr_name: string;
+  cd: string;
+  full_addr: string;
+  x_coor: string;
+  y_coor: string;
+}

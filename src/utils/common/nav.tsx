@@ -1,3 +1,4 @@
+
 import * as React from 'react'
 import type { SVGProps } from 'react'
 
@@ -39,6 +40,7 @@ const ClickedHeartIcon = (props: SVGProps<SVGSVGElement>) => (
 )
 const ClickedMyPageIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} fill="none" {...props}>
+
     <path
       fill="#D22E2F"
       fillRule="evenodd"
