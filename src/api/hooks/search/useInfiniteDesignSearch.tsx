@@ -1,5 +1,5 @@
 // hooks/useInfiniteDesignSearch.ts
-import { searchDesign } from '@/api/searchAPI'
+import { getDesignSearchResult } from '@/api/searchAPI'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { SortType } from '@/types/search'
@@ -68,7 +68,7 @@ export const useInfiniteDesignSearch = (params: {
   return useInfiniteQuery({
     queryKey,
     queryFn: ({ pageParam = 0 }) =>
-      searchDesign({
+      getDesignSearchResult({
         pageParam,
         count,
         sortType,
