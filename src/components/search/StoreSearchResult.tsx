@@ -5,6 +5,7 @@ import { StoreListResponseType } from '@/types/search'
 import { useInfiniteStoreSearch } from '@/api/hooks/search/useInfiniteStoreSearch'
 import NoSearchResults from '@/components/search/NoSearchResults'
 import StoreCard from '@/components/search/StoreCard'
+import StoreCardSkeleton from '@/components/skeleton/StoreCardSkeleton'
 
 interface Props {}
 
@@ -102,7 +103,9 @@ const StoreSearchResult = (props: Props) => {
           )
         ) : (
           //skeleton-ui
-          <div></div>
+          [1, 2, 3, 4].map((i) => {
+            return <StoreCardSkeleton key={i} />
+          })
         )}
       </section>
     </>

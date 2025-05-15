@@ -5,6 +5,7 @@ import { getDesignRecommendData } from '@/api/searchAPI'
 import { ResponseType } from '@/types/common'
 import { RecommendType } from '@/types/search'
 import { useSearchStore } from '@/store/searchStore'
+import RecommendCardSkeleton from '@/components/skeleton/RecommendCardSkeleton'
 
 const NoSearchResults = () => {
   const [recommendResults, setRecommendResults] = useState<RecommendType[]>()
@@ -33,25 +34,25 @@ const NoSearchResults = () => {
       <div className="mt-[1.5rem] px-[1.25rem] pb-[5.625rem]">
         <h2 className="title-l">이런 디자인은 어때요?</h2>
         <section className="mt-[0.5rem] grid grid-cols-2 gap-[0.125rem]">
-          {recommendResults ? (
-            recommendResults.map((recommendResult) => {
-              return (
-                <RecommendCard
-                  onCardClick={() => {
-                    setSearchParams({
-                      designId: recommendResult.designId,
-                      isDesignDetailModalOpen: true,
-                    })
-                  }}
-                  {...recommendResult}
-                  key={recommendResult.designId}
-                />
-              )
-            })
-          ) : (
-            //skeleton-ui
-            <div></div>
-          )}
+          {recommendResults
+            ? recommendResults.map((recommendResult) => {
+                return (
+                  <RecommendCard
+                    onCardClick={() => {
+                      setSearchParams({
+                        designId: recommendResult.designId,
+                        isDesignDetailModalOpen: true,
+                      })
+                    }}
+                    {...recommendResult}
+                    key={recommendResult.designId}
+                  />
+                )
+              })
+            : //skeleton-ui
+              [1, 2, 3, 4].map((i) => {
+                return <RecommendCardSkeleton key={i} />
+              })}
         </section>
       </div>
     </>
