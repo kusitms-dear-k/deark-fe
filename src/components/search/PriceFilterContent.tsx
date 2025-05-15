@@ -1,6 +1,6 @@
 import { WhiteCheckIcon } from '@/assets/svgComponents'
 import { Dispatch, SetStateAction, useEffect } from 'react'
-import { searchDesign } from '@/api/searchAPI'
+import { getDesignSearchResult } from '@/api/searchAPI'
 import { useSearchStore } from '@/store/searchStore'
 import { ResponseType } from '@/types/common'
 import { DesignListResponseType } from '@/types/search'
@@ -33,7 +33,7 @@ const PriceFilterContent = (props: Props) => {
   ]
 
   useEffect(() => {
-    searchDesign({
+    getDesignSearchResult({
       pageParam: 0,
       count: 4,
       sortType: 'ACCURACY',

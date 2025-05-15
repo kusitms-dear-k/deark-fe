@@ -4,7 +4,7 @@ import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 
 import { getAddressData, getPublicDataToken } from '@/api/commonAPI'
 import { AddressType, ResponseType } from '@/types/common'
-import { searchDesign } from '@/api/searchAPI'
+import { getDesignSearchResult } from '@/api/searchAPI'
 import { DesignListResponseType } from '@/types/search'
 import { useSearchStore } from '@/store/searchStore'
 
@@ -34,7 +34,7 @@ const AddressFilterContent = (props: Props) => {
   // 00 결과 보기 에서 00을 계산하는 코드
   useEffect(() => {
     if (selectedFilterContents.length > 0) {
-      searchDesign({
+      getDesignSearchResult({
         pageParam: 0,
         count: 4,
         sortType: 'ACCURACY',
