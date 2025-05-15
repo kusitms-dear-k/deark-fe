@@ -1,3 +1,4 @@
+'use client'
 import SearchInput from '@/components/home/SearchInput'
 import { useRouter } from 'next/navigation'
 import { HeaderType } from '@/types/common'
@@ -7,10 +8,14 @@ interface Props {
   onBack?: () => void
   headerType: HeaderType
   keyword?: null | string
+  title?: string
+  className?: string
+  description?: string
+  fixed?: boolean
 }
 
 const Header = (props: Props) => {
-  const { onBack, headerType, keyword } = props
+  const { onBack, headerType, keyword, title, className, description, fixed = true } = props
   const router = useRouter()
 
   const renderHeaderType = (headerType: HeaderType) => {
@@ -42,7 +47,7 @@ const Header = (props: Props) => {
         )
       case 'DYNAMIC':
         return (
-          <div className="absolute top-10 left-5 w-[90%]">
+          <div className={`absolute right-5 left-5 flex items-center gap-x-2 ${className} bg-white`}>
             <LeftArrowIcon
               width={24}
               height={24}
@@ -51,6 +56,10 @@ const Header = (props: Props) => {
                 onBack ? onBack() : router.back()
               }}
             />
+            <div className="flex flex-col">
+              {title && <h2 className="title-l">{title}</h2>}
+              {description && <p className="body-s-m text-gray-400">{description}</p>}
+            </div>
           </div>
         )
       case 'SEARCH':
@@ -78,7 +87,13 @@ const Header = (props: Props) => {
     }
   }
   return (
-    <header className="fixed top-0 z-30 flex w-full items-center bg-white pt-[4.125rem]">
+    <header
+      className={
+        fixed
+          ? 'fixed top-0 z-30 flex w-full items-center bg-white pt-[4.125rem]'
+          : 'flex w-full items-center bg-white pt-[4.125rem]'
+      }
+    >
       {renderHeaderType(headerType)}
     </header>
   )

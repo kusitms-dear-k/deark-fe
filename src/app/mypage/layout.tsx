@@ -1,13 +1,6 @@
-'use client';
-
-import NavBar from '@/components/common/NavBar';
+'use client'
 
 const MyPageLayout = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div>
-      {children}
-      <NavBar />
-    </div>
-  )
+  return <div>{children}</div>
 }
-export default MyPageLayout;
+export default MyPageLayout

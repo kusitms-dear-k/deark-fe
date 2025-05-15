@@ -1,4 +1,4 @@
-import { useSearchStore } from '@/store/search'
+import { useSearchStore } from '@/store/searchStore'
 
 interface Props {
   RightIcon?: React.ReactNode

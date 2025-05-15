@@ -1,5 +1,5 @@
 import { BlueCheckIcon } from '@/assets/svgComponents'
-import { useSearchStore } from '@/store/search'
+import { useSearchStore } from '@/store/searchStore'
 import { SortType } from '@/types/search'
 import { Dispatch, SetStateAction } from 'react'
 

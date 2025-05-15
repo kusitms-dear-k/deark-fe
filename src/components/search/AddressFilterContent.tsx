@@ -6,7 +6,7 @@ import { getAddressData, getPublicDataToken } from '@/api/commonAPI'
 import { AddressType, ResponseType } from '@/types/common'
 import { searchDesign } from '@/api/searchAPI'
 import { DesignListResponseType } from '@/types/search'
-import { useSearchStore } from '@/store/search'
+import { useSearchStore } from '@/store/searchStore'
 
 interface Props {
   selectedFilterContents: string[] //최종으로 api 요청에 포함될 content

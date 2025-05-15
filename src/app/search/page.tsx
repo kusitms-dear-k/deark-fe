@@ -19,10 +19,9 @@ import StoreDetailMenu from '@/components/search/StoreDetailMenu'
 import StoreReview from '@/components/search/StoreReview'
 import StoreDesign from '@/components/search/StoreDesign'
 import StoreInfo from '@/components/search/StoreInfo'
-import { useSearchStore } from '@/store/search'
+import { useSearchStore } from '@/store/searchStore'
 import DesignDetailContent from '@/components/search/DesignDetailContent'
 import { AnimatePresence } from 'framer-motion'
-
 
 const SearchPage = () => {
   const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
@@ -138,24 +137,65 @@ const SearchPage = () => {
       case 'ADDRESS':
         return (
           <section>
-            <Filter.Menu />
-            <AddressFilterContent />
-            <Filter.BottomButton />
+            <Filter.Menu
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+              setIsFilterModalOpen={setIsFilterModalOpen}
+            />
+            <AddressFilterContent
+              selectedFilterContents={selectedFilterContents}
+              setSelectedFilterContents={setSelectedFilterContents}
+            />
+            <Filter.BottomButton
+              reset={() => {
+                setSearchParams({ locationList: null })
+                setIsFilterModalOpen(false)
+              }}
+              apply={() => {
+                setSearchParams({ locationList: selectedFilterContents })
+                setIsFilterModalOpen(false)
+              }}
+              totalResultCount={totalCount}
+            />
           </section>
         )
       case 'DATE':
         return (
           <section>
-            <Filter.Menu />
-            <Filter.BottomButton />
+            <Filter.Menu
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+            />
           </section>
         )
       case 'PRICE':
         return (
-          <section className="flex flex-col justify-start gap-y-[2px] py-[7px]">
-            <Filter.Menu />
-            <PriceFilterContent />
-            <Filter.BottomButton />
+          <section className="flex flex-col justify-start gap-y-[0.125rem] py-[0.438rem]">
+            <Filter.Menu
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+            />
+            <PriceFilterContent
+              minPrice={minPrice}
+              setMinPrice={setMinPrice}
+              setMaxPrice={setMaxPrice}
+              maxPrice={maxPrice}
+            />
+            <Filter.BottomButton
+              reset={() => {
+                setMinPrice(null)
+                setMaxPrice(null)
+                setSearchParams({ minPrice: null, maxPrice: null })
+                setIsFilterModalOpen(false)
+              }}
+              apply={() => {
+                setSearchParams({ minPrice: minPrice, maxPrice: maxPrice })
+                setIsFilterModalOpen(false)
+              }}
+              totalResultCount={totalCount}
+            />
           </section>
         );
     }
