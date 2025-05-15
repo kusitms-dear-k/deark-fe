@@ -1,45 +1,35 @@
-import { Dispatch, SetStateAction } from 'react';
+import { Dispatch, SetStateAction } from 'react'
 
 interface Props {
-  storeDetailMenu: '가게 정보' | '디자인' | '리뷰';
-  setStoreDetailMenu: Dispatch<SetStateAction<'가게 정보' | '디자인' | '리뷰'>>;
+  storeDetailMenu: '가게 정보' | '디자인' | '리뷰'
+  setStoreDetailMenu: Dispatch<SetStateAction<'가게 정보' | '디자인' | '리뷰'>>
 }
 
 const StoreDetailMenu = (props: Props) => {
-  const {storeDetailMenu, setStoreDetailMenu} = props;
+  const { storeDetailMenu, setStoreDetailMenu } = props
+
+  const storeDetailMenuContents: ('가게 정보' | '디자인' | '리뷰')[] = ['가게 정보', '디자인', '리뷰']
+
   return (
-    <div className={'mt-4 flex w-full mt-[26px]'}>
-      <button
-        onClick={() => {
-          setStoreDetailMenu('가게 정보')
-        }}
-        className={storeDetailMenu === '가게 정보'
-          ? 'w-full title-l text-[var(--red-500)] h-[44px] border-b-[4px] border-[var(--red-500)]'
-          : 'w-full body-l text-[var(--gray-300)] h-[44px] border-b-[4px] border-[var(--gray-300)]'
-        }>
-        가게 정보
-      </button>
-      <button
-        onClick={() => {
-          setStoreDetailMenu('디자인')
-        }}
-        className={storeDetailMenu === '디자인'
-          ? 'w-full title-l text-[var(--red-500)] h-[44px] border-b-[4px] border-[var(--red-500)]'
-          : 'w-full body-l text-[var(--gray-300)] h-[44px] border-b-[4px] border-[var(--gray-300)]'
-        }>
-        디자인
-      </button>
-      <button
-        onClick={() => {
-          setStoreDetailMenu('리뷰')
-        }}
-        className={storeDetailMenu === '리뷰'
-          ? 'w-full title-l text-[var(--red-500)] h-[44px] border-b-[4px] border-[var(--red-500)]'
-          : 'w-full body-l text-[var(--gray-300)] h-[44px] border-b-[4px] border-[var(--gray-300)]'
-        }>
-        리뷰
-      </button>
+    <div className="mt-[1.625rem] flex w-full">
+      {storeDetailMenuContents.map((storeDetailMenuContent: '가게 정보' | '디자인' | '리뷰') => {
+        return (
+          <button
+            key={storeDetailMenuContent}
+            onClick={() => {
+              setStoreDetailMenu(storeDetailMenuContent)
+            }}
+            className={
+              storeDetailMenu === storeDetailMenuContent
+                ? 'title-l h-[2.75rem] w-full border-b-[0.25rem] border-red-500 text-red-500'
+                : 'body-l h-[2.75rem] w-full border-b-[0.25rem] border-gray-300 text-gray-300'
+            }
+          >
+            {storeDetailMenuContent}
+          </button>
+        )
+      })}
     </div>
   )
 }
-export default StoreDetailMenu;
+export default StoreDetailMenu
