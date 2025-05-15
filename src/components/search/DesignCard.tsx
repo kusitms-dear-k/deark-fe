@@ -11,6 +11,7 @@ interface DesignCardProps {
   heartCount?: number
   location?: string
   onHeartClick?: () => void
+  onCardClick: () => void
 }
 
 const DesignCard = ({
@@ -23,9 +24,10 @@ const DesignCard = ({
   heartCount,
   location,
   onHeartClick,
+  onCardClick,
 }: DesignCardProps) => {
   return (
-    <div className={'w-full'}>
+    <div onClick={onCardClick} className={'w-full'}>
       <div className={'relative h-[194px] w-full'}>
         <Image src={img} alt={'arrow'} fill className={'object-cover'} />
         <div className={'absolute bottom-[8px] flex w-full justify-between pr-[12px] pl-[8px]'}>

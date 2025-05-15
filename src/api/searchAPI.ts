@@ -4,7 +4,7 @@ import { SortType } from '@/types/search'
 /**
  * 디자인 통합 검색
  */
-export const searchDesign = async ({
+export const getDesignSearchResult = async ({
   pageParam = 0,
   count,
   sortType,
@@ -54,6 +54,62 @@ export const searchDesign = async ({
 
   const fullUrl = `${baseUrl}?${queryParams}`
 
+  const response = await fetch(fullUrl, {
+    method: 'GET',
+    headers: {
+      Authorization: Cookies.get('ACCESS_TOKEN') as string,
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
+
+/**
+ * 디자인 상세 불러오는 API
+ */
+export const getDesignDetailData = async (designId: number) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/design/detail/${designId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: Cookies.get('ACCESS_TOKEN') as string,
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
+
+/**
+ * 가게 상세 불러오는 API
+ */
+export const getStoreDetailData = async (storeId: number) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/store/detail/${storeId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: Cookies.get('ACCESS_TOKEN') as string,
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
+
+/**
+ * 가게/디자인 상세 불러오는 API
+ */
+export const getStoreDesignDetailData = async (
+  pageParam: number,
+  count: number,
+  sizeName: string | null,
+  storeId: number
+) => {
+  const baseUrl = `${process.env.NEXT_PUBLIC_BASE_URL}/design/store/${storeId}`
+  const queryParams = [`page=${pageParam}`, `count=${count}`, sizeName === '전체' ? '' : `sizeName=${sizeName}`]
+    .filter(Boolean)
+    .join('&')
+
+  const fullUrl = `${baseUrl}?${queryParams}`
   const response = await fetch(fullUrl, {
     method: 'GET',
     headers: {

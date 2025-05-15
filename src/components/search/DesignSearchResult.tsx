@@ -30,6 +30,8 @@ const DesignSearchResult = () => {
   const minPrice = useSearchStore((state) => state.minPrice)
   const maxPrice = useSearchStore((state) => state.maxPrice)
   const locationList = useSearchStore((state) => state.locationList)
+  const storeId = useSearchStore((state) => state.storeId)
+  const designId = useSearchStore((state) => state.designId)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   // 무한스크롤 훅 호출
@@ -200,6 +202,15 @@ const DesignSearchResult = () => {
                   return (
                     <div key={design.designId} ref={observerRef}>
                       <DesignCard
+                        onCardClick={() => {
+                          setSearchParams({
+                            designId: design.designId,
+                            storeId: design.storeId,
+                            isStoreDetailModalOpen: true,
+                          })
+                        }}
+                        storeId={design.storeId}
+                        designId={design.designId}
                         key={design.designId}
                         img={design.designImageUrl}
                         enableDayOrder={design.isSameDayOrder}

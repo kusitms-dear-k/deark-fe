@@ -17,6 +17,11 @@ interface SearchStoreType {
   isLunchBoxCake: boolean | null
   isSelfService: boolean | null
   totalCount: number
+  storeId: number
+  designId: number
+  sizeName: string
+  isDesignDetailModalOpen: boolean
+  isStoreDetailModalOpen: boolean
   setSearchParams: (params: {
     isLoading?: boolean
     error?: boolean | null
@@ -33,6 +38,11 @@ interface SearchStoreType {
     isLunchBoxCake?: boolean | null
     isSelfService?: boolean | null
     totalCount?: number
+    storeId?: number
+    designId?: number
+    sizeName?: string
+    isDesignDetailModalOpen?: boolean
+    isStoreDetailModalOpen?: boolean
   }) => void
 }
 
@@ -54,6 +64,12 @@ export const useSearchStore = create<SearchStoreType>((set) => ({
   isSelfService: null,
   //data-state
   totalCount: 0,
+  designId: 0,
+  storeId: 0,
+  sizeName: '전체',
+  //modal 관련
+  isDesignDetailModalOpen: false,
+  isStoreDetailModalOpen: false,
 
   // 검색 조건 상태 업데이트 함수 추가
   setSearchParams: (params: {
@@ -72,12 +88,15 @@ export const useSearchStore = create<SearchStoreType>((set) => ({
     isLunchBoxCake?: boolean | null
     isSelfService?: boolean | null
     totalCount?: number
+    designId?: number
+    storeId?: number
+    sizeName?: string
+    isDesignDetailModalOpen?: boolean
+    isStoreDetailModalOpen?: boolean
   }) => {
     set((state) => ({
       ...state,
       ...params,
     }))
   },
-
-  storeSearch: () => {},
 }))

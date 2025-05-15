@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
-import { FilterType } from '@/types/common'
+import { FilterType, ResponseType } from '@/types/common'
 import Header from '@/components/common/Header'
 import SearchMenu from '@/components/search/SearchMenu'
 import FilterPanel from '@/components/search/FilterPanel'
@@ -14,22 +14,19 @@ import AddressFilterContent from '@/components/search/AddressFilterContent'
 import PriceFilterContent from '@/components/search/PriceFilterContent'
 import SortFilterContent from '@/components/search/SortFilterContent'
 import BottomModal from '@/components/common/BottomModal'
-import StoreProfile from '@/components/search/StoreProfile'
-import StoreDetailMenu from '@/components/search/StoreDetailMenu'
-import StoreReview from '@/components/search/StoreReview'
-import StoreDesign from '@/components/search/StoreDesign'
-import StoreInfo from '@/components/search/StoreInfo'
 import { useSearchStore } from '@/store/searchStore'
 import DesignDetailContent from '@/components/search/DesignDetailContent'
 import { AnimatePresence } from 'framer-motion'
+import StoreDetail from '@/components/search/StoreDetail'
+import { getDesignDetailData } from '@/api/searchAPI'
+import { DesignDetailType } from '@/types/search'
 
 const SearchPage = () => {
   const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
   // 모달 관련 state
-  const [isStoreDetailModalOpen, setIsStoreDetailModalOpen] = useState(false)
-  const [isDesignDetailModalOpen, setIsDesignDetailModalOpen] = useState(false)
+  const isStoreDetailModalOpen = useSearchStore((state) => state.isStoreDetailModalOpen)
+  const isDesignDetailModalOpen = useSearchStore((state) => state.isDesignDetailModalOpen)
   // 필터 관련 state
-  const [sort, setSort] = useState<'정확도' | '최신순' | '인기순'>('정확도')
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>('ADDRESS')
   const [selectedFilterContents, setSelectedFilterContents] = useState<string[]>([]) //위치 필터 값
@@ -37,6 +34,8 @@ const SearchPage = () => {
   const [maxPrice, setMaxPrice] = useState<null | number>(null) //최대 가격 필터 값
   //가게 상세보기
   const [storeDetailMenu, setStoreDetailMenu] = useState<'가게 정보' | '디자인' | '리뷰'>('가게 정보')
+  const designId = useSearchStore((state) => state.designId) //선택된 designId
+  const [designDetail, setDesignDetail] = useState<DesignDetailType>() // 디자인 상세 페이지 데이터
   // zustand 전역 상태
   const sortType = useSearchStore((state) => state.sortType)
   const totalCount = useSearchStore((state) => state.totalCount)
@@ -44,19 +43,29 @@ const SearchPage = () => {
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   /**
-   * 가게 상세 페이지
-   * @param storeDetailMenu 가게 상세 페이지 메뉴
+   * 스토어,디자인 상세페이지 데이터 불러오기
    */
-  const renderStoreDetailContent = (storeDetailMenu: '가게 정보' | '디자인' | '리뷰') => {
-    switch (storeDetailMenu) {
-      case '리뷰':
-        return <StoreReview />
-      case '디자인':
-        return <StoreDesign />
-      default:
-        return <StoreInfo />
-    }
-  }
+  useEffect(() => {
+    // 1. 초기 상태 실행
+    getDesignDetailData(designId)
+      .then((res: ResponseType<DesignDetailType>) => {
+        console.log('디자인 상세', res.results)
+        setDesignDetail(res.results)
+      })
+      .catch(console.error)
+
+    // 2. 이후 상태 변화 감지
+    const unsubscribe = useSearchStore.subscribe((currentStatus, prevState) => {
+      getDesignDetailData(currentStatus.designId)
+        .then((res) => {
+          console.log('디자인 상세:', res)
+          setDesignDetail(res.results)
+        })
+        .catch(console.error)
+    })
+
+    return () => unsubscribe()
+  }, [])
 
   /**
    * 필터 페이지
@@ -68,70 +77,6 @@ const SearchPage = () => {
         return (
           <section className="flex flex-col px-[1.5rem]">
             <SortFilterContent setIsFilterModalOpen={setIsFilterModalOpen} />
-          </section>
-        )
-      case 'ADDRESS':
-        return (
-          <section>
-            <Filter.Menu
-              selectedFilterType={selectedFilterType}
-              setSelectedFilterType={setSelectedFilterType}
-              setIsFilterModalOpen={setIsFilterModalOpen}
-            />
-            <AddressFilterContent
-              selectedFilterContents={selectedFilterContents}
-              setSelectedFilterContents={setSelectedFilterContents}
-            />
-            <Filter.BottomButton
-              reset={() => {
-                setSearchParams({ locationList: null })
-                setIsFilterModalOpen(false)
-              }}
-              apply={() => {
-                setSearchParams({ locationList: selectedFilterContents })
-                setIsFilterModalOpen(false)
-              }}
-              totalResultCount={totalCount}
-            />
-          </section>
-        )
-      case 'DATE':
-        return (
-          <section>
-            <Filter.Menu
-              setIsFilterModalOpen={setIsFilterModalOpen}
-              selectedFilterType={selectedFilterType}
-              setSelectedFilterType={setSelectedFilterType}
-            />
-          </section>
-        )
-      case 'PRICE':
-        return (
-          <section className="flex flex-col justify-start gap-y-[0.125rem] py-[0.438rem]">
-            <Filter.Menu
-              setIsFilterModalOpen={setIsFilterModalOpen}
-              selectedFilterType={selectedFilterType}
-              setSelectedFilterType={setSelectedFilterType}
-            />
-            <PriceFilterContent
-              minPrice={minPrice}
-              setMinPrice={setMinPrice}
-              setMaxPrice={setMaxPrice}
-              maxPrice={maxPrice}
-            />
-            <Filter.BottomButton
-              reset={() => {
-                setMinPrice(null)
-                setMaxPrice(null)
-                setSearchParams({ minPrice: null, maxPrice: null })
-                setIsFilterModalOpen(false)
-              }}
-              apply={() => {
-                setSearchParams({ minPrice: minPrice, maxPrice: maxPrice })
-                setIsFilterModalOpen(false)
-              }}
-              totalResultCount={totalCount}
-            />
           </section>
         )
       case 'ADDRESS':
@@ -212,27 +157,23 @@ const SearchPage = () => {
 
       {/* 가게 상세 페이지 모달 */}
       {isStoreDetailModalOpen && (
-        <BottomModal>
-          <>
-            <StoreProfile />
-            <StoreDetailMenu storeDetailMenu={storeDetailMenu} setStoreDetailMenu={setStoreDetailMenu} />
-            {renderStoreDetailContent(storeDetailMenu)}
-            <div className={'border-gray-150 bottom-0 w-full border-t bg-white px-[1.25rem] pt-[1.25rem]'}>
-              <button className={'button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white'}>
-                주문하러 가기
-              </button>
-            </div>
-          </>
-        </BottomModal>
+        <AnimatePresence>
+          <BottomModal onClick={() => setSearchParams({ isStoreDetailModalOpen: false })}>
+            <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
+          </BottomModal>
+        </AnimatePresence>
       )}
 
       {/* 디자인 상세 페이지 모달 */}
       {isDesignDetailModalOpen && (
-        <BottomModal>
-          <DesignDetailContent />
-        </BottomModal>
+        <AnimatePresence>
+          <BottomModal onClick={() => setSearchParams({ isDesignDetailModalOpen: false })}>
+            <DesignDetailContent designDetail={designDetail} />
+          </BottomModal>
+        </AnimatePresence>
       )}
       <Header headerType="SEARCH" keyword={keyword} />
+
       <SearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
       <FilterPanel
         isFilterModalOpen={isFilterModalOpen}
