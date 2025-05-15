@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react'
 
@@ -142,9 +142,9 @@ const SearchPage = () => {
               totalResultCount={totalCount}
             />
           </section>
-        )
+        );
     }
-  }
+  };
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -188,6 +188,6 @@ const SearchPage = () => {
       />
       {searchMenu === '스토어' ? <StoreSearchResult /> : <DesignSearchResult />}
     </main>
-  )
-}
-export default SearchPage
+  );
+};
+export default SearchPage;
