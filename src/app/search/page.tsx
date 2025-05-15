@@ -133,6 +133,70 @@ const SearchPage = () => {
               totalResultCount={totalCount}
             />
           </section>
+        )
+      case 'ADDRESS':
+        return (
+          <section>
+            <Filter.Menu
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+              setIsFilterModalOpen={setIsFilterModalOpen}
+            />
+            <AddressFilterContent
+              selectedFilterContents={selectedFilterContents}
+              setSelectedFilterContents={setSelectedFilterContents}
+            />
+            <Filter.BottomButton
+              reset={() => {
+                setSearchParams({ locationList: null })
+                setIsFilterModalOpen(false)
+              }}
+              apply={() => {
+                setSearchParams({ locationList: selectedFilterContents })
+                setIsFilterModalOpen(false)
+              }}
+              totalResultCount={totalCount}
+            />
+          </section>
+        )
+      case 'DATE':
+        return (
+          <section>
+            <Filter.Menu
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+            />
+          </section>
+        )
+      case 'PRICE':
+        return (
+          <section className="flex flex-col justify-start gap-y-[0.125rem] py-[0.438rem]">
+            <Filter.Menu
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+            />
+            <PriceFilterContent
+              minPrice={minPrice}
+              setMinPrice={setMinPrice}
+              setMaxPrice={setMaxPrice}
+              maxPrice={maxPrice}
+            />
+            <Filter.BottomButton
+              reset={() => {
+                setMinPrice(null)
+                setMaxPrice(null)
+                setSearchParams({ minPrice: null, maxPrice: null })
+                setIsFilterModalOpen(false)
+              }}
+              apply={() => {
+                setSearchParams({ minPrice: minPrice, maxPrice: maxPrice })
+                setIsFilterModalOpen(false)
+              }}
+              totalResultCount={totalCount}
+            />
+          </section>
         );
     }
   };
