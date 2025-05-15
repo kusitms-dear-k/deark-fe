@@ -1,12 +1,32 @@
 'use client'
 import Image from 'next/image'
 import { BlueClipboardIcon, BluePencilIcon, BlueSendIcon } from '@/assets/svgComponents'
-import DesignCard from '@/components/search/DesignCard'
 import { useRouter } from 'next/navigation'
 import NavBar from '@/components/common/NavBar'
+import { useEffect, useState } from 'react'
+import { RecommendType } from '@/types/search'
+import { useSearchStore } from '@/store/searchStore'
+import { getDesignRecommendData } from '@/api/searchAPI'
+import { ResponseType } from '@/types/common'
+import RecommendCard from '@/components/search/RecommendCard'
+import RecommendCardSkeleton from '@/components/skeleton/RecommendCardSkeleton'
+import DesignCard from '@/components/search/DesignCard'
 
 const MyPage = () => {
   const router = useRouter()
+  const [recommendResults, setRecommendResults] = useState<RecommendType[]>()
+  const setSearchParams = useSearchStore((state) => state.setSearchParams)
+
+  useEffect(() => {
+    // 1. 초기 상태 실행
+    getDesignRecommendData(4)
+      .then((res: ResponseType<{ designList: RecommendType[] }>) => {
+        console.log('검색 결과 없을 경우 추천', res)
+        setRecommendResults(res.results.designList)
+      })
+      .catch(console.error)
+  }, [])
+
   return (
     <main className="relative">
       <div className="w-full bg-gray-100 px-[1.25rem]">
@@ -69,26 +89,29 @@ const MyPage = () => {
         <section className="mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
           <div className="min-w-[12.125rem]">
             <DesignCard
+              onCardClick={() => {}}
               description="심플감성 스타일 레터링케이크"
               storeName="무무케이크"
-              isHeart={true}
+              isHeart={false}
               img={'/common/cake1.png'}
               enableDayOrder={true}
             />
           </div>
           <div className="min-w-[12.125rem]">
             <DesignCard
+              onCardClick={() => {}}
               description="심플감성 스타일 레터링케이크"
               storeName="무무케이크"
-              isHeart={true}
+              isHeart={false}
               img={'/common/cake1.png'}
             />
           </div>
           <div className="min-w-[12.125rem]">
             <DesignCard
+              onCardClick={() => {}}
               description="심플감성 스타일 레터링케이크"
               storeName="무무케이크"
-              isHeart={true}
+              isHeart={false}
               img={'/common/cake1.png'}
             />
           </div>
@@ -97,32 +120,27 @@ const MyPage = () => {
 
       <section className="mb-[6.25rem] p-[1rem]">
         <h3 className="title-l text-gray-900">추천 케이크</h3>
-        <section className="mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
-          <div className="min-w-[12.125rem]">
-            <DesignCard
-              description="심플감성 스타일 레터링케이크"
-              storeName="무무케이크"
-              isHeart={true}
-              img={'/common/cake1.png'}
-              enableDayOrder={true}
-            />
-          </div>
-          <div className="min-w-[12.125rem]">
-            <DesignCard
-              description="심플감성 스타일 레터링케이크"
-              storeName="무무케이크"
-              isHeart={true}
-              img={'/common/cake1.png'}
-            />
-          </div>
-          <div className="min-w-[12.125rem]">
-            <DesignCard
-              description="심플감성 스타일 레터링케이크"
-              storeName="무무케이크"
-              isHeart={true}
-              img={'/common/cake1.png'}
-            />
-          </div>
+        <section className="mt-[0.5rem] grid grid-cols-2 gap-[0.125rem]">
+          {recommendResults
+            ? recommendResults.map((recommendResult) => {
+                return (
+                  <RecommendCard
+                    isGradient={false}
+                    onCardClick={() => {
+                      setSearchParams({
+                        designId: recommendResult.designId,
+                        isDesignDetailModalOpen: true,
+                      })
+                    }}
+                    {...recommendResult}
+                    key={recommendResult.designId}
+                  />
+                )
+              })
+            : //skeleton-ui
+              [1, 2, 3, 4].map((i) => {
+                return <RecommendCardSkeleton key={i} />
+              })}
         </section>
       </section>
       <NavBar />
