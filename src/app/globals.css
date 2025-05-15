@@ -299,10 +299,49 @@ font-family: 'Handsome Pro', Pretendard, 'Pretendard Variable', sans-serif;
   line-height: 160%;
   letter-spacing: 0;
 }
-@utility caption-l {
+@utility body-s {
   font-family: Pretendard, serif;
   font-weight: 400;
+  font-size: 12px;
+  line-height: 160%;
+  letter-spacing: 0;
+}
+@utility chip-m-bold {
+  font-family: Pretendard, serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+  letter-spacing: 0;
+}
+@utility chip-m {
+  font-family: Pretendard, serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%;
+  letter-spacing: 0;
+}
+@utility chip-s-bold {
+  font-family: Pretendard, serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 160%;
+}
+@utility chip-s {
+  font-family: Pretendard, serif;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 160%;
+  letter-spacing: 0;
+}
+@utility caption-l {
+  font-family: Pretendard, serif;
   font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
   line-height: 160%;
   letter-spacing: 0;
 }
@@ -488,4 +527,71 @@ background-color: var(--blue-200);
   font-style: normal;
   font-weight: 400;
   line-height: 160%;
+}
+.blue-chip {
+  background: var(--white);
+  display: inline-flex;
+  padding: 6px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  border-radius: 20px;
+  border: 1px solid var(--blue-400);
+  color: var(--blue-400);
+  font-family: Pretendard, serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%; /* 22.4px */
+}
+.gray-chip {
+  display: inline-flex;
+  padding: 6px 12px;
+  justify-content: center;
+  align-items: center;
+  gap: 2px;
+  border-radius: 20px;
+  border: 1px solid var(--gray-200);
+  background: var(--white, #fff);
+  color: var(--gray-500);
+  font-family: Pretendard, serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%; /* 22.4px */
+}
+.gray-today-chip {
+  display: flex;
+  width: 108px;
+  height: 34px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  border: 1px solid var(--gray-200);
+  background: var(--white);
+  color: var(--gray-500);
+  font-family: Pretendard, serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%; /* 22.4px */
+}
+.blue-today-chip {
+  display: flex;
+  width: 108px;
+  height: 34px;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: var(--blue-400);
+  color: var(--white);
+  font-family: Pretendard, serif;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 160%; /* 22.4px */
 }

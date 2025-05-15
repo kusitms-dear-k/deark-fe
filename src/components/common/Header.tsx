@@ -50,7 +50,18 @@ const Header = (props: Props) => {
           </div>
         )
       case 'DYNAMIC':
-       return <div></div>
+        return (
+          <div className={'absolute top-10 left-5 w-[90%]'}>
+            <LeftArrowIcon
+              width={24}
+              height={24}
+              className="cursor-pointer"
+              onClick={() => {
+                onBack ? onBack() : router.back()
+              }}
+            />
+          </div>
+        )
       case 'SEARCH':
         return (
           <div className={'flex w-full items-center gap-x-2'}>
