@@ -62,7 +62,6 @@ const DesignCard = ({
               <Image className={'object-cover'} src={'/search/right-arrow.svg'} fill alt={'arrow'} />
             </div>
           </div>
-
           <div className={'body-m text-[var(--gray-800)]'}>{description}</div>
         </div>
         {startPrice && (

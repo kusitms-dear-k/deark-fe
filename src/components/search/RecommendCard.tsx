@@ -1,6 +1,7 @@
 import { HeartIcon } from '@/assets/svgComponents'
 import Image from 'next/image'
 
+
 const RecommendCard = () => {
   return (
     <div className={'relative h-[194px] w-full'}>
