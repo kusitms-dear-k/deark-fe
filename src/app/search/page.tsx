@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState } from 'react'
 
@@ -22,6 +22,7 @@ import StoreInfo from '@/components/search/StoreInfo'
 import { useSearchStore } from '@/store/search'
 import DesignDetailContent from '@/components/search/DesignDetailContent'
 import { AnimatePresence } from 'framer-motion'
+
 
 const SearchPage = () => {
   const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
@@ -134,8 +135,31 @@ const SearchPage = () => {
             />
           </section>
         )
+      case 'ADDRESS':
+        return (
+          <section>
+            <Filter.Menu />
+            <AddressFilterContent />
+            <Filter.BottomButton />
+          </section>
+        )
+      case 'DATE':
+        return (
+          <section>
+            <Filter.Menu />
+            <Filter.BottomButton />
+          </section>
+        )
+      case 'PRICE':
+        return (
+          <section className="flex flex-col justify-start gap-y-[2px] py-[7px]">
+            <Filter.Menu />
+            <PriceFilterContent />
+            <Filter.BottomButton />
+          </section>
+        );
     }
-  }
+  };
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -184,6 +208,6 @@ const SearchPage = () => {
       />
       {searchMenu === '스토어' ? <StoreSearchResult /> : <DesignSearchResult />}
     </main>
-  )
-}
-export default SearchPage
+  );
+};
+export default SearchPage;
