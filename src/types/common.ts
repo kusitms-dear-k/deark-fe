@@ -3,6 +3,7 @@ import { JSX } from 'react';
 export type UserRoleType = 'PICKER' | 'MAKER';
 export type HeaderType = 'DEFAULT' | 'DYNAMIC' | 'SEARCH';
 export type FilterType = 'SORT' | 'ADDRESS' | 'PRICE' | 'DATE';
+
 export interface MenuListType {
   id: number;
   unClickedIcon: string;

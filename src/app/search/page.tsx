@@ -13,11 +13,15 @@ import Filter from '@/components/common/Filter';
 import AddressFilterContent from '@/components/search/AddressFilterContent';
 import PriceFilterContent from '@/components/search/PriceFilterContent';
 import SortFilterContent from '@/components/search/SortFilterContent';
+import StoreDetailModal from '@/components/search/StoreDetailModal';
+
 
 const SearchPage = () => {
   const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인');
   const [sort, setSort] = useState<'정확도' | '최신순' | '인기순'>('정확도');
   const [sortModalOpen, setSortModalOpen] = useState(false);
+
+  const [isStoreDetailModalOpen, setIsStoreDetailModalOpen] = useState(true);
 
   const renderFilterContent = (filter: FilterType) => {
     switch (filter) {
@@ -56,6 +60,7 @@ const SearchPage = () => {
   return (
     <main className="flex min-h-screen flex-col">
       {sortModalOpen && <Filter>{renderFilterContent('ADDRESS')}</Filter>}
+      {isStoreDetailModalOpen && <StoreDetailModal />}
       <div className="px-5">
         <Header headerType="SEARCH" />
       </div>
@@ -65,6 +70,6 @@ const SearchPage = () => {
       <DesignSearchResult searchMenu={searchMenu} />
       <StoreSearchResult />
     </main>
-  )
-}
-export default SearchPage
+  );
+};
+export default SearchPage;

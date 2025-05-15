@@ -160,7 +160,6 @@ const DesignSearchResult = (props: Props) => {
         return null
     }
   }
-
   return (
     <div>
       <div className={'mt-7 mb-[53px] flex flex-col items-center justify-center gap-y-[15px]'}>
