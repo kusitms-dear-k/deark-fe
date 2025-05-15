@@ -15,10 +15,12 @@ import PriceFilterContent from '@/components/search/PriceFilterContent';
 import SortFilterContent from '@/components/search/SortFilterContent';
 import StoreDetailModal from '@/components/search/StoreDetailModal';
 
+
 const SearchPage = () => {
   const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인');
   const [sort, setSort] = useState<'정확도' | '최신순' | '인기순'>('정확도');
   const [sortModalOpen, setSortModalOpen] = useState(false);
+
   const [isStoreDetailModalOpen, setIsStoreDetailModalOpen] = useState(true);
 
   const renderFilterContent = (filter: FilterType) => {

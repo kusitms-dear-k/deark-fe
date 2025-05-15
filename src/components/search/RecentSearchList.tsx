@@ -1,3 +1,4 @@
+
 import { SearchIconGray } from '@/assets/svgComponents'
 import Image from 'next/image'
 
