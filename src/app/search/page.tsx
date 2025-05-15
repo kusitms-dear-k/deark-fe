@@ -159,11 +159,7 @@ const SearchPage = () => {
       {isStoreDetailModalOpen && (
         <AnimatePresence>
           <BottomModal onClick={() => setSearchParams({ isStoreDetailModalOpen: false })}>
-            <StoreDetail
-              // storeDetail={storeDetail}
-              setStoreDetailMenu={setStoreDetailMenu}
-              storeDetailMenu={storeDetailMenu}
-            />
+            <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
           </BottomModal>
         </AnimatePresence>
       )}

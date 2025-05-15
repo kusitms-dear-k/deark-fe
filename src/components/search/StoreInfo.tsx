@@ -1,5 +1,5 @@
 import Image from 'next/image'
-import { BusinessHourType } from '@/types/search'
+import { BusinessHourType, PickUpHourType } from '@/types/search'
 
 interface Props {
   isSameDayOrder: true
@@ -9,7 +9,7 @@ interface Props {
   storeName: string
   storeAddress: string
   businessHours: BusinessHourType[]
-  pickUpHours: BusinessHourType[]
+  pickUpHours: PickUpHourType[]
   ownerName: string
   businessNumber: string
 }
@@ -67,7 +67,7 @@ const StoreInfo = (props: Props) => {
             {businessHours.map((businessHour) => {
               return (
                 <p key={businessHour.dayName} className="body-m text-gray-800">
-                  {`${businessHour.dayName} : ${businessHour.startTime}~${businessHour.endTime}`}
+                  {`${businessHour.dayName} : ${businessHour.openTime}~${businessHour.closeTime}`}
                 </p>
               )
             })}

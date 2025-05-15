@@ -52,17 +52,23 @@ export interface StoreDetailType {
   isLunchBoxCake: true
   isBookmarkedInEvent: false
   businessHours: BusinessHourType[]
-  pickUpHours: BusinessHourType[]
+  pickUpHours: PickUpHourType[]
   ownerName: string
   likeCount: number
   businessNumber: string
   sizeNameList: string[]
 }
 
-export interface BusinessHourType {
+export interface PickUpHourType {
   dayName: string
   startTime: string
   endTime: string
+}
+
+export interface BusinessHourType {
+  dayName: string
+  openTime: string
+  closeTime: string
 }
 
 export interface StoreDesignDetailType {
