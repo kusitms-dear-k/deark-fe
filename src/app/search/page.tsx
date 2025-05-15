@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useState } from 'react'
 
@@ -71,9 +71,9 @@ const SearchPage = () => {
             <PriceFilterContent />
             <Filter.BottomButton />
           </section>
-        )
+        );
     }
-  }
+  };
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -155,6 +155,6 @@ const SearchPage = () => {
       <DesignSearchResult searchMenu={searchMenu} />
       <StoreSearchResult />
     </main>
-  )
-}
-export default SearchPage
+  );
+};
+export default SearchPage;
