@@ -8,7 +8,7 @@ export interface StoreType {
   storeImageUrl: string
   address: string
   isSameDayOrder: boolean
-  isUnmanned: boolean
+  isSelfService: boolean
   isLunchBoxCake: boolean
   isLiked: boolean
   likeCount: number
@@ -80,8 +80,20 @@ export interface StoreDesignDetailType {
   isLiked: boolean
 }
 
+export interface RecommendType {
+  designId: number
+  designName: string
+  designImageUrl: string
+  storeName: string
+  isLiked: boolean
+}
+
 export interface DesignListResponseType extends PageNationType {
   designList: DesignType[]
+}
+
+export interface StoreListResponseType extends PageNationType {
+  storeList: StoreType[]
 }
 
 export interface StoreDesignListResponseType extends PageNationType {

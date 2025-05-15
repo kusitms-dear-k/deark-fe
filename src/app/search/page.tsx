@@ -173,7 +173,6 @@ const SearchPage = () => {
         </AnimatePresence>
       )}
       <Header headerType="SEARCH" keyword={keyword} />
-
       <SearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
       <FilterPanel
         isFilterModalOpen={isFilterModalOpen}

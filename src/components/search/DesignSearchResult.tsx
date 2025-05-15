@@ -206,11 +206,9 @@ const DesignSearchResult = () => {
                           setSearchParams({
                             designId: design.designId,
                             storeId: design.storeId,
-                            isStoreDetailModalOpen: true,
+                            isDesignDetailModalOpen: true,
                           })
                         }}
-                        storeId={design.storeId}
-                        designId={design.designId}
                         key={design.designId}
                         img={design.designImageUrl}
                         enableDayOrder={design.isSameDayOrder}
