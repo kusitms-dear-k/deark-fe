@@ -191,7 +191,6 @@ const DesignSearchResult = () => {
         return null
     }
   }
-
   return (
     <div className="pb-[6.25rem]">
       <section>

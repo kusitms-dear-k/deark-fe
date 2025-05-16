@@ -15,8 +15,7 @@ const HomePage = () => {
   const [isTotalSearchPage, setIsTotalSearchPage] = useState(false)
 
   return isTotalSearchPage ? (
-    <Order/>
-    // <TotalSearchPage setIsTotalSearchPage={setIsTotalSearchPage} />
+    <TotalSearchPage setIsTotalSearchPage={setIsTotalSearchPage} />
   ) : (
     <main className={'relative flex min-h-screen flex-col items-center justify-center px-5'}>
       <Header headerType={'DEFAULT'} />
