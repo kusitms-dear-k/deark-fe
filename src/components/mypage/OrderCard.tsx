@@ -1,17 +1,99 @@
 import { BlackCalendarIcon, GrayRightArrowIcon } from '@/assets/svgComponents'
 import Image from 'next/image'
+import { OrderMenuType, OrderType } from '@/types/mypage'
+import { Dispatch, SetStateAction } from 'react'
 
-interface Props {}
+interface Props extends OrderType {
+  status: OrderMenuType
+  setIsRequestModalOpen: Dispatch<SetStateAction<boolean>>
+  isRequestModalOpen: boolean
+}
 
 const OrderCard = (props: Props) => {
-  const {} = props
+  const {
+    status,
+    messageId,
+    requestDate,
+    storeName,
+    designName,
+    designImageUrl,
+    qaDetails,
+    setIsRequestModalOpen,
+    isRequestModalOpen,
+  } = props
+  const pickupDate = qaDetails.find((q) => q.title === 'pickupDate')?.answer || ''
+  const pickupTime = qaDetails.find((q) => q.title === 'pickupTime')?.answer || ''
+  const sheet = qaDetails.find((q) => q.title === 'sheet')?.answer || ''
+  const size = qaDetails.find((q) => q.title === 'size')?.answer || ''
+  const cream = qaDetails.find((q) => q.title === 'cream')?.answer || ''
+
+  function formatShortDate(dateStr: string) {
+    const regex = /(\d{4})-(\d{2})-(\d{2})\((.)\)/
+    const match = dateStr.match(regex)
+
+    if (!match) return ''
+
+    const [, , month, day, weekday] = match
+    return `${month}/${day}(${weekday})`
+  }
+
+  function formatKoreanDate(dateStr: string) {
+    const regex = /(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일\s*(\S+)/
+    const match = dateStr.match(regex)
+
+    if (!match) return ''
+
+    const [, year, month, day, weekday] = match
+    const yy = year.slice(2)
+    const mm = month.padStart(2, '0')
+    const dd = day.padStart(2, '0')
+    const shortWeekday = weekday.slice(0, 1) // 금요일 → 금
+
+    return `${mm}/${dd}(${shortWeekday})`
+  }
+
+  const renderStatusButton = (status: OrderMenuType) => {
+    switch (status) {
+      case 'ACCEPTED':
+        return (
+          <button
+            onClick={() => {
+              setIsRequestModalOpen(true)
+            }}
+            type={'button'}
+            className="blue-400-button w-full"
+          >
+            사장님 메시지 보러가기
+          </button>
+        )
+      case 'REJECTED':
+        return (
+          <button
+            onClick={() => {
+              setIsRequestModalOpen(true)
+            }}
+            type={'button'}
+            className="blue-400-button w-full"
+          >
+            사장님 메시지 보러가기
+          </button>
+        )
+      default:
+        return (
+          <button type={'button'} className="gray-200-700-button w-full">
+            응답 대기 중
+          </button>
+        )
+    }
+  }
+
   return (
     <div className="flex w-full flex-col gap-y-[0.5rem] border-b-[0.563rem] border-gray-100 px-[1.25rem] py-[1.5rem]">
       <section className="flex w-full justify-between">
         <div className="flex">
           <BlackCalendarIcon width={24} height={24} />
           <h3 className="body-m text-gray-900">
-            <span className="title-l text-gray-700">05/03(수)</span> 요청 날짜
+            <span className="title-l text-gray-700">{formatShortDate(requestDate)}</span> 요청 날짜
           </h3>
         </div>
         <button className="bg-gray-150 body-m-m px- flex h-fit items-center gap-x-[0.25rem] rounded-[0.25rem] px-[0.438rem] py-[0.25rem] text-gray-500">
@@ -22,18 +104,22 @@ const OrderCard = (props: Props) => {
 
       <section className="flex gap-x-[1.25rem]">
         <div className="relative h-[5.625rem] w-[5.625rem]">
-          <Image alt="케이크" src="/common/cake1.png" fill className="rounded-[0.25rem] object-cover" />
+          <Image alt="케이크" src={designImageUrl} fill className="rounded-[0.25rem] object-cover" />
         </div>
 
-        <div>
-          <h2 className="title-l">꿈빛나라 케이크</h2>
-          <p className="body-m-m mt-[0.375rem] text-gray-700">강아지 꼬까 모자 케이크</p>
-          <p className="body-m-m text-gray-400">2호 / [크림] 바닐라 맛 / [시트] 초콜릿 ...</p>
-          <p className="body-m-m text-blue-400">05/05(금) 픽업 희망</p>
+        <div className="w-[70%]">
+          <h2 className="title-l">{storeName}</h2>
+          <p className="body-m-m mt-[0.375rem] text-gray-700">{designName}</p>
+          <p className="body-m-m line-clamp-1 w-[100%] text-gray-400">
+            {`${size ? `${size}` : ''}${cream ? ` / [크림] ${cream}` : ''}${sheet ? ` / [시트] ${sheet}` : ''}`}
+          </p>
+          <p className="body-m-m text-blue-400">
+            {formatKoreanDate(pickupDate)} {pickupTime} 픽업 희망
+          </p>
         </div>
       </section>
 
-      <button className="gray-200-700-button w-full">응답 대기 중</button>
+      {renderStatusButton(status)}
     </div>
   )
 }

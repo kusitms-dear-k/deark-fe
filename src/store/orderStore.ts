@@ -1,7 +1,7 @@
 import { create } from 'zustand/index'
 import { OrderMenuType, OrderType } from '@/types/mypage'
 import { ResponseType } from '@/types/common'
-import { myOrder } from '@/api/mypageAPI'
+import { getMyOrder } from '@/api/mypageAPI'
 
 interface OrderStoreType {
   isLoading: boolean
@@ -28,7 +28,7 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
   orderData: async (status: OrderMenuType) => {
     try {
       set({ isLoading: true, error: null })
-      const result: ResponseType<{ responseList: OrderType[] }> = await myOrder(status)
+      const result: ResponseType<{ responseList: OrderType[] }> = await getMyOrder(status)
       set({ isLoading: false })
       console.log(result)
       return result.results
