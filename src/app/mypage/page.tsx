@@ -69,6 +69,7 @@ const MyPage = () => {
         <section className="mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
           <div className="min-w-[12.125rem]">
             <DesignCard
+              onCardClick={() => {}}
               description="심플감성 스타일 레터링케이크"
               storeName="무무케이크"
               isHeart={true}
@@ -78,6 +79,7 @@ const MyPage = () => {
           </div>
           <div className="min-w-[12.125rem]">
             <DesignCard
+              onCardClick={() => {}}
               description="심플감성 스타일 레터링케이크"
               storeName="무무케이크"
               isHeart={true}
@@ -86,6 +88,7 @@ const MyPage = () => {
           </div>
           <div className="min-w-[12.125rem]">
             <DesignCard
+              onCardClick={() => {}}
               description="심플감성 스타일 레터링케이크"
               storeName="무무케이크"
               isHeart={true}
@@ -100,6 +103,7 @@ const MyPage = () => {
         <section className="mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
           <div className="min-w-[12.125rem]">
             <DesignCard
+              onCardClick={() => {}}
               description="심플감성 스타일 레터링케이크"
               storeName="무무케이크"
               isHeart={true}
@@ -109,6 +113,7 @@ const MyPage = () => {
           </div>
           <div className="min-w-[12.125rem]">
             <DesignCard
+              onCardClick={() => {}}
               description="심플감성 스타일 레터링케이크"
               storeName="무무케이크"
               isHeart={true}
@@ -117,6 +122,7 @@ const MyPage = () => {
           </div>
           <div className="min-w-[12.125rem]">
             <DesignCard
+              onCardClick={() => {}}
               description="심플감성 스타일 레터링케이크"
               storeName="무무케이크"
               isHeart={true}
