@@ -37,7 +37,6 @@ const MyPage = () => {
             </div>
             <p className="title-l">리무진님의 마이페이지</p>
           </div>
-          <button className="chip-s-bold rounded-full bg-gray-800 px-[1rem] py-[0.5rem] text-white">로그아웃</button>
         </section>
         <section className="flex flex-col pt-[2.875rem] pb-[4rem]">
           <p className="title-l text-blue-400">D-13 "큐시즘의 밤!"</p>
@@ -55,7 +54,7 @@ const MyPage = () => {
         >
           <BlueSendIcon width={16} height={16} />
           <p className="title-m flex gap-x-[0.25rem]">
-            제작 문의 <span className="text-blue-400">4</span>
+            제작 문의
           </p>
         </div>
         <div className="border-gray-150 h-[2rem] border-r" />
@@ -67,7 +66,7 @@ const MyPage = () => {
         >
           <BlueClipboardIcon width={16} height={16} />
           <p className="title-m flex gap-x-[0.25rem]">
-            픽업 확정 <span className="text-blue-400">4</span>
+            픽업 확정
           </p>
         </div>
         <div className="border-gray-150 h-[2rem] border-r" />
@@ -79,7 +78,7 @@ const MyPage = () => {
         >
           <BluePencilIcon width={16} height={16} />
           <p className="title-m flex gap-x-[0.25rem]">
-            리뷰 <span className="text-blue-400">4</span>
+            리뷰
           </p>
         </div>
       </section>
