@@ -23,19 +23,8 @@ const HomePage = () => {
           setIsTotalSearchPage(true)
         }}
         LeftIcon={<SearchIconRed width={24} height={24}></SearchIconRed>}
-        onChange={() => {}}
-        LeftIcon={
-          <Image
-            src={'/common/search_icon_red.svg'}
-            width={24}
-            height={24}
-            alt={'검색'}
-            style={{ width: 24, height: 24 }}
-          />
-        }
+      />
+    </main>
   )
 }
-export default HomePage
-  );
-};
 export default HomePage;
