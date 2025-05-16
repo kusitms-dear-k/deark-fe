@@ -18,6 +18,8 @@ interface OrderStoreType extends OrderFormType {
   selectedRequestDetailDesignUrl?: string | null
   selectedEventId: number | null
   selectedEventTitle: string | null,
+  isOrderFormOpen: boolean
+  isOrderOpen: boolean
   setState: (params: {
     status?: OrderMenuType
     storeId?: number | null
@@ -30,6 +32,8 @@ interface OrderStoreType extends OrderFormType {
     selectedEventId?: number | null
     selectedEventTitle?: string | null
     answers?: QaDetailType[] | null
+    isOrderFormOpen?: boolean
+    isOrderOpen?: boolean
   }) => void
 }
 
@@ -49,6 +53,9 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
   selectedEventId: null,
   selectedEventTitle: null,
   answers: null,
+  //모달 오픈
+  isOrderFormOpen: false,
+  isOrderOpen: false,
   // 상태 업데이트 함수
   setState: (params: {
     status?: OrderMenuType
@@ -63,6 +70,8 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
     selectedEventId?: number | null
     selectedEventTitle?: string | null,
     answers?: QaDetailType[] | null
+    isOrderFormOpen?: boolean
+    isOrderOpen?: boolean
   }) => {
     set((state) => ({
       ...state,
