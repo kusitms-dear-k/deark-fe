@@ -164,7 +164,7 @@ const OrderForm = () => {
   }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form className="z-60 bg-white" onSubmit={handleSubmit}>
       {isEventFilterOpen && (
         <AnimatePresence>
           <UTEventModal
@@ -185,7 +185,7 @@ const OrderForm = () => {
           />
         </AnimatePresence>
       )}
-      <Header title={'주문서'} headerType={'DYNAMIC'} className={'pb-3'} />
+      <Header title={'주문서'} headerType={'DYNAMIC'} className={'pb-3'} onBack={() => setState({isOrderFormOpen: false})} />
 
       <div className="mt-24 flex flex-col gap-y-[16px] px-5 pb-5">
         <NameField />
