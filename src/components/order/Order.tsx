@@ -14,6 +14,7 @@ interface Props {
 const Order = (props: Props) => {
   const { messageId = 4 } = props
   const [orderDetailData, setOrderDetailData] = useState<OrderType>()
+
   useEffect(() => {
     // 1. 초기 상태 실행
     getMyOrderDetailData(messageId)
