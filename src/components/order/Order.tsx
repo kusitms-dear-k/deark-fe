@@ -31,7 +31,7 @@ const Order = (props: Props) => {
 
       {orderDetailData ? (
         <>
-          <div className="mt-30 flex flex-col gap-y-[1rem] border-b-[0.5rem] border-gray-100 px-[1.25rem] pb-[1.25rem]">
+          <div className="mt-24 flex flex-col gap-y-[1rem] border-b-[0.5rem] border-gray-100 px-[1.25rem] pb-[1.25rem]">
             <section>
               <h5 className="title-m flex gap-x-[0.125rem]">
                 이름<span className="title-s text-red-400">*</span>
@@ -64,7 +64,7 @@ const Order = (props: Props) => {
               <h5 className="title-m flex gap-x-[0.125rem]">
                 픽업 희망 시간<span className="title-s text-red-400">*</span>
               </h5>
-              <p className="body-s text-gray-400">운영 시간 11:00 ~ 21:00</p>
+              <p className="body-s text-gray-400">운영 시간 {orderDetailData.operatingHours}</p>
               <div className="body-m-m mt-[0.5rem] flex w-full justify-between rounded-[0.25rem] border border-gray-200 px-[1rem] py-[0.875rem] text-gray-400">
                 {orderDetailData.qaDetails.find((item) => item.title === '픽업 희망 시간')?.answer}
               </div>
@@ -98,7 +98,7 @@ const Order = (props: Props) => {
               <div className="flex w-full items-center justify-center">
                 <div className="relative mt-[0.5rem] h-[21.875rem] w-[21.875rem]">
                   <Image
-                    src={orderDetailData.requestDate}
+                    src={orderDetailData.designImageUrl}
                     alt="케이크"
                     fill
                     className="rounded-[0.25rem] object-cover"
@@ -164,7 +164,10 @@ const Order = (props: Props) => {
               </div>
               <div>
                 <div className="title-m">Kakao</div>
-                <a href={'/kakao.com/dearcake'} />
+                <a className="body-m text-blue-400" href={orderDetailData.chattingUrl}>
+                  {orderDetailData.chattingUrl}
+                </a>
+                <a href={orderDetailData.chattingUrl} />
               </div>
             </div>
           </section>

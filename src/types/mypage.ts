@@ -16,7 +16,10 @@ export interface OrderType {
   requestDate: string
   storeName: string
   designName: string
+  chattingUrl: string
   designImageUrl: string
+  operatingHours: string
+  designType: OrderFormDesignType
   qaDetails: QaDetailType[]
 }
 
