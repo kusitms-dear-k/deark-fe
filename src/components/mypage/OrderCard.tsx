@@ -21,11 +21,11 @@ const OrderCard = (props: Props) => {
     setIsRequestModalOpen,
     isRequestModalOpen,
   } = props
-  const pickupDate = qaDetails.find((q) => q.title === 'pickupDate')?.answer || ''
-  const pickupTime = qaDetails.find((q) => q.title === 'pickupTime')?.answer || ''
-  const sheet = qaDetails.find((q) => q.title === 'sheet')?.answer || ''
-  const size = qaDetails.find((q) => q.title === 'size')?.answer || ''
-  const cream = qaDetails.find((q) => q.title === 'cream')?.answer || ''
+  const pickupDate = qaDetails.find((q: {title: string}) => q.title === 'pickupDate')?.answer || ''
+  const pickupTime = qaDetails.find((q: {title: string}) => q.title === 'pickupTime')?.answer || ''
+  const sheet = qaDetails.find((q: {title: string}) => q.title === 'sheet')?.answer || ''
+  const size = qaDetails.find((q: {title: string}) => q.title === 'size')?.answer || ''
+  const cream = qaDetails.find((q: {title: string}) => q.title === 'cream')?.answer || ''
 
   function formatShortDate(dateStr: string) {
     const regex = /(\d{4})-(\d{2})-(\d{2})\((.)\)/
