@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import NavBar from '@/components/common/NavBar';
+import NavBar from '@/components/common/NavBar'
 
 const StoreLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,4 +10,4 @@ const StoreLayout = ({ children }: { children: React.ReactNode }) => {
     </div>
   )
 }
-export default StoreLayout;
+export default StoreLayout

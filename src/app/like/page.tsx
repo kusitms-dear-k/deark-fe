@@ -1,7 +1,4 @@
 const LikePage = () => {
-  return (
-    <>
-    </>
-  )
+  return <></>
 }
-export default LikePage;
+export default LikePage

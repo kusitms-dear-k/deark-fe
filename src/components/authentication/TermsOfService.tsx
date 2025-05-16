@@ -1,6 +1,4 @@
 const TermsOfService = () => {
-  return (
-    <></>
-  )
+  return <></>
 }
-export default TermsOfService;
+export default TermsOfService

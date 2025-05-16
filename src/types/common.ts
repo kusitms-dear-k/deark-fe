@@ -43,25 +43,25 @@ export interface PageNationType {
  * 우리나라 도로명 불러오는 공공 API 타입
  */
 export interface AddressType {
-  addr_name: string;
-  cd: string;
-  full_addr: string;
-  x_coor: string;
-  y_coor: string;
+  addr_name: string
+  cd: string
+  full_addr: string
+  x_coor: string
+  y_coor: string
 }
 
 /**
  * 백엔드 요청 Type
  */
 export interface ResponseType<T = any> {
-  isSuccess: true,
-  code: "REQUEST_OK",
-  message: "요청이 승인되었습니다.",
+  isSuccess: true
+  code: 'REQUEST_OK'
+  message: '요청이 승인되었습니다.'
   results: T
 }
 
 export interface PageNationType {
-  totalCount: number;
-  page: number;
-  hasNext: boolean;
+  totalCount: number
+  page: number
+  hasNext: boolean
 }

@@ -1,8 +1,4 @@
 const OrderPage = () => {
-  return (
-    <>
-
-    </>
-  )
+  return <></>
 }
-export default OrderPage;
+export default OrderPage

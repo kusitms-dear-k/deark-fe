@@ -1,36 +1,39 @@
-import { motion } from 'framer-motion';
-import Image from 'next/image';
-import Link from 'next/link';
-import { Dispatch, ReactNode, SetStateAction } from 'react';
+import { motion } from 'framer-motion'
+import Image from 'next/image'
+import Link from 'next/link'
+import { Dispatch, ReactNode, SetStateAction } from 'react'
 
 interface Props {
-  headingText: ReactNode;
-  content: ReactNode;
-  url: string;
-  setIsOpen: Dispatch<SetStateAction<boolean>>;
+  headingText: ReactNode
+  content: ReactNode
+  url: string
+  setIsOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const Modal = (props: Props) => {
-  const {headingText, content, url, setIsOpen} = props;
+  const { headingText, content, url, setIsOpen } = props
 
   const variants = {
     hidden: { y: 100, opacity: 0 },
     visible: { y: 0, opacity: 1 },
     exit: { y: 100, opacity: 0 },
-  };
+  }
 
   return (
     <div
-      className={'fixed inset-0 z-50 flex flex-col items-center gap-y-2 justify-center bg-[rgba(0,0,0,0.7)] px-8 min-h-screen'}>
+      className={
+        'fixed inset-0 z-50 flex min-h-screen flex-col items-center justify-center gap-y-2 bg-[rgba(0,0,0,0.7)] px-8'
+      }
+    >
       <motion.div
-        className="flex flex-col justify-center items-center absolute bg-[var(--background)] w-[320px] p-[20px] rounded-[20px]"
+        className="absolute flex w-[320px] flex-col items-center justify-center rounded-[20px] bg-[var(--background)] p-[20px]"
         initial="hidden"
         animate="visible"
         exit="exit"
         transition={{ duration: 0.3, ease: 'easeOut' }}
         variants={variants}
       >
-        <div className="w-full flex justify-end">
+        <div className="flex w-full justify-end">
           <Image
             className="cursor-pointer"
             onClick={() => setIsOpen(false)}
@@ -50,12 +53,14 @@ const Modal = (props: Props) => {
           height={56}
           style={{ width: 56, height: 56 }}
         />
-        <h2 className="text-[var(--main)] headline-m mt-[19px] text-center">{headingText}</h2>
+        <h2 className="headline-m mt-[19px] text-center text-[var(--main)]">{headingText}</h2>
         <p className="body-l-1 text-[var(--gray-600)]">🍰서비스 출시 준비 중🍰</p>
-        <p className="body-l-1 text-[var(--gray-600)] mt-[24px] text-center">{content}</p>
-        <div className="bg-[var(--background)] w-full mt-[41px]">
-          <Link href={url}
-                className="flex items-center justify-center gap-x-1 bg-[var(--main)] button-l text-[var(--white)] rounded-[12px] h-[49px] hover:scale-105 transition">
+        <p className="body-l-1 mt-[24px] text-center text-[var(--gray-600)]">{content}</p>
+        <div className="mt-[41px] w-full bg-[var(--background)]">
+          <Link
+            href={url}
+            className="button-l flex h-[49px] items-center justify-center gap-x-1 rounded-[12px] bg-[var(--main)] text-[var(--white)] transition hover:scale-105"
+          >
             <Image
               src="/landing/file.svg"
               alt="파일"
@@ -69,7 +74,6 @@ const Modal = (props: Props) => {
         </div>
       </motion.div>
     </div>
-
   )
 }
-export default Modal;
+export default Modal

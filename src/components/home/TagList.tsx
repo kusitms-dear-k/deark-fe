@@ -1,9 +1,9 @@
 interface Props {
-  tagList: string[];
+  tagList: string[]
 }
 
 const TagList = (props: Props) => {
-  const {tagList} = props;
+  const { tagList } = props
   return (
     <section className={'mt-[12.5px] flex w-full gap-x-2 overflow-x-scroll'}>
       {tagList.map((tag) => {
@@ -16,7 +16,7 @@ const TagList = (props: Props) => {
           >
             {tag}
           </button>
-        );
+        )
       })}
     </section>
   )

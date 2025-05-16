@@ -1,6 +1,4 @@
 const SignUpMaker = () => {
-  return (
-    <></>
-  )
+  return <></>
 }
 export default SignUpMaker
