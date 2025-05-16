@@ -1,81 +1,83 @@
-import Image from 'next/image';
-import SearchInput from '@/components/home/SearchInput';
-import { useRouter } from 'next/navigation';
-import { HeaderType } from '@/types/common';
+'use client'
+import SearchInput from '@/components/home/SearchInput'
+import { useRouter } from 'next/navigation'
+import { HeaderType } from '@/types/common'
+import { BellIcon, LeftArrowIcon, ProfileIcon, SearchIconRed } from '@/assets/svgComponents'
 
 interface Props {
-  onBack?: () => void;
-  headerType: HeaderType;
+  onBack?: () => void
+  headerType: HeaderType
+  keyword?: null | string
+  title?: string
+  className?: string
+  description?: string
+  fixed?: boolean
 }
 
 const Header = (props: Props) => {
-  const { onBack, headerType } = props;
-  const router = useRouter();
+  const { onBack, headerType, keyword, title, className, description, fixed = true } = props
+  const router = useRouter()
+
   const renderHeaderType = (headerType: HeaderType) => {
     switch (headerType) {
       case 'DEFAULT':
         return (
-          <section className={'absolute top-10 left-5 w-[90%]'}>
-            <div className={'flex w-full justify-between'}>
-              <h1 className={'key-visual-m text-[var(--red-400)]'}>Cake is easy</h1>
-              <div className={'flex items-center gap-x-3'}>
-                <div className={'relative p-1'}>
-                  <Image
-                    src={'/common/message.svg'}
-                    width={24}
-                    height={24}
-                    alt={'쪽지'}
-                    style={{ width: 24, height: 24 }}
-                  />
-                  <div className={'absolute top-0 right-0 h-[6px] w-[6px] rounded-full bg-[var(--red-400)]'}></div>
+          <div className="absolute top-10 left-5 w-[90%]">
+            <div className="flex w-full justify-between">
+              <h1 className="key-visual-m text-red-400">Cake is easy</h1>
+              <div className="flex items-center gap-x-[0.75rem]">
+                <div className="relative p-[0.125rem]">
+                  <BellIcon width={24} height={24} />
+                  <div className="absolute top-0 right-0 h-[0.375rem] w-[0.375rem] rounded-full bg-red-400"></div>
                 </div>
-
-                <Image
+                <ProfileIcon
                   onClick={() => {
-                    router.push('/mypage');
+                    router.push('/mypage')
                   }}
-                  src={'/common/profile.svg'}
                   width={32}
                   height={32}
-                  alt={'프로필'}
-                  style={{ width: 32, height: 32 }}
                 />
               </div>
             </div>
-            <div className={'body-el'}>
-              안녕하세요, <span className={'headline-s text-[var(--gray-900)]'}>리무진님!</span>{' '}
+            <div className="body-el">
+              안녕하세요, <span className="headline-s text-gray-900">리무진님!</span>{' '}
             </div>
-          </section>
+          </div>
         )
       case 'DYNAMIC':
         return (
-          <div></div>
-        );
-      case 'SEARCH':
-        return (
-          <div className={'flex gap-x-2 items-center w-full'}>
-            <Image
-              onClick={() => {
-                onBack ? onBack() : router.back();
-              }}
-              className={'cursor-pointer'}
-              src={'/common/left_arrow.svg'}
+          <div className={`absolute right-5 left-5 flex items-center gap-x-2 ${className} bg-white`}>
+            <LeftArrowIcon
               width={24}
               height={24}
-              alt={'화살표'}
-              style={{ width: 24, height: 24 }}
+              className="cursor-pointer"
+              onClick={() => {
+                onBack ? onBack() : router.back()
+              }}
+            />
+            <div className="flex flex-col">
+              {title && <h2 className="title-l">{title}</h2>}
+              {description && <p className="body-s-m text-gray-400">{description}</p>}
+            </div>
+          </div>
+        )
+      case 'SEARCH':
+        return (
+          <div className="flex w-full items-center gap-x-[0.5rem] px-[1.25rem] pb-4">
+            <LeftArrowIcon
+              width={24}
+              height={24}
+              className="cursor-pointer"
+              onClick={() => {
+                onBack ? onBack() : router.back()
+              }}
             />
             <SearchInput
+              keyword={keyword ? keyword : null}
               RightIcon={
-                <div className={'flex gap-x-4 items-center'}>
-                  <div className={'h-[16px] border-l border-[var(--gray-300)]'} />
-                  <Image
-                    src={'/common/search_icon_red.svg'}
-                    width={24}
-                    height={24}
-                    alt={'찾기'}
-                    style={{ width: 24, height: 24 }}
-                  />
+                <div className="flex items-center gap-x-[0.75rem]">
+                  <div className="h-[1rem] border-l border-gray-300" />
+                  <SearchIconRed width={24} height={24} />
                 </div>
               }
             />
@@ -84,9 +86,15 @@ const Header = (props: Props) => {
     }
   }
   return (
-    <section className={'flex items-center pt-[66px] w-full'}>
+    <header
+      className={
+        fixed
+          ? 'fixed top-0 z-30 flex w-full items-center bg-white pt-[4.125rem]'
+          : 'flex w-full items-center bg-white pt-[4.125rem]'
+      }
+    >
       {renderHeaderType(headerType)}
-    </section>
+    </header>
   )
 }
 export default Header

@@ -1,16 +1,17 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import Image from 'next/image'
+import Link from 'next/link'
+import { usePathname } from 'next/navigation'
 
-import { MAKER_MENU_LIST, PICKER_MENU_LIST } from '@/utils/common/nav';
-import { UserRoleType } from '@/types/common';
+import { MAKER_MENU_LIST, PICKER_MENU_LIST } from '@/utils/common/nav'
+import { UserRoleType } from '@/types/common'
 
 interface Props {
-  navType?: UserRoleType;
+  navType?: UserRoleType
 }
+
 const NavBar = (props: Props) => {
-  const { navType = 'PICKER' } = props;
-  const paramsName = usePathname();
+  const { navType = 'PICKER' } = props
+  const paramsName = usePathname()
 
   const renderNavBar = (navType: UserRoleType) => {
     switch (navType) {
@@ -44,8 +45,8 @@ const NavBar = (props: Props) => {
                 </div>
               )}
             </Link>
-          );
-        });
+          )
+        })
       case 'MAKER':
         return MAKER_MENU_LIST.map((menu) => {
           return (
@@ -76,15 +77,15 @@ const NavBar = (props: Props) => {
                 </div>
               )}
             </Link>
-          );
-        });
+          )
+        })
     }
   };
 
   return (
     <nav
       style={{ boxShadow: '0px -6px 16px 0px rgba(134, 134, 134, 0.05)' }}
-      className="fixed bottom-0 z-20 mb-[20px] flex w-full items-center justify-center rounded-[16px] bg-white"
+      className="fixed bottom-0 z-20 flex w-full items-center justify-center rounded-t-[16px] bg-white pb-[20px]"
     >
       {renderNavBar(navType)}
     </nav>
