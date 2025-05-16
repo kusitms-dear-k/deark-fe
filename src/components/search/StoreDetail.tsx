@@ -10,7 +10,6 @@ import { getStoreDetailData } from '@/api/searchAPI'
 import { ResponseType } from '@/types/common'
 import { useInfiniteStoreDesign } from '@/api/hooks/search/useInfiniteStoreDesign'
 import { useOrderStore } from '@/store/orderStore';
-
 interface Props {
   storeDetailMenu: '디자인' | '가게 정보' | '리뷰'
   setStoreDetailMenu: Dispatch<SetStateAction<'디자인' | '가게 정보' | '리뷰'>>
