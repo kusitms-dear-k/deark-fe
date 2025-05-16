@@ -1,5 +1,5 @@
-import { motion } from 'framer-motion';
-import Image from 'next/image';
+import { motion } from 'framer-motion'
+import Image from 'next/image'
 
 const FeatureSection = () => {
   return (
@@ -10,8 +10,7 @@ const FeatureSection = () => {
         transition={{ duration: 0.6, ease: 'easeOut' }}
         className="flex flex-col items-center justify-center gap-y-[16px]"
       >
-        <div
-          className="title-l flex h-[49px] w-[252px] items-center justify-center rounded-[12px] bg-[#3E98F9] text-[var(--white)]">
+        <div className="title-l flex h-[49px] w-[252px] items-center justify-center rounded-[12px] bg-[#3E98F9] text-[var(--white)]">
           1. 내 일정에 맞는 가게만 보기
         </div>
         <Image
@@ -31,8 +30,7 @@ const FeatureSection = () => {
           transition={{ duration: 0.8, ease: 'easeOut', delay: 0.2 }}
           className="absolute top-0 flex flex-col gap-y-[16px]"
         >
-          <div
-            className="title-l flex h-[49px] w-[252px] items-center justify-center rounded-[12px] bg-[#3E98F9] text-[var(--white)]">
+          <div className="title-l flex h-[49px] w-[252px] items-center justify-center rounded-[12px] bg-[#3E98F9] text-[var(--white)]">
             2. 가게들은 한 눈에 비교하기
           </div>
           <Image
@@ -51,8 +49,7 @@ const FeatureSection = () => {
           transition={{ duration: 1.0, ease: 'easeOut', delay: 0.5 }}
           className="absolute bottom-0 flex flex-col items-center gap-y-[16px]"
         >
-          <div
-            className="title-l flex h-[49px] w-[252px] items-center justify-center rounded-[12px] bg-[#3E98F9] text-[var(--white)]">
+          <div className="title-l flex h-[49px] w-[252px] items-center justify-center rounded-[12px] bg-[#3E98F9] text-[var(--white)]">
             3. 선택형 주문으로 간편히
           </div>
           <Image
@@ -75,4 +72,4 @@ const FeatureSection = () => {
     </div>
   )
 }
-export default FeatureSection;
+export default FeatureSection

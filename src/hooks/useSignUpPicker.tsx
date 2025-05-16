@@ -4,7 +4,7 @@ import { useLoginStore } from '@/store/authStore'
 import { useRouter } from 'next/navigation'
 
 const useSignUpPicker = () => {
-  const router = useRouter();
+  const router = useRouter()
   const [pickerSignUpInfo, setPickerSignUpInfo] = useState<CustomerSignUpType | null>(null)
   const imgRef = useRef<HTMLInputElement>(null)
   const [uploadImage, setUploadImage] = useState<string | ArrayBuffer | null>()
@@ -61,7 +61,7 @@ const useSignUpPicker = () => {
 
     // 전송
     useLoginStore.getState().customerSignUp(formData)
-    router.push('/home');
+    router.push('/home')
   }
 
   /**

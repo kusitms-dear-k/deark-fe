@@ -1,6 +1,4 @@
 const PersonalInformation = () => {
-  return (
-    <></>
-  )
+  return <></>
 }
-export default PersonalInformation;
+export default PersonalInformation

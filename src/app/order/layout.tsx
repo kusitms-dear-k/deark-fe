@@ -1,6 +1,6 @@
-'use client';
+'use client'
 
-import NavBar from '@/components/common/NavBar';
+import NavBar from '@/components/common/NavBar'
 
 const OrderLayout = ({ children }: { children: React.ReactNode }) => {
   return (
@@ -10,4 +10,4 @@ const OrderLayout = ({ children }: { children: React.ReactNode }) => {
     </div>
   )
 }
-export default OrderLayout;
+export default OrderLayout

@@ -1,10 +1,9 @@
 ---
 name: hotfix
 about: 빠르게 수정하기
-title: "[HOTFIX] hotfix 내용"
+title: '[HOTFIX] hotfix 내용'
 labels: "\U0001F525 hotfix"
 assignees: ''
-
 ---
 
 <!-- Assignees 체크하기 -->

@@ -1,6 +1,4 @@
 const MarketingInformation = () => {
-  return (
-    <></>
-  )
+  return <></>
 }
 export default MarketingInformation

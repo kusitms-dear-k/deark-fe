@@ -1,6 +1,4 @@
 const ThirdPartyAgreementConsent = () => {
-  return (
-    <></>
-  )
+  return <></>
 }
-export default ThirdPartyAgreementConsent;
+export default ThirdPartyAgreementConsent

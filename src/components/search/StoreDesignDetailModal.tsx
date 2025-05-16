@@ -1,8 +1,4 @@
 const StoreDesignDetailModal = () => {
-  return (
-    <div>
-
-    </div>
-  )
+  return <div></div>
 }
 export default StoreDesignDetailModal

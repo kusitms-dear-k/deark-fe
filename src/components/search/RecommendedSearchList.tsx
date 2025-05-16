@@ -1,9 +1,9 @@
 interface Props {
-  recommendedSearchList: string[];
+  recommendedSearchList: string[]
 }
 
 const RecommendedSearchList = (props: Props) => {
-  const {recommendedSearchList} = props;
+  const { recommendedSearchList } = props
   return (
     <section className={'flex flex-col gap-y-3'}>
       <h2 className={'title-l'}>추천 검색어</h2>
@@ -16,10 +16,10 @@ const RecommendedSearchList = (props: Props) => {
             >
               {recommendedSearchText}
             </div>
-          );
+          )
         })}
       </div>
     </section>
   )
 }
-export default RecommendedSearchList;
+export default RecommendedSearchList

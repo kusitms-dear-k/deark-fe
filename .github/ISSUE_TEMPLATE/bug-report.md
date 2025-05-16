@@ -1,10 +1,9 @@
 ---
 name: bug report
 about: 버그 보고하기
-title: "[BUG] bug 내용"
+title: '[BUG] bug 내용'
 labels: "\U0001F41B bug"
 assignees: ''
-
 ---
 
 <!-- Assignees 체크하기 -->

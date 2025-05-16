@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { motion } from 'framer-motion';
+import Image from 'next/image'
+import { motion } from 'framer-motion'
 
 const PainAndSolutionSection = () => {
   return (
@@ -35,20 +35,20 @@ const PainAndSolutionSection = () => {
       >
         <p className={'title-l mt-[32px] text-center'}>레터링케이크 주문할 때</p>
         <p className="headline-m mt-[7px] text-center">
-            <span className="relative inline-block">
-              <span className="text-[var(--main)] before:absolute before:top-[-20px] before:left-1 before:content-['•']">
-                어
-              </span>
-              <span className="text-[var(--main)] before:absolute before:top-[-20px] before:left-6 before:content-['•']">
-                떤
-              </span>{' '}
-              <span className="text-[var(--main)] before:absolute before:top-[-20px] before:left-13 before:content-['•']">
-                가
-              </span>
-              <span className="text-[var(--main)] before:absolute before:top-[-20px] before:left-18 before:content-['•']">
-                게
-              </span>
+          <span className="relative inline-block">
+            <span className="text-[var(--main)] before:absolute before:top-[-20px] before:left-1 before:content-['•']">
+              어
             </span>
+            <span className="text-[var(--main)] before:absolute before:top-[-20px] before:left-6 before:content-['•']">
+              떤
+            </span>{' '}
+            <span className="text-[var(--main)] before:absolute before:top-[-20px] before:left-13 before:content-['•']">
+              가
+            </span>
+            <span className="text-[var(--main)] before:absolute before:top-[-20px] before:left-18 before:content-['•']">
+              게
+            </span>
+          </span>
           에서 주문할지
           <br />
           막막하셨죠?
@@ -141,4 +141,4 @@ const PainAndSolutionSection = () => {
     </section>
   )
 }
-export default PainAndSolutionSection;
+export default PainAndSolutionSection
