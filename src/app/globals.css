@@ -106,7 +106,7 @@
 
 /* 전역 폰트 스타일 */
 body {
-font-family: 'Handsome Pro', Pretendard, 'Pretendard Variable', sans-serif;
+  font-family: 'Handsome Pro', Pretendard, 'Pretendard Variable', sans-serif;
   background-color: #ffffff;
   color: #000000;
 }
@@ -362,7 +362,7 @@ font-family: 'Handsome Pro', Pretendard, 'Pretendard Variable', sans-serif;
 
 /* 버튼 컴포넌트 */
 .blue-200-button {
-background-color: var(--blue-200);
+  background-color: var(--blue-200);
   display: flex;
   padding: 10px;
   justify-content: center;

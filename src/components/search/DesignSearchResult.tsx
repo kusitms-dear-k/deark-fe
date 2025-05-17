@@ -16,6 +16,10 @@ import { ResponseType } from '@/types/common'
 import DesignCardSkeleton from '@/components/skeleton/DesignCardSkeleton'
 import DesignCard from '@/components/search/DesignCard'
 import NoSearchResults from '@/components/search/NoSearchResults'
+import Cookies from 'js-cookie'
+import { useRouter } from 'next/navigation'
+import { EventApi } from '@/api/eventAPI'
+import { formatDateForApi } from '@/utils/formatDataForApi'
 
 type ModalViewType = 'eventList' | 'newEvent' | 'dateSelect' | 'locationSelect' | null
 
@@ -33,6 +37,8 @@ const DesignSearchResult = () => {
   const storeId = useSearchStore((state) => state.storeId)
   const designId = useSearchStore((state) => state.designId)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
+
+  const router = useRouter()
 
   // 무한스크롤 훅 호출
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteDesignSearch({
@@ -90,7 +96,7 @@ const DesignSearchResult = () => {
 
   // 이벤트 관련
   const [isGoLoginModal, setIsGoLoginModal] = useState<boolean>(true)
-  const [isLogin] = useState<boolean>(true)
+  const [isLogin, setIsLogin] = useState<boolean>(true)
 
   const [selectedDesign, setSelectedDesign] = useState<number | null>(null)
   const [modalView, setModalView] = useState<ModalViewType>(null)
@@ -104,17 +110,40 @@ const DesignSearchResult = () => {
   const [showToast, setShowToast] = useState<boolean>(false)
   const [toastMessage, setToastMessage] = useState<string>('')
 
-  const handleHeartClick = (designId: number) => {
-    if (!isLogin) {
+  const [eventList, setEventList] = useState<{ id: number; name: string; icon: string; isLiked: boolean }[]>([])
+  const handleHeartClick = async (itemId: number, type: 'design' | 'store') => {
+    const loginCheck = !!Cookies.get('ACCESS_TOKEN')
+    setIsLogin(loginCheck)
+
+    if (!loginCheck) {
       setIsGoLoginModal(true)
-    } else {
-      setSelectedDesign(designId)
-      setModalView('eventList')
+      return
     }
+    const events = await EventApi.getMyEvents()
+    const checkedEvents =
+      type === 'design'
+        ? await EventApi.getCheckedEventsByDesign(itemId)
+        : await EventApi.getCheckedEventsByStore(itemId)
+
+    const merged = events.map((event) => ({
+      id: event.eventId,
+      name: event.title,
+      icon: event.thumbnailUrl,
+      isLiked: checkedEvents.some((ce) => ce.eventId === event.eventId && ce.isChecked),
+    }))
+    setEventList(merged)
+
+    setSelectedDesign(itemId)
+    setModalView('eventList')
   }
 
-  const handleEventSelect = (eventId: number) => {
+  const handleEventSelect = async (eventId: number) => {
     console.log(`디자인 ${selectedDesign}을 이벤트 ${eventId}에 추가`)
+
+    await EventApi.mapDesignToEvents({
+      design_id: selectedDesign!,
+      event_ids: [eventId],
+    })
 
     setModalView(null)
 
@@ -126,14 +155,54 @@ const DesignSearchResult = () => {
     setModalView('newEvent')
   }
 
-  const handleSaveNewEvent = () => {
+  const handleSaveNewEvent = async () => {
     if (newEvent.name) {
-      setModalView(null)
+      try {
+        // CreateEventRequest 형식으로 변환
+        const eventData = {
+          title: newEvent.name,
+          event_date: formatDateForApi(newEvent.date), // 날짜 형식 변환 필요
+          address: newEvent.location,
+        }
 
-      setToastMessage('새 이벤트가 추가되었습니다')
-      setShowToast(true)
+        // API 호출로 이벤트 생성
+        const newEventId = await EventApi.createEvent(eventData)
 
-      setNewEvent({ name: '', date: '', location: '' })
+        // 성공 후 이벤트 목록 갱신 - 새로 생성된 이벤트 추가
+        const updatedEvents = [
+          {
+            id: newEventId,
+            name: newEvent.name,
+            icon: '/search/cake_img.png',
+            isLiked: false,
+          },
+          ...eventList,
+        ]
+        setEventList(updatedEvents)
+
+        // 모달 닫기
+        setModalView(null)
+
+        // 토스트 메시지 표시
+        setToastMessage('새 이벤트가 추가되었습니다')
+        setShowToast(true)
+
+        // 폼 초기화
+        setNewEvent({ name: '', date: '', location: '' })
+
+        // 선택한 디자인을 새 이벤트에 바로 추가하고 싶다면
+        if (selectedDesign) {
+          await EventApi.mapDesignToEvents({
+            design_id: selectedDesign,
+            event_ids: [newEventId],
+          })
+          setToastMessage('아이템을 새 폴더에 추가했어요')
+        }
+      } catch (error) {
+        console.error('이벤트 생성 실패:', error)
+        setToastMessage('이벤트 생성에 실패했습니다')
+        setShowToast(true)
+      }
     }
   }
 
@@ -155,7 +224,7 @@ const DesignSearchResult = () => {
   const renderModalContent = () => {
     switch (modalView) {
       case 'eventList':
-        return <EventSelectionContent onSelect={handleEventSelect} onAddNew={handleAddNewEvent} />
+        return <EventSelectionContent events={eventList} onSelect={handleEventSelect} onAddNew={handleAddNewEvent} />
       case 'newEvent':
         return (
           <NewEventContent
@@ -218,7 +287,7 @@ const DesignSearchResult = () => {
                         startPrice={design.price}
                         heartCount={design.likeCount}
                         location={design.address}
-                        onHeartClick={() => handleHeartClick(design.designId)}
+                        onHeartClick={() => handleHeartClick(design.designId, 'design')}
                       />
                     </div>
                   )
@@ -256,8 +325,8 @@ const DesignSearchResult = () => {
             <button
               className="bg-kakao absolute bottom-0 left-0 flex h-[2.625rem] w-full items-center justify-center gap-2 rounded-b-lg text-center"
               onClick={() => {
-                // 카카오 로그인 로직
                 setIsGoLoginModal(false)
+                router.push('/sign-up')
               }}
             >
               <KakaoIcon width={19} height={17} />

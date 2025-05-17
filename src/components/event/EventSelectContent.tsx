@@ -4,18 +4,12 @@ import { HeartIconEmpty, HeartIconFill, PlusIcon } from '@/assets/svgComponents'
 import Image from 'next/image'
 
 interface EventSelectionContentProps {
+  events: { id: number; name: string; icon: string; isLiked: boolean }[]
   onSelect: (eventId: number) => void
   onAddNew: () => void
 }
 
-const EventSelectionContent = ({ onSelect, onAddNew }: EventSelectionContentProps) => {
-  // 샘플 이벤트 데이터
-  const events = [
-    { id: 1, name: '기본 이벤트', icon: '/search/cake_img.png', isLiked: false },
-    { id: 2, name: '수학여행 200일', icon: '/search/cake_img.png', isLiked: true },
-    { id: 3, name: '민채 생일🎂', icon: '/search/cake_img.png', isLiked: false },
-  ]
-
+const EventSelectionContent = ({ events, onSelect, onAddNew }: EventSelectionContentProps) => {
   return (
     <div className="divide-y divide-gray-100">
       <button
@@ -36,7 +30,7 @@ const EventSelectionContent = ({ onSelect, onAddNew }: EventSelectionContentProp
         >
           <div className="body-l-1 flex items-center gap-3">
             <div className="h-9 w-9 overflow-hidden rounded-full bg-gray-200">
-              <Image src={event.icon} width={32} height={32} alt="" />
+              <Image src={event.icon ?? '/search/cake_img.png'} width={32} height={32} alt="" />
             </div>
             <span className={event.id === 2 ? 'font-bold' : ''}>{event.name}</span>
           </div>
