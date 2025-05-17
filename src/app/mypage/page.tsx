@@ -11,6 +11,8 @@ import { ResponseType } from '@/types/common'
 import RecommendCard from '@/components/search/RecommendCard'
 import RecommendCardSkeleton from '@/components/skeleton/RecommendCardSkeleton'
 import DesignCard from '@/components/search/DesignCard'
+import { useOrderStore } from '@/store/orderStore'
+import Order from '@/components/order/Order'
 
 const MyPage = () => {
   const router = useRouter()
