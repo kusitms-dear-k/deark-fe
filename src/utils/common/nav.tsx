@@ -1,4 +1,3 @@
-
 import * as React from 'react'
 import type { SVGProps } from 'react'
 
@@ -40,7 +39,6 @@ const ClickedHeartIcon = (props: SVGProps<SVGSVGElement>) => (
 )
 const ClickedMyPageIcon = (props: SVGProps<SVGSVGElement>) => (
   <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} fill="none" {...props}>
-
     <path
       fill="#D22E2F"
       fillRule="evenodd"
@@ -79,7 +77,7 @@ const ClickedStoreIcon = (props: SVGProps<SVGSVGElement>) => (
 export const PICKER_MENU_LIST: MenuListType[] = [
   { id: 1, unClickedIcon: '/common/gray_home_icon.svg', ClickedIcon: ClickedHomeIcon, path: '/home' },
   { id: 2, unClickedIcon: '/common/gray_search_icon.svg', ClickedIcon: ClickedSearchIcon, path: '/search' },
-  { id: 3, unClickedIcon: '/common/gray_heart_icon.svg', ClickedIcon: ClickedHeartIcon, path: '/like' },
+  { id: 3, unClickedIcon: '/common/gray_heart_icon.svg', ClickedIcon: ClickedHeartIcon, path: '/event' },
   { id: 4, unClickedIcon: '/common/gray_mypage_icon.svg', ClickedIcon: ClickedMyPageIcon, path: '/mypage' },
 ]
 
