@@ -6,7 +6,7 @@ const BottomModal = ({ children, onClick }: { children: React.ReactNode; onClick
     <div onClick={onClick} className={'fixed inset-0 z-50 flex min-h-screen flex-col gap-y-2 bg-[rgba(0,0,0,0.6)]'}>
       <motion.div
         onClick={(e) => e.stopPropagation()}
-        className="absolute bottom-0 flex h-[800px] w-full flex-col items-center justify-center rounded-t-[16px] bg-[var(--white)] py-[20px]"
+        className="absolute bottom-0 flex h-[600px] w-full flex-col items-center justify-center rounded-t-[16px] bg-[var(--white)] py-[20px] overflow-y-scroll"
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}

@@ -1,9 +1,17 @@
-import { OrderMenuKorType, OrderMenuType } from '@/types/mypage'
+import { OrderMenuKorType, OrderMenuType, RequestCountType } from '@/types/mypage'
 import { useOrderStore } from '@/store/orderStore'
 
-const OrderMenu = () => {
+interface Props {
+  requestCountList: RequestCountType[] | undefined
+}
+
+const OrderMenu = (props: Props) => {
+  const { requestCountList } = props
   const orderMenu = useOrderStore((state) => state.status)
   const setState = useOrderStore((state) => state.setState)
+  const pendingCount = requestCountList?.find((q) => q.status === 'PENDING')?.count || ''
+  const acceptedCount = requestCountList?.find((q) => q.status === 'ACCEPTED')?.count || ''
+  const rejectedCount = requestCountList?.find((q) => q.status === 'REJECTED')?.count || ''
 
   const menuContents: { kor: OrderMenuKorType; eng: OrderMenuType }[] = [
     { kor: '응답 대기', eng: 'PENDING' },
@@ -13,6 +21,17 @@ const OrderMenu = () => {
     },
     { kor: '반려', eng: 'REJECTED' },
   ]
+
+  const renderCountByStatus = (status: OrderMenuType) => {
+    switch (status) {
+      case 'PENDING':
+        return pendingCount
+      case 'ACCEPTED':
+        return acceptedCount
+      default:
+        return rejectedCount
+    }
+  }
 
   return (
     <div className="w-full px-[1.25rem]">
@@ -30,7 +49,7 @@ const OrderMenu = () => {
                   : 'body-m-m bg-gray-150 w-[7.125rem] text-gray-400'
               }
             >
-              {menuContent.kor}
+              {`${menuContent.kor}(${renderCountByStatus(menuContent.eng)})`}
             </button>
           )
         })}

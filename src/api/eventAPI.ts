@@ -189,6 +189,7 @@ export const EventApi = {
         Authorization:
           'Bearer ' +
           'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+
       },
     })
     return handleResponse<void>(res)
