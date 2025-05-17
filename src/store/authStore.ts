@@ -9,16 +9,21 @@ import {
 } from '@/api/authenticationAPI'
 import { ResponseType, UserLoginRoleType } from '@/types/common'
 import Cookies from 'js-cookie'
+import { OrderFormDesignType, OrderFormRequestDetailType, OrderMenuType, QaDetailType } from '@/types/mypage'
 
 interface LoginState {
   user: LoginType | null
   customer: CustomerSignUpType | null
   isLoading: boolean
   error: boolean | null
+  isWelcomeModalOpen: boolean
+  isGuardianModalOpen: boolean
+
   kakaoLogin: (code: string) => void
   changeRole: (role: UserLoginRoleType) => void
   validationNickname: (nickName: string) => Promise<boolean>
   customerSignUp: (formData: FormData) => void
+  setState: (params: { isWelcomeModalOpen?: boolean; isGuardianModalOpen?: boolean }) => void
 }
 
 export const useLoginStore = create<LoginState>((set) => ({
@@ -26,6 +31,15 @@ export const useLoginStore = create<LoginState>((set) => ({
   customer: null,
   isLoading: false,
   error: null,
+  isWelcomeModalOpen: true,
+  isGuardianModalOpen: false,
+
+  setState: (params: { isWelcomeModalOpen?: boolean; isGuardianModalOpen?: boolean }) => {
+    set((state) => ({
+      ...state,
+      ...params,
+    }))
+  },
 
   kakaoLogin: async (code: string) => {
     const kakaoToken = Cookies.get('kakaoAccessToken')
