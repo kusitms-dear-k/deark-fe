@@ -1,7 +1,8 @@
 import Image from 'next/image'
-
 import { DesignDetailType } from '@/types/search'
 import { HeartIcon, HeartIconFill } from '@/assets/svgComponents'
+import { useOrderStore } from '@/store/orderStore';
+import { useSearchStore } from '@/store/searchStore';
 
 interface Props {
   designDetail: DesignDetailType | undefined
@@ -9,6 +10,8 @@ interface Props {
 
 const DesignDetailContent = (props: Props) => {
   const { designDetail } = props
+
+  const setState = useOrderStore((state) =>state.setState)
 
   return (
     <>
@@ -83,7 +86,11 @@ const DesignDetailContent = (props: Props) => {
             </section>
           </div>
           <div className="border-gray-150 bottom-0 w-full border-t bg-white px-[1.25rem] pt-[1.25rem]">
-            <button className="button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white">
+            <button
+              onClick={() => {
+                setState({isOrderFormOpen: true})
+              }}
+              className="button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white">
               주문하러 가기
             </button>
           </div>

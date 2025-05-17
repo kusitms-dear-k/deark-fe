@@ -9,7 +9,7 @@ import { useSearchStore } from '@/store/searchStore'
 import { getStoreDetailData } from '@/api/searchAPI'
 import { ResponseType } from '@/types/common'
 import { useInfiniteStoreDesign } from '@/api/hooks/search/useInfiniteStoreDesign'
-
+import { useOrderStore } from '@/store/orderStore';
 interface Props {
   storeDetailMenu: '디자인' | '가게 정보' | '리뷰'
   setStoreDetailMenu: Dispatch<SetStateAction<'디자인' | '가게 정보' | '리뷰'>>
@@ -20,6 +20,8 @@ const StoreDetail = (props: Props) => {
   const [storeDetail, setStoreDetail] = useState<StoreDetailType>() // 가게 상세 페이지 데이터
   const storeId = useSearchStore((state) => state.storeId) //선택된 storeId
   const sizeName = useSearchStore((state) => state.sizeName) //케이크 필터
+
+  const setState = useOrderStore((state) =>state.setState)
 
   // 무한스크롤 훅 호출
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteStoreDesign({
@@ -128,7 +130,9 @@ const StoreDetail = (props: Props) => {
           <StoreDetailMenu storeDetailMenu={storeDetailMenu} setStoreDetailMenu={setStoreDetailMenu} />
           {renderStoreDetailContent(storeDetailMenu)}
           <div className={'border-gray-150 bottom-0 z-10 w-full border-t bg-white px-[1.25rem] pt-[1.25rem]'}>
-            <button className={'button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white'}>
+            <button
+              onClick={() => setState({isOrderFormOpen: true})}
+              className={'button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white'}>
               주문하러 가기
             </button>
           </div>

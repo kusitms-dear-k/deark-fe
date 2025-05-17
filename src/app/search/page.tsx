@@ -20,12 +20,17 @@ import { AnimatePresence } from 'framer-motion'
 import StoreDetail from '@/components/search/StoreDetail'
 import { getDesignDetailData } from '@/api/searchAPI'
 import { DesignDetailType } from '@/types/search'
+import { useOrderStore } from '@/store/orderStore';
+import OrderForm from '@/components/order/OrderForm';
+import GATracker from '@/components/GATracker'
+
 
 const SearchPage = () => {
   const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
   // 모달 관련 state
   const isStoreDetailModalOpen = useSearchStore((state) => state.isStoreDetailModalOpen)
   const isDesignDetailModalOpen = useSearchStore((state) => state.isDesignDetailModalOpen)
+  const isOrderFormOpen= useOrderStore((state) => state.isOrderFormOpen)
   // 필터 관련 state
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>('ADDRESS')
@@ -142,51 +147,127 @@ const SearchPage = () => {
               totalResultCount={totalCount}
             />
           </section>
+        )
+      case 'PRICE':
+        return (
+          <section className="flex flex-col justify-start gap-y-[0.125rem] py-[0.438rem]">
+            <Filter.Menu
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+            />
+            <PriceFilterContent
+              minPrice={minPrice}
+              setMinPrice={setMinPrice}
+              setMaxPrice={setMaxPrice}
+              maxPrice={maxPrice}
+            />
+            <Filter.BottomButton
+              reset={() => {
+                setMinPrice(null)
+                setMaxPrice(null)
+                setSearchParams({ minPrice: null, maxPrice: null })
+                setIsFilterModalOpen(false)
+              }}
+              apply={() => {
+                setSearchParams({ minPrice: minPrice, maxPrice: maxPrice })
+                setIsFilterModalOpen(false)
+              }}
+              totalResultCount={totalCount}
+            />
+          </section>
+        )
+      case 'DATE':
+        return (
+          <section>
+            <Filter.Menu
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+            />
+          </section>
+        )
+      case 'PRICE':
+        return (
+          <section className="flex flex-col justify-start gap-y-[0.125rem] py-[0.438rem]">
+            <Filter.Menu
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+            />
+            <PriceFilterContent
+              minPrice={minPrice}
+              setMinPrice={setMinPrice}
+              setMaxPrice={setMaxPrice}
+              maxPrice={maxPrice}
+            />
+            <Filter.BottomButton
+              reset={() => {
+                setMinPrice(null)
+                setMaxPrice(null)
+                setSearchParams({ minPrice: null, maxPrice: null })
+                setIsFilterModalOpen(false)
+              }}
+              apply={() => {
+                setSearchParams({ minPrice: minPrice, maxPrice: maxPrice })
+                setIsFilterModalOpen(false)
+              }}
+              totalResultCount={totalCount}
+            />
+          </section>
         );
     }
   };
 
   return (
     <main className="flex min-h-screen flex-col">
-      {/* 필터 모달 */}
-      <AnimatePresence>
-        {isFilterModalOpen && (
-          <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
-        )}
-      </AnimatePresence>
+      <GATracker />
+      {/* 주문서 작성 폼 모달 */}
+      {isOrderFormOpen ? (
+        <OrderForm />
+      ) : (
+        <>
+          {/* 필터 모달 */}
+          <AnimatePresence>
+            {isFilterModalOpen && (
+              <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
+            )}
+          </AnimatePresence>
 
-      {/* 가게 상세 페이지 모달 */}
-      {isStoreDetailModalOpen && (
-        <AnimatePresence>
-          <BottomModal onClick={() => setSearchParams({ isStoreDetailModalOpen: false })}>
-            <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
-          </BottomModal>
-        </AnimatePresence>
-      )}
+          {/* 가게 상세 페이지 모달 */}
+          {isStoreDetailModalOpen && (
+            <AnimatePresence>
+              <BottomModal onClick={() => setSearchParams({ isStoreDetailModalOpen: false })}>
+                <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
+              </BottomModal>
+            </AnimatePresence>
+          )}
 
-      {/* 디자인 상세 페이지 모달 */}
-      {isDesignDetailModalOpen && (
-        <AnimatePresence>
-          <BottomModal onClick={() => setSearchParams({ isDesignDetailModalOpen: false })}>
-            <DesignDetailContent designDetail={designDetail} />
-          </BottomModal>
-        </AnimatePresence>
+          {/* 디자인 상세 페이지 모달 */}
+          {isDesignDetailModalOpen && (
+            <AnimatePresence>
+              <BottomModal onClick={() => setSearchParams({ isDesignDetailModalOpen: false })}>
+                <DesignDetailContent designDetail={designDetail} />
+              </BottomModal>
+            </AnimatePresence>
+          )}
+          <Header headerType="SEARCH" keyword={keyword} />
+          <SearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
+          <FilterPanel
+            isFilterModalOpen={isFilterModalOpen}
+            selectedFilterType={selectedFilterType}
+            setIsFilterModalOpen={setIsFilterModalOpen}
+            setSelectedFilterType={setSelectedFilterType}
+          />
+          <SearchSummaryPanel
+            totalCount={totalCount}
+            sortType={sortType}
+            setSelectedFilterType={setSelectedFilterType}
+            setSortModalOpen={setIsFilterModalOpen}
+          />
+          {searchMenu === '스토어' ? <StoreSearchResult /> : <DesignSearchResult />}
+        </>
       )}
-      <Header headerType="SEARCH" keyword={keyword} />
-      <SearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
-      <FilterPanel
-        isFilterModalOpen={isFilterModalOpen}
-        selectedFilterType={selectedFilterType}
-        setIsFilterModalOpen={setIsFilterModalOpen}
-        setSelectedFilterType={setSelectedFilterType}
-      />
-      <SearchSummaryPanel
-        totalCount={totalCount}
-        sortType={sortType}
-        setSelectedFilterType={setSelectedFilterType}
-        setSortModalOpen={setIsFilterModalOpen}
-      />
-      {searchMenu === '스토어' ? <StoreSearchResult /> : <DesignSearchResult />}
     </main>
   );
 };
