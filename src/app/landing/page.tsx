@@ -1,6 +1,12 @@
+import GATracker from '@/components/GATracker'
+import Landing from '@/components/landing/Landing'
+
 const LandingPage = () => {
   return (
-    <LandingPage />
+    <>
+      <GATracker />
+      <Landing />
+    </>
   )
 }
 export default LandingPage;

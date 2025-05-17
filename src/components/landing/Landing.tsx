@@ -8,7 +8,7 @@ import FeatureSection from '@/components/landing/FeatureSection';
 import SloganSection from '@/components/landing/SloganSection';
 import CallToActionSection from '@/components/landing/CallToActionSection';
 
-const LandingPage = () => {
+const Landing = () => {
   const [isNoModalOpen, setIsNoModalOpen] = useState<boolean>(false);
   const [isYesModalOpen, setIsYesModalOpen] = useState<boolean>(false);
 
@@ -40,4 +40,4 @@ const LandingPage = () => {
     </div>
   );
 }
-export default LandingPage;
+export default Landing;
