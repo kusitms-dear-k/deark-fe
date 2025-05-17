@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from 'react'
 import Header from '@/components/common/Header'
 import RecentSearchList from '@/components/search/RecentSearchList'
 import RecommendedSearchList from '@/components/search/RecommendedSearchList'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   setIsTotalSearchPage: Dispatch<SetStateAction<boolean>>
@@ -10,6 +11,8 @@ interface Props {
 
 const TotalSearchPage = (props: Props) => {
   const { setIsTotalSearchPage } = props
+  const router = useRouter()
+
   const textList = [
     '젠더리빌 케이크',
     '엄마아빠 로또케이크',
@@ -18,9 +21,13 @@ const TotalSearchPage = (props: Props) => {
     '생화 케이크',
     '당일예약 케이크',
   ]
+
   return (
     <>
       <Header
+        onClick={() => {
+          router.push('/search')
+        }}
         headerType={'SEARCH'}
         onBack={() => {
           setIsTotalSearchPage(false)

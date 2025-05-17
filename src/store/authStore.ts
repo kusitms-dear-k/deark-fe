@@ -31,7 +31,7 @@ export const useLoginStore = create<LoginState>((set) => ({
   customer: null,
   isLoading: false,
   error: null,
-  isWelcomeModalOpen: true,
+  isWelcomeModalOpen: false,
   isGuardianModalOpen: false,
 
   setState: (params: { isWelcomeModalOpen?: boolean; isGuardianModalOpen?: boolean }) => {

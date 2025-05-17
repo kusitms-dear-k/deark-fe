@@ -16,7 +16,7 @@ const GuardianModal = (props: Props) => {
   const { onClick } = props
   return (
     <div className="bg-white min-h-screen">
-      <div className="px-5 pt-[63px] flex w-full justify-between">
+      <div className="px-5 pt-[48px] flex w-full justify-between">
         <div>
           <h1 className="key-visual-m text-red-400">Cake is easy</h1>
 
@@ -31,7 +31,7 @@ const GuardianModal = (props: Props) => {
       <div
         onClick={onClick}
         className="fixed inset-0 z-50 flex min-h-screen flex-col items-center justify-center gap-y-2 bg-[rgba(0,0,0,0.6)]">
-        <div className="absolute top-10 left-5 w-[90%]">
+        <div className="absolute top-6 left-5 w-[90%]">
           <div className="flex w-full justify-between">
             <div>
             </div>
