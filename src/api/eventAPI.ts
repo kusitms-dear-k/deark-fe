@@ -26,8 +26,7 @@ export const EventApi = {
       method: 'GET',
       headers: {
         Authorization:
-          'Bearer' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
       },
     })
     return handleResponse<EventDetail>(res)
@@ -40,7 +39,7 @@ export const EventApi = {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
@@ -55,7 +54,7 @@ export const EventApi = {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
@@ -70,7 +69,7 @@ export const EventApi = {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
       },
     })
     return handleResponse<void>(res)
@@ -83,7 +82,7 @@ export const EventApi = {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
@@ -98,7 +97,7 @@ export const EventApi = {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
@@ -113,7 +112,7 @@ export const EventApi = {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
       },
     })
     return handleResponse<StoreItem[]>(res)
@@ -126,7 +125,7 @@ export const EventApi = {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
       },
     })
     return handleResponse<DesignItem[]>(res)
@@ -139,7 +138,7 @@ export const EventApi = {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
       },
     })
     return handleResponse<EventDetail[]>(res)
@@ -151,7 +150,7 @@ export const EventApi = {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
       },
     })
     return handleResponse<EventCheckItem[]>(res)
@@ -163,7 +162,7 @@ export const EventApi = {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
       },
     })
     return handleResponse<EventCheckItem[]>(res)
@@ -176,7 +175,7 @@ export const EventApi = {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
       },
     })
     return handleResponse<void>(res)
@@ -189,7 +188,7 @@ export const EventApi = {
       headers: {
         Authorization:
           'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NDU3OTEsImV4cCI6MTc0NzQ0OTM5MSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.OFTn79I0ziyaFoOyuWrKowyLANYFwVkN12HyX0GZwqJPizswU4yG-BHLdCg2STb2Lc00p2ta4wEraJXPk0Je2A',
+          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
       },
     })
     return handleResponse<void>(res)

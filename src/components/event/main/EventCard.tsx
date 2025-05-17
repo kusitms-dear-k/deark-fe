@@ -31,11 +31,11 @@ export default function EventCard({ event, stores, designs, onMenuClick }: Event
   }
 
   return (
-    <div
-      className="shadow-middlemodal h-[15.125rem] w-[10.5rem] rounded-sm bg-white px-2 py-4"
-      onClick={handleCardClick}
-    >
-      <div className={`mb-2 ${thumbnails.length > 1 ? 'grid grid-cols-2 grid-rows-2 gap-1' : ''}`}>
+    <div className="shadow-middlemodal h-[15.125rem] w-[10.5rem] rounded-sm bg-white px-2 py-4">
+      <div
+        className={`mb-2 ${thumbnails.length > 1 ? 'grid grid-cols-2 grid-rows-2 gap-1' : ''}`}
+        onClick={handleCardClick}
+      >
         {thumbnails.map((url, i) => (
           <div key={i} className="relative aspect-square overflow-hidden rounded">
             <Image src={url} alt={event.title} fill className="object-cover" />
