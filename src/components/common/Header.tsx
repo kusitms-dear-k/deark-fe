@@ -31,7 +31,6 @@ const Header = (props: Props) => {
                   <BellIcon width={24} height={24} />
                   <div className="absolute top-0 right-0 h-[0.375rem] w-[0.375rem] rounded-full bg-red-400"></div>
                 </div>
-
                 <ProfileIcon
                   onClick={() => {
                     router.push('/mypage')

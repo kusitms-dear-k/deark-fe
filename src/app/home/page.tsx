@@ -55,8 +55,6 @@ const HomePage = () => {
         }}
         LeftIcon={<SearchIconRed width={24} height={24}></SearchIconRed>}
       />
-      <TagList tagList={tagList} />
-      <NavBar />
     </main>
   )
 }

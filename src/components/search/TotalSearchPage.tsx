@@ -21,7 +21,6 @@ const TotalSearchPage = (props: Props) => {
     '생화 케이크',
     '당일예약 케이크',
   ]
-
   return (
     <>
       <Header

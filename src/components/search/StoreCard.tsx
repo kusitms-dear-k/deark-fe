@@ -75,6 +75,6 @@ const StoreCard = (props: Props) => {
         )}
       </section>
     </div>
-  )
+  );
 }
 export default StoreCard

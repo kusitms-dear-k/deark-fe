@@ -69,4 +69,3 @@ export interface UTEventDesignType {
 export interface OrderFormCreamType {creamName: string}
 export interface OrderFormSheetType {sheetName: string}
 export interface OrderFormSizeType {sizeName: string}
-

@@ -80,7 +80,7 @@ const NavBar = (props: Props) => {
           )
         })
     }
-  }
+  };
 
   return (
     <nav
@@ -89,6 +89,6 @@ const NavBar = (props: Props) => {
     >
       {renderNavBar(navType)}
     </nav>
-  )
-}
-export default NavBar
+  );
+};
+export default NavBar;

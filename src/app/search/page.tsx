@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react'
 
@@ -23,6 +23,7 @@ import { DesignDetailType } from '@/types/search'
 import { useOrderStore } from '@/store/orderStore';
 import OrderForm from '@/components/order/OrderForm';
 import GATracker from '@/components/GATracker'
+
 
 const SearchPage = () => {
   const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
@@ -147,8 +148,76 @@ const SearchPage = () => {
             />
           </section>
         )
+      case 'PRICE':
+        return (
+          <section className="flex flex-col justify-start gap-y-[0.125rem] py-[0.438rem]">
+            <Filter.Menu
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+            />
+            <PriceFilterContent
+              minPrice={minPrice}
+              setMinPrice={setMinPrice}
+              setMaxPrice={setMaxPrice}
+              maxPrice={maxPrice}
+            />
+            <Filter.BottomButton
+              reset={() => {
+                setMinPrice(null)
+                setMaxPrice(null)
+                setSearchParams({ minPrice: null, maxPrice: null })
+                setIsFilterModalOpen(false)
+              }}
+              apply={() => {
+                setSearchParams({ minPrice: minPrice, maxPrice: maxPrice })
+                setIsFilterModalOpen(false)
+              }}
+              totalResultCount={totalCount}
+            />
+          </section>
+        )
+      case 'DATE':
+        return (
+          <section>
+            <Filter.Menu
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+            />
+          </section>
+        )
+      case 'PRICE':
+        return (
+          <section className="flex flex-col justify-start gap-y-[0.125rem] py-[0.438rem]">
+            <Filter.Menu
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+            />
+            <PriceFilterContent
+              minPrice={minPrice}
+              setMinPrice={setMinPrice}
+              setMaxPrice={setMaxPrice}
+              maxPrice={maxPrice}
+            />
+            <Filter.BottomButton
+              reset={() => {
+                setMinPrice(null)
+                setMaxPrice(null)
+                setSearchParams({ minPrice: null, maxPrice: null })
+                setIsFilterModalOpen(false)
+              }}
+              apply={() => {
+                setSearchParams({ minPrice: minPrice, maxPrice: maxPrice })
+                setIsFilterModalOpen(false)
+              }}
+              totalResultCount={totalCount}
+            />
+          </section>
+        );
     }
-  }
+  };
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -200,6 +269,6 @@ const SearchPage = () => {
         </>
       )}
     </main>
-  )
-}
-export default SearchPage
+  );
+};
+export default SearchPage;
