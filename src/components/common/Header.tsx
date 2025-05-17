@@ -12,10 +12,11 @@ interface Props {
   className?: string
   description?: string
   fixed?: boolean
+  onClick?: () => void
 }
 
 const Header = (props: Props) => {
-  const { onBack, headerType, keyword, title, className, description, fixed = true } = props
+  const { onBack, headerType, keyword, title, className, description, fixed = true, onClick } = props
   const router = useRouter()
 
   const renderHeaderType = (headerType: HeaderType) => {
@@ -73,6 +74,7 @@ const Header = (props: Props) => {
               }}
             />
             <SearchInput
+              onClick={onClick}
               keyword={keyword ? keyword : null}
               RightIcon={
                 <div className="flex items-center gap-x-[0.75rem]">

@@ -35,6 +35,18 @@ const FilterPanel = (props: Props) => {
     if (minPrice !== 0 && maxPrice === null) return `${minPrice} 이상`
   }
 
+  const handleIsSelfServiceClick = () => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'filter-isSelfService');
+    }
+  };
+
+  const handleIsLunchBoxCakeClick = () => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', 'filter-isSelfService');
+    }
+  };
+
   return (
     <section className="border-gray-150 fixed top-[11.063rem] z-30 flex w-full items-center gap-x-[0.5rem] overflow-x-scroll border-b bg-white py-[0.75rem] pl-[1.25rem]">
       <button
@@ -161,6 +173,7 @@ const FilterPanel = (props: Props) => {
 
       <button
         onClick={() => {
+          handleIsSelfServiceClick()
           setSearchParams({ isSelfService: !searchState.isSelfService })
         }}
         className={
@@ -181,6 +194,7 @@ const FilterPanel = (props: Props) => {
 
       <button
         onClick={() => {
+          handleIsLunchBoxCakeClick()
           setSearchParams({ isLunchBoxCake: !searchState.isLunchBoxCake })
         }}
         className={

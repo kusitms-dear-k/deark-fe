@@ -2,6 +2,7 @@ import { BlackCalendarIcon, GrayRightArrowIcon } from '@/assets/svgComponents'
 import Image from 'next/image'
 import { OrderMenuType, OrderType } from '@/types/mypage'
 import { Dispatch, SetStateAction } from 'react'
+import { useOrderStore } from '@/store/orderStore'
 
 interface Props extends OrderType {
   status: OrderMenuType
@@ -21,11 +22,14 @@ const OrderCard = (props: Props) => {
     setIsRequestModalOpen,
     isRequestModalOpen,
   } = props
-  const pickupDate = qaDetails.find((q) => q.title === 'pickupDate')?.answer || ''
-  const pickupTime = qaDetails.find((q) => q.title === 'pickupTime')?.answer || ''
-  const sheet = qaDetails.find((q) => q.title === 'sheet')?.answer || ''
-  const size = qaDetails.find((q) => q.title === 'size')?.answer || ''
-  const cream = qaDetails.find((q) => q.title === 'cream')?.answer || ''
+  const pickupDate = qaDetails.find((q: {title: string}) => q.title === 'pickupDate')?.answer || ''
+  const pickupTime = qaDetails.find((q: {title: string}) => q.title === 'pickupTime')?.answer || ''
+  const sheet = qaDetails.find((q: {title: string}) => q.title === 'sheet')?.answer || ''
+  const size = qaDetails.find((q: {title: string}) => q.title === 'size')?.answer || ''
+  const cream = qaDetails.find((q: {title: string}) => q.title === 'cream')?.answer || ''
+
+
+  const setState = useOrderStore((state) => state.setState)
 
   function formatShortDate(dateStr: string) {
     const regex = /(\d{4})-(\d{2})-(\d{2})\((.)\)/
@@ -96,7 +100,13 @@ const OrderCard = (props: Props) => {
             <span className="title-l text-gray-700">{formatShortDate(requestDate)}</span> 요청 날짜
           </h3>
         </div>
-        <button className="bg-gray-150 body-m-m px- flex h-fit items-center gap-x-[0.25rem] rounded-[0.25rem] px-[0.438rem] py-[0.25rem] text-gray-500">
+        <button
+          type={'button'}
+          onClick={() => {
+            setState({isOrderOpen: true})
+            // setState({messageId: messageId})
+          }}
+          className="bg-gray-150 body-m-m px- flex h-fit items-center gap-x-[0.25rem] rounded-[0.25rem] px-[0.438rem] py-[0.25rem] text-gray-500">
           주문서 보기
           <GrayRightArrowIcon width={5} height={10} />
         </button>

@@ -16,6 +16,8 @@ const AdditionalRequestField = (props: Props) => {
   const editableRef = useRef<HTMLDivElement>(null) // ✅ contentEditable ref
   const setState = useOrderStore((state) => state.setState)
   const selectedRequestDetailDesignUrl = useOrderStore((state) => state.selectedRequestDetailDesignUrl)
+  const answers = useOrderStore((state) => state.answers)
+  const additionalRequestField = answers?.find((a) => a.title === '전화번호')?.answer ?? ''
 
   return (
     <section>
@@ -44,9 +46,15 @@ const AdditionalRequestField = (props: Props) => {
         />
 
         {/* 커스텀 placeholder */}
-        <div className="body-m pointer-events-none hidden border text-gray-400 peer-empty:block">
-          원하는 요청사항을 작성해주세요.
-        </div>
+        {/*{additionalRequestField ? (*/}
+        {/*  <div className="body-m pointer-events-none hidden border text-gray-400 peer-empty:block">*/}
+        {/*    {additionalRequestField}*/}
+        {/*  </div>*/}
+        {/*) : (*/}
+        {/*  <div className="body-m pointer-events-none text-gray-400">*/}
+        {/*    원하는 요청사항을 작성해주세요.*/}
+        {/*  </div>*/}
+        {/*)}*/}
       </div>
 
       {uploadRequestDetailImage || selectedRequestDetailDesignUrl ? (
@@ -56,7 +64,7 @@ const AdditionalRequestField = (props: Props) => {
               src={
                 typeof uploadRequestDetailImage === 'string'
                   ? uploadRequestDetailImage
-                  : selectedRequestDetailDesignUrl as string // null일 수 있으므로 안전하게 단언
+                  : (selectedRequestDetailDesignUrl as string) // null일 수 있으므로 안전하게 단언
               }
               alt="케이크"
               fill

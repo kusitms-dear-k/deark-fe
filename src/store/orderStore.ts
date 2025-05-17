@@ -20,6 +20,7 @@ interface OrderStoreType extends OrderFormType {
   selectedEventTitle: string | null,
   isOrderFormOpen: boolean
   isOrderOpen: boolean
+  messageId: number
   setState: (params: {
     status?: OrderMenuType
     storeId?: number | null
@@ -34,6 +35,7 @@ interface OrderStoreType extends OrderFormType {
     answers?: QaDetailType[] | null
     isOrderFormOpen?: boolean
     isOrderOpen?: boolean
+    messageId?: number
   }) => void
 }
 
@@ -53,6 +55,7 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
   selectedEventId: null,
   selectedEventTitle: null,
   answers: null,
+  messageId: 4,
   //모달 오픈
   isOrderFormOpen: false,
   isOrderOpen: false,
@@ -72,6 +75,7 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
     answers?: QaDetailType[] | null
     isOrderFormOpen?: boolean
     isOrderOpen?: boolean
+    messageId?: number
   }) => {
     set((state) => ({
       ...state,
