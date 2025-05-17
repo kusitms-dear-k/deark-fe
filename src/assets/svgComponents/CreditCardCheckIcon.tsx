@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const SvgCreditCardCheckIcon = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 25 24" {...props}><path stroke="#fff" strokeLinecap="round" strokeLinejoin="round" d="m16.032 18 2 2 4-4m0-6h-20m20 2V8.2c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C20.512 5 19.952 5 18.832 5h-13.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874c-.218.428-.218.988-.218 2.108v7.6c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874c.428.218.988.218 2.108.218h6.8" /></svg>;
+export default SvgCreditCardCheckIcon;
