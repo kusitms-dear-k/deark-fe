@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "svgr": "svgr --icon --typescript --no-prettier --out-dir src/assets/svgComponents public/common"
+    "svgr": "svgr --icon --typescript --no-prettier --out-dir src/assets/svgComponents public/common --ignore-existing"
   },
   "dependencies": {
     "@svgr/cli": "^8.1.0",
