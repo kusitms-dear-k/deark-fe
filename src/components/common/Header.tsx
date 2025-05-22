@@ -10,9 +10,9 @@ interface Props {
   headerType: HeaderType
   keyword?: null | string
   title?: string
+  headerClassname?: string
   className?: string
   description?: string
-  fixed?: boolean
   onClick?: () => void
   onKeyDown?: () => void
   RightIcon?: React.ReactNode
@@ -25,9 +25,9 @@ const Header = (props: Props) => {
     headerType,
     keyword,
     title,
+    headerClassname = 'bg-white',
     className,
     description,
-    fixed = true,
     onClick,
     onKeyDown,
     RightIcon,
@@ -68,7 +68,7 @@ const Header = (props: Props) => {
         )
       case 'SEARCH':
         return (
-          <div className="flex w-full items-center gap-x-[0.5rem] px-[1.25rem] pb-4">
+          <div className="flex w-full items-center gap-x-[0.5rem] px-[1.25rem] pb-4 bg-white">
             <LeftArrowIcon
               width={24}
               height={24}
@@ -91,7 +91,7 @@ const Header = (props: Props) => {
   return (
     <header
       className={
-        fixed ? 'fixed top-0 z-30 flex w-full items-center pt-[4.125rem]' : 'flex w-full items-center pt-[4.125rem]'
+      `${headerClassname ? headerClassname : ''} top-0 z-30 flex w-full items-center pt-[4.125rem]' : 'flex w-full items-center pt-[4.125rem]`
       }
     >
       {renderHeaderType(headerType)}

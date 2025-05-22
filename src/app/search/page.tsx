@@ -12,6 +12,7 @@ import SearchContent from '@/components/search/SearchContent'
 import useSearchResult from '@/hooks/useSearchResult'
 import { useRouter } from 'next/navigation'
 import { KeywordDeleteIcon } from '@/assets/svgComponents'
+import useScrollDirection from '@/hooks/useScrollDirection'
 
 const SearchPage = () => {
   const router = useRouter()
@@ -31,6 +32,9 @@ const SearchPage = () => {
     designDetail,
     renderFilterContent,
   } = useSearchResult()
+
+  const scrollDirection = useScrollDirection()
+  const isScrollingDown = scrollDirection === 'down'
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -65,11 +69,13 @@ const SearchPage = () => {
             </AnimatePresence>
           )}
           <Header
+            headerClassname={'fixed bg-white'}
             headerType="SEARCH"
             keyword={keyword}
             onBack={() => {
-              router.back()
               setSearchParams({ keyword: null })
+              setSearchParams({ isTotalSearchPageOpen: false })
+              router.back()
             }}
             RightIcon={
               <KeywordDeleteIcon
@@ -84,6 +90,11 @@ const SearchPage = () => {
             }
           />
           <SearchContent
+            FilterPanelClassname={
+              isScrollingDown
+                ? 'transition-all duration-100 fixed opacity-0 top-[11.063rem]'
+                : 'transition-all duration-100 fixed opacity-100 top-[11.063rem]'
+            }
             isFilterModalOpen={isFilterModalOpen}
             selectedFilterType={selectedFilterType}
             setSelectedFilterType={setSelectedFilterType}

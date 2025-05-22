@@ -106,7 +106,7 @@ const HomePage1 = () => {
             transition={{ duration: 0.01 }}
             className="bg-bg-300 fixed top-0 right-0 left-0 z-30"
           >
-            <Header headerType={'DEFAULT'} fixed={false} />
+            <Header headerType={'DEFAULT'} headerClassname={'bg-bg-300 fixed'}/>
           </motion.div>
         )}
       </AnimatePresence>

@@ -37,6 +37,7 @@ const TotalSearchPage = (props: Props) => {
   return (
     <>
       <Header
+        headerClassname={'fixed'}
         inputRef={inputRef}
         onKeyDown={() => router.push('/search')}
         keyword={keyword}
