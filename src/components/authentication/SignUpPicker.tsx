@@ -29,6 +29,8 @@ const SignUpPicker = (props: Props) => {
   const [thirdPartyAgreementConsent, setThirdPartyAgreementConsent] = useState(false)
   //다음버튼 유효성 검사
   const isInvalid = nickNameValidationResult !== false || !termsOfServiceOptions || !personalInformation
+  //welcome 모달을 띄우기 위한 state 변경 함수
+  const setState = useLoginStore((state) => state.setState)
 
   // 이미지 미리보기 설정
   const handleImagePreview = async () => {
@@ -72,6 +74,7 @@ const SignUpPicker = (props: Props) => {
 
     // 전송
     customerSignUp(formData)
+    setState({isWelcomeModalOpen: true})
     router.push('/home')
   }
 
@@ -129,7 +132,7 @@ const SignUpPicker = (props: Props) => {
                 className={
                   nickNameValidationResult
                     ? 'error-input body-m flex-1 outline-none'
-                    : 'default-input body-m flex-1 outline-none'
+                    : 'default-input body-m flex-1 focus:outline-1 focus:outline-blue-400'
                 }
               />
               <button
@@ -152,7 +155,7 @@ const SignUpPicker = (props: Props) => {
               {nickNameValidationResult === null
                 ? null
                 : nickNameValidationResult
-                  ? '*이미 존재하는 닉네임입니다.'
+                  ? '* 이미 존재하는 닉네임입니다.'
                   : '* 사용 가능한 닉네임 입니다.'}
             </div>
           </section>
