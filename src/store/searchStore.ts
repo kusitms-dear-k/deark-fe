@@ -22,6 +22,7 @@ interface SearchStoreType {
   sizeName: string
   isDesignDetailModalOpen: boolean
   isStoreDetailModalOpen: boolean
+  isTotalSearchPageOpen: boolean
   setSearchParams: (params: {
     isLoading?: boolean
     error?: boolean | null
@@ -43,6 +44,7 @@ interface SearchStoreType {
     sizeName?: string
     isDesignDetailModalOpen?: boolean
     isStoreDetailModalOpen?: boolean
+    isTotalSearchPageOpen?: boolean
   }) => void
 }
 
@@ -70,6 +72,7 @@ export const useSearchStore = create<SearchStoreType>((set) => ({
   //modal 관련
   isDesignDetailModalOpen: false,
   isStoreDetailModalOpen: false,
+  isTotalSearchPageOpen: false,
 
   // 검색 조건 상태 업데이트 함수 추가
   setSearchParams: (params: {
@@ -93,6 +96,7 @@ export const useSearchStore = create<SearchStoreType>((set) => ({
     sizeName?: string
     isDesignDetailModalOpen?: boolean
     isStoreDetailModalOpen?: boolean
+    isTotalSearchPageOpen?: boolean
   }) => {
     set((state) => ({
       ...state,

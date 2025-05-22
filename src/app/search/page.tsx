@@ -10,8 +10,11 @@ import OrderForm from '@/components/order/OrderForm'
 import GATracker from '@/components/GATracker'
 import SearchContent from '@/components/search/SearchContent'
 import useSearchResult from '@/hooks/useSearchResult'
+import { useRouter } from 'next/navigation'
+import { KeywordDeleteIcon } from '@/assets/svgComponents'
 
 const SearchPage = () => {
+  const router = useRouter()
   const {
     isStoreDetailModalOpen,
     isDesignDetailModalOpen,
@@ -61,7 +64,25 @@ const SearchPage = () => {
               </BottomModal>
             </AnimatePresence>
           )}
-          <Header headerType="SEARCH" keyword={keyword} />
+          <Header
+            headerType="SEARCH"
+            keyword={keyword}
+            onBack={() => {
+              router.back()
+              setSearchParams({ keyword: null })
+            }}
+            RightIcon={
+              <KeywordDeleteIcon
+                onClick={() => {
+                  router.back()
+                  setSearchParams({ keyword: '' })
+                  setSearchParams({ isTotalSearchPageOpen: true })
+                }}
+                width={16}
+                height={16}
+              />
+            }
+          />
           <SearchContent
             isFilterModalOpen={isFilterModalOpen}
             selectedFilterType={selectedFilterType}

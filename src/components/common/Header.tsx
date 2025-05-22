@@ -3,6 +3,7 @@ import SearchInput from '@/components/home/SearchInput'
 import { useRouter } from 'next/navigation'
 import { HeaderType } from '@/types/common'
 import { BellIcon, LeftArrowIcon, ProfileIcon, SearchIconRed } from '@/assets/svgComponents'
+import { RefObject } from 'react'
 
 interface Props {
   onBack?: () => void
@@ -13,22 +14,39 @@ interface Props {
   description?: string
   fixed?: boolean
   onClick?: () => void
+  onKeyDown?: () => void
+  RightIcon?: React.ReactNode
+  inputRef?: RefObject<HTMLInputElement | null>
 }
 
 const Header = (props: Props) => {
-  const { onBack, headerType, keyword, title, className, description, fixed = true, onClick } = props
+  const {
+    onBack,
+    headerType,
+    keyword,
+    title,
+    className,
+    description,
+    fixed = true,
+    onClick,
+    onKeyDown,
+    RightIcon,
+    inputRef,
+  } = props
   const router = useRouter()
 
   const renderHeaderType = (headerType: HeaderType) => {
     switch (headerType) {
       case 'DEFAULT':
         return (
-          <div className="flex flex-col px-5 w-full">
+          <div className="flex w-full flex-col px-5">
             <div className="flex justify-between">
               <h1 className="key-visual-m text-red-400">Dear.k</h1>
-              <button className="border border-bg-500 py-[6px] px-3 rounded-full text-gray-500 h-fit w-fit chip-s">로그인</button>
+              <button className="border-bg-500 chip-s h-fit w-fit rounded-full border px-3 py-[6px] text-gray-500">
+                로그인
+              </button>
             </div>
-            <div className="body-xl text-gray-900 py-1">만나서 반가워요 👋🏻</div>
+            <div className="body-xl py-1 text-gray-900">만나서 반가워요 👋🏻</div>
           </div>
         )
       case 'DYNAMIC':
@@ -60,14 +78,11 @@ const Header = (props: Props) => {
               }}
             />
             <SearchInput
+              inputRef={inputRef}
+              onKeyDown={onKeyDown}
               onClick={onClick}
               keyword={keyword ? keyword : null}
-              RightIcon={
-                <div className="flex items-center gap-x-[0.75rem]">
-                  <div className="h-[1rem] border-l border-gray-300" />
-                  <SearchIconRed width={24} height={24} />
-                </div>
-              }
+              RightIcon={RightIcon ? RightIcon : null}
             />
           </div>
         )
@@ -76,9 +91,7 @@ const Header = (props: Props) => {
   return (
     <header
       className={
-        fixed
-          ? 'fixed top-0 z-30 flex w-full items-center pt-[4.125rem]'
-          : 'flex w-full items-center pt-[4.125rem]'
+        fixed ? 'fixed top-0 z-30 flex w-full items-center pt-[4.125rem]' : 'flex w-full items-center pt-[4.125rem]'
       }
     >
       {renderHeaderType(headerType)}

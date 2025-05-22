@@ -2,7 +2,7 @@ import Header from '@/components/common/Header'
 import NavBar from '@/components/common/NavBar'
 import SearchInput from '@/components/home/SearchInput'
 import { RedSearchIcon } from '@/assets/svgComponents'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import GuardianModal from '@/components/authentication/GuardianModal'
 import TotalSearchPage from '@/components/search/TotalSearchPage'
@@ -16,9 +16,11 @@ import StoreDetail from '@/components/search/StoreDetail'
 import DesignDetailContent from '@/components/search/DesignDetailContent'
 import useSearchResult from '@/hooks/useSearchResult'
 import OrderForm from '@/components/order/OrderForm'
+import { useSearchStore } from '@/store/searchStore'
 
 const HomePage1 = () => {
-  const [isTotalSearchPage, setIsTotalSearchPage] = useState(false)
+  const isTotalSearchPageOpen = useSearchStore((state) =>state.isTotalSearchPageOpen)
+
   const setState = useLoginStore((state) => state.setState)
   const isWelcomeModalOpen = useLoginStore((state) => state.isWelcomeModalOpen)
   const isGuardianModalOpen = useLoginStore((state) => state.isGuardianModalOpen)
@@ -37,6 +39,7 @@ const HomePage1 = () => {
     setSearchParams,
     designDetail,
     renderFilterContent,
+    keyword,
   } = useSearchResult()
 
   const scrollDirection = useScrollDirection()
@@ -56,8 +59,8 @@ const HomePage1 = () => {
     <AnimatePresence>
       <GuardianModal onClick={() => setState({ isGuardianModalOpen: false })} />
     </AnimatePresence>
-  ) : isTotalSearchPage ? (
-    <TotalSearchPage setIsTotalSearchPage={setIsTotalSearchPage} />
+  ) : isTotalSearchPageOpen ? (
+    <TotalSearchPage keyword={keyword} />
   ) : isOrderFormOpen ? (
     <OrderForm />
   ) : (
@@ -115,7 +118,7 @@ const HomePage1 = () => {
       >
         <SearchInput
           onClick={() => {
-            setIsTotalSearchPage(true)
+            setSearchParams({isTotalSearchPageOpen: true})
           }}
           LeftIcon={<RedSearchIcon width={24} height={24} />}
           className="w-full bg-white"
