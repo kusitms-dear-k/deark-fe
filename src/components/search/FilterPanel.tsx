@@ -49,7 +49,7 @@ const FilterPanel = (props: Props) => {
   };
 
   return (
-    <section className={`${className ? className : ''} border-gray-150  z-30 flex w-full items-center gap-x-[0.5rem] overflow-x-scroll border-b bg-white py-[0.75rem] pl-[1.25rem]`}>
+    <section className={`${className ? className : ''} scrollbar-hide border-gray-150  z-30 flex w-full items-center gap-x-[0.5rem] overflow-x-scroll border-b bg-white py-[0.75rem] pl-[1.25rem]`}>
       <button
         onClick={() => {
           setSearchParams({ isSameDayOrder: !searchState.isSameDayOrder })
