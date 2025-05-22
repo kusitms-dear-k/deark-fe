@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { useEffect, useState } from 'react'
 
@@ -20,17 +20,17 @@ import { AnimatePresence } from 'framer-motion'
 import StoreDetail from '@/components/search/StoreDetail'
 import { getDesignDetailData } from '@/api/searchAPI'
 import { DesignDetailType } from '@/types/search'
-import { useOrderStore } from '@/store/orderStore';
-import OrderForm from '@/components/order/OrderForm';
+import { useOrderStore } from '@/store/orderStore'
+import OrderForm from '@/components/order/OrderForm'
 import GATracker from '@/components/GATracker'
-
+import RangeCalendar from '@/components/search/CustomRangeCalendar'
 
 const SearchPage = () => {
   const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
   // 모달 관련 state
   const isStoreDetailModalOpen = useSearchStore((state) => state.isStoreDetailModalOpen)
   const isDesignDetailModalOpen = useSearchStore((state) => state.isDesignDetailModalOpen)
-  const isOrderFormOpen= useOrderStore((state) => state.isOrderFormOpen)
+  const isOrderFormOpen = useOrderStore((state) => state.isOrderFormOpen)
   // 필터 관련 state
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>('ADDRESS')
@@ -46,6 +46,8 @@ const SearchPage = () => {
   const totalCount = useSearchStore((state) => state.totalCount)
   const keyword = useSearchStore((state) => state.keyword)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
+
+  const [dateRange, setDateRange] = useState<{ start: Date | null; end: Date | null }>({ start: null, end: null })
 
   /**
    * 스토어,디자인 상세페이지 데이터 불러오기
@@ -113,9 +115,25 @@ const SearchPage = () => {
         return (
           <section>
             <Filter.Menu
-              setIsFilterModalOpen={setIsFilterModalOpen}
               selectedFilterType={selectedFilterType}
               setSelectedFilterType={setSelectedFilterType}
+              setIsFilterModalOpen={setIsFilterModalOpen}
+            />
+            <RangeCalendar value={dateRange} setValue={setDateRange} />
+            <Filter.BottomButton
+              reset={() => {
+                setDateRange({ start: null, end: null })
+                setSearchParams({ startDate: null, endDate: null })
+                setIsFilterModalOpen(false)
+              }}
+              apply={() => {
+                setSearchParams({
+                  startDate: dateRange.start ? dateRange.start.toISOString().slice(0, 10) : null,
+                  endDate: dateRange.end ? dateRange.end.toISOString().slice(0, 10) : null,
+                })
+                setIsFilterModalOpen(false)
+              }}
+              totalResultCount={totalCount}
             />
           </section>
         )
@@ -147,9 +165,9 @@ const SearchPage = () => {
               totalResultCount={totalCount}
             />
           </section>
-        );
+        )
     }
-  };
+  }
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -201,6 +219,6 @@ const SearchPage = () => {
         </>
       )}
     </main>
-  );
-};
-export default SearchPage;
+  )
+}
+export default SearchPage

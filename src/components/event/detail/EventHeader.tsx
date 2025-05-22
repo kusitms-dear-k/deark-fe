@@ -37,7 +37,7 @@ export default function EventHeader({ event }: EventHeaderProps) {
   }
 
   return (
-    <div className="body-l shadow-location-search border-gray-150 mx-auto mt-4 flex h-[4.25rem] w-[21.875rem] items-center rounded-lg border bg-white px-5">
+    <div className="body-l shadow-location-search border-gray-150 mx-auto mt-[2.625rem] flex h-[4.25rem] w-[21.875rem] items-center rounded-lg border bg-white px-5">
       <CakeIcon width={40} height={40} className="mr-1" />
 
       <div className="flex-1">
