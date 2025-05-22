@@ -5,16 +5,17 @@ interface Props {
   LeftIcon?: React.ReactNode
   keyword?: null | string
   onClick?: () => void
+  className?: string
 }
 
 const SearchInput = (props: Props) => {
-  const { keyword, LeftIcon, RightIcon, onClick } = props
+  const { keyword, LeftIcon, RightIcon, onClick, className } = props
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   return (
     <div
       style={{ boxShadow: '0px 4px 50px 0px rgba(0, 0, 0, 0.05)' }}
-      className="border-gray-150 flex w-full items-center justify-center gap-x-[0.5rem] rounded-full border px-[1rem] py-[0.75rem] focus-within:border-blue-400"
+      className={`${className ? className : ''} border-gray-150 flex w-full items-center justify-center gap-x-[0.5rem] rounded-full border px-[1rem] py-[0.75rem] focus-within:border-blue-400`}
     >
       {LeftIcon && LeftIcon}
       <input

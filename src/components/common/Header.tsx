@@ -23,26 +23,12 @@ const Header = (props: Props) => {
     switch (headerType) {
       case 'DEFAULT':
         return (
-          <div className="absolute top-10 left-5 w-[90%]">
-            <div className="flex w-full justify-between">
-              <h1 className="key-visual-m text-red-400">Cake is easy</h1>
-              <div className="flex items-center gap-x-[0.75rem]">
-                <div className="relative p-[0.125rem]">
-                  <BellIcon width={24} height={24} />
-                  <div className="absolute top-0 right-0 h-[0.375rem] w-[0.375rem] rounded-full bg-red-400"></div>
-                </div>
-                <ProfileIcon
-                  onClick={() => {
-                    router.push('/mypage')
-                  }}
-                  width={32}
-                  height={32}
-                />
-              </div>
+          <div className="flex flex-col px-5 w-full">
+            <div className="flex justify-between">
+              <h1 className="key-visual-m text-red-400">Dear.k</h1>
+              <button className="border border-bg-500 py-[6px] px-3 rounded-full text-gray-500 h-fit w-fit chip-s">로그인</button>
             </div>
-            <div className="body-el">
-              안녕하세요, <span className="headline-s text-gray-900">리무진님!</span>{' '}
-            </div>
+            <div className="body-xl text-gray-900 py-1">만나서 반가워요 👋🏻</div>
           </div>
         )
       case 'DYNAMIC':
@@ -91,8 +77,8 @@ const Header = (props: Props) => {
     <header
       className={
         fixed
-          ? 'fixed top-0 z-30 flex w-full items-center bg-white pt-[4.125rem]'
-          : 'flex w-full items-center bg-white pt-[4.125rem]'
+          ? 'fixed top-0 z-30 flex w-full items-center pt-[4.125rem]'
+          : 'flex w-full items-center pt-[4.125rem]'
       }
     >
       {renderHeaderType(headerType)}

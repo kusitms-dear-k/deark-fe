@@ -75,8 +75,7 @@ const ClickedStoreIcon = (props: SVGProps<SVGSVGElement>) => (
 )
 
 export const PICKER_MENU_LIST: MenuListType[] = [
-  { id: 1, unClickedIcon: '/common/gray_home_icon.svg', ClickedIcon: ClickedHomeIcon, path: '/home' },
-  { id: 2, unClickedIcon: '/common/gray_search_icon.svg', ClickedIcon: ClickedSearchIcon, path: '/search' },
+  { id: 1, unClickedIcon: '/common/gray_home_icon.svg', ClickedIcon: ClickedHomeIcon, path: '/' },
   { id: 3, unClickedIcon: '/common/gray_heart_icon.svg', ClickedIcon: ClickedHeartIcon, path: '/event' },
   { id: 4, unClickedIcon: '/common/gray_mypage_icon.svg', ClickedIcon: ClickedMyPageIcon, path: '/mypage' },
 ]
