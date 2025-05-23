@@ -10,7 +10,7 @@ const ApprovePage = () => {
         title="픽업 확정"
         className="top-20 items-start"
         description={'곧 만날 케이크들 이에요!'}
-        fixed={false}
+        headerClassname={'fixed'}
       />
       <section className="mt-[4.375rem] flex flex-col gap-y-[1.5rem] px-[1.25rem]">
         <section>
