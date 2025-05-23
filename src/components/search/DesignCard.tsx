@@ -56,7 +56,7 @@ const DesignCard = ({
         </div>
       </div>
 
-      <section className={'flex flex-col gap-y-1 px-[10px] py-[6px]'}>
+      <section className={'flex flex-col gap-y-1 items-start px-[10px] py-[6px]'}>
         <div className={'flex flex-col gap-y-1'}>
           <div className={'flex items-center gap-x-1'}>
             <div className={'caption-m text-[var(--gray-900)]'}>{storeName}</div>
