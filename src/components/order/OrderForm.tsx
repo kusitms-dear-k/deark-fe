@@ -210,7 +210,7 @@ const OrderForm = () => {
   }
 
   return (
-    <div className="flex h-screen flex-col z-50">
+    <div className="flex h-screen flex-col z-40">
       <Header
         headerClassname={'fixed bg-white'}
         title={'주문서'}
@@ -223,93 +223,96 @@ const OrderForm = () => {
           if (requestDetailImageRef.current) requestDetailImageRef.current.value = ''
         }}
       />
-      <form className="z-50 mt-24 flex flex-col gap-y-[16px] overflow-y-scroll px-5 pb-5" onSubmit={handleSubmit}>
-        {isNotFormValidModalOpen && <NotFormValidModal onClick={() => setIsNotFormValidModalOpen(false)} />}
-        {isSubmitConfirmationModalOpen && (
-          <SubmitConfirmationModal onClick={() => setIsSubmitConfirmationModalOpen(false)} />
-        )}
-        {isEventFilterOpen && (
-          <AnimatePresence>
-            <UTEventModal
-              onClick={() => {
-                setIsEventFilterOpen(!isEventFilterOpen)
-              }}
-              setIsEventDesignFilterOpen={setIsEventDesignFilterOpen}
-            />
-          </AnimatePresence>
-        )}
-        {isEventDesignFilterOpen && (
-          <AnimatePresence>
-            <UTEventDesignModal
-              onClick={() => {
-                setIsEventDesignFilterOpen(!isEventDesignFilterOpen)
-              }}
-              setIsEventFilterOpen={setIsEventFilterOpen}
-            />
-          </AnimatePresence>
-        )}
-        <NameField setBlurred={setBlurred} />
-        {name && blurred.name && <PhoneNumberField blurred={blurred} setBlurred={setBlurred} />}
-        {phoneNumber && blurred.phoneNumber && <WishPickUpDateField blurred={blurred} />}
-        {wishPickUpDate && (
-          <WishPickUpTimeField businessHours={businessHours} setBlurred={setBlurred} blurred={blurred} />
-        )}
-        {(selectedDesignUrl || (wishPickUpTime && blurred.wishPickUpTime)) && (
-          <>
-            <DesignSelector
-              uploadImage={uploadDesignImage}
-              handleImagePreview={handleDesignImagePreview}
-              imgRef={designImageRef}
-              designList={orderFormDesignList}
-              isDesignDropBoxOpen={isDesignDropBoxOpen}
-              selectedDesignContent={selectedDesignContent}
-              setIsDesignDropBoxOpen={setIsDesignDropBoxOpen}
-            />
-            <AdditionalRequestField
-              setIsEventFilterOpen={setIsEventFilterOpen}
-              imgRef={requestDetailImageRef}
-              handleRequestDetailImagePreview={handleRequestDetailImagePreview}
-              uploadRequestDetailImage={uploadRequestDetailImage}
-            />
-          </>
-        )}
-        {(uploadDesignImage || selectedDesignUrl) && (
-          <SizeSelector isSizeDropBoxOpen={isSizeDropBoxOpen} setIsSizeDropBoxOpen={setIsSizeDropBoxOpen} />
-        )}
-        {size && (
-          <CreamSelector isCreamDropBoxOpen={isCreamDropBoxOpen} setIsCreamDropBoxOpen={setIsCreamDropBoxOpen} />
-        )}
-        {cream && (
-          <SheetSelector isSheetDropBoxOpen={isSheetDropBoxOpen} setIsSheetDropBoxOpen={setIsSheetDropBoxOpen} />
-        )}
-        {sheet && <ETCRequestField />}
-      </form>
-      <div className="h-[150px]" />
-      {!isFormValid ? (
-        <div className="z-60 border-gray-150 fixed bottom-0 w-full border-t bg-white px-[20px] pt-[20px] pb-[29px]">
-          <button
-            onClick={() => {
-              setIsNotFormValidModalOpen(true)
-            }}
-            type={'button'}
-            className={!isFormValid ? 'blue-200-button w-full' : 'blue-400-button w-full'}
-          >
-            주문서와 함께 문의하기
-          </button>
-        </div>
-      ) : (
-        <div className="z-60 border-gray-150 fixed bottom-0 w-full border-t bg-white px-[20px] pt-[20px] pb-[29px]">
-          <button
-            type={'button'}
-            onClick={() => {
-              setIsSubmitConfirmationModalOpen(true)
-            }}
-            className={!isFormValid ? 'blue-200-button w-full' : 'blue-400-button w-full'}
-          >
-            주문서와 함께 문의하기
-          </button>
-        </div>
+      {isNotFormValidModalOpen && <NotFormValidModal onClick={() => setIsNotFormValidModalOpen(false)} />}
+      {isSubmitConfirmationModalOpen && (
+        <SubmitConfirmationModal onClick={() => setIsSubmitConfirmationModalOpen(false)} />
       )}
+      {isEventFilterOpen && (
+        <AnimatePresence>
+          <UTEventModal
+            onClick={() => {
+              setIsEventFilterOpen(!isEventFilterOpen)
+            }}
+            setIsEventDesignFilterOpen={setIsEventDesignFilterOpen}
+          />
+        </AnimatePresence>
+      )}
+      {isEventDesignFilterOpen && (
+        <AnimatePresence>
+          <UTEventDesignModal
+            onClick={() => {
+              setIsEventDesignFilterOpen(!isEventDesignFilterOpen)
+            }}
+            setIsEventFilterOpen={setIsEventFilterOpen}
+          />
+        </AnimatePresence>
+      )}
+      <div>
+        <form className="z-40 mt-24 flex flex-col gap-y-[16px] overflow-y-scroll px-5 pb-5" onSubmit={handleSubmit}>
+          <NameField setBlurred={setBlurred} />
+          {name && blurred.name && <PhoneNumberField blurred={blurred} setBlurred={setBlurred} />}
+          {phoneNumber && blurred.phoneNumber && <WishPickUpDateField blurred={blurred} />}
+          {wishPickUpDate && (
+            <WishPickUpTimeField businessHours={businessHours} setBlurred={setBlurred} blurred={blurred} />
+          )}
+          {(selectedDesignUrl || (wishPickUpTime && blurred.wishPickUpTime)) && (
+            <>
+              <DesignSelector
+                uploadImage={uploadDesignImage}
+                handleImagePreview={handleDesignImagePreview}
+                imgRef={designImageRef}
+                designList={orderFormDesignList}
+                isDesignDropBoxOpen={isDesignDropBoxOpen}
+                selectedDesignContent={selectedDesignContent}
+                setIsDesignDropBoxOpen={setIsDesignDropBoxOpen}
+              />
+              <AdditionalRequestField
+                setIsEventFilterOpen={setIsEventFilterOpen}
+                imgRef={requestDetailImageRef}
+                handleRequestDetailImagePreview={handleRequestDetailImagePreview}
+                uploadRequestDetailImage={uploadRequestDetailImage}
+              />
+            </>
+          )}
+          {(uploadDesignImage || selectedDesignUrl) && (
+            <SizeSelector isSizeDropBoxOpen={isSizeDropBoxOpen} setIsSizeDropBoxOpen={setIsSizeDropBoxOpen} />
+          )}
+          {size && (
+            <CreamSelector isCreamDropBoxOpen={isCreamDropBoxOpen} setIsCreamDropBoxOpen={setIsCreamDropBoxOpen} />
+          )}
+          {cream && (
+            <SheetSelector isSheetDropBoxOpen={isSheetDropBoxOpen} setIsSheetDropBoxOpen={setIsSheetDropBoxOpen} />
+          )}
+          {sheet && <ETCRequestField />}
+
+        </form>
+        <div className="h-[150px]" />
+        {!isFormValid ? (
+          <div className="z-40 border-gray-150 fixed bottom-0 w-full border-t bg-white px-[20px] pt-[20px] pb-[29px]">
+            <button
+              onClick={() => {
+                setIsNotFormValidModalOpen(true)
+              }}
+              type={'button'}
+              className={!isFormValid ? 'blue-200-button w-full' : 'blue-400-button w-full'}
+            >
+              주문서와 함께 문의하기
+            </button>
+          </div>
+        ) : (
+          <div className="z-40 border-gray-150 fixed bottom-0 w-full border-t bg-white px-[20px] pt-[20px] pb-[29px]">
+            <button
+              type={'button'}
+              onClick={() => {
+                setIsSubmitConfirmationModalOpen(true)
+              }}
+              className={!isFormValid ? 'blue-200-button w-full' : 'blue-400-button w-full'}
+            >
+              주문서와 함께 문의하기
+            </button>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
