@@ -46,7 +46,7 @@ const SizeSelector = (props: Props) => {
             : 'body-m-m mt-2 flex w-full justify-between rounded-[4px] border border-gray-200 px-4 py-[14px] text-gray-400'
         }
       >
-        <p>{size}</p>
+        <p className={size ? 'text-gray-700' : 'text-gray-400'}>{size}</p>
         <DropDownIcon height={24} width={24} />
       </div>
       {isSizeDropBoxOpen && (
