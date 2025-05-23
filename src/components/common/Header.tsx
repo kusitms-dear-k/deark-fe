@@ -4,6 +4,8 @@ import { useRouter } from 'next/navigation'
 import { HeaderType } from '@/types/common'
 import { BellIcon, LeftArrowIcon, ProfileIcon, SearchIconRed } from '@/assets/svgComponents'
 import { RefObject } from 'react'
+import { useLoginStore } from '@/store/authStore'
+import Cookies from 'js-cookie'
 
 interface Props {
   onBack?: () => void
@@ -34,6 +36,8 @@ const Header = (props: Props) => {
     inputRef,
   } = props
   const router = useRouter()
+  const user = useLoginStore((state) => state.user)
+  const accessToken = Cookies.get('ACCESS_TOKEN')
 
   const renderHeaderType = (headerType: HeaderType) => {
     switch (headerType) {
@@ -42,11 +46,24 @@ const Header = (props: Props) => {
           <div className="flex w-full flex-col px-5">
             <div className="flex justify-between">
               <h1 className="key-visual-m text-red-400">Dear.k</h1>
-              <button className="border-bg-500 chip-s h-fit w-fit rounded-full border px-3 py-[6px] text-gray-500">
-                로그인
-              </button>
+              {accessToken ? (
+                <BellIcon width={24} height={24} />
+              ) : (
+                <button
+                  onClick={() => {
+                    router.push('/login')
+                  }}
+                  className="border-bg-500 chip-s h-fit w-fit rounded-full border px-3 py-[6px] text-gray-500"
+                >
+                  로그인
+                </button>
+              )}
             </div>
-            <div className="body-xl py-1 text-gray-900">만나서 반가워요 👋🏻</div>
+            {accessToken ? (<div className="body-xl py-1 text-gray-900">안녕하세요,<span
+              className="headline-s">리무진님!</span></div>) : (
+              <div className="body-xl py-1 text-gray-900">만나서 반가워요 👋🏻</div>
+            )}
+
           </div>
         )
       case 'DYNAMIC':
@@ -68,7 +85,7 @@ const Header = (props: Props) => {
         )
       case 'SEARCH':
         return (
-          <div className="flex w-full items-center gap-x-[0.5rem] px-[1.25rem] pb-4 bg-white">
+          <div className="flex w-full items-center gap-x-[0.5rem] bg-white px-[1.25rem] pb-4">
             <LeftArrowIcon
               width={24}
               height={24}
@@ -90,9 +107,7 @@ const Header = (props: Props) => {
   }
   return (
     <header
-      className={
-      `${headerClassname ? headerClassname : ''} top-0 z-30 flex w-full items-center pt-[4.125rem]' : 'flex w-full items-center pt-[4.125rem]`
-      }
+      className={`${headerClassname ? headerClassname : ''} pt-[4.125rem]' : 'flex top-0 z-30 flex w-full items-center pt-[4.125rem]`}
     >
       {renderHeaderType(headerType)}
     </header>

@@ -11,7 +11,7 @@ import Loading from '@/components/common/Spinner'
 import { getJWTToken, getKaKaoAccessToken } from '@/api/authenticationAPI'
 
 const AuthenticationPage = () => {
-  const [step, setStep] = useState<StepType>('SelectRole')
+  const [step, setStep] = useState<StepType>('Loading')
   const [role, setRole] = useState<UserLoginRoleType | undefined>()
   const params = useSearchParams()
   const router = useRouter()
