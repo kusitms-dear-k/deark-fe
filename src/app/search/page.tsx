@@ -2,7 +2,6 @@
 
 import Header from '@/components/common/Header'
 import Filter from '@/components/common/Filter'
-import BottomModal from '@/components/common/BottomModal'
 import DesignDetailContent from '@/components/search/DesignDetailContent'
 import { AnimatePresence } from 'framer-motion'
 import StoreDetail from '@/components/search/StoreDetail'
@@ -14,9 +13,8 @@ import { useRouter } from 'next/navigation'
 import { KeywordDeleteIcon } from '@/assets/svgComponents'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import {
-  Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle,
+  Drawer
 } from '@/components/ui/drawer'
-import { BottomSheet } from 'react-spring-bottom-sheet'
 import { useEffect } from 'react'
 
 
