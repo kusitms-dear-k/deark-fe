@@ -2,10 +2,15 @@
 import SearchInput from '@/components/home/SearchInput'
 import { useRouter } from 'next/navigation'
 import { HeaderType } from '@/types/common'
-import { BellIcon, LeftArrowIcon, ProfileIcon, SearchIconRed } from '@/assets/svgComponents'
-import { RefObject } from 'react'
+import { LeftArrowIcon } from '@/assets/svgComponents'
+import { RefObject, useEffect, useState } from 'react'
 import { useLoginStore } from '@/store/authStore'
 import Cookies from 'js-cookie'
+import dynamic from 'next/dynamic'
+
+const SvgBellIcon = dynamic(() => import('@/assets/svgComponents/BellIcon'), {
+  ssr: false,
+})
 
 interface Props {
   onBack?: () => void
@@ -37,7 +42,13 @@ const Header = (props: Props) => {
   } = props
   const router = useRouter()
   const user = useLoginStore((state) => state.user)
-  const accessToken = Cookies.get('ACCESS_TOKEN')
+  const [isClient, setIsClient] = useState(false)
+  const [token, setToken] = useState<string | undefined>()
+
+  useEffect(() => {
+    setIsClient(true)
+    setToken(Cookies.get('ACCESS_TOKEN'))
+  }, [])
 
   const renderHeaderType = (headerType: HeaderType) => {
     switch (headerType) {
@@ -46,9 +57,9 @@ const Header = (props: Props) => {
           <div className="flex w-full flex-col px-5">
             <div className="flex justify-between">
               <h1 className="key-visual-m text-red-400">Dear.k</h1>
-              {accessToken ? (
-                <BellIcon width={24} height={24} />
-              ) : (
+              {isClient && token ? (
+                <SvgBellIcon width={24} height={24} />
+              ) : isClient ? (
                 <button
                   onClick={() => {
                     router.push('/login')
@@ -57,9 +68,9 @@ const Header = (props: Props) => {
                 >
                   로그인
                 </button>
-              )}
+              ) : null}
             </div>
-            {accessToken ? (<div className="body-xl py-1 text-gray-900">안녕하세요,<span
+            {isClient && token ? (<div className="body-xl py-1 text-gray-900">안녕하세요,<span
               className="headline-s">리무진님!</span></div>) : (
               <div className="body-xl py-1 text-gray-900">만나서 반가워요 👋🏻</div>
             )}
