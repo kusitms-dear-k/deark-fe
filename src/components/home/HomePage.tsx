@@ -18,7 +18,7 @@ import useSearchResult from '@/hooks/useSearchResult'
 import OrderForm from '@/components/order/OrderForm'
 import { useSearchStore } from '@/store/searchStore'
 
-const HomePage1 = () => {
+const HomePage = () => {
   const isTotalSearchPageOpen = useSearchStore((state) =>state.isTotalSearchPageOpen)
 
   const setState = useLoginStore((state) => state.setState)
@@ -41,6 +41,17 @@ const HomePage1 = () => {
     renderFilterContent,
     keyword,
   } = useSearchResult()
+
+  // ✅ 3초 후 자동 닫힘 처리
+  useEffect(() => {
+    if (isWelcomeModalOpen) {
+      const timer = setTimeout(() => {
+        setState({ isWelcomeModalOpen: false, isGuardianModalOpen: true })
+      }, 3000)
+
+      return () => clearTimeout(timer) // cleanup
+    }
+  }, [isWelcomeModalOpen, setState])
 
   const scrollDirection = useScrollDirection()
 
@@ -149,4 +160,4 @@ const HomePage1 = () => {
     </main>
   )
 }
-export default HomePage1
+export default HomePage

@@ -43,7 +43,7 @@ const AuthenticationPage = () => {
                 if (response.results.role === 'GUEST') {
                   setStep('SelectRole')
                 } else {
-                  router.push('/home')
+                  router.push('/')
                 }
               })
             }
