@@ -76,7 +76,19 @@ const HomePage = () => {
     <OrderForm />
   ) : (
     <main className="bg-bg-300 relative min-h-screen">
-      <Drawer>
+      <Drawer
+        open={isStoreDetailModalOpen || isDesignDetailModalOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            if (isStoreDetailModalOpen) {
+              setSearchParams({ isStoreDetailModalOpen: false })
+            }
+            if (isDesignDetailModalOpen) {
+              setSearchParams({ isDesignDetailModalOpen: false })
+            }
+          }
+        }}
+      >
         {/* 회원가입 환영 모달 */}
         {isWelcomeModalOpen && (
           <AnimatePresence>

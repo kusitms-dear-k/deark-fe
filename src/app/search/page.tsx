@@ -48,7 +48,19 @@ const SearchPage = () => {
 
   return (
     <main className="flex min-h-screen flex-col">
-      <Drawer>
+      <Drawer
+        open={isStoreDetailModalOpen || isDesignDetailModalOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            if (isStoreDetailModalOpen) {
+              setSearchParams({ isStoreDetailModalOpen: false })
+            }
+            if (isDesignDetailModalOpen) {
+              setSearchParams({ isDesignDetailModalOpen: false })
+            }
+          }
+        }}
+      >
         <GATracker />
         {/* 주문서 작성 폼 모달 */}
         {isOrderFormOpen ? (

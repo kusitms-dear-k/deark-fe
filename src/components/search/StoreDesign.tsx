@@ -63,29 +63,6 @@ const StoreDesign = (props: Props) => {
             : [1, 2, 3, 4].map((i) => {
               return <DesignCardSkeleton key={i} />
             })}
-          {searchResults
-            ? searchResults.map((results) => {
-              return results.results.designList.map((design) => {
-                return (
-                  <DesignCard
-                    onCardClick={() => {
-                      setSearchParams({ designId: design.designId, isDesignDetailModalOpen: true, isStoreDetailModalOpen: false })
-                    }}
-                    key={design.designId}
-                    description={design.designName}
-                    img={design.designImageUrl}
-                    heartCount={10}
-                    isHeart={design.isLiked}
-                    storeName={design.storeName}
-                    startPrice={design.price}
-                    onHeartClick={() => {}}
-                  />
-                )
-              })
-            })
-            : [1, 2, 3, 4].map((i) => {
-              return <DesignCardSkeleton key={i} />
-            })}
         </div>
       </section>
     </div>
