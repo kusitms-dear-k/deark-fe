@@ -13,6 +13,12 @@ import useSearchResult from '@/hooks/useSearchResult'
 import { useRouter } from 'next/navigation'
 import { KeywordDeleteIcon } from '@/assets/svgComponents'
 import useScrollDirection from '@/hooks/useScrollDirection'
+import {
+  Drawer, DrawerClose, DrawerContent, DrawerDescription, DrawerFooter, DrawerHeader, DrawerTitle,
+} from '@/components/ui/drawer'
+import { BottomSheet } from 'react-spring-bottom-sheet'
+import { useEffect } from 'react'
+
 
 const SearchPage = () => {
   const router = useRouter()
@@ -36,73 +42,72 @@ const SearchPage = () => {
   const scrollDirection = useScrollDirection()
   const isScrollingDown = scrollDirection === 'down'
 
+  useEffect(() => {
+    console.log('isStoreDetailModalOpen', isStoreDetailModalOpen)
+  }, [isStoreDetailModalOpen])
+
   return (
     <main className="flex min-h-screen flex-col">
-      <GATracker />
-      {/* 주문서 작성 폼 모달 */}
-      {isOrderFormOpen ? (
-        <OrderForm />
-      ) : (
-        <>
-          {/* 필터 모달 */}
-          <AnimatePresence>
-            {isFilterModalOpen && (
-              <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
+      <Drawer>
+        <GATracker />
+        {/* 주문서 작성 폼 모달 */}
+        {isOrderFormOpen ? (
+          <OrderForm />
+        ) : (
+          <>
+            {/* 필터 모달 */}
+            <AnimatePresence>
+              {isFilterModalOpen && (
+                <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
+              )}
+            </AnimatePresence>
+
+            {/* 가게 상세 페이지 모달 */}
+            {isStoreDetailModalOpen && (
+              <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
             )}
-          </AnimatePresence>
 
-          {/* 가게 상세 페이지 모달 */}
-          {isStoreDetailModalOpen && (
-            <AnimatePresence>
-              <BottomModal onClick={() => setSearchParams({ isStoreDetailModalOpen: false })}>
-                <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
-              </BottomModal>
-            </AnimatePresence>
-          )}
+            {/* 디자인 상세 페이지 모달 */}
+            {isDesignDetailModalOpen && (
+              <DesignDetailContent designDetail={designDetail} />
+            )}
+            <Header
+              headerClassname={'fixed bg-white'}
+              headerType="SEARCH"
+              keyword={keyword}
+              onBack={() => {
+                setSearchParams({ keyword: null })
+                setSearchParams({ isTotalSearchPageOpen: false })
+                router.back()
+              }}
+              RightIcon={
+                <KeywordDeleteIcon
+                  onClick={() => {
+                    router.back()
+                    setSearchParams({ keyword: '' })
+                    setSearchParams({ isTotalSearchPageOpen: true })
+                  }}
+                  width={16}
+                  height={16}
+                />
+              }
+            />
+            <SearchContent
+              FilterPanelClassname={
+                isScrollingDown
+                  ? 'transition-all duration-100 fixed opacity-0 top-[11.063rem]'
+                  : 'transition-all duration-100 fixed opacity-100 top-[11.063rem]'
+              }
+              isFilterModalOpen={isFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              totalCount={totalCount}
+            />
+          </>
+        )}
+      </Drawer>
 
-          {/* 디자인 상세 페이지 모달 */}
-          {isDesignDetailModalOpen && (
-            <AnimatePresence>
-              <BottomModal onClick={() => setSearchParams({ isDesignDetailModalOpen: false })}>
-                <DesignDetailContent designDetail={designDetail} />
-              </BottomModal>
-            </AnimatePresence>
-          )}
-          <Header
-            headerClassname={'fixed bg-white'}
-            headerType="SEARCH"
-            keyword={keyword}
-            onBack={() => {
-              setSearchParams({ keyword: null })
-              setSearchParams({ isTotalSearchPageOpen: false })
-              router.back()
-            }}
-            RightIcon={
-              <KeywordDeleteIcon
-                onClick={() => {
-                  router.back()
-                  setSearchParams({ keyword: '' })
-                  setSearchParams({ isTotalSearchPageOpen: true })
-                }}
-                width={16}
-                height={16}
-              />
-            }
-          />
-          <SearchContent
-            FilterPanelClassname={
-              isScrollingDown
-                ? 'transition-all duration-100 fixed opacity-0 top-[11.063rem]'
-                : 'transition-all duration-100 fixed opacity-100 top-[11.063rem]'
-            }
-            isFilterModalOpen={isFilterModalOpen}
-            selectedFilterType={selectedFilterType}
-            setSelectedFilterType={setSelectedFilterType}
-            setIsFilterModalOpen={setIsFilterModalOpen}
-            totalCount={totalCount}
-          />
-        </>
-      )}
     </main>
   )
 }

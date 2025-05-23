@@ -17,7 +17,7 @@ import DesignDetailContent from '@/components/search/DesignDetailContent'
 import useSearchResult from '@/hooks/useSearchResult'
 import OrderForm from '@/components/order/OrderForm'
 import { useSearchStore } from '@/store/searchStore'
-
+import { Drawer } from '@/components/ui/drawer'
 const HomePage = () => {
   const isTotalSearchPageOpen = useSearchStore((state) =>state.isTotalSearchPageOpen)
 
@@ -76,87 +76,82 @@ const HomePage = () => {
     <OrderForm />
   ) : (
     <main className="bg-bg-300 relative min-h-screen">
-      {/* 회원가입 환영 모달 */}
-      {isWelcomeModalOpen && (
-        <AnimatePresence>
-          {isWelcomeModalOpen && <WelcomeModal onClick={() => setState({ isWelcomeModalOpen: false })} />}
-        </AnimatePresence>
-      )}
-
-      {/* 필터 모달 */}
-      <AnimatePresence>
-        {isFilterModalOpen && (
-          <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
+      <Drawer>
+        {/* 회원가입 환영 모달 */}
+        {isWelcomeModalOpen && (
+          <AnimatePresence>
+            {isWelcomeModalOpen && <WelcomeModal onClick={() => setState({ isWelcomeModalOpen: false })} />}
+          </AnimatePresence>
         )}
-      </AnimatePresence>
 
-      {/* 가게 상세 페이지 모달 */}
-      {isStoreDetailModalOpen && (
+        {/* 필터 모달 */}
         <AnimatePresence>
-          <BottomModal onClick={() => setSearchParams({ isStoreDetailModalOpen: false })}>
-            <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
-          </BottomModal>
+          {isFilterModalOpen && (
+            <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
+          )}
         </AnimatePresence>
-      )}
 
-      {/* 디자인 상세 페이지 모달 */}
-      {isDesignDetailModalOpen && (
-        <AnimatePresence>
-          <BottomModal onClick={() => setSearchParams({ isDesignDetailModalOpen: false })}>
-            <DesignDetailContent designDetail={designDetail} />
-          </BottomModal>
-        </AnimatePresence>
-      )}
-
-      <AnimatePresence>
-        {isAtTop && (
-          <motion.div
-            initial={{ y: 0, opacity: 1 }}
-            animate={{ y: 0, opacity: 1 }}
-            exit={{ y: -100, opacity: 0 }}
-            transition={{ duration: 0.01 }}
-            className="bg-bg-300 fixed top-0 right-0 left-0 z-30"
-          >
-            <Header headerType={'DEFAULT'} headerClassname={'bg-bg-300 fixed'}/>
-          </motion.div>
+        {/* 가게 상세 페이지 모달 */}
+        {isStoreDetailModalOpen && (
+          <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
         )}
-      </AnimatePresence>
 
-      <div
-        className={`z-40 w-full px-5 pt-2 pb-4 transition-all duration-300 ${
-          !isAtTop ? 'bg-bg-300 fixed top-0 pt-[1.563rem]' : 'fixed top-40 z-10 bg-transparent'
-        }`}
-      >
-        <SearchInput
-          onClick={() => {
-            setSearchParams({isTotalSearchPageOpen: true})
-          }}
-          LeftIcon={<RedSearchIcon width={24} height={24} />}
-          className="w-full bg-white"
-        />
-      </div>
+        {/* 디자인 상세 페이지 모달 */}
+        {isDesignDetailModalOpen && (
+          <DesignDetailContent designDetail={designDetail} />
+        )}
 
-      <div
-        className={`absolute mt-10 w-full bg-white transition-all duration-300 ${
-          scrollDirection === 'down' ? 'bottom-0 h-[60%]' : 'top-[9.75rem] bottom-0 rounded-t-[2rem]'
-        }`}
-      >
-        <SearchContent
-          searchMenuClassname={
-            !isAtTop ? 'transition-all duration-300 fixed top-23' : 'transition-all duration-300 fixed top-60'
-          }
-          FilterPanelClassname={
-            !isAtTop ? 'transition-all duration-300 fixed top-34' : 'transition-all duration-300 fixed top-71'
-          }
-          SearchSummaryPanelClassname={!isAtTop ? 'mt-5' : 'mt-[9.375rem]'}
-          isFilterModalOpen={isFilterModalOpen}
-          selectedFilterType={selectedFilterType}
-          setSelectedFilterType={setSelectedFilterType}
-          setIsFilterModalOpen={setIsFilterModalOpen}
-          totalCount={totalCount}
-        />
-      </div>
-      <NavBar />
+        <AnimatePresence>
+          {isAtTop && (
+            <motion.div
+              initial={{ y: 0, opacity: 1 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{ y: -100, opacity: 0 }}
+              transition={{ duration: 0.01 }}
+              className="bg-bg-300 fixed top-0 right-0 left-0 z-30"
+            >
+              <Header headerType={'DEFAULT'} headerClassname={'bg-bg-300 fixed'}/>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        <div
+          className={`z-40 w-full px-5 pt-2 pb-4 transition-all duration-300 ${
+            !isAtTop ? 'bg-bg-300 fixed top-0 pt-[1.563rem]' : 'fixed top-40 z-10 bg-transparent'
+          }`}
+        >
+          <SearchInput
+            onClick={() => {
+              setSearchParams({isTotalSearchPageOpen: true})
+            }}
+            LeftIcon={<RedSearchIcon width={24} height={24} />}
+            className="w-full bg-white"
+          />
+        </div>
+
+        <div
+          className={`absolute mt-10 w-full bg-white transition-all duration-300 ${
+            scrollDirection === 'down' ? 'bottom-0 h-[60%]' : 'top-[9.75rem] bottom-0 rounded-t-[2rem]'
+          }`}
+        >
+          <SearchContent
+            searchMenuClassname={
+              !isAtTop ? 'transition-all duration-300 fixed top-23' : 'transition-all duration-300 fixed top-60'
+            }
+            FilterPanelClassname={
+              !isAtTop ? 'transition-all duration-300 fixed top-34' : 'transition-all duration-300 fixed top-71'
+            }
+            SearchSummaryPanelClassname={!isAtTop ? 'mt-5' : 'mt-[9.375rem]'}
+            isFilterModalOpen={isFilterModalOpen}
+            selectedFilterType={selectedFilterType}
+            setSelectedFilterType={setSelectedFilterType}
+            setIsFilterModalOpen={setIsFilterModalOpen}
+            totalCount={totalCount}
+          />
+        </div>
+        <NavBar />
+      </Drawer>
+
     </main>
   )
 }
