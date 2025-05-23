@@ -51,7 +51,7 @@ const NicknameEditor = (props: Props) => {
         <input
           value={nickname}
           onChange={(e) => {
-            setPickerSignUpInfo((prevState) => ({ ...prevState!, nickname: e.target.value }))
+            setPickerSignUpInfo((prevState) => prevState && ({ ...prevState, nickname: e.target.value }))
             setNickNameValidationResult(null)
             setIsInvalidModalOpen(false)
           }}
