@@ -37,7 +37,7 @@ const DesignSelector = (props: Props) => {
         }}
         className="body-m-m mt-2 flex w-full justify-between rounded-[4px] border border-gray-200 px-4 py-[14px] text-gray-400"
       >
-        <p>{selectedDesignContent ? selectedDesignContent : selectedDesignUrl ? '갤러리에서 업로드' : '원하는 케이크 디자인을 선택해주세요.'}</p>
+        <p className={selectedDesignContent ? 'text-gray-700' : 'text-gray-400'}>{selectedDesignContent ? selectedDesignContent : selectedDesignUrl ? '갤러리에서 업로드' : '원하는 케이크 디자인을 선택해주세요.'}</p>
         <DropDownIcon height={24} width={24} />
       </div>
       {isDesignDropBoxOpen && (

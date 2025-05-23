@@ -27,7 +27,7 @@ const WishPickUpDateField = (props: Props) => {
       <h5 className="title-m flex gap-x-[2px]">
         픽업 희망 일자<span className="title-s text-red-400">*</span>
       </h5>
-      <div className="body-m-m mt-2 flex w-full justify-between rounded-[4px] border border-gray-200 px-4 py-[14px] text-gray-400">
+      <div className={`${wishPickUpDate ? 'text-gray-700' : 'text-gray-400' } body-m-m mt-2 flex w-full justify-between rounded-[4px] border border-gray-200 px-4 py-[14px]`}>
         <input
           ref={inputRef}
           placeholder={'픽업일자를 선택해주세요.'}
