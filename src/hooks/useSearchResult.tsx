@@ -28,6 +28,11 @@ const useSearchResult = () => {
   const totalCount = useSearchStore((state) => state.totalCount)
   const keyword = useSearchStore((state) => state.keyword)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
+  // 가격 중복 리스트
+  const [selectedPriceRanges, setSelectedPriceRanges] = useState<
+    { minPrice: number | null; maxPrice: number | null }[]
+  >([])
+
 
   /**
    * 스토어,디자인 상세페이지 데이터 불러오기
@@ -110,10 +115,10 @@ const useSearchResult = () => {
               setSelectedFilterType={setSelectedFilterType}
             />
             <PriceFilterContent
-              minPrice={minPrice}
+              selectedPriceRanges={selectedPriceRanges}
+              setSelectedPriceRanges={setSelectedPriceRanges}
               setMinPrice={setMinPrice}
               setMaxPrice={setMaxPrice}
-              maxPrice={maxPrice}
             />
             <Filter.BottomButton
               reset={() => {
@@ -134,6 +139,8 @@ const useSearchResult = () => {
   }
 
   return {
+    selectedPriceRanges,
+    setSelectedPriceRanges,
     isStoreDetailModalOpen,
     isDesignDetailModalOpen,
     isOrderFormOpen,

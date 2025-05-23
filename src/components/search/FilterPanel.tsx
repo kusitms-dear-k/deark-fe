@@ -31,9 +31,9 @@ const FilterPanel = (props: Props) => {
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   const formatPriceContent = (minPrice: null | number, maxPrice: null | number) => {
-    if (minPrice === 0 && maxPrice !== null) return `~${maxPrice} 이하`
-    if (minPrice !== 0 && maxPrice !== null) return `${minPrice}~${maxPrice}`
-    if (minPrice !== 0 && maxPrice === null) return `${minPrice} 이상`
+    if (minPrice === 0 && maxPrice !== null) return `~${maxPrice.toLocaleString()} 이하`
+    if (minPrice !== 0 && maxPrice !== null && minPrice !== null) return `${minPrice.toLocaleString()}~${maxPrice.toLocaleString()}`
+    if (minPrice !== 0 && maxPrice === null && minPrice !== null) return `${minPrice.toLocaleString()} 이상`
   }
 
   const handleIsSelfServiceClick = () => {
