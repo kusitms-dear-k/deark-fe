@@ -13,7 +13,7 @@ const SizeSelector = (props: Props) => {
   const {setIsSizeDropBoxOpen, isSizeDropBoxOpen} = props
 
   const answers = useOrderStore((state) => state.answers)
-  const size = answers?.find((a) => a.title === '크기')?.answer ?? '크기를 선택해주세요.'
+  const size = answers?.find((a) => a.title === '크기')?.answer ?? '케이크 사이즈를 선택해주세요.'
 
   const setState = useOrderStore((state) => state.setState)
 

@@ -14,6 +14,7 @@ const useSearchResult = () => {
   const isStoreDetailModalOpen = useSearchStore((state) => state.isStoreDetailModalOpen)
   const isDesignDetailModalOpen = useSearchStore((state) => state.isDesignDetailModalOpen)
   const isOrderFormOpen = useOrderStore((state) => state.isOrderFormOpen)
+  const isOrderSubmissionSuccessModalOpen = useOrderStore((state) => state.isOrderSubmissionSuccessModalOpen)
   // 필터 관련 state
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>('ADDRESS')
@@ -32,7 +33,8 @@ const useSearchResult = () => {
   const [selectedPriceRanges, setSelectedPriceRanges] = useState<
     { minPrice: number | null; maxPrice: number | null }[]
   >([])
-
+  const setState = useOrderStore((state) => state.setState)
+  const resetOrderForm = useOrderStore((state) =>state.resetOrderForm)
 
   /**
    * 스토어,디자인 상세페이지 데이터 불러오기
@@ -139,13 +141,16 @@ const useSearchResult = () => {
   }
 
   return {
+    resetOrderForm,
     selectedPriceRanges,
     setSelectedPriceRanges,
     isStoreDetailModalOpen,
     isDesignDetailModalOpen,
     isOrderFormOpen,
+    isOrderSubmissionSuccessModalOpen,
     isFilterModalOpen,
     setIsFilterModalOpen,
+    setState,
     selectedFilterType,
     setSelectedFilterType,
     selectedFilterContents,

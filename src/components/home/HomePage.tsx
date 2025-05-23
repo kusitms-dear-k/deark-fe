@@ -2,7 +2,7 @@ import Header from '@/components/common/Header'
 import NavBar from '@/components/common/NavBar'
 import SearchInput from '@/components/home/SearchInput'
 import { RedSearchIcon } from '@/assets/svgComponents'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { AnimatePresence, motion } from 'framer-motion'
 import GuardianModal from '@/components/authentication/GuardianModal'
 import TotalSearchPage from '@/components/search/TotalSearchPage'
@@ -11,17 +11,17 @@ import SearchContent from '@/components/search/SearchContent'
 import WelcomeModal from '@/components/authentication/WelcomeModal'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import Filter from '@/components/common/Filter'
-import BottomModal from '@/components/common/BottomModal'
 import StoreDetail from '@/components/search/StoreDetail'
 import DesignDetailContent from '@/components/search/DesignDetailContent'
 import useSearchResult from '@/hooks/useSearchResult'
 import OrderForm from '@/components/order/OrderForm'
 import { useSearchStore } from '@/store/searchStore'
 import { Drawer } from '@/components/ui/drawer'
+import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSuccessModal'
 const HomePage = () => {
   const isTotalSearchPageOpen = useSearchStore((state) =>state.isTotalSearchPageOpen)
 
-  const setState = useLoginStore((state) => state.setState)
+  const setLoginState = useLoginStore((state) => state.setState)
   const isWelcomeModalOpen = useLoginStore((state) => state.isWelcomeModalOpen)
   const isGuardianModalOpen = useLoginStore((state) => state.isGuardianModalOpen)
 
@@ -40,18 +40,34 @@ const HomePage = () => {
     designDetail,
     renderFilterContent,
     keyword,
+    isOrderSubmissionSuccessModalOpen,
+    setState,
+    resetOrderForm,
   } = useSearchResult()
 
   // ✅ 3초 후 자동 닫힘 처리
   useEffect(() => {
     if (isWelcomeModalOpen) {
       const timer = setTimeout(() => {
-        setState({ isWelcomeModalOpen: false, isGuardianModalOpen: true })
+        setLoginState({ isWelcomeModalOpen: false, isGuardianModalOpen: true })
       }, 3000)
 
       return () => clearTimeout(timer) // cleanup
     }
   }, [isWelcomeModalOpen, setState])
+
+  // 2초 후 자동 닫힘 처리
+  useEffect(() => {
+    if (isOrderSubmissionSuccessModalOpen) {
+      const timer = setTimeout(() => {
+        setState({ isOrderSubmissionSuccessModalOpen: false })
+        //초기화
+        resetOrderForm()
+      }, 2000)
+
+      return () => clearTimeout(timer) // cleanup
+    }
+  }, [isOrderSubmissionSuccessModalOpen, setState])
 
   const scrollDirection = useScrollDirection()
 
@@ -68,7 +84,7 @@ const HomePage = () => {
 
   return isGuardianModalOpen ? (
     <AnimatePresence>
-      <GuardianModal onClick={() => setState({ isGuardianModalOpen: false })} />
+      <GuardianModal onClick={() => setLoginState({ isGuardianModalOpen: false })} />
     </AnimatePresence>
   ) : isTotalSearchPageOpen ? (
     <TotalSearchPage keyword={keyword} />
@@ -89,10 +105,15 @@ const HomePage = () => {
           }
         }}
       >
+        {/* 주문서 문의가 완료될 때 보이는 모달 */}
+        {isOrderSubmissionSuccessModalOpen && (
+          <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })}/>
+        )}
+
         {/* 회원가입 환영 모달 */}
         {isWelcomeModalOpen && (
           <AnimatePresence>
-            {isWelcomeModalOpen && <WelcomeModal onClick={() => setState({ isWelcomeModalOpen: false })} />}
+            {isWelcomeModalOpen && <WelcomeModal onClick={() => setLoginState({ isWelcomeModalOpen: false })} />}
           </AnimatePresence>
         )}
 

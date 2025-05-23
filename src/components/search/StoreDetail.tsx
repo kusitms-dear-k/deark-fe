@@ -23,6 +23,7 @@ const StoreDetail = (props: Props) => {
   const sizeName = useSearchStore((state) => state.sizeName) //케이크 필터
 
   const setState = useOrderStore((state) =>state.setState)
+  const setSearchParams = useSearchStore((state) =>state.setSearchParams)
 
   // 무한스크롤 훅 호출
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteStoreDesign({
@@ -138,11 +139,14 @@ const StoreDetail = (props: Props) => {
 
             {storeDetailMenu === '가게 정보' && (
               <div>
-                <div className="h-[100px]"></div>
+                <div className="h-[100px]" />
 
                 <DrawerFooter className="border-gray-150 fixed bottom-0 z-10 w-full border-t bg-white px-[1.25rem] pt-[1.25rem]">
                   <button
-                    onClick={() => setState({ isOrderFormOpen: true })}
+                    onClick={() => {
+                      setState({ isOrderFormOpen: true, storeId: storeDetail?.storeId })
+                      setSearchParams({isStoreDetailModalOpen: false})
+                    }}
                     className="button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white"
                   >
                     주문 문의하기

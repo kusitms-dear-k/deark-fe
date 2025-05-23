@@ -12,11 +12,9 @@ import useSearchResult from '@/hooks/useSearchResult'
 import { useRouter } from 'next/navigation'
 import { KeywordDeleteIcon } from '@/assets/svgComponents'
 import useScrollDirection from '@/hooks/useScrollDirection'
-import {
-  Drawer
-} from '@/components/ui/drawer'
+import { Drawer } from '@/components/ui/drawer'
 import { useEffect } from 'react'
-
+import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSuccessModal'
 
 const SearchPage = () => {
   const router = useRouter()
@@ -25,6 +23,7 @@ const SearchPage = () => {
     isDesignDetailModalOpen,
     isOrderFormOpen,
     isFilterModalOpen,
+    isOrderSubmissionSuccessModalOpen,
     setIsFilterModalOpen,
     selectedFilterType,
     setSelectedFilterType,
@@ -35,14 +34,25 @@ const SearchPage = () => {
     setSearchParams,
     designDetail,
     renderFilterContent,
+    setState,
+    resetOrderForm,
   } = useSearchResult()
 
   const scrollDirection = useScrollDirection()
   const isScrollingDown = scrollDirection === 'down'
 
+  // 2초 후 자동 닫힘 처리
   useEffect(() => {
-    console.log('isStoreDetailModalOpen', isStoreDetailModalOpen)
-  }, [isStoreDetailModalOpen])
+    if (isOrderSubmissionSuccessModalOpen) {
+      const timer = setTimeout(() => {
+        setState({ isOrderSubmissionSuccessModalOpen: false })
+        //초기화
+        resetOrderForm()
+      }, 2000)
+
+      return () => clearTimeout(timer) // cleanup
+    }
+  }, [isOrderSubmissionSuccessModalOpen, setState])
 
   return (
     <main className="flex min-h-screen flex-col">
@@ -60,11 +70,14 @@ const SearchPage = () => {
         }}
       >
         <GATracker />
-        {/* 주문서 작성 폼 모달 */}
         {isOrderFormOpen ? (
           <OrderForm />
         ) : (
           <>
+            {/* 주문서 문의가 완료될 때 보이는 모달 */}
+            {isOrderSubmissionSuccessModalOpen && (
+              <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })}/>
+            )}
             {/* 필터 모달 */}
             <AnimatePresence>
               {isFilterModalOpen && (
@@ -78,9 +91,7 @@ const SearchPage = () => {
             )}
 
             {/* 디자인 상세 페이지 모달 */}
-            {isDesignDetailModalOpen && (
-              <DesignDetailContent designDetail={designDetail} />
-            )}
+            {isDesignDetailModalOpen && <DesignDetailContent designDetail={designDetail} />}
             <Header
               headerClassname={'fixed bg-white'}
               headerType="SEARCH"
@@ -117,7 +128,6 @@ const SearchPage = () => {
           </>
         )}
       </Drawer>
-
     </main>
   )
 }

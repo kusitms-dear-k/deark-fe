@@ -1,4 +1,4 @@
-import { create } from 'zustand/index'
+import { create, createStore } from 'zustand/index'
 import {
   OrderFormDesignType,
   OrderFormRequestDetailType,
@@ -9,6 +9,7 @@ import {
 } from '@/types/mypage'
 import { ResponseType } from '@/types/common'
 import { getMyOrder } from '@/api/mypageAPI'
+import { RefObject, useRef } from 'react'
 
 interface OrderStoreType extends OrderFormType {
   isLoading: boolean
@@ -19,11 +20,17 @@ interface OrderStoreType extends OrderFormType {
   selectedEventId: number | null
   selectedEventTitle: string | null,
   isOrderFormOpen: boolean
+  selectedDesignContent: string | undefined,
   isOrderOpen: boolean
+  isOrderSubmissionSuccessModalOpen: boolean
+  uploadDesignImage: (string | ArrayBuffer | null)
+  uploadRequestDetailImage: (string | ArrayBuffer | null)
   messageId: number
+  resetOrderForm: () => void
   setState: (params: {
     status?: OrderMenuType
     storeId?: number | null
+    selectedDesignContent?: string | undefined,
     designType?: OrderFormDesignType | null
     designId?: number | null
     selectedDesignUrl?: string | null
@@ -35,6 +42,9 @@ interface OrderStoreType extends OrderFormType {
     answers?: QaDetailType[] | null
     isOrderFormOpen?: boolean
     isOrderOpen?: boolean
+    isOrderSubmissionSuccessModalOpen?: boolean
+    uploadDesignImage?: (string | ArrayBuffer | null)
+    uploadRequestDetailImage?: (string | ArrayBuffer | null)
     messageId?: number
   }) => void
 }
@@ -48,18 +58,22 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
   storeId: 1,
   designType: null,
   designId: null,
+  selectedDesignContent: undefined,
   requestDetailType: null,
   requestDetailDesignId: null,
   selectedDesignUrl: null,
   selectedRequestDetailDesignUrl: null,
   selectedEventId: null,
   selectedEventTitle: null,
-  answers: null,
+  answers: [],
   messageId: 4,
   //모달 오픈
   isOrderFormOpen: false,
   isOrderOpen: false,
+  isOrderSubmissionSuccessModalOpen: false,
   // 상태 업데이트 함수
+  uploadDesignImage: null,
+  uploadRequestDetailImage: null,
   setState: (params: {
     status?: OrderMenuType
     storeId?: number | null
@@ -71,10 +85,14 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
     requestDetailDesignId?: number | null
     selectedRequestDetailDesignUrl?: string | null
     selectedEventId?: number | null
+    selectedDesignContent?: string | undefined,
     selectedEventTitle?: string | null,
     answers?: QaDetailType[] | null
     isOrderFormOpen?: boolean
     isOrderOpen?: boolean
+    isOrderSubmissionSuccessModalOpen?: boolean
+    uploadDesignImage?: (string | ArrayBuffer | null)
+    uploadRequestDetailImage?: (string | ArrayBuffer | null)
     messageId?: number
   }) => {
     set((state) => ({
@@ -82,4 +100,19 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
       ...params,
     }))
   },
+  resetOrderForm: () => set({
+    storeId: null,
+    designType: null,
+    designId: null,
+    requestDetailType: null,
+    requestDetailDesignId: null,
+    selectedDesignUrl: null,
+    selectedRequestDetailDesignUrl: null,
+    answers: [],
+    selectedDesignContent: undefined,
+    // 상태 업데이트 함수
+    uploadDesignImage: null,
+    uploadRequestDetailImage: null,
+    isOrderFormOpen: false
+  }),
 }))

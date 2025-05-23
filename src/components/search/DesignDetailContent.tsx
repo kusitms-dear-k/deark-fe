@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { DesignDetailType } from '@/types/search'
-import { Gray700HeartIcon, GrayHeartIcon, HeartIcon, HeartIconFill } from '@/assets/svgComponents'
+import { Gray700HeartIcon, HeartIconFill } from '@/assets/svgComponents'
 import { useOrderStore } from '@/store/orderStore'
 import { DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
 import { useSearchStore } from '@/store/searchStore'
@@ -12,6 +12,7 @@ interface Props {
 const DesignDetailContent = ({ designDetail }: Props) => {
   const setState = useOrderStore((state) => state.setState)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
+  const designId = useSearchStore((state) => state.designId) //선택된 designId
 
   if (!designDetail) return null
 
@@ -54,7 +55,10 @@ const DesignDetailContent = ({ designDetail }: Props) => {
 
       <DrawerFooter className="border-gray-150 border-t bg-white px-[1.25rem] pt-[1.25rem]">
         <button
-          onClick={() => setState({ isOrderFormOpen: true })}
+          onClick={() => {
+            setState({ isOrderFormOpen: true, selectedDesignUrl: designDetail?.designImageUrl, designId: designId, selectedDesignContent: designDetail?.designName }) //TODO: storeId추가하기
+            setSearchParams({isDesignDetailModalOpen: false})
+          }}
           className="button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white"
           type="button"
         >
