@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { DesignDetailType } from '@/types/search'
-import { HeartIcon, HeartIconFill } from '@/assets/svgComponents'
+import { Gray700HeartIcon, GrayHeartIcon, HeartIcon, HeartIconFill } from '@/assets/svgComponents'
 import { useOrderStore } from '@/store/orderStore'
 import { DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
 import { useSearchStore } from '@/store/searchStore'
@@ -34,7 +34,7 @@ const DesignDetailContent = ({ designDetail }: Props) => {
           <div className="flex items-center justify-between">
             <h4 className="title-l">{designDetail.designName}</h4>
             <div className="flex items-center gap-x-1">
-              {designDetail.isLiked ? <HeartIconFill width={24} height={24} /> : <HeartIcon width={24} height={24} />}
+              {designDetail.isLiked ? <HeartIconFill width={24} height={24} /> : <Gray700HeartIcon width={20} height={18} />}
               <p className="caption-m text-gray-700">{designDetail.likeCount}</p>
             </div>
           </div>
