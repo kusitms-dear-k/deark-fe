@@ -5,6 +5,25 @@ interface Props {
 }
 const TermsOfServiceOptions = (props: Props) => {
   const { onBack } = props
+
+  const ARTICLE1 = [
+    '“서비스”란 이용자가 원하는 디자인의 케이크를 검색, 저장, 주문할 수 있도록 하고, 케이크 제작자(이하 "메이커")와 연결해주는 온라인 플랫폼을 의미합니다.',
+    '“이용자”란 본 약관에 따라 서비스를 이용하는 자를 말합니다.',
+    '“메이커”란 디어케이에 가게 및 디자인 정보를 등록하고, 이용자의 주문을 받아 케이크를 제작·판매하는 자를 말합니다.',
+  ]
+
+  const ARTICLE3 = [
+    '본 약관은 서비스 초기화면 또는 별도의 연결화면에 게시하여 공지하며, 이에 동의한 이용자에게 효력을 발생합니다.',
+    '회사는 관련 법령을 위반하지 않는 범위 내에서 약관을 개정할 수 있으며, 변경된 약관은 공지사항을 통해 사전 고지합니다.'
+  ]
+
+  const ARTICLE5 = [
+    '케이크 디자인 및 메이커 검색 기능',
+    '디자인 및 가게 즐겨찾기, 저장 기능',
+    '메이커에게 주문서 전달 및 수락/반려 기능',
+    '주문 현황 확인 및 쪽지 기능'
+  ]
+
   return (
     <>
       <Header headerType={'DYNAMIC'} title={'이용약관 동의'} onBack={onBack} className={'border-b pb-2'} />
@@ -24,15 +43,9 @@ const TermsOfServiceOptions = (props: Props) => {
             <br />
             <p>제2조 (정의)</p>
             <ol className="list-decimal pl-5">
-              <li>
-                “서비스”란 이용자가 원하는 디자인의 케이크를 검색, 저장, 주문할 수 있도록 하고, 케이크 제작자(이하
-                "메이커")와 연결해주는 온라인 플랫폼을 의미합니다.
-              </li>
-              <li>“이용자”란 본 약관에 따라 서비스를 이용하는 자를 말합니다.</li>
-              <li>
-                “메이커”란 디어케이에 가게 및 디자인 정보를 등록하고, 이용자의 주문을 받아 케이크를 제작·판매하는 자를
-                말합니다.
-              </li>
+              {ARTICLE1.map((article) => {
+                return <li key={article}>{article}</li>
+              })}
             </ol>
           </div>
 
@@ -41,14 +54,11 @@ const TermsOfServiceOptions = (props: Props) => {
             <p>제3조 (약관의 효력 및 변경)</p>
 
             <ol start={4} className="list-decimal pl-5">
-              <li>
-                본 약관은 서비스 초기화면 또는 별도의 연결화면에 게시하여 공지하며, 이에 동의한 이용자에게 효력을
-                발생합니다.
-              </li>
-              <li>
-                회사는 관련 법령을 위반하지 않는 범위 내에서 약관을 개정할 수 있으며, 변경된 약관은 공지사항을 통해 사전
-                고지합니다.
-              </li>
+              {ARTICLE3.map((article) => {
+                return (
+                  <li key={article}>{article}</li>
+                )
+              })}
             </ol>
           </div>
 
@@ -69,10 +79,9 @@ const TermsOfServiceOptions = (props: Props) => {
             </div>
 
             <ul className="list-disc space-y-1 pl-5">
-              <li>케이크 디자인 및 메이커 검색 기능</li>
-              <li>디자인 및 가게 즐겨찾기, 저장 기능</li>
-              <li>메이커에게 주문서 전달 및 수락/반려 기능</li>
-              <li>주문 현황 확인 및 쪽지 기능</li>
+              {ARTICLE5.map((article) => {
+                return <li key={article}>{article}</li>
+              })}
             </ul>
 
             <p className="pt-2">단, 회사는 서비스의 품질 향상을 위해 서비스 내용을 추가하거나 변경할 수 있습니다.</p>
