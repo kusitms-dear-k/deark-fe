@@ -1,4 +1,5 @@
-import { EditPencilIcon, TrashIcon } from '@/assets/svgComponents'
+import EditPencilIcon from '@/assets/svgComponents/EditPencilIcon'
+import TrashIcon from '@/assets/svgComponents/TrashIcon'
 import { EventDetail } from '@/types/event'
 
 interface EventActionSheetProps {

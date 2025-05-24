@@ -10,11 +10,11 @@ import GATracker from '@/components/GATracker'
 import SearchContent from '@/components/search/SearchContent'
 import useSearchResult from '@/hooks/useSearchResult'
 import { useRouter } from 'next/navigation'
-import { KeywordDeleteIcon } from '@/assets/svgComponents'
 import useScrollDirection from '@/hooks/useScrollDirection'
 import { Drawer } from '@/components/ui/drawer'
 import { useEffect } from 'react'
 import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSuccessModal'
+import KeywordDeleteIcon from '@/assets/svgComponents/KeywordDeleteIcon'
 
 const SearchPage = () => {
   const router = useRouter()

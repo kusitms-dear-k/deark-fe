@@ -1,4 +1,4 @@
-import { KebabIcon } from '@/assets/svgComponents'
+import KebabIcon from '@/assets/svgComponents/KebabIcon'
 import { DesignItem, EventDetail, StoreItem } from '@/types/event'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
@@ -23,19 +23,20 @@ export default function EventCard({ event, stores, designs, onMenuClick }: Event
 
   const handleCardClick = (e: React.MouseEvent) => {
     // 케밥 메뉴 클릭 시 이벤트 전파 방지
-    if ((e.target as HTMLElement).closest('.kebab-menu')) {
-      return
-    }
-    // 이벤트 상세 페이지로 이동
-    router.push(`/event/${event.eventId}`)
+    // if ((e.target as HTMLElement).closest('.kebab-menu')) {
+    //   return
+    // }
+    // // 이벤트 상세 페이지로 이동
+    // router.push(`/event/${event.eventId}`)
   }
 
   return (
-    <div
-      className="shadow-middlemodal h-[15.125rem] w-[10.5rem] rounded-sm bg-white px-2 py-4"
-      onClick={handleCardClick}
-    >
-      <div className={`mb-2 ${thumbnails.length > 1 ? 'grid grid-cols-2 grid-rows-2 gap-1' : ''}`}>
+    <div className="shadow-middlemodal h-[15.125rem] w-[10.5rem] rounded-sm bg-white px-2 py-4">
+      <div
+        className={`mb-2 ${thumbnails.length > 1 ? 'grid grid-cols-2 grid-rows-2 gap-1' : ''}`}
+        onClick={handleCardClick}
+      >
+
         {thumbnails.map((url, i) => (
           <div key={i} className="relative aspect-square overflow-hidden rounded">
             <Image src={url} alt={event.title} fill className="object-cover" />
