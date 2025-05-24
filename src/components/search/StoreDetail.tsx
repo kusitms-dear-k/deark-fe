@@ -10,6 +10,7 @@ import { getStoreDetailData } from '@/api/searchAPI'
 import { ResponseType } from '@/types/common'
 import { useInfiniteStoreDesign } from '@/api/hooks/search/useInfiniteStoreDesign'
 import { useOrderStore } from '@/store/orderStore';
+import { DrawerContent, DrawerDescription, DrawerFooter, DrawerTitle } from '@/components/ui/drawer'
 interface Props {
   storeDetailMenu: '디자인' | '가게 정보' | '리뷰'
   setStoreDetailMenu: Dispatch<SetStateAction<'디자인' | '가게 정보' | '리뷰'>>
@@ -22,6 +23,7 @@ const StoreDetail = (props: Props) => {
   const sizeName = useSearchStore((state) => state.sizeName) //케이크 필터
 
   const setState = useOrderStore((state) =>state.setState)
+  const setSearchParams = useSearchStore((state) =>state.setSearchParams)
 
   // 무한스크롤 훅 호출
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteStoreDesign({
@@ -66,6 +68,8 @@ const StoreDetail = (props: Props) => {
    * 스토어 상세 페이지 데이터 불러오기
    */
   useEffect(() => {
+    if (!storeId) return
+
     // 1. 초기 상태 실행
     getStoreDetailData(storeId)
       .then((res: ResponseType<StoreDetailType>) => {
@@ -85,7 +89,7 @@ const StoreDetail = (props: Props) => {
     })
 
     return () => unsubscribe()
-  }, [])
+  }, [storeId])
 
   /**
    * 가게 상세 페이지
@@ -118,30 +122,46 @@ const StoreDetail = (props: Props) => {
   }
 
   return (
-    <>
-      {storeDetail ? (
-        <>
-          <StoreProfile
-            storeName={storeDetail.storeName}
-            storeAddress={storeDetail.storeAddress}
-            likeCount={storeDetail.likeCount}
-            storeImageUrl={storeDetail.storeImageUrl}
-          />
-          <StoreDetailMenu storeDetailMenu={storeDetailMenu} setStoreDetailMenu={setStoreDetailMenu} />
-          {renderStoreDetailContent(storeDetailMenu)}
-          <div className={'border-gray-150 bottom-0 z-10 w-full border-t bg-white px-[1.25rem] pt-[1.25rem]'}>
-            <button
-              onClick={() => setState({isOrderFormOpen: true})}
-              className={'button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white'}>
-              주문하러 가기
-            </button>
-          </div>
-        </>
-      ) : (
-        //TODO: skeleton-ui
-        <div></div>
-      )}
-    </>
+    <div className="h-screen">
+      <DrawerContent className="flex flex-col h-full">
+        <DrawerTitle className="sr-only">{storeDetail?.storeName || '상세 정보'}</DrawerTitle>
+        <DrawerDescription className="sr-only">{storeDetail ? '가게 상세 페이지' : '로딩 중'}</DrawerDescription>
+        {storeDetail ? (
+          <>
+            <StoreProfile
+              storeName={storeDetail.storeName}
+              storeAddress={storeDetail.storeAddress}
+              likeCount={storeDetail.likeCount}
+              storeImageUrl={storeDetail.storeImageUrl}
+            />
+            <StoreDetailMenu storeDetailMenu={storeDetailMenu} setStoreDetailMenu={setStoreDetailMenu} />
+            {renderStoreDetailContent(storeDetailMenu)}
+
+            {storeDetailMenu === '가게 정보' && (
+              <div>
+                <div className="h-[100px]" />
+
+                <DrawerFooter className="border-gray-150 fixed bottom-0 z-10 w-full border-t bg-white px-[1.25rem] pt-[1.25rem]">
+                  <button
+                    onClick={() => {
+                      setState({ isOrderFormOpen: true, storeId: storeDetail?.storeId })
+                      setSearchParams({isStoreDetailModalOpen: false})
+                    }}
+                    className="button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white"
+                  >
+                    주문 문의하기
+                  </button>
+                </DrawerFooter>
+              </div>
+            )}
+          </>
+        ) : (
+          //TODO: skeleton-ui
+          <div></div>
+        )}
+      </DrawerContent>
+    </div>
+
   )
 }
 export default StoreDetail

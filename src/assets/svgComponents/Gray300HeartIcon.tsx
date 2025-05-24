@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const SvgGray300HeartIcon = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 17 17" {...props}><g clipPath="url(#gray-300-heart-icon_svg__a)"><path stroke="silver" strokeLinecap="round" strokeLinejoin="round" d="M9.275 14.021c-.226.081-.6.081-.826 0-1.934-.667-6.254-3.451-6.254-8.17 0-2.084 1.66-3.769 3.707-3.769 1.213 0 2.287.593 2.96 1.51a3.67 3.67 0 0 1 2.96-1.51c2.047 0 3.707 1.685 3.707 3.769 0 4.719-4.32 7.503-6.254 8.17" /></g><defs><clipPath id="gray-300-heart-icon_svg__a"><path fill="#fff" d="M.861.082h16v16h-16z" /></clipPath></defs></svg>;
+export default SvgGray300HeartIcon;

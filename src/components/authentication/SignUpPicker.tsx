@@ -1,11 +1,9 @@
 import { Dispatch, FormEvent, SetStateAction, useRef, useState } from 'react'
 import { CustomerSignUpType, StepType } from '@/types/authentication'
 import Header from '@/components/common/Header'
-import Image from 'next/image'
 import { useLoginStore } from '@/store/authStore'
 import TermsOfUseCheckbox from '@/components/authentication/TermsOfUseCheckbox'
 import { useRouter } from 'next/navigation'
-import { CameraIcon } from '@/assets/svgComponents'
 import ProfileEditor from '@/components/authentication/sign-up-picker/ProfileEditor'
 import NicknameEditor from '@/components/authentication/sign-up-picker/NicknameEditor'
 import GenderEditor from '@/components/authentication/sign-up-picker/GenderEditor'
@@ -21,7 +19,6 @@ interface SignUpPickerProps {
 }
 
 const SignUpPicker = ({
-  setStep,
   setIsTermsOfServiceOptionsModalOpen,
   setIsMarketingInformationModalOpen,
   setIsPersonalInformationModalOpen,
@@ -32,6 +29,8 @@ const SignUpPicker = ({
   const imgRef = useRef<HTMLInputElement>(null)
   const [uploadImage, setUploadImage] = useState<string | ArrayBuffer | null>()
   const [nickNameValidationResult, setNickNameValidationResult] = useState<boolean | null>(null) // true: 중복된게 잇는거,
+  const user = useLoginStore((state) => state.user)
+  const validationNickname = useLoginStore((state) => state.validationNickname)
   const customerSignUp = useLoginStore((state) => state.customerSignUp)
   //이용약관 state
   const [allOptions, setAllOptions] = useState(false)

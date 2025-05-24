@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import React from 'react'
 
+
 const BottomModal = ({ children, onClick }: { children: React.ReactNode; onClick: () => void }) => {
   return (
     <div onClick={onClick} className={'fixed inset-0 z-50 flex min-h-screen flex-col gap-y-2 bg-[rgba(0,0,0,0.6)]'}>

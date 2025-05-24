@@ -1,5 +1,4 @@
 import Header from '@/components/common/Header'
-import { article } from 'framer-motion/m'
 
 interface Props {
   onBack: () => void
