@@ -11,8 +11,8 @@ import GATracker from '@/components/GATracker'
 import SearchContent from '@/components/search/SearchContent'
 import useSearchResult from '@/hooks/useSearchResult'
 import { useRouter } from 'next/navigation'
-import { KeywordDeleteIcon } from '@/assets/svgComponents'
 import useScrollDirection from '@/hooks/useScrollDirection'
+import KeywordDeleteIcon from '@/assets/svgComponents/KeywordDeleteIcon'
 
 const SearchPage = () => {
   const router = useRouter()
