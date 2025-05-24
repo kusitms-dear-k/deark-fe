@@ -1,0 +1,69 @@
+'use client'
+
+import { useState } from 'react'
+import { DesignItem } from '@/types/event'
+import Image from 'next/image'
+import { HeartIconFill } from '@/assets/svgComponents'
+
+export default function DesignCarousel({ designs }: { designs: DesignItem[] }) {
+  // 각 디자인별 메모 상태를 따로 관리 (designId를 key로)
+  const [memoMap, setMemoMap] = useState<{ [designId: number]: string }>({})
+
+  if (!designs.length) {
+    return (
+      <div className="flex flex-col items-center justify-center py-8">
+        <span className="mb-2 text-gray-500">아직 저장된 디자인이 없어요.</span>
+        <button className="rounded bg-gray-100 px-4 py-2 font-medium text-gray-700">디자인 탐색</button>
+      </div>
+    )
+  }
+
+  return (
+    <div className="scrollbar-hide flex gap-2 overflow-x-auto pb-2">
+      {designs.map((design) => {
+        const memo = memoMap[design.designId] ?? ''
+        const maxLen = 20
+
+        return (
+          <div
+            key={design.designId}
+            className="flex w-[140px] flex-none flex-col items-start gap-2 rounded border border-gray-100 bg-white p-2 shadow"
+          >
+            <div className="relative h-[112px] w-[112px]">
+              <Image src={design.designImageUrl} alt={design.designName} fill className="rounded object-cover" />
+              <div className="absolute top-2 right-2">
+                <HeartIconFill width={20} height={20} className="text-red-500" />
+              </div>
+            </div>
+            <div className="flex w-[96px] flex-col gap-0.5">
+              <div className="text-xs font-bold text-zinc-900">{design.designName}</div>
+              <div className="text-[10px] text-neutral-500">{design.storeName}</div>
+            </div>
+            <div className="relative h-[2.75rem] w-[7.5rem] rounded-sm bg-stone-50 p-1.5 text-xs text-neutral-500">
+              {/* 메모가 이미 있으면 텍스트로, 없으면 입력창 */}
+              {design.memo ? (
+                <span>{design.memo}</span>
+              ) : (
+                <>
+                  <input
+                    className="caption-m w-full bg-transparent text-[#707070] outline-none placeholder:text-stone-300"
+                    placeholder="메모를 입력해주세요..."
+                    maxLength={maxLen}
+                    value={memo}
+                    onChange={(e) => {
+                      const val = e.target.value.slice(0, maxLen)
+                      setMemoMap((prev) => ({ ...prev, [design.designId]: val }))
+                    }}
+                  />
+                  <span className="caption-m absolute right-2 bottom-1 text-[13px] font-medium text-stone-300">
+                    {memo.length}/{maxLen}
+                  </span>
+                </>
+              )}
+            </div>
+          </div>
+        )
+      })}
+    </div>
+  )
+}
