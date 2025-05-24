@@ -79,7 +79,7 @@ const Header = (props: Props) => {
         )
       case 'DYNAMIC':
         return (
-          <div className={`absolute right-5 left-5 flex items-center gap-x-2 ${className} bg-white`}>
+          <div className={`absolute px-5 flex items-center gap-x-2 ${className} bg-white w-full`}>
             <LeftArrowIcon
               width={24}
               height={24}

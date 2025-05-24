@@ -1,7 +1,11 @@
 import { BlackCalendarIcon, GrayRightArrowIcon } from '@/assets/svgComponents'
 import Image from 'next/image'
 
-const PickUpStatusCard = () => {
+interface PickUpStatusCardProps {
+
+}
+
+const PickUpStatusCard = ({}:PickUpStatusCardProps) => {
   return (
     <div
       className="relative flex flex-col gap-y-[0.75rem] rounded-[0.25rem] bg-white"
@@ -11,7 +15,7 @@ const PickUpStatusCard = () => {
         <div className="flex">
           <BlackCalendarIcon width={24} height={24} />
           <h3 className="body-m text-gray-900">
-            <span className="title-l text-gray-700">05/03(수)</span> 요청 날짜
+            <span className="title-l text-gray-700">05/03(수) 오후 3:00</span> 픽업 예정
           </h3>
         </div>
         <button className="bg-gray-150 body-m-m flex h-fit items-center gap-x-[0.25rem] rounded-[0.25rem] px-[0.438rem] py-[0.25rem] text-gray-500">
