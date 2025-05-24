@@ -11,7 +11,7 @@ import NicknameEditor from '@/components/authentication/sign-up-picker/NicknameE
 import GenderEditor from '@/components/authentication/sign-up-picker/GenderEditor'
 import BirthEditor from '@/components/authentication/sign-up-picker/BirthEditor'
 
-interface Props {
+interface SignUpPickerProps {
   setStep: Dispatch<SetStateAction<StepType>>
   //각 이용약관 상세 페이지 모달창 관리 state
   setIsTermsOfServiceOptionsModalOpen: Dispatch<SetStateAction<boolean>>
@@ -20,8 +20,13 @@ interface Props {
   setIsThirdPartyAgreementConsentModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const SignUpPicker = (props: Props) => {
-  const { setStep, setIsTermsOfServiceOptionsModalOpen, setIsMarketingInformationModalOpen, setIsPersonalInformationModalOpen, setIsThirdPartyAgreementConsentModalOpen } = props
+const SignUpPicker = ({
+  setStep,
+  setIsTermsOfServiceOptionsModalOpen,
+  setIsMarketingInformationModalOpen,
+  setIsPersonalInformationModalOpen,
+  setIsThirdPartyAgreementConsentModalOpen,
+}: SignUpPickerProps) => {
   const router = useRouter()
   const [pickerSignUpInfo, setPickerSignUpInfo] = useState<CustomerSignUpType | null>(null)
   const imgRef = useRef<HTMLInputElement>(null)
