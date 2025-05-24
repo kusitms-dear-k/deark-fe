@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const SvgProfile = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 33 33" {...props}><rect width={32} height={32} x={0.041} y={0.469} fill="#E5E5E4" rx={16} /><g fill="silver" fillRule="evenodd" clipRule="evenodd"><path d="M10.849 11.869c0-2.972 2.38-5.4 5.342-5.4s5.342 2.428 5.342 5.4c0 2.971-2.38 5.4-5.342 5.4s-5.342-2.429-5.342-5.4M7.786 22.737c1.93-2.588 4.973-4.268 8.405-4.268s6.475 1.68 8.406 4.268l.024.033c.17.226.345.462.47.688.149.27.256.575.25.945a1.9 1.9 0 0 1-.205.803c-.11.225-.279.468-.513.654-.312.248-.654.338-.965.375-.274.034-.601.034-.936.034H9.66c-.335 0-.662 0-.936-.034-.311-.037-.653-.127-.965-.375a1.9 1.9 0 0 1-.513-.654c-.11-.224-.2-.506-.205-.803-.006-.37.101-.676.25-.945.125-.226.3-.462.47-.688z" /></g></svg>;
+export default SvgProfile;
