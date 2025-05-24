@@ -35,7 +35,7 @@ const DesignDetailContent = (props: Props) => {
                 </div>
               </div>
               <p className="body-m mt-[0.25rem] text-gray-800">{designDetail.description}</p>
-              <p className="title-xl">{designDetail.price}원</p>
+              <p className="title-xl">{designDetail.price.toLocaleString()}원</p>
             </section>
             <section className="p-[1.25rem]">
               <h4 className="title-l">케이크 옵션</h4>

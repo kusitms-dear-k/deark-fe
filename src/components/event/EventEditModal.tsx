@@ -1,5 +1,5 @@
 // EditEventModal.tsx - 수정 모달 래퍼 컴포넌트
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { EventApi } from '@/api/eventAPI'
 import { EventDetail, CreateEventRequest } from '@/types/event'
 import EventModal from './EventModal'

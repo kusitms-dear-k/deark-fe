@@ -1,19 +1,20 @@
 import { WhiteCheckIcon } from '@/assets/svgComponents'
-import { Dispatch, SetStateAction, useEffect } from 'react'
+import { Dispatch, SetStateAction, useEffect, useState } from 'react'
 import { getDesignSearchResult } from '@/api/searchAPI'
 import { useSearchStore } from '@/store/searchStore'
 import { ResponseType } from '@/types/common'
 import { DesignListResponseType } from '@/types/search'
 
 interface Props {
-  minPrice: null | number
-  maxPrice: null | number
+  selectedPriceRanges: { minPrice: number | null; maxPrice: number | null }[]
+  setSelectedPriceRanges: Dispatch<SetStateAction<{ minPrice: number | null; maxPrice: number | null }[]>>
+
   setMinPrice: Dispatch<SetStateAction<null | number>>
   setMaxPrice: Dispatch<SetStateAction<null | number>>
 }
 
 const PriceFilterContent = (props: Props) => {
-  const { minPrice, maxPrice, setMinPrice, setMaxPrice } = props
+  const { selectedPriceRanges, setSelectedPriceRanges, setMinPrice, setMaxPrice } = props
   // zustand 상태
   const keyword = useSearchStore((state) => state.keyword)
   const locationList = useSearchStore((state) => state.locationList)
@@ -32,7 +33,63 @@ const PriceFilterContent = (props: Props) => {
     { content: '40,000원 이상', minPrice: 40000, maxPrice: null },
   ]
 
+  const ALL_RANGE = { minPrice: null, maxPrice: null }
+
+  const togglePriceRange = (range: { minPrice: number | null; maxPrice: number | null }) => {
+    const isAlreadySelected = selectedPriceRanges.some(
+      (r) => r.minPrice === range.minPrice && r.maxPrice === range.maxPrice
+    )
+
+    if (range.minPrice === null && range.maxPrice === null) {
+      // "전체" 선택 시: 전체 체크
+      if (!isAlreadySelected) {
+        setSelectedPriceRanges(priceContents) // 모두 선택
+      } else {
+        setSelectedPriceRanges([]) // 전체 해제
+      }
+    } else {
+      if (isAlreadySelected) {
+        // 다른 구간 해제 → "전체"도 해제
+        setSelectedPriceRanges((prev) =>
+          prev.filter(
+            (r) =>
+              !(r.minPrice === range.minPrice && r.maxPrice === range.maxPrice) &&
+              !(r.minPrice === null && r.maxPrice === null)
+          )
+        )
+      } else {
+        // 추가 선택
+        const newSelected = [...selectedPriceRanges, range]
+
+        // 모든 구간이 다 선택되었는지 확인
+        const isAllSelected = priceContents
+          .filter((p) => p.minPrice !== null || p.maxPrice !== null) // "전체" 제외
+          .every((p) => newSelected.some((r) => r.minPrice === p.minPrice && r.maxPrice === p.maxPrice))
+
+        if (isAllSelected) {
+          setSelectedPriceRanges(priceContents) // 전체 포함한 전부 선택
+        } else {
+          setSelectedPriceRanges(newSelected.filter((r) => r.minPrice !== null || r.maxPrice !== null)) // "전체" 제외
+        }
+      }
+    }
+  }
+
   useEffect(() => {
+    const prices = selectedPriceRanges.flatMap((r) => [
+      r.minPrice !== null ? r.minPrice : [],
+      r.maxPrice !== null ? r.maxPrice : [],
+    ])
+    const numericPrices = prices.filter((p): p is number => typeof p === 'number')
+
+    const minPrice = numericPrices.length ? Math.min(...numericPrices) : null
+    const maxPrice = numericPrices.length ? Math.max(...numericPrices) : null
+
+    console.log('최소:', minPrice, '최대:', maxPrice)
+
+    setMinPrice(minPrice)
+    setMaxPrice(maxPrice)
+
     getDesignSearchResult({
       pageParam: 0,
       count: 4,
@@ -49,19 +106,17 @@ const PriceFilterContent = (props: Props) => {
     }).then((res: ResponseType<DesignListResponseType>) => {
       setSearchParams({ totalCount: res.results.totalCount })
     })
-  }, [minPrice, maxPrice])
+  }, [selectedPriceRanges])
 
   return (
     <div className="pb-[1.125rem]">
       {priceContents.map((priceContent) => {
-        const isSelected = minPrice === priceContent.minPrice && maxPrice === priceContent.maxPrice
+        const isSelected = selectedPriceRanges.some(
+          (r) => r.minPrice === priceContent.minPrice && r.maxPrice === priceContent.maxPrice
+        )
         return (
           <button
-            onClick={() => {
-              setMinPrice(priceContent.minPrice)
-              setMaxPrice(priceContent.maxPrice)
-              // 00 결과 보기 에서 00을 계산하는 코드
-            }}
+            onClick={() => togglePriceRange(priceContent)}
             key={priceContent.content}
             className="flex items-center gap-x-[0.625rem] px-[1.5rem] py-[0.625rem]"
           >

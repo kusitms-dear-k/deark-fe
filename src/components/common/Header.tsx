@@ -2,47 +2,79 @@
 import SearchInput from '@/components/home/SearchInput'
 import { useRouter } from 'next/navigation'
 import { HeaderType } from '@/types/common'
-import { BellIcon, LeftArrowIcon, ProfileIcon, SearchIconRed } from '@/assets/svgComponents'
+import { LeftArrowIcon } from '@/assets/svgComponents'
+import { RefObject, useEffect, useState } from 'react'
+import { useLoginStore } from '@/store/authStore'
+import Cookies from 'js-cookie'
+import dynamic from 'next/dynamic'
+
+const SvgBellIcon = dynamic(() => import('@/assets/svgComponents/BellIcon'), {
+  ssr: false,
+})
 
 interface Props {
   onBack?: () => void
   headerType: HeaderType
   keyword?: null | string
   title?: string
+  headerClassname?: string
   className?: string
   description?: string
-  fixed?: boolean
   onClick?: () => void
+  onKeyDown?: () => void
+  RightIcon?: React.ReactNode
+  inputRef?: RefObject<HTMLInputElement | null>
 }
 
 const Header = (props: Props) => {
-  const { onBack, headerType, keyword, title, className, description, fixed = true, onClick } = props
+  const {
+    onBack,
+    headerType,
+    keyword,
+    title,
+    headerClassname = 'bg-white',
+    className,
+    description,
+    onClick,
+    onKeyDown,
+    RightIcon,
+    inputRef,
+  } = props
   const router = useRouter()
+  const user = useLoginStore((state) => state.user)
+  const [isClient, setIsClient] = useState(false)
+  const [token, setToken] = useState<string | undefined>()
+
+  useEffect(() => {
+    setIsClient(true)
+    setToken(Cookies.get('ACCESS_TOKEN'))
+  }, [])
 
   const renderHeaderType = (headerType: HeaderType) => {
     switch (headerType) {
       case 'DEFAULT':
         return (
-          <div className="absolute top-10 left-5 w-[90%]">
-            <div className="flex w-full justify-between">
-              <h1 className="key-visual-m text-red-400">Cake is easy</h1>
-              <div className="flex items-center gap-x-[0.75rem]">
-                <div className="relative p-[0.125rem]">
-                  <BellIcon width={24} height={24} />
-                  <div className="absolute top-0 right-0 h-[0.375rem] w-[0.375rem] rounded-full bg-red-400"></div>
-                </div>
-                <ProfileIcon
+          <div className="flex w-full flex-col px-5">
+            <div className="flex justify-between">
+              <h1 className="key-visual-m text-red-400">Dear.k</h1>
+              {isClient && token ? (
+                <SvgBellIcon width={24} height={24} />
+              ) : isClient ? (
+                <button
                   onClick={() => {
-                    router.push('/mypage')
+                    router.push('/login')
                   }}
-                  width={32}
-                  height={32}
-                />
-              </div>
+                  className="border-bg-500 chip-s h-fit w-fit rounded-full border px-3 py-[6px] text-gray-500"
+                >
+                  로그인
+                </button>
+              ) : null}
             </div>
-            <div className="body-el">
-              안녕하세요, <span className="headline-s text-gray-900">리무진님!</span>{' '}
-            </div>
+            {isClient && token ? (<div className="body-xl py-1 text-gray-900">안녕하세요,<span
+              className="headline-s">리무진님!</span></div>) : (
+              <div className="body-xl py-1 text-gray-900">만나서 반가워요 👋🏻</div>
+            )}
+
           </div>
         )
       case 'DYNAMIC':
@@ -64,7 +96,7 @@ const Header = (props: Props) => {
         )
       case 'SEARCH':
         return (
-          <div className="flex w-full items-center gap-x-[0.5rem] px-[1.25rem] pb-4">
+          <div className="flex w-full items-center gap-x-[0.5rem] bg-white px-[1.25rem] pb-4">
             <LeftArrowIcon
               width={24}
               height={24}
@@ -74,14 +106,11 @@ const Header = (props: Props) => {
               }}
             />
             <SearchInput
+              inputRef={inputRef}
+              onKeyDown={onKeyDown}
               onClick={onClick}
               keyword={keyword ? keyword : null}
-              RightIcon={
-                <div className="flex items-center gap-x-[0.75rem]">
-                  <div className="h-[1rem] border-l border-gray-300" />
-                  <SearchIconRed width={24} height={24} />
-                </div>
-              }
+              RightIcon={RightIcon ? RightIcon : null}
             />
           </div>
         )
@@ -89,11 +118,7 @@ const Header = (props: Props) => {
   }
   return (
     <header
-      className={
-        fixed
-          ? 'fixed top-0 z-30 flex w-full items-center bg-white pt-[4.125rem]'
-          : 'flex w-full items-center bg-white pt-[4.125rem]'
-      }
+      className={`${headerClassname ? headerClassname : ''} pt-[4.125rem]' : 'flex top-0 z-30 flex w-full items-center pt-[4.125rem]`}
     >
       {renderHeaderType(headerType)}
     </header>

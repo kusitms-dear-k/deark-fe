@@ -1,13 +1,13 @@
 import UnCheckBoxIcon from '@/assets/svgComponents/UnCheckBoxIcon'
 import BlueCheckIcon from '../../assets/svgComponents/BlueCheckIcon'
 import { Dispatch, SetStateAction, useEffect } from 'react'
-import TermsOfService from '@/components/authentication/TermsOfService'
-import PersonalInformation from '@/components/authentication/PersonalInformation'
-import MarketingInformation from '@/components/authentication/MarketingInformation'
-import ThirdPartyAgreementConsent from '@/components/authentication/ThirdPartyAgreementConsent'
+import PersonalInformation from '@/components/authentication/terms-of-service/PersonalInformation'
+import MarketingInformation from '@/components/authentication/terms-of-service/MarketingInformation'
+import ThirdPartyAgreementConsent from '@/components/authentication/terms-of-service/ThirdPartyAgreementConsent'
 import CheckBoxIcon from '@/assets/svgComponents/CheckBoxIcon'
 import GrayCheckIcon from '@/assets/svgComponents/GrayCheckIcon'
 import TermsOfUseRightArrowIcon from '@/assets/svgComponents/TermsOfUseRightArrowIcon'
+import TermsOfServiceOptions from '@/components/authentication/terms-of-service/TermsOfServiceOptions'
 
 interface Props {
   allOptions: boolean
@@ -20,6 +20,11 @@ interface Props {
   setMarketingInformation: Dispatch<SetStateAction<boolean>>
   setThirdPartyAgreementConsent: Dispatch<SetStateAction<boolean>>
   setAllOptions: Dispatch<SetStateAction<boolean>>
+  //각 이용약관 상세 페이지 모달창 관리 state
+  setIsTermsOfServiceOptionsModalOpen: Dispatch<SetStateAction<boolean>>
+  setIsPersonalInformationModalOpen: Dispatch<SetStateAction<boolean>>
+  setIsMarketingInformationModalOpen: Dispatch<SetStateAction<boolean>>
+  setIsThirdPartyAgreementConsentModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const TermsOfUseCheckbox = (props: Props) => {
@@ -34,31 +39,39 @@ const TermsOfUseCheckbox = (props: Props) => {
     setMarketingInformation,
     setThirdPartyAgreementConsent,
     setAllOptions,
+    setIsTermsOfServiceOptionsModalOpen,
+    setIsPersonalInformationModalOpen,
+    setIsMarketingInformationModalOpen,
+    setIsThirdPartyAgreementConsentModalOpen,
   } = props
   const termsOfUseContents = [
     {
       content: '[필수] 이용약관 동의',
-      component: TermsOfService,
+      component: TermsOfServiceOptions,
       state: termsOfServiceOptions,
       setState: setTermsOfServiceOptions,
+      setIsModalOpen: setIsTermsOfServiceOptionsModalOpen,
     },
     {
-      content: '[필수] 개인정보 수집이용 동의)',
+      content: '[필수] 개인정보 수집이용 동의',
       component: PersonalInformation,
       state: personalInformation,
       setState: setPersonalInformation,
+      setIsModalOpen: setIsPersonalInformationModalOpen,
     },
     {
       content: '[선택] 마케팅 수신 동의',
       component: MarketingInformation,
       state: marketingInformation,
       setState: setMarketingInformation,
+      setIsModalOpen: setIsMarketingInformationModalOpen,
     },
     {
       content: '[선택] 제3자 제공 동의',
       component: ThirdPartyAgreementConsent,
       state: thirdPartyAgreementConsent,
       setState: setThirdPartyAgreementConsent,
+      setIsModalOpen: setIsThirdPartyAgreementConsentModalOpen,
     },
   ]
 
@@ -109,11 +122,11 @@ const TermsOfUseCheckbox = (props: Props) => {
               }}
               className="flex justify-between"
             >
-              <div className="flex items-center justify-start gap-x-[22px]">
-                {content.state ? <BlueCheckIcon /> : <GrayCheckIcon />}
+              <div className={content.state ? "flex items-center justify-start gap-x-[23px]" : "flex items-center justify-start gap-x-[24px]"}>
+                {content.state ? <BlueCheckIcon width={11} height={11} className="mx-[3px]" /> : <GrayCheckIcon width={16} height={16}  />}
                 <p className="body-m text-gray-800">{content.content}</p>
               </div>
-              <TermsOfUseRightArrowIcon />
+              <TermsOfUseRightArrowIcon onClick={() => content.setIsModalOpen(true)}/>
             </button>
           )
         })}

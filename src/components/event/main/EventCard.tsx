@@ -23,11 +23,11 @@ export default function EventCard({ event, stores, designs, onMenuClick }: Event
 
   const handleCardClick = (e: React.MouseEvent) => {
     // 케밥 메뉴 클릭 시 이벤트 전파 방지
-    if ((e.target as HTMLElement).closest('.kebab-menu')) {
-      return
-    }
-    // 이벤트 상세 페이지로 이동
-    router.push(`/event/${event.eventId}`)
+    // if ((e.target as HTMLElement).closest('.kebab-menu')) {
+    //   return
+    // }
+    // // 이벤트 상세 페이지로 이동
+    // router.push(`/event/${event.eventId}`)
   }
 
   if (!thumbnails.length) return

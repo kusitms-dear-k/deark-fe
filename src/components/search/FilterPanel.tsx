@@ -13,6 +13,7 @@ import { FilterType } from '@/types/common'
 import { useSearchStore } from '@/store/searchStore'
 
 interface Props {
+  className?: string
   isFilterModalOpen: boolean
   setSelectedFilterType: Dispatch<SetStateAction<FilterType>>
   setIsFilterModalOpen: Dispatch<SetStateAction<boolean>>
@@ -20,7 +21,7 @@ interface Props {
 }
 
 const FilterPanel = (props: Props) => {
-  const { isFilterModalOpen, setIsFilterModalOpen, setSelectedFilterType, selectedFilterType } = props
+  const { className='fixed top-[11.063rem]', isFilterModalOpen, setIsFilterModalOpen, setSelectedFilterType, selectedFilterType } = props
 
   const searchState = useSearchStore.getState()
   const isLunchBoxCake = useSearchStore((state) => state.isLunchBoxCake)
@@ -30,9 +31,9 @@ const FilterPanel = (props: Props) => {
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   const formatPriceContent = (minPrice: null | number, maxPrice: null | number) => {
-    if (minPrice === 0 && maxPrice !== null) return `~${maxPrice} 이하`
-    if (minPrice !== 0 && maxPrice !== null) return `${minPrice}~${maxPrice}`
-    if (minPrice !== 0 && maxPrice === null) return `${minPrice} 이상`
+    if (minPrice === 0 && maxPrice !== null) return `~${maxPrice.toLocaleString()} 이하`
+    if (minPrice !== 0 && maxPrice !== null && minPrice !== null) return `${minPrice.toLocaleString()}~${maxPrice.toLocaleString()}`
+    if (minPrice !== 0 && maxPrice === null && minPrice !== null) return `${minPrice.toLocaleString()} 이상`
   }
 
   const handleIsSelfServiceClick = () => {
@@ -48,7 +49,7 @@ const FilterPanel = (props: Props) => {
   };
 
   return (
-    <section className="border-gray-150 fixed top-[11.063rem] z-30 flex w-full items-center gap-x-[0.5rem] overflow-x-scroll border-b bg-white py-[0.75rem] pl-[1.25rem]">
+    <section className={`${className ? className : ''} scrollbar-hide border-gray-150  z-30 flex w-full items-center gap-x-[0.5rem] overflow-x-scroll border-b bg-white py-[0.75rem] pl-[1.25rem]`}>
       <button
         onClick={() => {
           setSearchParams({ isSameDayOrder: !searchState.isSameDayOrder })
