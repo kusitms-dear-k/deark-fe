@@ -6,20 +6,26 @@ import { useLoginStore } from '@/store/authStore'
 import TermsOfUseCheckbox from '@/components/authentication/TermsOfUseCheckbox'
 import { useRouter } from 'next/navigation'
 import { CameraIcon } from '@/assets/svgComponents'
+import ProfileEditor from '@/components/authentication/sign-up-picker/ProfileEditor'
+import NicknameEditor from '@/components/authentication/sign-up-picker/NicknameEditor'
+import GenderEditor from '@/components/authentication/sign-up-picker/GenderEditor'
+import BirthEditor from '@/components/authentication/sign-up-picker/BirthEditor'
 
-interface Props {
+interface SignUpPickerProps {
   setStep: Dispatch<SetStateAction<StepType>>
+  //각 이용약관 상세 페이지 모달창 관리 state
+  setIsTermsOfServiceOptionsModalOpen: Dispatch<SetStateAction<boolean>>
+  setIsPersonalInformationModalOpen: Dispatch<SetStateAction<boolean>>
+  setIsMarketingInformationModalOpen: Dispatch<SetStateAction<boolean>>
+  setIsThirdPartyAgreementConsentModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const SignUpPicker = (props: Props) => {
-  const { setStep } = props
+const SignUpPicker = ({ setStep, setIsTermsOfServiceOptionsModalOpen, setIsMarketingInformationModalOpen, setIsPersonalInformationModalOpen, setIsThirdPartyAgreementConsentModalOpen }: SignUpPickerProps) => {
   const router = useRouter()
   const [pickerSignUpInfo, setPickerSignUpInfo] = useState<CustomerSignUpType | null>(null)
   const imgRef = useRef<HTMLInputElement>(null)
   const [uploadImage, setUploadImage] = useState<string | ArrayBuffer | null>()
   const [nickNameValidationResult, setNickNameValidationResult] = useState<boolean | null>(null) // true: 중복된게 잇는거,
-  const user = useLoginStore((state) => state.user)
-  const validationNickname = useLoginStore((state) => state.validationNickname)
   const customerSignUp = useLoginStore((state) => state.customerSignUp)
   //이용약관 state
   const [allOptions, setAllOptions] = useState(false)
@@ -27,8 +33,10 @@ const SignUpPicker = (props: Props) => {
   const [personalInformation, setPersonalInformation] = useState(false)
   const [marketingInformation, setMarketingInformation] = useState(false)
   const [thirdPartyAgreementConsent, setThirdPartyAgreementConsent] = useState(false)
-  //다음버튼 유효성 검사
+
+  //다음 버튼 유효성 검사
   const isInvalid = nickNameValidationResult !== false || !termsOfServiceOptions || !personalInformation
+  const [isInvalidModalOpen, setIsInvalidModalOpen] = useState(false)
   //welcome 모달을 띄우기 위한 state 변경 함수
   const setState = useLoginStore((state) => state.setState)
 
@@ -49,6 +57,12 @@ const SignUpPicker = (props: Props) => {
    */
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault() // 새로고침 방지
+
+    //중복 확인을 하지 않을 경우 문구 or 모달
+    if (isInvalid) {
+      setIsInvalidModalOpen(true)
+      return
+    }
 
     if (!pickerSignUpInfo) return
 
@@ -74,7 +88,7 @@ const SignUpPicker = (props: Props) => {
 
     // 전송
     customerSignUp(formData)
-    setState({isWelcomeModalOpen: true})
+    setState({ isWelcomeModalOpen: true })
     router.push('/home')
   }
 
@@ -83,137 +97,24 @@ const SignUpPicker = (props: Props) => {
       <form onSubmit={handleSubmit} className="relative w-full">
         <Header headerType={'DYNAMIC'} />
         {/* 프로필 */}
-        <section className="mt-20 flex w-full flex-col items-center justify-center gap-y-3">
-          <div onClick={() => imgRef.current?.click()} className="relative w-fit cursor-pointer p-1">
-            <div className="relative h-[60px] w-[60px]">
-              <Image
-                src={
-                  typeof uploadImage === 'string'
-                    ? uploadImage
-                    : user?.profileImageUrl
-                      ? user?.profileImageUrl
-                      : '/common/cake1.png'
-                }
-                alt="cake"
-                fill
-                className="rounded-full object-cover"
-              />
-            </div>
-            <label htmlFor="input-file">
-              <div className="absolute right-0 bottom-0 flex h-[24px] w-[24px] items-center justify-center rounded-full bg-gray-300">
-                <CameraIcon />
-              </div>
-            </label>
-            <input
-              type="file"
-              id={'input-file'}
-              ref={imgRef}
-              name="input-file"
-              onChange={handleImagePreview}
-              className="hidden"
-            />
-          </div>
+        <ProfileEditor imgRef={imgRef} uploadImage={uploadImage} handleImagePreview={handleImagePreview} />
 
-          <p className="title-l text-gray-900">디어케이에 오신 것을 환영합니다!</p>
-        </section>
-        {/* 닉네임 */}
-        <section className="mx-5 mt-5 flex flex-col gap-y-[10px]">
-          <section className="flex w-full flex-col gap-y-1">
-            <p className="title-l text-gray-800">
-              닉네임 <span className="text-blue-400">*</span>
-            </p>
-            <div className="flex justify-between gap-x-2">
-              <input
-                value={pickerSignUpInfo?.nickname ?? ''}
-                onChange={(e) => {
-                  setPickerSignUpInfo((prevState) => ({ ...prevState!, nickname: e.target.value }))
-                  setNickNameValidationResult(null)
-                }}
-                className={
-                  nickNameValidationResult
-                    ? 'error-input body-m flex-1 outline-none'
-                    : 'default-input body-m flex-1 focus:outline-1 focus:outline-blue-400'
-                }
-              />
-              <button
-                type="button"
-                disabled={!pickerSignUpInfo || pickerSignUpInfo?.nickname === ''}
-                onClick={async () => {
-                  if (pickerSignUpInfo && pickerSignUpInfo.nickname) {
-                    setNickNameValidationResult(await validationNickname(pickerSignUpInfo.nickname))
-                  }
-                }}
-                className={
-                  !pickerSignUpInfo || pickerSignUpInfo?.nickname === '' ? 'blue-200-button' : 'blue-400-button'
-                }
-              >
-                중복확인
-              </button>
-            </div>
-
-            <div className={nickNameValidationResult ? 'caption-m h-4 text-red-400' : 'caption-m h-4 text-blue-400'}>
-              {nickNameValidationResult === null
-                ? null
-                : nickNameValidationResult
-                  ? '* 이미 존재하는 닉네임입니다.'
-                  : '* 사용 가능한 닉네임 입니다.'}
-            </div>
-          </section>
+        <section className="mx-5 mt-5 flex flex-col gap-y-[0.625rem]">
+          {/* 닉네임 */}
+          <NicknameEditor
+            pickerSignUpInfo={pickerSignUpInfo}
+            setPickerSignUpInfo={setPickerSignUpInfo}
+            nickNameValidationResult={nickNameValidationResult}
+            setNickNameValidationResult={setNickNameValidationResult}
+            isInvalidModalOpen={isInvalidModalOpen}
+            setIsInvalidModalOpen={setIsInvalidModalOpen}
+          />
 
           {/* 성별 */}
-          <section className="flex flex-col gap-y-1">
-            <p className="title-l text-gray-800">성별</p>
-            <div className="flex gap-x-2">
-              <button
-                type="button"
-                onClick={() => {
-                  setPickerSignUpInfo((prevState) => ({
-                    ...prevState!,
-                    gender: prevState?.gender === 'MAN' ? null : 'MAN',
-                  }))
-                }}
-                className={
-                  pickerSignUpInfo?.gender === 'MAN'
-                    ? 'body-m w-full rounded-[4px] border border-blue-400 bg-blue-100 py-[10px] text-blue-400'
-                    : 'body-m w-full rounded-[4px] border border-gray-200 py-[10px] text-gray-500'
-                }
-              >
-                남자
-              </button>
-              <button
-                type="button"
-                onClick={() => {
-                  setPickerSignUpInfo((prevState) => ({
-                    ...prevState!,
-                    gender: prevState?.gender === 'WOMAN' ? null : 'WOMAN',
-                  }))
-                }}
-                className={
-                  pickerSignUpInfo?.gender === 'WOMAN'
-                    ? 'body-m w-full rounded-[4px] border border-blue-400 bg-blue-100 py-[10px] text-blue-400'
-                    : 'body-m w-full rounded-[4px] border border-gray-200 py-[10px] text-gray-500'
-                }
-              >
-                여자
-              </button>
-            </div>
-            <div className="caption-m h-4"></div>
-          </section>
+          <GenderEditor setPickerSignUpInfo={setPickerSignUpInfo} pickerSignUpInfo={pickerSignUpInfo} />
 
           {/* 생년월일 */}
-          <section className="flex flex-col gap-y-1">
-            <p className="title-l text-gray-800">생년월일</p>
-            <div className="default-input">
-              <input
-                type="date"
-                className="body-m w-full outline-none"
-                onChange={(e) => {
-                  setPickerSignUpInfo((prevState) => ({ ...prevState!, birthDate: e.target.value }))
-                }}
-              />
-            </div>
-            <div className="caption-m h-4"></div>
-          </section>
+          <BirthEditor setPickerSignUpInfo={setPickerSignUpInfo} />
 
           {/* 약관 동의 */}
           <TermsOfUseCheckbox
@@ -227,10 +128,16 @@ const SignUpPicker = (props: Props) => {
             setPersonalInformation={setPersonalInformation}
             setThirdPartyAgreementConsent={setThirdPartyAgreementConsent}
             thirdPartyAgreementConsent={thirdPartyAgreementConsent}
+            setIsTermsOfServiceOptionsModalOpen={setIsTermsOfServiceOptionsModalOpen}
+            setIsPersonalInformationModalOpen={setIsPersonalInformationModalOpen}
+            setIsMarketingInformationModalOpen={setIsMarketingInformationModalOpen}
+            setIsThirdPartyAgreementConsentModalOpen={setIsThirdPartyAgreementConsentModalOpen}
           />
         </section>
 
-        <div className="fixed bottom-0 w-full bg-white p-5">
+        <div className="h-[6.25rem]" />
+
+        <div className="fixed bottom-0 w-full bg-white p-[1.25rem]">
           <button
             type="submit"
             disabled={isInvalid}

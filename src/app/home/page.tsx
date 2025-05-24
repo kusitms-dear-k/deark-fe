@@ -12,6 +12,7 @@ import { useLoginStore } from '@/store/authStore';
 import WelcomeModal from '@/components/authentication/WelcomeModal';
 import { AnimatePresence } from 'framer-motion';
 import GuardianModal from '@/components/authentication/GuardianModal';
+import Spinner from '@/components/common/Spinner'
 
 const HomePage = () => {
   const tagList = ['스승의 날', '여자친구 퇴사 케이크', '강아지 도시락 케이크', '어버이 날', '기념일']

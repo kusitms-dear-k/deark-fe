@@ -1,6 +1,6 @@
 import { UserLoginRoleType } from '@/types/common'
 
-export type StepType = 'SelectRole' | 'SignUp'
+export type StepType = 'Loading' | 'SelectRole' | 'SignUp'
 export type GenderType = 'MAN' | 'WOMAN'
 export interface LoginType {
   profileImageUrl: string
