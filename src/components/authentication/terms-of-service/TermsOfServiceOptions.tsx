@@ -14,14 +14,14 @@ const TermsOfServiceOptions = (props: Props) => {
 
   const ARTICLE3 = [
     '본 약관은 서비스 초기화면 또는 별도의 연결화면에 게시하여 공지하며, 이에 동의한 이용자에게 효력을 발생합니다.',
-    '회사는 관련 법령을 위반하지 않는 범위 내에서 약관을 개정할 수 있으며, 변경된 약관은 공지사항을 통해 사전 고지합니다.'
+    '회사는 관련 법령을 위반하지 않는 범위 내에서 약관을 개정할 수 있으며, 변경된 약관은 공지사항을 통해 사전 고지합니다.',
   ]
 
   const ARTICLE5 = [
     '케이크 디자인 및 메이커 검색 기능',
     '디자인 및 가게 즐겨찾기, 저장 기능',
     '메이커에게 주문서 전달 및 수락/반려 기능',
-    '주문 현황 확인 및 쪽지 기능'
+    '주문 현황 확인 및 쪽지 기능',
   ]
 
   return (
@@ -55,9 +55,7 @@ const TermsOfServiceOptions = (props: Props) => {
 
             <ol start={4} className="list-decimal pl-5">
               {ARTICLE3.map((article) => {
-                return (
-                  <li key={article}>{article}</li>
-                )
+                return <li key={article}>{article}</li>
               })}
             </ol>
           </div>

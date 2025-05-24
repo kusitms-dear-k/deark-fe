@@ -1,14 +1,13 @@
 "use client";
 
-import Landing from '@/components/landing/Landing';
 import GATracker from '@/components/GATracker';
-import Login from '@/components/authentication/Login'
+import HomePage from '@/components/home/HomePage'
 
 export default function Home() {
   return (
     <>
       <GATracker />
-      <Login />
+      <HomePage />
     </>
   )
 }

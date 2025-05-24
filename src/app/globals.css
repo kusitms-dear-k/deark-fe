@@ -595,3 +595,8 @@ body {
   font-weight: 500;
   line-height: 160%; /* 22.4px */
 }
+
+/* 스크롤바 안보이게 */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}

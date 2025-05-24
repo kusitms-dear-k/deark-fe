@@ -68,7 +68,7 @@ const DesignCard = ({
         </div>
         {startPrice && (
           <div className={'title-l text-[var(--gray-900)]'}>
-            {startPrice}
+            {startPrice.toLocaleString()}
             <span className={'body-s'}>원~</span>
           </div>
         )}

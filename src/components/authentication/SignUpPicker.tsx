@@ -20,7 +20,13 @@ interface SignUpPickerProps {
   setIsThirdPartyAgreementConsentModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const SignUpPicker = ({ setStep, setIsTermsOfServiceOptionsModalOpen, setIsMarketingInformationModalOpen, setIsPersonalInformationModalOpen, setIsThirdPartyAgreementConsentModalOpen }: SignUpPickerProps) => {
+const SignUpPicker = ({
+  setStep,
+  setIsTermsOfServiceOptionsModalOpen,
+  setIsMarketingInformationModalOpen,
+  setIsPersonalInformationModalOpen,
+  setIsThirdPartyAgreementConsentModalOpen,
+}: SignUpPickerProps) => {
   const router = useRouter()
   const [pickerSignUpInfo, setPickerSignUpInfo] = useState<CustomerSignUpType | null>(null)
   const imgRef = useRef<HTMLInputElement>(null)

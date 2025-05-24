@@ -1,7 +1,9 @@
-import Link from 'next/link'
+'use client';
+
 import { useEffect, useState } from 'react'
-import { KakaoIcon } from '@/assets/svgComponents'
 import Image from 'next/image'
+import Link from 'next/link'
+import { KakaoIcon } from '@/assets/svgComponents'
 
 const Login = () => {
   const [kakaoUrl, setKakaoUrl] = useState('');

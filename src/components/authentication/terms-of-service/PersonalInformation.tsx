@@ -18,7 +18,7 @@ const PersonalInformation = (props: Props) => {
     '서비스 제공 및 운영을 위한 회원 식별 및 관리',
     '주문 접수 및 메이커 전달, 쪽지 발송',
     '고객 문의 응대, 공지사항 전달',
-    '통계 분석 및 서비스 개선'
+    '통계 분석 및 서비스 개선',
   ]
 
   return (
@@ -33,9 +33,7 @@ const PersonalInformation = (props: Props) => {
             <p className="mb-1">수집 항목</p>
             <ul className="list-disc space-y-1 pl-5">
               {ARTICLE1.map((article) => {
-                return (
-                  <li key={article}>{article}</li>
-                )
+                return <li key={article}>{article}</li>
               })}
             </ul>
           </li>
@@ -44,9 +42,7 @@ const PersonalInformation = (props: Props) => {
             <p className="mb-1">수집 및 이용 목적</p>
             <ul className="list-disc space-y-1 pl-5">
               {ARTICLE2.map((article) => {
-                return (
-                  <li key={article}>{article}</li>
-                )
+                return <li key={article}>{article}</li>
               })}
             </ul>
           </li>

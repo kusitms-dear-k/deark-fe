@@ -35,7 +35,7 @@ const ThirdPartyAgreementConsent = (props: Props) => {
       <Header headerType={'DYNAMIC'} onBack={onBack} title={'제3자 정보 제공 동의 '} />
       <div className="caption-m p-5 pt-24">
         <strong>[선택] 제3자 정보 제공 동의 (전문)</strong>
-        <ol className="list-decimal space-y-4 pl-4 mt-4">
+        <ol className="mt-4 list-decimal space-y-4 pl-4">
           {THIRD_PARTY_TERMS.map(({ title, items }, index) => (
             <li key={index}>
               <p className="mb-1">{title}</p>
