@@ -29,7 +29,7 @@ const Order = (props: Props) => {
 
   return (
     <div className="z-40 min-h-screen">
-      <Header onBack={() => setState({isOrderOpen: false})} title={'내가 보낸 주문서'} headerType={'DYNAMIC'} className="pb-[0.75rem]" />
+      <Header onBack={() => setState({isOrderOpen: false})} title={'내가 보낸 주문서'} headerType={'DYNAMIC'} className="pb-[0.75rem]" headerClassname="fixed bg-white"/>
 
       {orderDetailData ? (
         <>

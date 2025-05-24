@@ -27,7 +27,7 @@ const MyPage = () => {
   const router = useRouter()
   const [recommendResults, setRecommendResults] = useState<RecommendType[]>()
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
-  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
 
   useEffect(() => {
     // 1. 초기 상태 실행
@@ -48,7 +48,7 @@ const MyPage = () => {
 
   return (
     <main className="relative">
-      {isLogoutModalOpen && <LogoutModal onClick={() => setIsLogoutModalOpen(false)} handleLogout={handleLogout}/>}
+      {isLogoutModalOpen && <LogoutModal onClick={() => setIsLogoutModalOpen(false)} handleLogout={handleLogout} />}
       {/* 프로필 관련 */}
       <div className="bg-gray-100 px-5 pb-6">
         <header className="title-xl pt-[74px] pb-[27px]">마이페이지</header>
@@ -65,18 +65,33 @@ const MyPage = () => {
         </div>
       </div>
 
-      <div className="justify-between items-center border-gray-150 absolute top-68 right-5 left-5 flex rounded-[8px] border bg-white px-5 py-4">
-        <button className="flex w-[80px] flex-col items-center gap-y-1">
+      <div className="border-gray-150 absolute top-68 right-5 left-5 flex items-center justify-between rounded-[8px] border bg-white px-5 py-4">
+        <button
+          onClick={() => {
+            router.push('/mypage/order')
+          }}
+          className="flex w-[80px] flex-col items-center gap-y-1"
+        >
           <BlueClipboardIcon width={16} height={16} />
           <p className="title-m text-gray-700">문의 내역</p>
         </button>
         <div className="border-gray-150 h-[32px] w-[1px] border-r" />
-        <button className="flex w-[80px] flex-col items-center gap-y-1">
+        <button
+          onClick={() => {
+            router.push('/mypage/approve')
+          }}
+          className="flex w-[80px] flex-col items-center gap-y-1"
+        >
           <BlueCheckCircleIcon width={16} height={16} />
           <p className="title-m text-gray-700">픽업 확정</p>
         </button>
         <div className="border-gray-150 h-[32px] w-[1px] border-r" />
-        <button className="flex w-[80px] flex-col items-center gap-y-1">
+        <button
+          onClick={() => {
+            router.push('/mypage/review')
+          }}
+          className="flex w-[80px] flex-col items-center gap-y-1"
+        >
           <BluePencilIcon width={16} height={16} />
           <p className="title-m text-gray-700">리뷰</p>
         </button>
@@ -141,7 +156,12 @@ const MyPage = () => {
               })}
         </section>
       </section>
-      <button onClick={() => {setIsLogoutModalOpen(true)}} className="body-m-m mt-1 flex gap-x-1 px-5 py-3 text-gray-700">
+      <button
+        onClick={() => {
+          setIsLogoutModalOpen(true)
+        }}
+        className="body-m-m mt-1 flex gap-x-1 px-5 py-3 text-gray-700"
+      >
         <LogoutIcon width={24} height={24} />
         로그아웃
       </button>

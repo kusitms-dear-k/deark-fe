@@ -19,22 +19,25 @@ const RequestModal = (props: Props) => {
       }
     >
       <motion.div
-        className={'mx-[18px]'}
+        className={'absolute left-5 right-5'}
         onClick={(e) => e.stopPropagation()}
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={{ type: 'tween', duration: 0.2 }}
       >
-        <div
-          className={`flex flex-col items-center justify-center rounded-t-[8px] bg-white px-[20px] py-[20px] ${className}`}
-        >
-          <div className="flex w-full justify-end">
-            <CancelIcon width={24} height={24} onClick={onClick} />
+        <div className="w-full">
+          <div
+            className={`flex flex-col items-center justify-center rounded-t-[8px] bg-white px-[20px] py-[20px] ${className}`}
+          >
+            <div className="flex w-full justify-end">
+              <CancelIcon width={24} height={24} onClick={onClick} />
+            </div>
+            {children}
           </div>
-          {children}
+          <div>{bottomChildren}</div>
         </div>
-        <div>{bottomChildren}</div>
+
       </motion.div>
     </div>
   )

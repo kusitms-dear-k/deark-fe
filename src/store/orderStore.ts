@@ -66,7 +66,7 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
   selectedEventId: null,
   selectedEventTitle: null,
   answers: [],
-  messageId: 4,
+  messageId: 2,
   //모달 오픈
   isOrderFormOpen: false,
   isOrderOpen: false,

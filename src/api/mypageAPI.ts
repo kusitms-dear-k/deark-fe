@@ -1,4 +1,4 @@
-import { OrderMenuType } from '@/types/mypage'
+import { OrderMenuType, RequestStatusType } from '@/types/mypage'
 import Cookies from 'js-cookie';
 
 /**
@@ -36,6 +36,23 @@ export const getMyOrderRequestCount = async () => {
  */
 export const getMyOrderDetailData = async (messageId: number) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/request/detail/${messageId}`, {
+    method: 'GET',
+    headers: {
+      Authorization:
+        Cookies.get('ACCESS_TOKEN') as string,
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
+
+
+/**
+ * 승인된 요청서 상세 조회
+ */
+export const getAcceptedOrderDetailData = async (messageId: number) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/request/accepted/${messageId}`, {
     method: 'GET',
     headers: {
       Authorization:
@@ -163,6 +180,34 @@ export const getMyEventForUT = async () => {
  */
 export const getMyEventDesignForUT = async (eventId: number) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}/designs`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
+/**
+ * 입금 완료/주문 취소 상태를 변경하는 호출
+ */
+export const putRequestStatus = async (messageId: number, status: RequestStatusType) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/request/${messageId}?status=${status}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
+/**
+ * 반려된 견적서 사유 조회
+ */
+export const getRejectedMessage = async (messageId: number) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/request/rejected/${messageId}`, {
     method: 'GET',
     headers: {
       Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`
