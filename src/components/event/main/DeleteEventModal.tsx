@@ -1,4 +1,4 @@
-import { TrashAlertIcon } from '@/assets/svgComponents'
+import TrashAlertIcon from '@/assets/svgComponents/TrashAlertIcon'
 
 interface DeleteEventModalProps {
   onClose: () => void

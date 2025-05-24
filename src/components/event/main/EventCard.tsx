@@ -1,4 +1,4 @@
-import { KebabIcon } from '@/assets/svgComponents'
+import KebabIcon from '@/assets/svgComponents/KebabIcon'
 import { DesignItem, EventDetail, StoreItem } from '@/types/event'
 import Image from 'next/image'
 import { useRouter } from 'next/navigation'
