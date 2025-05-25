@@ -15,6 +15,7 @@ interface CalendarProps<T extends CalendarMode> {
   value: T extends 'single' ? Date | null : Range
   setValue: (value: T extends 'single' ? Date : Range) => void
   className?: string
+  businessDays?: number[]
 }
 
 function getDaysInMonth(year: number, month: number) {
@@ -45,6 +46,7 @@ export default function Calendar<T extends CalendarMode = 'range'>({
   mode = 'range' as T,
   value,
   setValue,
+  businessDays,
   className = '',
 }: CalendarProps<T>) {
   const today = new Date()
@@ -67,11 +69,18 @@ export default function Calendar<T extends CalendarMode = 'range'>({
   for (let i = 0; i < firstDay; i++) calendar.push(null)
   for (let d = 1; d <= daysInMonth; d++) calendar.push(new Date(year, month, d))
 
+  // 가게 운영일 체크 함수 추가
+  const isBusinessDay = (date: Date) => {
+    if (!businessDays) return true // businessDays가 없으면 모든 날 가능
+    const dayOfWeek = date.getDay() // 0: 일요일, 1: 월요일, ..., 6: 토요일
+    return businessDays.includes(dayOfWeek)
+  }
+
   // 지난 날짜 비활성화
   const isPast = (date: Date) => {
     const now = new Date()
     now.setHours(0, 0, 0, 0)
-    return date < now
+    return date < now || !isBusinessDay(date)
   }
 
   // 날짜 클릭 핸들러
