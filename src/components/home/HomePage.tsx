@@ -20,7 +20,7 @@ import { Drawer } from '@/components/ui/drawer'
 import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSuccessModal'
 
 const HomePage = () => {
-  const isTotalSearchPageOpen = useSearchStore((state) =>state.isTotalSearchPageOpen)
+  const isTotalSearchPageOpen = useSearchStore((state) => state.isTotalSearchPageOpen)
 
   const setLoginState = useLoginStore((state) => state.setState)
   const isWelcomeModalOpen = useLoginStore((state) => state.isWelcomeModalOpen)
@@ -108,7 +108,7 @@ const HomePage = () => {
       >
         {/* 주문서 문의가 완료될 때 보이는 모달 */}
         {isOrderSubmissionSuccessModalOpen && (
-          <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })}/>
+          <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })} />
         )}
 
         {/* 회원가입 환영 모달 */}
@@ -131,9 +131,7 @@ const HomePage = () => {
         )}
 
         {/* 디자인 상세 페이지 모달 */}
-        {isDesignDetailModalOpen && (
-          <DesignDetailContent designDetail={designDetail} />
-        )}
+        {isDesignDetailModalOpen && <DesignDetailContent designDetail={designDetail} />}
 
         <AnimatePresence>
           {isAtTop && (
@@ -144,7 +142,7 @@ const HomePage = () => {
               transition={{ duration: 0.01 }}
               className="bg-bg-300 fixed top-0 right-0 left-0 z-30"
             >
-              <Header headerType={'DEFAULT'} headerClassname={'bg-bg-300 fixed'}/>
+              <Header headerType={'DEFAULT'} headerClassname={'bg-bg-300 fixed'} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -156,7 +154,7 @@ const HomePage = () => {
         >
           <SearchInput
             onClick={() => {
-              setSearchParams({isTotalSearchPageOpen: true})
+              setSearchParams({ isTotalSearchPageOpen: true })
             }}
             LeftIcon={<RedSearchIcon width={24} height={24} />}
             className="w-full bg-white"
@@ -185,7 +183,6 @@ const HomePage = () => {
         </div>
         <NavBar />
       </Drawer>
-
     </main>
   )
 }
