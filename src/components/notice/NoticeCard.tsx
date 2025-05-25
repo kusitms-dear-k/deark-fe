@@ -109,7 +109,7 @@ const NoticeCard = ({
           setIsRejectedMessageModalOpen(true)
         }
       }}
-      className={isLastIndex ? 'flex gap-x-2 px-5 py-4' : 'flex gap-x-2 border-b-[9px] border-gray-100 px-5 py-4'}
+      className={isLastIndex ? 'w-full flex gap-x-2 px-5 py-4' : 'w-full flex gap-x-2 border-b-[9px] border-gray-100 px-5 py-4'}
     >
       {isChecked ? (
         <CheckBoxIcon
@@ -130,7 +130,7 @@ const NoticeCard = ({
           height={24}
         />
       )}
-      <section className="flex w-full flex-col gap-y-3">
+      <section className="flex w-full flex-col gap-y-3 w-full">
         <section className="flex justify-between">
           <div className="flex gap-x-3">
             <div className="relative h-[67px] w-[67px]">
@@ -147,7 +147,7 @@ const NoticeCard = ({
                   className={
                     orderStatus === 'ACCEPTED'
                       ? `body-s-m rounded-[27px] bg-blue-100 px-[6px] ${isRead ? 'text-blue-300' : 'text-blue-400'}`
-                      : `body-s-m rounded-[27px] bg-red-100 px-[6px] ${isRead ? 'text-red-300' : 'text-red-400'}`
+                      : `body-s-m rounded-[27px] bg-red-100 px-[6px] ${isRead ? 'text-red-200' : 'text-red-400'}`
                   }
                 >
                   {orderStatus === 'ACCEPTED' ? '수락' : '반려'}
