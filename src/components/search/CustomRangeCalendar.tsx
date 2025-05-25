@@ -1,7 +1,7 @@
 'use client'
 
 import { ChevronLeftIcon, ChevronRightIcon } from '@/assets/svgComponents'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 interface Range {
   start: Date | null
@@ -42,6 +42,7 @@ export default function RangeCalendar({ value, setValue }: RangeCalendarProps) {
   const today = new Date()
   const [month, setMonth] = useState(today.getMonth())
   const [year, setYear] = useState(today.getFullYear())
+  const [isPickerOpen, setIsPickerOpen] = useState(false)
 
   // 달력 데이터 생성
   const daysInMonth = getDaysInMonth(year, month)
@@ -71,6 +72,13 @@ export default function RangeCalendar({ value, setValue }: RangeCalendarProps) {
     }
   }
 
+  // 연도/월 선택 핸들러
+  const handleYearMonthSelect = (selectedYear: number, selectedMonth: number) => {
+    setYear(selectedYear)
+    setMonth(selectedMonth)
+    setIsPickerOpen(false)
+  }
+
   // 월 이동
   const prevMonth = () => {
     if (month === 0) {
@@ -96,7 +104,12 @@ export default function RangeCalendar({ value, setValue }: RangeCalendarProps) {
     <div className="w-full bg-white px-6">
       {/* 상단: 월 네비게이션 */}
       <div className="flex items-center justify-between px-6 py-4">
-        <span className="cal-t text-gray-700">{formatMonth}</span>
+        <div className="flex items-center gap-x-2">
+          <span className="cal-t text-gray-700">{formatMonth}</span>
+          <button onClick={() => setIsPickerOpen(!isPickerOpen)} className="rounded-full p-1 hover:bg-gray-100">
+            <ChevronRightIcon width={24} height={24} />
+          </button>
+        </div>
 
         <div>
           <button onClick={prevMonth} className="px-2 text-xl">
@@ -108,6 +121,17 @@ export default function RangeCalendar({ value, setValue }: RangeCalendarProps) {
           </button>
         </div>
       </div>
+
+      {/* 연도/월 선택 모달 */}
+      {isPickerOpen && (
+        <YearMonthPicker
+          currentYear={year}
+          currentMonth={month}
+          onSelect={handleYearMonthSelect}
+          onClose={() => setIsPickerOpen(false)}
+        />
+      )}
+
       {/* 요일 헤더 */}
       <div className="body-l-m mb-2 grid grid-cols-7 px-2 text-center">
         {['일', '월', '화', '수', '목', '금', '토'].map((d) => (
@@ -173,6 +197,68 @@ export default function RangeCalendar({ value, setValue }: RangeCalendarProps) {
             </div>
           )
         })}
+      </div>
+    </div>
+  )
+}
+
+const YearMonthPicker = ({
+  currentYear,
+  currentMonth,
+  onSelect,
+  onClose,
+}: {
+  currentYear: number
+  currentMonth: number
+  onSelect: (year: number, month: number) => void
+  onClose: () => void
+}) => {
+  const [viewYear, setViewYear] = useState(currentYear)
+  const months = Array.from({ length: 12 }, (_, i) => i + 1)
+
+  // 외부 클릭 감지
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      const target = e.target as HTMLElement
+      if (!target.closest('.year-month-picker')) {
+        onClose()
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [onClose])
+
+  return (
+    <div className="year-month-picker absolute top-16 right-0 left-0 z-50 mx-6 rounded-lg border bg-white p-4 shadow-lg">
+      {/* 연도 선택 */}
+      <div className="mb-4 flex items-center justify-between">
+        <button onClick={() => setViewYear(viewYear - 1)} className="rounded-full p-2 hover:bg-gray-100">
+          <ChevronLeftIcon width={20} height={20} />
+        </button>
+        <span className="title-m">{viewYear}년</span>
+        <button onClick={() => setViewYear(viewYear + 1)} className="rounded-full p-2 hover:bg-gray-100">
+          <ChevronRightIcon width={20} height={20} />
+        </button>
+      </div>
+
+      {/* 월 선택 그리드 */}
+      <div className="grid grid-cols-3 gap-2">
+        {months.map((monthNumber) => (
+          <button
+            key={monthNumber}
+            onClick={() => {
+              onSelect(viewYear, monthNumber - 1)
+              onClose() // 월 선택 시 모달 닫기
+            }}
+            className={`body-m flex h-12 items-center justify-center rounded ${
+              monthNumber - 1 === currentMonth && viewYear === currentYear
+                ? 'bg-blue-400 text-white'
+                : 'hover:bg-blue-50'
+            }`}
+          >
+            {monthNumber}월
+          </button>
+        ))}
       </div>
     </div>
   )
