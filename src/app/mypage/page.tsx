@@ -55,9 +55,7 @@ const MyPage = () => {
           className="flex w-[5rem] flex-col items-center justify-center gap-y-[0.25rem]"
         >
           <BlueSendIcon width={16} height={16} />
-          <p className="title-m flex gap-x-[0.25rem]">
-            제작 문의
-          </p>
+          <p className="title-m flex gap-x-[0.25rem]">제작 문의</p>
         </div>
         <div className="border-gray-150 h-[2rem] border-r" />
         <div
@@ -67,9 +65,7 @@ const MyPage = () => {
           className="flex w-[5rem] flex-col items-center justify-center gap-y-[0.25rem]"
         >
           <BlueClipboardIcon width={16} height={16} />
-          <p className="title-m flex gap-x-[0.25rem]">
-            픽업 확정
-          </p>
+          <p className="title-m flex gap-x-[0.25rem]">픽업 확정</p>
         </div>
         <div className="border-gray-150 h-[2rem] border-r" />
         <div
@@ -79,9 +75,7 @@ const MyPage = () => {
           className="flex w-[5rem] flex-col items-center justify-center gap-y-[0.25rem]"
         >
           <BluePencilIcon width={16} height={16} />
-          <p className="title-m flex gap-x-[0.25rem]">
-            리뷰
-          </p>
+          <p className="title-m flex gap-x-[0.25rem]">리뷰</p>
         </div>
       </section>
 

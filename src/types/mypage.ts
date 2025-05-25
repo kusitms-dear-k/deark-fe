@@ -66,6 +66,35 @@ export interface UTEventDesignType {
   designImageUrl: string
   memo: string
 }
-export interface OrderFormCreamType {creamName: string}
-export interface OrderFormSheetType {sheetName: string}
-export interface OrderFormSizeType {sizeName: string}
+export interface OrderFormCreamType {
+  creamName: string
+}
+export interface OrderFormSheetType {
+  sheetName: string
+}
+export interface OrderFormSizeType {
+  sizeName: string
+}
+
+export interface PickupOrder {
+  messageId: number
+  storeName: string
+  designName: string
+  designUrl: string
+  size: string
+  cream: string
+  sheet: string
+  progressStatus: 'RESERVED' | 'PICKUP_DONE' | string
+  pickupDate: string
+  pickupTime: string
+}
+
+export interface PickupOrderResponse {
+  isSuccess: boolean
+  code: string
+  message: string
+  results: {
+    responseList: PickupOrder[]
+    totalNum: number
+  }
+}
