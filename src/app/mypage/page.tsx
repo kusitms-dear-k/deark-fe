@@ -32,9 +32,25 @@ const MyPage = () => {
   const setLoginState = useLoginStore((state) => state.setState)
   const token = Cookies.get('ACCESS_TOKEN')
   const [hasMounted, setHasMounted] = useState(false)
+  const [parsedRecentlyViewedDesigns, setParsedRecentlyViewedDesigns] = useState<RecommendType[]>([])
 
-  const recentlyViewedDesigns = localStorage.getItem('recentlyViewedDesigns')
-  const parsedRecentlyViewedDesigns = recentlyViewedDesigns ? JSON.parse(recentlyViewedDesigns) : []
+  useEffect(() => {
+    setHasMounted(true)
+
+    if (typeof window !== 'undefined') {
+      const data = localStorage.getItem('recentlyViewedDesigns')
+      if (data) {
+        try {
+          setParsedRecentlyViewedDesigns(JSON.parse(data))
+        } catch (e) {
+          console.error('localStorage 파싱 실패:', e)
+        }
+      }
+    }
+  }, [])
+
+  if (!hasMounted) return null // 서버/초기 hydration 대응
+
 
   useEffect(() => {
     setHasMounted(true)
