@@ -83,4 +83,4 @@ export interface AcceptedOrderDetailType {
   bankName: string
   account: string
 }
-export type RequestStatusType = 'CANCELED' | 'PAID'
+export type RequestStatusType = 'CANCELED' | 'PAID' | 'UNRESPONSIVE'
