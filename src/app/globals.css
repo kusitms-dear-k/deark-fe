@@ -395,6 +395,14 @@ body {
   letter-spacing: 0;
 }
 
+@utility cal-t {
+  font-family: Pretendard, serif;
+  font-weight: 600;
+  font-size: 20px;
+  line-height: 100%;
+  letter-spacing: 0;
+}
+
 /* 버튼 컴포넌트 */
 .blue-200-button {
   background-color: var(--blue-200);

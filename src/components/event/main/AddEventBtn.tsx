@@ -1,4 +1,4 @@
-import { BluePlusIcon } from '@/assets/svgComponents'
+import BluePlusIcon from '@/assets/svgComponents/BluePlusIcon'
 
 interface AddEventBtnProps {
   className?: string

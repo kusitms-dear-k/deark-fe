@@ -37,9 +37,7 @@ const NicknameEditor = (props: Props) => {
     if (nickNameValidationResult === null) {
       return isInvalidModalOpen ? '* 닉네임 중복 확인을 해주세요.' : null
     }
-    return nickNameValidationResult
-      ? '* 이미 존재하는 닉네임입니다.'
-      : '* 사용 가능한 닉네임 입니다.'
+    return nickNameValidationResult ? '* 이미 존재하는 닉네임입니다.' : '* 사용 가능한 닉네임 입니다.'
   }
 
   return (
@@ -51,7 +49,7 @@ const NicknameEditor = (props: Props) => {
         <input
           value={nickname}
           onChange={(e) => {
-            setPickerSignUpInfo((prevState) => ({ ...prevState!, nickname: e.target.value }))
+            setPickerSignUpInfo((prevState) => prevState && { ...prevState, nickname: e.target.value })
             setNickNameValidationResult(null)
             setIsInvalidModalOpen(false)
           }}

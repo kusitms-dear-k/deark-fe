@@ -1,6 +1,6 @@
 import { useOrderStore } from '@/store/orderStore';
 import { QaDetailTitleType } from '@/types/mypage';
-import { Dispatch, SetStateAction, useEffect } from 'react'
+import { Dispatch, SetStateAction } from 'react'
 import { useStoreWithEqualityFn } from 'zustand/traditional'
 import { shallow } from 'zustand/shallow'
 

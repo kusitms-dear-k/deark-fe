@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion'
-import { MemoSearchIcon } from '@/assets/svgComponents'
 import React from 'react'
 import { useOrderStore } from '@/store/orderStore'
+import MemoSearchIcon from '@/assets/svgComponents/MemoSearchIcon'
 
 interface SubmitConfirmationModalProps {
   onClick: () => void
 }
 
-const SubmitConfirmationModal = ({onClick}: SubmitConfirmationModalProps) => {
+const SubmitConfirmationModal = ({ onClick }: SubmitConfirmationModalProps) => {
   const setState = useOrderStore((state) => state.setState)
 
   return (
@@ -40,7 +40,7 @@ const SubmitConfirmationModal = ({onClick}: SubmitConfirmationModalProps) => {
             </div>
           </div>
 
-          <div className="mt-4 mb-5 flex flex-col gap-y-1 items-center justify-center">
+          <div className="mt-4 mb-5 flex flex-col items-center justify-center gap-y-1">
             <h2 className="headline-s text-gray-900">이대로 제작 요청이 전송돼요!</h2>
             <p className="body-m text-gray-600">옵션과 요청사항을 한 번 더 확인해주세요!</p>
           </div>
@@ -57,8 +57,8 @@ const SubmitConfirmationModal = ({onClick}: SubmitConfirmationModalProps) => {
             type={'submit'}
             onClick={() => {
               onClick()
-              setState({isOrderFormOpen: false})
-              setState({isOrderSubmissionSuccessModalOpen: true})
+              setState({ isOrderFormOpen: false })
+              setState({ isOrderSubmissionSuccessModalOpen: true })
             }}
             className="button-l rounded-t-0 flex w-full flex-1 items-center justify-center rounded-br-[8px] bg-blue-400 py-3 text-white"
           >
