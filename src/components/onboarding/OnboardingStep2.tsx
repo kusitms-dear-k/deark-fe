@@ -2,21 +2,42 @@ import BottomStepperControls from '@/components/onboarding/BottomStepperControls
 import Image from 'next/image'
 
 interface OnboardingStep2Props {
-  onNext: () => void;
-  onSkip: () => void;
+  onNext: () => void
+  onSkip: () => void
 }
 
-const OnboardingStep2 = ({onNext, onSkip}: OnboardingStep2Props) => {
+const OnboardingStep2 = ({ onNext, onSkip }: OnboardingStep2Props) => {
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center">
-      <div className="flex flex-col flex-1 items-center justify-center relative w-full border h-full">
-        <Image src={'/onboarding/card1.png'} width={150} height={1000} alt="폰" className="absolute top-5 left-0" />
-        <Image src={'/onboarding/hearts.png'} width={300} height={1000} alt="폰" className="absolute top-30 right-0" />
-        <Image src={'/onboarding/card2.png'} width={320} height={500} alt="폰" className="absolute top-40 right-0"  />
-        <Image src={'/onboarding/card3.png'} width={150} height={1000} alt="폰" className="absolute top-90 right-0"  />
-        <Image src={'/onboarding/card4.png'} width={220} height={1000} alt="폰" className="absolute top-90 left-0"  />
+    <main className="relative flex min-h-screen w-full flex-col items-center justify-center">
+      <div className="relative flex w-full flex-1 flex-col items-center justify-center border">
+        <div className="absolute top-0 left-0">
+          <div className="relative h-[300px] w-[150px]">
+            <Image src={'/onboarding/card1.png'} fill alt="폰" className="object-cover object-top" />
+          </div>
+        </div>
+        <div className="absolute top-0 right-0">
+          <div className="relative h-[400px] w-[300px]">
+            <Image src={'/onboarding/hearts.png'} fill alt="폰" className="object-contain" />
+          </div>
+        </div>
+        <div className="absolute top-18 right-0">
+          <div className="relative h-[300px] w-[320px]">
+            <Image src={'/onboarding/card2.png'} fill alt="폰" className="object-contain" />
+          </div>
+        </div>
+
+        <div className="absolute top-80 right-0">
+          <div className="relative h-[300px] w-[150px]">
+            <Image src={'/onboarding/card3.png'} fill alt="폰" className="object-cover object-top" />
+          </div>
+        </div>
+        <div className="absolute top-80 left-0">
+          <div className="relative h-[300px] w-[220px]">
+            <Image src={'/onboarding/card4.png'} fill alt="폰" className="object-cover object-top" />
+          </div>
+        </div>
       </div>
-      <div className="h-[80px]" />
+      <div className="h-[300px]" />
       <BottomStepperControls
         step={2}
         title={'찜으로 쉬워지는 선택'}

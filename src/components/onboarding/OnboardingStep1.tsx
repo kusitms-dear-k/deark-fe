@@ -10,10 +10,18 @@ interface OnboardingStep1Props {
 const OnboardingStep1 = ({ onSkip, onNext }: OnboardingStep1Props) => {
   const router = useRouter()
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center">
-      <div className="flex flex-col items-center justify-center relative w-full">
-        <Image src={'/onboarding/home-screen.png'} width={280} height={1000} alt="폰"/>
-        <Image src={'/onboarding/filter.png'} width={400} height={200} alt="폰" className="absolute z-10 top-48 drop-shadow-[0_-20px_10px_rgba(62,152,249,0.1)]"/>
+    <main className="relative flex min-h-screen w-full flex-col items-center justify-center">
+      <div className="relative flex w-full flex-col items-center justify-center">
+        <div className="relative h-[600px] w-[280px]">
+          <Image src={'/onboarding/home-screen.png'} fill alt="폰" className="object-cover object-top" />
+        </div>
+        <Image
+          src={'/onboarding/filter.png'}
+          width={400}
+          height={200}
+          alt="폰"
+          className="absolute top-48 z-10 drop-shadow-[0_-20px_10px_rgba(62,152,249,0.1)]"
+        />
       </div>
       <div className="h-[80px]" />
       <BottomStepperControls

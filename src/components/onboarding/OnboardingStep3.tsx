@@ -6,14 +6,13 @@ interface OnboardingStep3Props {
   onSkip: () => void
 }
 
-const OnboardingStep3 = ({onNext, onSkip}: OnboardingStep3Props) => {
+const OnboardingStep3 = ({ onNext, onSkip }: OnboardingStep3Props) => {
   return (
-    <main className="relative flex min-h-screen flex-col items-center justify-center px-5">
-      <div className="flex flex-col items-center justify-center relative w-full">
-        <div className="relative w-[280px] h-[600px] ">
-          <Image src={'/onboarding/form.png'} alt="폰" fill className="object-cover object-top"/>
+    <main className="relative flex min-h-screen w-full flex-col items-center justify-center">
+      <div className="relative flex w-full flex-col items-center justify-center">
+        <div className="relative h-[600px] w-[280px]">
+          <Image src={'/onboarding/form.png'} alt="폰" fill className="object-cover object-top" />
         </div>
-
       </div>
       <div className="h-[80px]" />
       <BottomStepperControls
@@ -27,4 +26,4 @@ const OnboardingStep3 = ({onNext, onSkip}: OnboardingStep3Props) => {
     </main>
   )
 }
-export default OnboardingStep3;
+export default OnboardingStep3
