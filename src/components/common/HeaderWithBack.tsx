@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation'
 interface HeaderWithBackProps {
   onBack?: () => void
   headerText: string
-  subText: string
+  subText?: string
   className?: string
 }
 
@@ -25,7 +25,7 @@ const HeaderWithBack = ({ onBack, headerText, subText, className = '' }: HeaderW
       />
       <div>
         <h1 className="title-l text-gray-900">{headerText}</h1>
-        <p className="body-s-m text-[#979797]">{subText}</p>
+        {subText && <p className="body-s-m text-[#979797]">{subText}</p>}
       </div>
     </header>
   )

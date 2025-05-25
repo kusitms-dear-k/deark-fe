@@ -1,13 +1,12 @@
+import MemoSearchIcon from '@/assets/svgComponents/MemoSearchIcon'
 import { motion } from 'framer-motion'
-import { MemoSearchIcon } from '@/assets/svgComponents'
 import React from 'react'
 
 interface NotFormValidModalProps {
   onClick: () => void
 }
 
-
-const NotFormValidModal = ({onClick}: NotFormValidModalProps) => {
+const NotFormValidModal = ({ onClick }: NotFormValidModalProps) => {
   return (
     <div
       onClick={onClick}
@@ -17,7 +16,7 @@ const NotFormValidModal = ({onClick}: NotFormValidModalProps) => {
     >
       <motion.div
         onClick={(e) => e.stopPropagation()}
-        className="absolute right-5 left-5 "
+        className="absolute right-5 left-5"
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
@@ -33,10 +32,16 @@ const NotFormValidModal = ({onClick}: NotFormValidModalProps) => {
         <section className="flex">
           <button
             onClick={onClick}
-            className="flex flex-1 items-center justify-center bg-gray-200 text-gray-700 button-l rounded-bl-[8px]">취소</button>
+            className="button-l flex flex-1 items-center justify-center rounded-bl-[8px] bg-gray-200 text-gray-700"
+          >
+            취소
+          </button>
           <button
             onClick={onClick}
-            className="flex flex-1 items-center justify-center py-3 bg-blue-400 text-white button-l w-full rounded-br-[8px] rounded-t-0">확인</button>
+            className="button-l rounded-t-0 flex w-full flex-1 items-center justify-center rounded-br-[8px] bg-blue-400 py-3 text-white"
+          >
+            확인
+          </button>
         </section>
       </motion.div>
     </div>
