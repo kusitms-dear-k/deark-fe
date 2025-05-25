@@ -58,7 +58,13 @@ const Header = (props: Props) => {
             <div className="flex justify-between">
               <h1 className="key-visual-m text-red-400">Dear.k</h1>
               {isClient && token ? (
-                <SvgBellIcon width={24} height={24} />
+                <SvgBellIcon
+                  onClick={() => {
+                    router.push('/notice')
+                  }}
+                  width={24}
+                  height={24}
+                />
               ) : isClient ? (
                 <button
                   onClick={() => {
@@ -70,16 +76,18 @@ const Header = (props: Props) => {
                 </button>
               ) : null}
             </div>
-            {isClient && token ? (<div className="body-xl py-1 text-gray-900">안녕하세요,<span
-              className="headline-s">리무진님!</span></div>) : (
+            {isClient && token ? (
+              <div className="body-xl py-1 text-gray-900">
+                안녕하세요,<span className="headline-s">리무진님!</span>
+              </div>
+            ) : (
               <div className="body-xl py-1 text-gray-900">만나서 반가워요 👋🏻</div>
             )}
-
           </div>
         )
       case 'DYNAMIC':
         return (
-          <div className={`absolute px-5 flex items-center gap-x-2 ${className} bg-white w-full`}>
+          <div className={`absolute flex items-center gap-x-2 px-5 ${className} w-full bg-white`}>
             <LeftArrowIcon
               width={24}
               height={24}
