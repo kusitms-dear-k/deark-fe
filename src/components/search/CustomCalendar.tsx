@@ -14,6 +14,7 @@ interface CalendarProps<T extends CalendarMode> {
   mode?: T
   value: T extends 'single' ? Date | null : Range
   setValue: (value: T extends 'single' ? Date : Range) => void
+  className?: string
 }
 
 function getDaysInMonth(year: number, month: number) {
@@ -44,6 +45,7 @@ export default function Calendar<T extends CalendarMode = 'range'>({
   mode = 'range' as T,
   value,
   setValue,
+  className = '',
 }: CalendarProps<T>) {
   const today = new Date()
   const [month, setMonth] = useState(
@@ -121,7 +123,7 @@ export default function Calendar<T extends CalendarMode = 'range'>({
   const formatMonth = `${year}년 ${month + 1}월`
 
   return (
-    <div className="w-full bg-white px-6">
+    <div className={`w-full bg-white px-6 ${className}`}>
       {/* 상단: 월 네비게이션 */}
       <div className="flex items-center justify-between px-6 py-4">
         <div className="flex items-center gap-x-2">

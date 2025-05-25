@@ -15,7 +15,7 @@ interface Props {
 const Order = (props: Props) => {
   const { messageId = 4 } = props
   const [orderDetailData, setOrderDetailData] = useState<OrderType>()
-  const setState = useOrderStore((state) =>state.setState)
+  const setState = useOrderStore((state) => state.setState)
 
   useEffect(() => {
     // 1. 초기 상태 실행
@@ -29,7 +29,12 @@ const Order = (props: Props) => {
 
   return (
     <div className="z-40 min-h-screen">
-      <Header onBack={() => setState({isOrderOpen: false})} title={'내가 보낸 주문서'} headerType={'DYNAMIC'} className="pb-[0.75rem]" />
+      <Header
+        onBack={() => setState({ isOrderOpen: false })}
+        title={'내가 보낸 주문서'}
+        headerType={'DYNAMIC'}
+        className="pb-[0.75rem]"
+      />
 
       {orderDetailData ? (
         <>
