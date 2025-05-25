@@ -31,7 +31,7 @@ const Order = (props: Props) => {
     <div className="z-40 min-h-screen">
       <Header onBack={() => setState({isOrderOpen: false})} title={'내가 보낸 주문서'} headerType={'DYNAMIC'} className="pb-[0.75rem]" headerClassname="fixed bg-white"/>
 
-      {orderDetailData ? (
+      {orderDetailData && orderDetailData.qaDetails ? (
         <>
           <div className="mt-24 flex flex-col gap-y-[1rem] border-b-[0.5rem] border-gray-100 px-[1.25rem] pb-[1.25rem]">
             <section>
@@ -39,7 +39,7 @@ const Order = (props: Props) => {
                 이름<span className="title-s text-red-400">*</span>
               </h5>
               <div className="body-m-m mt-[0.5rem] flex w-full justify-start rounded-[0.25rem] border border-gray-200 px-[1rem] py-[0.875rem] text-gray-400">
-                {orderDetailData.qaDetails.find((item) => item.title === '이름')?.answer}
+                {orderDetailData.qaDetails.find((item) => item.title === '이름')?.answer ?? ""}
               </div>
             </section>
 
@@ -48,7 +48,7 @@ const Order = (props: Props) => {
                 전화번호<span className="title-s text-red-400">*</span>
               </h5>
               <div className="body-m-m mt-[0.5rem] flex w-full justify-start rounded-[0.25rem] border border-gray-200 px-[1rem] py-[0.875rem] text-gray-400">
-                {orderDetailData.qaDetails.find((item) => item.title === '전화번호')?.answer}
+                {orderDetailData.qaDetails.find((item) => item.title === '전화번호')?.answer ?? ""}
               </div>
             </section>
 
@@ -57,8 +57,7 @@ const Order = (props: Props) => {
                 픽업 희망 일자<span className="title-s text-red-400">*</span>
               </h5>
               <div className="body-m-m mt-[0.5rem] flex w-full justify-between rounded-[0.25rem] border border-gray-200 px-[1rem] py-[0.875rem] text-gray-400">
-                <p> {orderDetailData.qaDetails.find((item) => item.title === '픽업 희망 일자')?.answer}</p>
-                <GrayUncheckCalendarIcon width={24} height={24} />
+                <p> {orderDetailData.qaDetails.find((item) => item.title === '픽업 희망 일자')?.answer ?? ""}</p>
               </div>
             </section>
 
@@ -68,7 +67,7 @@ const Order = (props: Props) => {
               </h5>
               <p className="body-s text-gray-400">운영 시간 {orderDetailData.operatingHours}</p>
               <div className="body-m-m mt-[0.5rem] flex w-full justify-between rounded-[0.25rem] border border-gray-200 px-[1rem] py-[0.875rem] text-gray-400">
-                {orderDetailData.qaDetails.find((item) => item.title === '픽업 희망 시간')?.answer}
+                {orderDetailData.qaDetails.find((item) => item.title === '픽업 희망 시간')?.answer ?? ""}
               </div>
             </section>
 
@@ -78,7 +77,6 @@ const Order = (props: Props) => {
               </h5>
               <div className="body-m-m mt-[0.5rem] flex w-full justify-between rounded-[0.25rem] border border-gray-200 px-[1rem] py-[0.875rem] text-gray-400">
                 <p>갤러리에서 업로드</p>
-                <DropDownIcon height={24} width={24} />
               </div>
               <div className="flex w-full items-center justify-center">
                 <div className="relative mt-[0.5rem] h-[21.875rem] w-[21.875rem]">
@@ -95,7 +93,7 @@ const Order = (props: Props) => {
             <section>
               <h5 className="title-m flex gap-x-[0.125rem]">추가 요청 사항</h5>
               <div className="body-m-m mt-[0.5rem] flex w-full justify-between rounded-[0.25rem] border border-gray-200 px-[1rem] py-[0.875rem] text-gray-400">
-                {orderDetailData.qaDetails.find((item) => item.title === '추가 요청사항')?.answer}
+                {orderDetailData.qaDetails.find((item) => item.title === '추가 요청사항')?.answer ?? ""}
               </div>
               <div className="flex w-full items-center justify-center">
                 <div className="relative mt-[0.5rem] h-[21.875rem] w-[21.875rem]">
@@ -125,8 +123,7 @@ const Order = (props: Props) => {
                 크기<span className="title-s text-red-400">*</span>
               </h5>
               <div className="body-m-m mt-[0.5rem] flex w-full justify-between rounded-[0.25rem] border border-gray-200 px-[1rem] py-[0.875rem] text-gray-400">
-                <p>{orderDetailData.qaDetails.find((item) => item.title === '크기')?.answer}</p>
-                <DropDownIcon height={24} width={24} />
+                <p>{orderDetailData.qaDetails.find((item) => item.title === '크기')?.answer ?? ""}</p>
               </div>
             </section>
 
@@ -135,8 +132,7 @@ const Order = (props: Props) => {
                 크림 맛<span className="title-s text-red-400">*</span>
               </h5>
               <div className="body-m-m mt-[0.5rem] flex w-full justify-between rounded-[0.25rem] border border-gray-200 px-[1rem] py-[0.875rem] text-gray-400">
-                <p>{orderDetailData.qaDetails.find((item) => item.title === '크림 맛')?.answer}</p>
-                <DropDownIcon height={24} width={24} />
+                <p>{orderDetailData.qaDetails.find((item) => item.title === '크림 맛')?.answer ?? ""}</p>
               </div>
             </section>
 
@@ -145,15 +141,14 @@ const Order = (props: Props) => {
                 시트 맛<span className="title-s text-red-400">*</span>
               </h5>
               <div className="body-m-m mt-[0.5rem] flex w-full justify-between rounded-[0.25rem] border border-gray-200 px-[1rem] py-[0.875rem] text-gray-400">
-                <p>{orderDetailData.qaDetails.find((item) => item.title === '시트 맛')?.answer}</p>
-                <DropDownIcon height={24} width={24} />
+                <p>{orderDetailData.qaDetails.find((item) => item.title === '시트 맛')?.answer ?? ""}</p>
               </div>
             </section>
 
             <section>
               <h5 className="title-m flex gap-x-[0.125rem]">기타 요청사항</h5>
               <div className="body-m-m mt-[0.5rem] flex w-full justify-between rounded-[0.25rem] border border-gray-200 px-[1rem] py-[0.875rem] text-gray-400">
-                <p>{orderDetailData.qaDetails.find((item) => item.title === '기타 요청사항')?.answer}</p>
+                <p>{orderDetailData.qaDetails.find((item) => item.title === '기타 요청사항')?.answer ?? ""}</p>
               </div>
             </section>
           </div>
