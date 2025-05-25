@@ -75,7 +75,8 @@ const MyPage = () => {
     Cookies.remove('kakaoAccessToken')
     Cookies.remove('ROLE')
     router.push('/')
-    setLoginState({ user: null })
+    localStorage.removeItem('login-store')
+    localStorage.removeItem('recentlyViewedDesigns')
   }
 
   // 2초 후 자동 닫힘 처리
