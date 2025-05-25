@@ -1,5 +1,4 @@
 import { motion } from 'framer-motion'
-import { MemoSearchIcon } from '@/assets/svgComponents'
 import React from 'react'
 import Image from 'next/image'
 
@@ -7,7 +6,7 @@ interface OrderSubmissionSuccessModalProps {
   onClick?: () => void
 }
 
-const OrderSubmissionSuccessModal = ({onClick}: OrderSubmissionSuccessModalProps) => {
+const OrderSubmissionSuccessModal = ({ onClick }: OrderSubmissionSuccessModalProps) => {
   return (
     <div
       onClick={onClick}
@@ -17,7 +16,7 @@ const OrderSubmissionSuccessModal = ({onClick}: OrderSubmissionSuccessModalProps
     >
       <motion.div
         onClick={(e) => e.stopPropagation()}
-        className="absolute flex flex-col w-[320px] items-center justify-center rounded-[8px] bg-white py-[30px] px-[20px]"
+        className="absolute flex w-[320px] flex-col items-center justify-center rounded-[8px] bg-white px-[20px] py-[30px]"
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
@@ -31,12 +30,14 @@ const OrderSubmissionSuccessModal = ({onClick}: OrderSubmissionSuccessModalProps
             </div>
           </div>
           <div className="flex flex-col gap-y-[20px]">
-            <div className="flex flex-col gap-y-1 items-center">
+            <div className="flex flex-col items-center gap-y-1">
               <p className="headline-s text-gray-900">문의가 완료되었어요!</p>
-              <p className="text-gray-500 body-m">메이커의 대답이 오면 알려드릴게요.</p>
+              <p className="body-m text-gray-500">메이커의 대답이 오면 알려드릴게요.</p>
             </div>
-            <p className={"text-gray-400 caption-l text-center"}>답변은 홈 상단의 “종 아이콘” or <br />
-              “마이페이지 → 제작 문의”에서 확인하실 수 있어요!</p>
+            <p className={'caption-l text-center text-gray-400'}>
+              답변은 홈 상단의 “종 아이콘” or <br />
+              “마이페이지 → 제작 문의”에서 확인하실 수 있어요!
+            </p>
           </div>
         </div>
       </motion.div>
