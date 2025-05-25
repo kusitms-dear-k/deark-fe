@@ -3,14 +3,17 @@
 import { ChevronLeftIcon, ChevronRightIcon } from '@/assets/svgComponents'
 import { useState, useEffect } from 'react'
 
+type CalendarMode = 'single' | 'range'
+
 interface Range {
   start: Date | null
   end: Date | null
 }
 
-interface RangeCalendarProps {
-  value: Range
-  setValue: (range: Range) => void
+interface CalendarProps<T extends CalendarMode> {
+  mode?: T
+  value: T extends 'single' ? Date | null : Range
+  setValue: (value: T extends 'single' ? Date : Range) => void
 }
 
 function getDaysInMonth(year: number, month: number) {
@@ -28,7 +31,6 @@ function isInRange(day: Date, start: Date | null, end: Date | null) {
   return day > start && day < end
 }
 
-// 오늘 날짜인지 확인하는 함수
 function isToday(date: Date) {
   const today = new Date()
   return (
@@ -38,10 +40,22 @@ function isToday(date: Date) {
   )
 }
 
-export default function RangeCalendar({ value, setValue }: RangeCalendarProps) {
+export default function Calendar<T extends CalendarMode = 'range'>({
+  mode = 'range' as T,
+  value,
+  setValue,
+}: CalendarProps<T>) {
   const today = new Date()
-  const [month, setMonth] = useState(today.getMonth())
-  const [year, setYear] = useState(today.getFullYear())
+  const [month, setMonth] = useState(
+    mode === 'single'
+      ? ((value as Date)?.getMonth?.() ?? today.getMonth())
+      : ((value as Range).start?.getMonth() ?? today.getMonth())
+  )
+  const [year, setYear] = useState(
+    mode === 'single'
+      ? ((value as Date)?.getFullYear?.() ?? today.getFullYear())
+      : ((value as Range).start?.getFullYear() ?? today.getFullYear())
+  )
   const [isPickerOpen, setIsPickerOpen] = useState(false)
 
   // 달력 데이터 생성
@@ -61,13 +75,19 @@ export default function RangeCalendar({ value, setValue }: RangeCalendarProps) {
   // 날짜 클릭 핸들러
   const handleDayClick = (date: Date) => {
     if (isPast(date)) return
-    if (!value.start || (value.start && value.end)) {
-      setValue({ start: date, end: null })
-    } else if (value.start && !value.end) {
-      if (date < value.start) {
-        setValue({ start: date, end: value.start })
-      } else {
-        setValue({ start: value.start, end: date })
+
+    if (mode === 'single') {
+      setValue(date as T extends 'single' ? Date : Range)
+    } else {
+      const currentValue = value as Range
+      if (!currentValue.start || (currentValue.start && currentValue.end)) {
+        setValue({ start: date, end: null } as T extends 'single' ? Date : Range)
+      } else if (currentValue.start && !currentValue.end) {
+        if (date < currentValue.start) {
+          setValue({ start: date, end: currentValue.start } as T extends 'single' ? Date : Range)
+        } else {
+          setValue({ start: currentValue.start, end: date } as T extends 'single' ? Date : Range)
+        }
       }
     }
   }
@@ -115,7 +135,6 @@ export default function RangeCalendar({ value, setValue }: RangeCalendarProps) {
           <button onClick={prevMonth} className="px-2 text-xl">
             <ChevronLeftIcon width={24} height={24} />
           </button>
-
           <button onClick={nextMonth} className="px-2 text-xl">
             <ChevronRightIcon width={24} height={24} />
           </button>
@@ -140,6 +159,7 @@ export default function RangeCalendar({ value, setValue }: RangeCalendarProps) {
           </div>
         ))}
       </div>
+
       {/* 날짜 */}
       <div className="body-l-m grid grid-cols-7 gap-y-2 px-2 pb-4 text-center">
         {calendar.map((date, i) => {
@@ -147,11 +167,23 @@ export default function RangeCalendar({ value, setValue }: RangeCalendarProps) {
             return <div key={i} className="h-10 w-10" />
           }
 
-          // 날짜 상태 계산
+          // 날짜 상태 계산 (기존 로직 사용)
           const isCurrentDay = isToday(date)
-          const isStart = value.start && isSameDay(date, value.start)
-          const isEnd = value.end && isSameDay(date, value.end)
-          const isBetween = value.start && value.end && isInRange(date, value.start, value.end)
+          let isStart = false
+          let isEnd = false
+          let isBetween = false
+          let selected = false
+
+          if (mode === 'single') {
+            selected = value && isSameDay(date, value as Date)
+          } else {
+            const range = value as Range
+            isStart = !!range.start && isSameDay(date, range.start)
+            isEnd = !!range.end && isSameDay(date, range.end)
+            isBetween = !!range.start && !!range.end && isInRange(date, range.start, range.end)
+            selected = isStart || isEnd
+          }
+
           const disabled = isPast(date)
 
           // 날짜 스타일 클래스 계산
@@ -159,34 +191,36 @@ export default function RangeCalendar({ value, setValue }: RangeCalendarProps) {
 
           if (disabled) {
             cellClass += ' bg-white text-stone-300'
-          } else if (isStart || isEnd) {
+          } else if (selected) {
             cellClass += ' bg-blue-400 font-semibold text-white'
           } else if (isBetween) {
             cellClass += ' bg-blue-100'
           } else if (isCurrentDay) {
-            cellClass += ' text-blue-400' // 오늘 날짜 강조
+            cellClass += ' text-blue-400'
           } else {
             cellClass += ' bg-white text-zinc-800 hover:bg-blue-50'
           }
 
-          // 연결된 배경을 위한 wrapper 클래스
+          // 연결된 배경을 위한 wrapper 클래스 (기존 3번째 파일 로직 사용)
           let wrapperClass = 'relative flex justify-center'
 
-          // 범위 내부 - 양쪽 다 채움
-          if (isBetween) {
-            wrapperClass +=
-              ' before:absolute before:inset-y-0 before:left-0 before:right-0 before:bg-blue-100 before:z-0'
-          }
+          if (mode === 'range') {
+            // 범위 내부 - 양쪽 다 채움
+            if (isBetween) {
+              wrapperClass +=
+                ' before:absolute before:inset-y-0 before:left-0 before:right-0 before:bg-blue-100 before:z-0'
+            }
 
-          // 시작일 - 오른쪽만 채움 (범위가 있을 때)
-          if (isStart && value.end) {
-            wrapperClass += ' after:absolute after:inset-y-0 after:left-1/2 after:right-0 after:bg-blue-100 after:z-0'
-          }
+            // 시작일 - 오른쪽만 채움 (범위가 있을 때)
+            if (isStart && (value as Range).end) {
+              wrapperClass += ' after:absolute after:inset-y-0 after:left-1/2 after:right-0 after:bg-blue-100 after:z-0'
+            }
 
-          // 종료일 - 왼쪽만 채움 (범위가 있을 때)
-          if (isEnd && value.start) {
-            wrapperClass +=
-              ' before:absolute before:inset-y-0 before:left-0 before:right-1/2 before:bg-blue-100 before:z-0'
+            // 종료일 - 왼쪽만 채움 (범위가 있을 때)
+            if (isEnd && (value as Range).start) {
+              wrapperClass +=
+                ' before:absolute before:inset-y-0 before:left-0 before:right-1/2 before:bg-blue-100 before:z-0'
+            }
           }
 
           return (
@@ -248,7 +282,7 @@ const YearMonthPicker = ({
             key={monthNumber}
             onClick={() => {
               onSelect(viewYear, monthNumber - 1)
-              onClose() // 월 선택 시 모달 닫기
+              onClose()
             }}
             className={`body-m flex h-12 items-center justify-center rounded ${
               monthNumber - 1 === currentMonth && viewYear === currentYear
