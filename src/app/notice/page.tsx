@@ -247,7 +247,7 @@ const NoticePage = () => {
         </section>
       )}
 
-      <section className="flex flex-1 flex-col w-full items-center justify-center w-full">
+      <section className="flex flex-1 flex-col w-full items-center w-full">
         {noticeData ? (
           noticeData.responseList.length > 0 ? (
             noticeData.responseList.map((notice, index) => {
