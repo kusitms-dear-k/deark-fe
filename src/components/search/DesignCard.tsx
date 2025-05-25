@@ -5,6 +5,7 @@ interface DesignCardProps {
   img: string
   enableDayOrder?: boolean
   storeName: string
+  isHeartContent?: boolean // 하트 아이콘과 count가 필요 없는 곳에 제거하기 위함
   isHeart: boolean
   description: string
   startPrice?: number
@@ -19,6 +20,7 @@ const DesignCard = ({
   enableDayOrder = false,
   storeName,
   isHeart,
+  isHeartContent = true,
   description,
   startPrice,
   heartCount,
@@ -56,7 +58,7 @@ const DesignCard = ({
         </div>
       </div>
 
-      <section className={'flex flex-col gap-y-1 items-start px-[10px] py-[6px]'}>
+      <section className={'flex flex-col items-start gap-y-1 px-[10px] py-[6px]'}>
         <div className={'flex flex-col gap-y-1'}>
           <div className={'flex items-center gap-x-1'}>
             <div className={'caption-m text-[var(--gray-900)]'}>{storeName}</div>
@@ -74,13 +76,15 @@ const DesignCard = ({
         )}
 
         <section className={'flex gap-x-[4px]'}>
-          <div className={'flex items-center gap-x-[2px]'}>
-            <div className={'relative h-[12px] w-[12px]'}>
-              <Image className={'object-cover'} src={'/search/gray-fill-heart.svg'} fill alt={'heart'} />
+          {isHeartContent ? (
+            <div className={'flex items-center gap-x-[2px]'}>
+              <div className={'relative h-[12px] w-[12px]'}>
+                <Image className={'object-cover'} src={'/search/gray-fill-heart.svg'} fill alt={'heart'} />
+              </div>
+              <div className={'caption-m text-[var(--gray-400)]'}>{heartCount}</div>
             </div>
-            <div className={'caption-m text-[var(--gray-400)]'}>{heartCount}</div>
-          </div>
-          {location && <div className={'caption-m text-[var(--gray-400)] truncate'}>{location}</div>}
+          ) : null}
+          {location && <div className={'caption-m truncate text-[var(--gray-400)]'}>{location}</div>}
         </section>
       </section>
     </div>

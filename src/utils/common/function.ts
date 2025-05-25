@@ -1,3 +1,5 @@
+import { DesignType, RecommendType } from '@/types/search'
+
 /**
  * 시간 format 하는 함수
  * 1분 미만: "방금 전"
@@ -23,4 +25,42 @@ export const formatTimeAgo = (alarmDateTime: string): string => {
 
   const diffDay = Math.floor(diffHour / 24)
   return `${diffDay}일 전`
+}
+
+/**
+ * 최근 본 디자인 Id를 저장하는 함수
+ * @param designId
+ * @param designName
+ * @param designImageUrl
+ * @param storeName
+ * @param isLiked
+ */
+export const addRecentlyViewedDesign = (
+  designId: number,
+  designName: string,
+  designImageUrl: string,
+  storeName: string,
+  isLiked: boolean
+) => {
+  const stored = localStorage.getItem('recentlyViewedDesigns')
+  let designs: {
+    designId: number,
+    designName: string,
+    designImageUrl: string,
+    storeName: string,
+    isLiked: boolean
+  }[] = stored ? JSON.parse(stored) : []
+
+  // 이미 있는 designId는 제거
+  designs = designs.filter((d) => d.designId !== designId)
+
+  // 맨 앞에 추가
+  designs.unshift({designId: designId, designName: designName, designImageUrl: designImageUrl, storeName: storeName, isLiked: isLiked})
+
+  // 최대 4개 유지
+  if (designs.length > 4) {
+    designs = designs.slice(0, 4)
+  }
+
+  localStorage.setItem('recentlyViewedDesigns', JSON.stringify(designs))
 }

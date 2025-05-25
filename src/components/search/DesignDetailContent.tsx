@@ -20,7 +20,7 @@ const DesignDetailContent = ({ designDetail }: Props) => {
     <DrawerContent>
       <DrawerHeader
         onClick={() => {
-          setSearchParams({ isStoreDetailModalOpen: true, isDesignDetailModalOpen: false })
+          setSearchParams({ isStoreDetailModalOpen: true, isDesignDetailModalOpen: false, storeId: designDetail?.storeId })
         }}
       >
         <DrawerTitle className="title-m  text-center">{designDetail.storeName}</DrawerTitle>

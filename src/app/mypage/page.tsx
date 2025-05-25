@@ -1,11 +1,6 @@
 'use client'
 import Image from 'next/image'
-import {
-  BlueCheckCircleIcon,
-  BlueClipboardIcon,
-  BluePencilIcon,
-  LogoutIcon,
-} from '@/assets/svgComponents'
+import { BlueCheckCircleIcon, BlueClipboardIcon, BluePencilIcon, LogoutIcon } from '@/assets/svgComponents'
 import { useRouter } from 'next/navigation'
 import NavBar from '@/components/common/NavBar'
 import { useEffect, useState } from 'react'
@@ -19,6 +14,14 @@ import Cookies from 'js-cookie'
 import LogoutModal from '@/components/mypage/LogoutModal'
 import { useLoginStore } from '@/store/authStore'
 import RequireLoginModal from '@/components/mypage/RequireLoginModal'
+import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSuccessModal'
+import { AnimatePresence } from 'framer-motion'
+import Filter from '@/components/common/Filter'
+import StoreDetail from '@/components/search/StoreDetail'
+import DesignDetailContent from '@/components/search/DesignDetailContent'
+import useSearchResult from '@/hooks/useSearchResult'
+import { Drawer } from '@/components/ui/drawer'
+import { addRecentlyViewedDesign } from '@/utils/common/function'
 
 const MyPage = () => {
   const router = useRouter()
@@ -26,9 +29,35 @@ const MyPage = () => {
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
   const user = useLoginStore((state) => state.user)
-  const setState = useLoginStore((state) => state.setState)
+  const setLoginState = useLoginStore((state) => state.setState)
   const token = Cookies.get('ACCESS_TOKEN')
+  const [hasMounted, setHasMounted] = useState(false)
 
+  const recentlyViewedDesigns = localStorage.getItem('recentlyViewedDesigns')
+  const parsedRecentlyViewedDesigns = recentlyViewedDesigns ? JSON.parse(recentlyViewedDesigns) : []
+
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
+
+  const {
+    isStoreDetailModalOpen,
+    isDesignDetailModalOpen,
+    isOrderFormOpen,
+    isFilterModalOpen,
+    isOrderSubmissionSuccessModalOpen,
+    setIsFilterModalOpen,
+    selectedFilterType,
+    setSelectedFilterType,
+    storeDetailMenu,
+    setStoreDetailMenu,
+    totalCount,
+    keyword,
+    designDetail,
+    setState,
+    renderFilterContent,
+    resetOrderForm,
+  } = useSearchResult()
 
   useEffect(() => {
     // 1. 초기 상태 실행
@@ -46,13 +75,61 @@ const MyPage = () => {
     Cookies.remove('kakaoAccessToken')
     Cookies.remove('ROLE')
     router.push('/')
-    setState({user: null})
+    setLoginState({ user: null })
   }
+
+  // 2초 후 자동 닫힘 처리
+  useEffect(() => {
+    if (isOrderSubmissionSuccessModalOpen) {
+      const timer = setTimeout(() => {
+        setState({ isOrderSubmissionSuccessModalOpen: false })
+        //초기화
+        resetOrderForm()
+      }, 2000)
+
+      return () => clearTimeout(timer) // cleanup
+    }
+  }, [isOrderSubmissionSuccessModalOpen, setState])
+
+  if (!hasMounted) return null // 또는 로딩 UI
 
   return (
     <main className="relative">
-      {isLogoutModalOpen && <LogoutModal onClick={() => setIsLogoutModalOpen(false)} handleLogout={handleLogout} />}
-      {!token && <RequireLoginModal onClick={() => {}}/>}
+      <Drawer
+        open={isStoreDetailModalOpen || isDesignDetailModalOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            if (isStoreDetailModalOpen) {
+              setSearchParams({ isStoreDetailModalOpen: false })
+            }
+            if (isDesignDetailModalOpen) {
+              setSearchParams({ isDesignDetailModalOpen: false })
+            }
+          }
+        }}
+      >
+        {isLogoutModalOpen && <LogoutModal onClick={() => setIsLogoutModalOpen(false)} handleLogout={handleLogout} />}
+        {!token && <RequireLoginModal onClick={() => {}} />}
+        {/* 주문서 문의가 완료될 때 보이는 모달 */}
+        {isOrderSubmissionSuccessModalOpen && (
+          <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })} />
+        )}
+        {/* 필터 모달 */}
+        <AnimatePresence>
+          {isFilterModalOpen && (
+            <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
+          )}
+        </AnimatePresence>
+
+        {/* 가게 상세 페이지 모달 */}
+        {isStoreDetailModalOpen && (
+          <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
+        )}
+
+        {/* 디자인 상세 페이지 모달 */}
+        {isDesignDetailModalOpen && <DesignDetailContent designDetail={designDetail} />}
+      </Drawer>
+
       {/* 프로필 관련 */}
       <div className="bg-gray-100 px-5 pb-6">
         <header className="title-xl pt-[74px] pb-[27px]">마이페이지</header>
@@ -105,34 +182,35 @@ const MyPage = () => {
       <section className="mt-[3.75rem] p-[1rem]">
         <h3 className="title-l text-gray-900">최근 본 케이크</h3>
         <section className="scrollbar-hide mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
-          <div className="min-w-[12.125rem]">
-            <DesignCard
-              onCardClick={() => {}}
-              description="심플감성 스타일 레터링케이크"
-              storeName="무무케이크"
-              isHeart={false}
-              img={'/common/cake1.png'}
-              enableDayOrder={true}
-            />
-          </div>
-          <div className="min-w-[12.125rem]">
-            <DesignCard
-              onCardClick={() => {}}
-              description="심플감성 스타일 레터링케이크"
-              storeName="무무케이크"
-              isHeart={false}
-              img={'/common/cake1.png'}
-            />
-          </div>
-          <div className="min-w-[12.125rem]">
-            <DesignCard
-              onCardClick={() => {}}
-              description="심플감성 스타일 레터링케이크"
-              storeName="무무케이크"
-              isHeart={false}
-              img={'/common/cake1.png'}
-            />
-          </div>
+          {parsedRecentlyViewedDesigns.map(
+            (design: RecommendType) => {
+              return (
+                <div key={design.designId} className="min-w-[12.125rem]">
+                  <DesignCard
+                    onCardClick={() => {
+                      setSearchParams({
+                        designId: design.designId,
+                        isDesignDetailModalOpen: true,
+                        isStoreDetailModalOpen: false,
+                      })
+                      addRecentlyViewedDesign(
+                        design.designId,
+                        design.designName,
+                        design.designImageUrl,
+                        design.storeName,
+                        design.isLiked
+                      )
+                    }}
+                    isHeartContent={false}
+                    description={design.designName}
+                    storeName={design.storeName}
+                    isHeart={design.isLiked}
+                    img={design.designImageUrl}
+                  />
+                </div>
+              )
+            }
+          )}
         </section>
       </section>
 
@@ -145,7 +223,21 @@ const MyPage = () => {
                 return (
                   <div key={recommendResult.designId} className="scrollbar-hide min-w-[12.125rem]">
                     <DesignCard
-                      onCardClick={() => {}}
+                      onCardClick={() => {
+                        setSearchParams({
+                          designId: recommendResult.designId,
+                          isDesignDetailModalOpen: true,
+                          isStoreDetailModalOpen: false,
+                        })
+                        addRecentlyViewedDesign(
+                          recommendResult.designId,
+                          recommendResult.designName,
+                          recommendResult.designImageUrl,
+                          recommendResult.storeName,
+                          recommendResult.isLiked
+                        )
+                      }}
+                      isHeartContent={false}
                       description={recommendResult.designName}
                       storeName={recommendResult.storeName}
                       isHeart={recommendResult.isLiked}
