@@ -90,6 +90,7 @@ const StoreSearchResult = (props: Props) => {
                         setSearchParams({
                           storeId: store.storeId,
                           isStoreDetailModalOpen: true,
+                          isDesignDetailModalOpen: false,
                         })
                       }}
                       {...store}

@@ -14,8 +14,8 @@ const StoreDesign = (props: Props) => {
   const selectedSizeName = useSearchStore((state) => state.sizeName)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
   return (
-    <>
-      <section className="scrollbar-hide flex w-full justify-start gap-x-[0.5rem] overflow-x-scroll px-[1.25rem] py-[0.75rem] whitespace-nowrap">
+    <div className="flex flex-col h-full min-h-0">
+      <section className="shrink-0 scrollbar-hide flex w-full justify-start gap-x-[0.5rem] overflow-x-scroll px-[1.25rem] py-[0.75rem] whitespace-nowrap">
         <button
           onClick={() => {
             setSearchParams({ sizeName: '전체' })
@@ -38,14 +38,15 @@ const StoreDesign = (props: Props) => {
           )
         })}
       </section>
-      <section className="grid min-h-[360px] w-full grid-cols-2 gap-x-[0.125rem] overflow-y-scroll">
-        {searchResults
-          ? searchResults.map((results) => {
+      <section className="flex-1 min-h-0 overflow-y-auto w-full">
+        <div className="grid grid-cols-2 gap-x-[0.125rem]">
+          {searchResults
+            ? searchResults.map((results) => {
               return results.results.designList.map((design) => {
                 return (
                   <DesignCard
                     onCardClick={() => {
-                      setSearchParams({ designId: design.designId, isDesignDetailModalOpen: true })
+                      setSearchParams({ designId: design.designId, isDesignDetailModalOpen: true, isStoreDetailModalOpen: false })
                     }}
                     key={design.designId}
                     description={design.designName}
@@ -59,11 +60,12 @@ const StoreDesign = (props: Props) => {
                 )
               })
             })
-          : [1, 2, 3, 4].map((i) => {
+            : [1, 2, 3, 4].map((i) => {
               return <DesignCardSkeleton key={i} />
             })}
+        </div>
       </section>
-    </>
+    </div>
   )
 }
 export default StoreDesign

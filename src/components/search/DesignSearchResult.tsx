@@ -20,6 +20,7 @@ import Cookies from 'js-cookie'
 import { useRouter } from 'next/navigation'
 import { EventApi } from '@/api/eventAPI'
 import { formatDateForApi } from '@/utils/formatDataForApi'
+import { DrawerTrigger } from '@/components/ui/drawer'
 
 type ModalViewType = 'eventList' | 'newEvent' | 'dateSelect' | 'locationSelect' | null
 
@@ -270,25 +271,27 @@ const DesignSearchResult = () => {
                 return item.results.designList.map((design: DesignType, designIndex: number) => {
                   return (
                     <div key={design.designId} ref={observerRef}>
-                      <DesignCard
-                        onCardClick={() => {
-                          setSearchParams({
-                            designId: design.designId,
-                            storeId: design.storeId,
-                            isDesignDetailModalOpen: true,
-                          })
-                        }}
-                        key={design.designId}
-                        img={design.designImageUrl}
-                        enableDayOrder={design.isSameDayOrder}
-                        storeName={design.storeName}
-                        isHeart={design.isLiked}
-                        description={design.designName}
-                        startPrice={design.price}
-                        heartCount={design.likeCount}
-                        location={design.address}
-                        onHeartClick={() => handleHeartClick(design.designId, 'design')}
-                      />
+                      <DrawerTrigger className="w-full">
+                        <DesignCard
+                          onCardClick={() => {
+                            setSearchParams({
+                              designId: design.designId,
+                              storeId: design.storeId,
+                              isDesignDetailModalOpen: true,
+                            })
+                          }}
+                          key={design.designId}
+                          img={design.designImageUrl}
+                          enableDayOrder={design.isSameDayOrder}
+                          storeName={design.storeName}
+                          isHeart={design.isLiked}
+                          description={design.designName}
+                          startPrice={design.price}
+                          heartCount={design.likeCount}
+                          location={design.address}
+                          onHeartClick={() => handleHeartClick(design.designId, 'design')}
+                        />
+                      </DrawerTrigger>
                     </div>
                   )
                 })

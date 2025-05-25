@@ -1,5 +1,6 @@
 import Image from 'next/image'
-import { HeartIcon } from '@/assets/svgComponents'
+import { Gray700HeartIcon, HeartIcon } from '@/assets/svgComponents'
+import { DrawerTitle } from '@/components/ui/drawer'
 
 interface Props {
   storeName: string
@@ -14,10 +15,10 @@ const StoreProfile = (props: Props) => {
   return (
     <div className="flex w-full flex-col items-center">
       <section className="flex w-full justify-end gap-x-[0.25rem] px-[1.438rem] pt-[1.25rem]">
-        <HeartIcon width={24} height={24} />
+        <Gray700HeartIcon width={20} height={18} />
         <p className="caption-m text-gray-700">{likeCount}</p>
       </section>
-      <p className="title-xl">{storeName}</p>
+      <DrawerTitle className="title-xl">{storeName}</DrawerTitle>
       <div className="mt-[0.25rem] flex gap-x-[0.313rem]">
         <div className="relative h-[1.375rem] w-[1.375rem]">
           <Image src="/search/location.svg" alt="장소" fill className="object-cover"></Image>

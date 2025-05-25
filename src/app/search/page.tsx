@@ -1,223 +1,133 @@
 'use client'
 
-import { useEffect, useState } from 'react'
-
-import { FilterType, ResponseType } from '@/types/common'
 import Header from '@/components/common/Header'
-import SearchMenu from '@/components/search/SearchMenu'
-import FilterPanel from '@/components/search/FilterPanel'
-import DesignSearchResult from '@/components/search/DesignSearchResult'
-import StoreSearchResult from '@/components/search/StoreSearchResult'
-import SearchSummaryPanel from '@/components/search/SearchSummaryPanel'
 import Filter from '@/components/common/Filter'
-import AddressFilterContent from '@/components/search/AddressFilterContent'
-import PriceFilterContent from '@/components/search/PriceFilterContent'
-import SortFilterContent from '@/components/search/SortFilterContent'
-import BottomModal from '@/components/common/BottomModal'
-import { useSearchStore } from '@/store/searchStore'
 import DesignDetailContent from '@/components/search/DesignDetailContent'
 import { AnimatePresence } from 'framer-motion'
 import StoreDetail from '@/components/search/StoreDetail'
-import { getDesignDetailData } from '@/api/searchAPI'
-import { DesignDetailType } from '@/types/search'
-import { useOrderStore } from '@/store/orderStore'
 import OrderForm from '@/components/order/OrderForm'
 import GATracker from '@/components/GATracker'
-import RangeCalendar from '@/components/search/CustomRangeCalendar'
+import SearchContent from '@/components/search/SearchContent'
+import useSearchResult from '@/hooks/useSearchResult'
+import { useRouter } from 'next/navigation'
+import useScrollDirection from '@/hooks/useScrollDirection'
+import { Drawer } from '@/components/ui/drawer'
+import { useEffect } from 'react'
+import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSuccessModal'
+import KeywordDeleteIcon from '@/assets/svgComponents/KeywordDeleteIcon'
 
 const SearchPage = () => {
-  const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
-  // 모달 관련 state
-  const isStoreDetailModalOpen = useSearchStore((state) => state.isStoreDetailModalOpen)
-  const isDesignDetailModalOpen = useSearchStore((state) => state.isDesignDetailModalOpen)
-  const isOrderFormOpen = useOrderStore((state) => state.isOrderFormOpen)
-  // 필터 관련 state
-  const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
-  const [selectedFilterType, setSelectedFilterType] = useState<FilterType>('ADDRESS')
-  const [selectedFilterContents, setSelectedFilterContents] = useState<string[]>([]) //위치 필터 값
-  const [minPrice, setMinPrice] = useState<null | number>(null) //최소 가격 필터 값
-  const [maxPrice, setMaxPrice] = useState<null | number>(null) //최대 가격 필터 값
-  //가게 상세보기
-  const [storeDetailMenu, setStoreDetailMenu] = useState<'가게 정보' | '디자인' | '리뷰'>('가게 정보')
-  const designId = useSearchStore((state) => state.designId) //선택된 designId
-  const [designDetail, setDesignDetail] = useState<DesignDetailType>() // 디자인 상세 페이지 데이터
-  // zustand 전역 상태
-  const sortType = useSearchStore((state) => state.sortType)
-  const totalCount = useSearchStore((state) => state.totalCount)
-  const keyword = useSearchStore((state) => state.keyword)
-  const setSearchParams = useSearchStore((state) => state.setSearchParams)
+  const router = useRouter()
+  const {
+    isStoreDetailModalOpen,
+    isDesignDetailModalOpen,
+    isOrderFormOpen,
+    isFilterModalOpen,
+    isOrderSubmissionSuccessModalOpen,
+    setIsFilterModalOpen,
+    selectedFilterType,
+    setSelectedFilterType,
+    storeDetailMenu,
+    setStoreDetailMenu,
+    totalCount,
+    keyword,
+    setSearchParams,
+    designDetail,
+    renderFilterContent,
+    setState,
+    resetOrderForm,
+  } = useSearchResult()
 
-  const [dateRange, setDateRange] = useState<{ start: Date | null; end: Date | null }>({ start: null, end: null })
+  const scrollDirection = useScrollDirection()
+  const isScrollingDown = scrollDirection === 'down'
 
-  /**
-   * 스토어,디자인 상세페이지 데이터 불러오기
-   */
+  // 2초 후 자동 닫힘 처리
   useEffect(() => {
-    // 1. 초기 상태 실행
-    getDesignDetailData(designId)
-      .then((res: ResponseType<DesignDetailType>) => {
-        console.log('디자인 상세', res.results)
-        setDesignDetail(res.results)
-      })
-      .catch(console.error)
+    if (isOrderSubmissionSuccessModalOpen) {
+      const timer = setTimeout(() => {
+        setState({ isOrderSubmissionSuccessModalOpen: false })
+        //초기화
+        resetOrderForm()
+      }, 2000)
 
-    // 2. 이후 상태 변화 감지
-    const unsubscribe = useSearchStore.subscribe((currentStatus, prevState) => {
-      getDesignDetailData(currentStatus.designId)
-        .then((res) => {
-          console.log('디자인 상세:', res)
-          setDesignDetail(res.results)
-        })
-        .catch(console.error)
-    })
-
-    return () => unsubscribe()
-  }, [])
-
-  /**
-   * 필터 페이지
-   * @param filter 정렬, 위치, 날짜, 가격대
-   */
-  const renderFilterContent = (filter: FilterType) => {
-    switch (filter) {
-      case 'SORT':
-        return (
-          <section className="flex flex-col px-[1.5rem]">
-            <SortFilterContent setIsFilterModalOpen={setIsFilterModalOpen} />
-          </section>
-        )
-      case 'ADDRESS':
-        return (
-          <section>
-            <Filter.Menu
-              selectedFilterType={selectedFilterType}
-              setSelectedFilterType={setSelectedFilterType}
-              setIsFilterModalOpen={setIsFilterModalOpen}
-            />
-            <AddressFilterContent
-              selectedFilterContents={selectedFilterContents}
-              setSelectedFilterContents={setSelectedFilterContents}
-            />
-            <Filter.BottomButton
-              reset={() => {
-                setSearchParams({ locationList: null })
-                setIsFilterModalOpen(false)
-              }}
-              apply={() => {
-                setSearchParams({ locationList: selectedFilterContents })
-                setIsFilterModalOpen(false)
-              }}
-              totalResultCount={totalCount}
-            />
-          </section>
-        )
-      case 'DATE':
-        return (
-          <section>
-            <Filter.Menu
-              selectedFilterType={selectedFilterType}
-              setSelectedFilterType={setSelectedFilterType}
-              setIsFilterModalOpen={setIsFilterModalOpen}
-            />
-            <RangeCalendar value={dateRange} setValue={setDateRange} />
-            <Filter.BottomButton
-              reset={() => {
-                setDateRange({ start: null, end: null })
-                setSearchParams({ startDate: null, endDate: null })
-                setIsFilterModalOpen(false)
-              }}
-              apply={() => {
-                setSearchParams({
-                  startDate: dateRange.start ? dateRange.start.toISOString().slice(0, 10) : null,
-                  endDate: dateRange.end ? dateRange.end.toISOString().slice(0, 10) : null,
-                })
-                setIsFilterModalOpen(false)
-              }}
-              totalResultCount={totalCount}
-            />
-          </section>
-        )
-      case 'PRICE':
-        return (
-          <section className="flex flex-col justify-start gap-y-[0.125rem] py-[0.438rem]">
-            <Filter.Menu
-              setIsFilterModalOpen={setIsFilterModalOpen}
-              selectedFilterType={selectedFilterType}
-              setSelectedFilterType={setSelectedFilterType}
-            />
-            <PriceFilterContent
-              minPrice={minPrice}
-              setMinPrice={setMinPrice}
-              setMaxPrice={setMaxPrice}
-              maxPrice={maxPrice}
-            />
-            <Filter.BottomButton
-              reset={() => {
-                setMinPrice(null)
-                setMaxPrice(null)
-                setSearchParams({ minPrice: null, maxPrice: null })
-                setIsFilterModalOpen(false)
-              }}
-              apply={() => {
-                setSearchParams({ minPrice: minPrice, maxPrice: maxPrice })
-                setIsFilterModalOpen(false)
-              }}
-              totalResultCount={totalCount}
-            />
-          </section>
-        )
+      return () => clearTimeout(timer) // cleanup
     }
-  }
+  }, [isOrderSubmissionSuccessModalOpen, setState])
 
   return (
     <main className="flex min-h-screen flex-col">
-      <GATracker />
-      {/* 주문서 작성 폼 모달 */}
-      {isOrderFormOpen ? (
-        <OrderForm />
-      ) : (
-        <>
-          {/* 필터 모달 */}
-          <AnimatePresence>
-            {isFilterModalOpen && (
-              <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
+      <Drawer
+        open={isStoreDetailModalOpen || isDesignDetailModalOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            if (isStoreDetailModalOpen) {
+              setSearchParams({ isStoreDetailModalOpen: false })
+            }
+            if (isDesignDetailModalOpen) {
+              setSearchParams({ isDesignDetailModalOpen: false })
+            }
+          }
+        }}
+      >
+        <GATracker />
+        {isOrderFormOpen ? (
+          <OrderForm />
+        ) : (
+          <>
+            {/* 주문서 문의가 완료될 때 보이는 모달 */}
+            {isOrderSubmissionSuccessModalOpen && (
+              <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })}/>
             )}
-          </AnimatePresence>
-
-          {/* 가게 상세 페이지 모달 */}
-          {isStoreDetailModalOpen && (
+            {/* 필터 모달 */}
             <AnimatePresence>
-              <BottomModal onClick={() => setSearchParams({ isStoreDetailModalOpen: false })}>
-                <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
-              </BottomModal>
+              {isFilterModalOpen && (
+                <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
+              )}
             </AnimatePresence>
-          )}
 
-          {/* 디자인 상세 페이지 모달 */}
-          {isDesignDetailModalOpen && (
-            <AnimatePresence>
-              <BottomModal onClick={() => setSearchParams({ isDesignDetailModalOpen: false })}>
-                <DesignDetailContent designDetail={designDetail} />
-              </BottomModal>
-            </AnimatePresence>
-          )}
-          <Header headerType="SEARCH" keyword={keyword} />
-          <SearchMenu searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
-          <FilterPanel
-            isFilterModalOpen={isFilterModalOpen}
-            selectedFilterType={selectedFilterType}
-            setIsFilterModalOpen={setIsFilterModalOpen}
-            setSelectedFilterType={setSelectedFilterType}
-          />
-          <SearchSummaryPanel
-            totalCount={totalCount}
-            sortType={sortType}
-            setSelectedFilterType={setSelectedFilterType}
-            setSortModalOpen={setIsFilterModalOpen}
-          />
-          {searchMenu === '스토어' ? <StoreSearchResult /> : <DesignSearchResult />}
-        </>
-      )}
+            {/* 가게 상세 페이지 모달 */}
+            {isStoreDetailModalOpen && (
+              <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
+            )}
+
+            {/* 디자인 상세 페이지 모달 */}
+            {isDesignDetailModalOpen && <DesignDetailContent designDetail={designDetail} />}
+            <Header
+              headerClassname={'fixed bg-white'}
+              headerType="SEARCH"
+              keyword={keyword}
+              onBack={() => {
+                setSearchParams({ keyword: null })
+                setSearchParams({ isTotalSearchPageOpen: false })
+                router.back()
+              }}
+              RightIcon={
+                <KeywordDeleteIcon
+                  onClick={() => {
+                    router.back()
+                    setSearchParams({ keyword: '' })
+                    setSearchParams({ isTotalSearchPageOpen: true })
+                  }}
+                  width={16}
+                  height={16}
+                />
+              }
+            />
+            <SearchContent
+              FilterPanelClassname={
+                isScrollingDown
+                  ? 'transition-all duration-100 fixed opacity-0 top-[11.063rem]'
+                  : 'transition-all duration-100 fixed opacity-100 top-[11.063rem]'
+              }
+              isFilterModalOpen={isFilterModalOpen}
+              selectedFilterType={selectedFilterType}
+              setSelectedFilterType={setSelectedFilterType}
+              setIsFilterModalOpen={setIsFilterModalOpen}
+              totalCount={totalCount}
+            />
+          </>
+        )}
+      </Drawer>
     </main>
   )
 }

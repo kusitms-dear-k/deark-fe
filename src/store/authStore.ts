@@ -23,7 +23,13 @@ interface LoginState {
   changeRole: (role: UserLoginRoleType) => void
   validationNickname: (nickName: string) => Promise<boolean>
   customerSignUp: (formData: FormData) => void
-  setState: (params: { isWelcomeModalOpen?: boolean; isGuardianModalOpen?: boolean }) => void
+  setState: (params: {
+    user?: LoginType | null
+    isLoading?: boolean
+    error?: boolean | null
+    isWelcomeModalOpen?: boolean
+    isGuardianModalOpen?: boolean
+  }) => void
 }
 
 export const useLoginStore = create<LoginState>((set) => ({
@@ -34,7 +40,13 @@ export const useLoginStore = create<LoginState>((set) => ({
   isWelcomeModalOpen: false,
   isGuardianModalOpen: false,
 
-  setState: (params: { isWelcomeModalOpen?: boolean; isGuardianModalOpen?: boolean }) => {
+  setState: (params: {
+    user?: LoginType | null
+    isLoading?: boolean
+    error?: boolean | null
+    isWelcomeModalOpen?: boolean
+    isGuardianModalOpen?: boolean
+  }) => {
     set((state) => ({
       ...state,
       ...params,
@@ -52,6 +64,7 @@ export const useLoginStore = create<LoginState>((set) => ({
         })
         if (!kakaoToken && code) {
           const data: ResponseType<LoginType> = await getJWTToken(Cookies.get('kakaoAccessToken') as string)
+          Cookies.set('ROLE', data.results.role, { expires: Date.now() + 604800000 })
           set({ user: data.results, isLoading: false })
         }
       }

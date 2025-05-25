@@ -4,6 +4,7 @@ import { SortType } from '@/types/search'
 import { FilterType } from '@/types/common'
 
 interface Props {
+  className?: string
   totalCount: number
   sortType: SortType
   setSortModalOpen: Dispatch<SetStateAction<boolean>>
@@ -11,7 +12,7 @@ interface Props {
 }
 
 const SearchSummaryPanel = (props: Props) => {
-  const { totalCount, sortType, setSortModalOpen, setSelectedFilterType } = props
+  const { className='mt-[15rem]', totalCount, sortType, setSortModalOpen, setSelectedFilterType } = props
 
   const renderSortTypeByKor = (sortType: SortType) => {
     switch (sortType) {
@@ -25,7 +26,7 @@ const SearchSummaryPanel = (props: Props) => {
   }
 
   return (
-    <div className="mt-[15rem] flex justify-between px-[1.25rem] py-[0.25rem]">
+    <div className={`${className ? className : ''} flex justify-between px-[1.25rem] py-[0.25rem]`}>
       <div className="caption-l py-[0.438rem] text-gray-400">총 {totalCount}개</div>
       <button
         onClick={() => {

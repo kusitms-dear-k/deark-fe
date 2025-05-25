@@ -1,22 +1,31 @@
 import { useOrderStore } from '@/store/orderStore';
 import { QaDetailTitleType } from '@/types/mypage';
+import { Dispatch, SetStateAction, useEffect } from 'react'
 
 interface Props {
-
+  setBlurred: Dispatch<SetStateAction<{   name: boolean;  phoneNumber: boolean;   wishPickUpTime: boolean }>>
 }
 const NameField = (props: Props) => {
-  const {} = props
+  const {setBlurred} = props
   const answers = useOrderStore((state) => state.answers)
   const nameAnswer = answers?.find((a) => a.title === '이름')?.answer ?? ''
   const setState = useOrderStore((state) => state.setState)
-
+  useEffect(() => {
+    console.log('🟢 NameField 렌더됨');
+  }, []);
   return (
     <section>
       <h5 className="title-m flex gap-x-[2px]">
         이름<span className="title-s text-red-400">*</span>
       </h5>
       <input
+        onBlur={() => setBlurred((prev) => ({...prev, name: true}))}
         value={nameAnswer}
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            setBlurred((prev) => ({ ...prev, name: true }))
+          }
+        }}
         onChange={(e) => {
           const currentAnswers = useOrderStore.getState().answers ?? []
 

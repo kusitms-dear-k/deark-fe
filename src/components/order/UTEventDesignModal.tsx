@@ -41,7 +41,7 @@ const UTEventDesignModal = (props: Props) => {
   }, [eventId]);
 
   return (
-    <div onClick={onClick} className={'fixed inset-0 z-50 flex min-h-screen flex-col gap-y-2 bg-[rgba(0,0,0,0.6)]'}>
+    <div onClick={onClick} className={'fixed inset-0 z-60 flex min-h-screen flex-col gap-y-2 bg-[rgba(0,0,0,0.6)]'}>
       <motion.div
         onClick={(e) => e.stopPropagation()}
         className="absolute bottom-0 flex w-full flex-col items-center justify-center rounded-t-[16px] bg-[var(--white)] py-[20px]"

@@ -63,6 +63,21 @@ export const getOrderFormDesignData = async (storeId: number) => {
   return data
 }
 
+/**
+ * 주문서 작성시 가게 운영시간 조회
+ */
+export const getBusinessHours = async (storeId: number, pickUpDate: string) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/order/store/${storeId}/business-hours?pickUpDate=${pickUpDate}`, {
+    method: 'GET',
+    headers: {
+      Authorization:
+        Cookies.get('ACCESS_TOKEN') as string,
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
 
 /**
  * 주문서 작성시 가게별 디자인 조회

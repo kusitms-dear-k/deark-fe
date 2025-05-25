@@ -11,30 +11,42 @@ import WishPickUpTimeField from '@/components/order/order-form/WishPickUpTimeFie
 import WishPickUpDateField from '@/components/order/order-form/WishPickUpDateField'
 import PhoneNumberField from '@/components/order/order-form/PhoneNumberField'
 import { ResponseType } from '@/types/common'
-import { getOrderFormDesignData, postOrderForm } from '@/api/mypageAPI'
+import { getBusinessHours, getOrderFormDesignData, postOrderForm } from '@/api/mypageAPI'
 import { OrderFormDesignListType } from '@/types/mypage'
 import { AnimatePresence } from 'framer-motion'
 import UTEventModal from '@/components/order/UTEventModal'
 import UTEventDesignModal from '@/components/order/UTEventDesignModal'
 import NameField from '@/components/order/order-form/NameField'
+import NotFormValidModal from '@/components/order/NotFormValidModal'
+import SubmitConfirmationModal from '@/components/order/SubmitConfirmationModal'
+import { shallow } from 'zustand/shallow'
+import { useStoreWithEqualityFn } from 'zustand/traditional'
 
 const OrderForm = () => {
   const [isDesignDropBoxOpen, setIsDesignDropBoxOpen] = useState<boolean>(false)
-  const [selectedDesignContent, setSelectedDesignContent] = useState<string>()
+  const selectedDesignContent = useOrderStore((state) => state.selectedDesignContent)
 
   const [isSizeDropBoxOpen, setIsSizeDropBoxOpen] = useState<boolean>(false)
   const [isSheetDropBoxOpen, setIsSheetDropBoxOpen] = useState<boolean>(false)
   const [isCreamDropBoxOpen, setIsCreamDropBoxOpen] = useState<boolean>(false)
   const [isEventFilterOpen, setIsEventFilterOpen] = useState<boolean>(false)
   const [isEventDesignFilterOpen, setIsEventDesignFilterOpen] = useState<boolean>(false)
+  const [businessHours, setBusinessHours] = useState<{ openTime: string; closeTime: string }>()
 
-  const setState = useOrderStore((state) => state.setState)
   const designType = useOrderStore((state) => state.designType)
   const storeId = useOrderStore((state) => state.storeId)
   const designId = useOrderStore((state) => state.designId)
   const requestDetailType = useOrderStore((state) => state.requestDetailType)
   const requestDetailDesignId = useOrderStore((state) => state.requestDetailDesignId)
-  const answers = useOrderStore((state) => state.answers)
+
+  const { answers, setState } = useStoreWithEqualityFn(
+    useOrderStore,
+    (state) => ({
+      answers: state.answers,
+      setState: state.setState,
+    }),
+    shallow
+  )
 
   const name = answers?.find((item) => item.title === '이름')?.answer
   const phoneNumber = answers?.find((item) => item.title === '전화번호')?.answer
@@ -46,11 +58,35 @@ const OrderForm = () => {
   const selectedDesignUrl = useOrderStore((state) => state.selectedDesignUrl)
   const selectedRequestDetailDesignUrl = useOrderStore((state) => state.selectedRequestDetailDesignUrl)
 
-  const designImageRef = useRef<HTMLInputElement>(null)
-  const requestDetailImageRef = useRef<HTMLInputElement>(null)
+  const [isNotFormValidModalOpen, setIsNotFormValidModalOpen] = useState(false)
+  const [isSubmitConfirmationModalOpen, setIsSubmitConfirmationModalOpen] = useState(false)
+  const isOrderSubmissionSuccessModalOpen= useOrderStore((state) =>state.isOrderSubmissionSuccessModalOpen)
+  const resetOrderForm = useOrderStore((state) =>state.resetOrderForm)
 
-  const [uploadDesignImage, setUploadDesignImage] = useState<string | ArrayBuffer | null>()
-  const [uploadRequestDetailImage, setUploadRequestDetailImage] = useState<string | ArrayBuffer | null>()
+  const [blurred, setBlurred] = useState<{
+    name: boolean
+    phoneNumber: boolean
+    wishPickUpTime: boolean
+  }>({
+    name: false,
+    phoneNumber: false,
+    wishPickUpTime: false,
+  })
+
+  //이미지
+  let designImageRef = useRef<HTMLInputElement>(null)
+  let requestDetailImageRef = useRef<HTMLInputElement>(null)
+
+  const uploadDesignImage = useOrderStore((state) =>state.uploadDesignImage)
+  const uploadRequestDetailImage = useOrderStore((state) =>state.uploadRequestDetailImage)
+
+  // 제출 완료되면 값을 초기화
+  useEffect(() => {
+    if (isOrderSubmissionSuccessModalOpen) {
+      if (designImageRef.current) designImageRef.current.value = ''
+      if (requestDetailImageRef.current) requestDetailImageRef.current.value = ''
+    }
+  }, [isOrderSubmissionSuccessModalOpen])
 
   const isFormValid = useMemo(() => {
     return (
@@ -85,7 +121,7 @@ const OrderForm = () => {
       reader.readAsDataURL(files[0])
       reader.onloadend = () => {
         if (typeof reader.result === 'string') {
-          setUploadDesignImage(reader.result)
+          setState({uploadDesignImage: reader.result})
         }
       }
     }
@@ -100,7 +136,7 @@ const OrderForm = () => {
       reader.readAsDataURL(files[0])
       reader.onloadend = () => {
         if (typeof reader.result === 'string') {
-          setUploadRequestDetailImage(reader.result)
+          setState({uploadRequestDetailImage: reader.result})
         }
       }
     }
@@ -121,13 +157,23 @@ const OrderForm = () => {
     }
   }, [])
 
+  useEffect(() => {
+    if (storeId && wishPickUpDate) {
+      getBusinessHours(storeId, wishPickUpDate)
+        .then((res) => {
+          console.log('가게 운영 시간 조회', res)
+          setBusinessHours(res.results)
+        })
+        .catch(console.error)
+    }
+  }, [storeId, wishPickUpDate])
+
   /**
    * form 형식 제출 함수
    */
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault() // 새로고침 방지
 
-    // 마케팅, 3자 동의 상태 변경
     const fullSignUpInfo = {
       storeId: storeId,
       designType: designType,
@@ -164,7 +210,23 @@ const OrderForm = () => {
   }
 
   return (
-    <form className="z-60 bg-white" onSubmit={handleSubmit}>
+    <div className="flex h-screen flex-col z-40">
+      <Header
+        headerClassname={'fixed bg-white'}
+        title={'주문서'}
+        headerType={'DYNAMIC'}
+        className={'pb-3'}
+        //제출시 값 초기화
+        onBack={() => {
+          resetOrderForm()
+          if (designImageRef.current) designImageRef.current.value = ''
+          if (requestDetailImageRef.current) requestDetailImageRef.current.value = ''
+        }}
+      />
+      {isNotFormValidModalOpen && <NotFormValidModal onClick={() => setIsNotFormValidModalOpen(false)} />}
+      {isSubmitConfirmationModalOpen && (
+        <SubmitConfirmationModal onClick={() => setIsSubmitConfirmationModalOpen(false)} />
+      )}
       {isEventFilterOpen && (
         <AnimatePresence>
           <UTEventModal
@@ -185,47 +247,73 @@ const OrderForm = () => {
           />
         </AnimatePresence>
       )}
-      <Header title={'주문서'} headerType={'DYNAMIC'} className={'pb-3'} onBack={() => setState({isOrderFormOpen: false})} />
+      <div>
+        <form className="z-40 mt-24 flex flex-col gap-y-[16px] overflow-y-scroll px-5 pb-5" onSubmit={handleSubmit}>
+          <NameField setBlurred={setBlurred} />
+          {name && blurred.name && <PhoneNumberField blurred={blurred} setBlurred={setBlurred} />}
+          {phoneNumber && blurred.phoneNumber && <WishPickUpDateField blurred={blurred} />}
+          {wishPickUpDate && (
+            <WishPickUpTimeField businessHours={businessHours} setBlurred={setBlurred} blurred={blurred} />
+          )}
+          {(selectedDesignUrl || (wishPickUpTime && blurred.wishPickUpTime)) && (
+            <>
+              <DesignSelector
+                uploadImage={uploadDesignImage}
+                handleImagePreview={handleDesignImagePreview}
+                imgRef={designImageRef}
+                designList={orderFormDesignList}
+                isDesignDropBoxOpen={isDesignDropBoxOpen}
+                selectedDesignContent={selectedDesignContent}
+                setIsDesignDropBoxOpen={setIsDesignDropBoxOpen}
+              />
+              <AdditionalRequestField
+                setIsEventFilterOpen={setIsEventFilterOpen}
+                imgRef={requestDetailImageRef}
+                handleRequestDetailImagePreview={handleRequestDetailImagePreview}
+                uploadRequestDetailImage={uploadRequestDetailImage}
+              />
+            </>
+          )}
+          {(uploadDesignImage || selectedDesignUrl) && (
+            <SizeSelector isSizeDropBoxOpen={isSizeDropBoxOpen} setIsSizeDropBoxOpen={setIsSizeDropBoxOpen} />
+          )}
+          {size && (
+            <CreamSelector isCreamDropBoxOpen={isCreamDropBoxOpen} setIsCreamDropBoxOpen={setIsCreamDropBoxOpen} />
+          )}
+          {cream && (
+            <SheetSelector isSheetDropBoxOpen={isSheetDropBoxOpen} setIsSheetDropBoxOpen={setIsSheetDropBoxOpen} />
+          )}
+          {sheet && <ETCRequestField />}
 
-      <div className="mt-24 flex flex-col gap-y-[16px] px-5 pb-5">
-        <NameField />
-        <PhoneNumberField />
-        <WishPickUpDateField />
-        <WishPickUpTimeField />
-        <DesignSelector
-          uploadImage={uploadDesignImage}
-          setUploadImage={setUploadDesignImage}
-          handleImagePreview={handleDesignImagePreview}
-          imgRef={designImageRef}
-          designList={orderFormDesignList}
-          isDesignDropBoxOpen={isDesignDropBoxOpen}
-          selectedDesignContent={selectedDesignContent}
-          setIsDesignDropBoxOpen={setIsDesignDropBoxOpen}
-          setSelectedDesignContent={setSelectedDesignContent}
-        />
-        <AdditionalRequestField
-          setIsEventFilterOpen={setIsEventFilterOpen}
-          imgRef={requestDetailImageRef}
-          handleRequestDetailImagePreview={handleRequestDetailImagePreview}
-          setUploadRequestDetailImage={setUploadRequestDetailImage}
-          uploadRequestDetailImage={uploadRequestDetailImage}
-        />
-        <SizeSelector isSizeDropBoxOpen={isSizeDropBoxOpen} setIsSizeDropBoxOpen={setIsSizeDropBoxOpen} />
-        <CreamSelector isCreamDropBoxOpen={isCreamDropBoxOpen} setIsCreamDropBoxOpen={setIsCreamDropBoxOpen} />
-        <SheetSelector isSheetDropBoxOpen={isSheetDropBoxOpen} setIsSheetDropBoxOpen={setIsSheetDropBoxOpen} />
-        <ETCRequestField />
+        </form>
+        <div className="h-[150px]" />
+        {!isFormValid ? (
+          <div className="z-40 border-gray-150 fixed bottom-0 w-full border-t bg-white px-[20px] pt-[20px] pb-[29px]">
+            <button
+              onClick={() => {
+                setIsNotFormValidModalOpen(true)
+              }}
+              type={'button'}
+              className={!isFormValid ? 'blue-200-button w-full' : 'blue-400-button w-full'}
+            >
+              주문서와 함께 문의하기
+            </button>
+          </div>
+        ) : (
+          <div className="z-40 border-gray-150 fixed bottom-0 w-full border-t bg-white px-[20px] pt-[20px] pb-[29px]">
+            <button
+              type={'button'}
+              onClick={() => {
+                setIsSubmitConfirmationModalOpen(true)
+              }}
+              className={!isFormValid ? 'blue-200-button w-full' : 'blue-400-button w-full'}
+            >
+              주문서와 함께 문의하기
+            </button>
+          </div>
+        )}
       </div>
-      <div className="h-[100px]" />
-      <div className="fixed bg-white w-full bottom-0 pb-[29px] pt-[20px] px-[20px] border-t border-gray-150">
-        <button
-          disabled={!isFormValid}
-          type={'submit'}
-          className={!isFormValid ? 'blue-200-button w-full' : 'blue-400-button w-full'}
-        >
-          주문서 보내기
-        </button>
-      </div>
-    </form>
+    </div>
   )
 }
 export default OrderForm

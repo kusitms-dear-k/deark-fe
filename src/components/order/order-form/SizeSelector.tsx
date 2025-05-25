@@ -13,7 +13,7 @@ const SizeSelector = (props: Props) => {
   const {setIsSizeDropBoxOpen, isSizeDropBoxOpen} = props
 
   const answers = useOrderStore((state) => state.answers)
-  const size = answers?.find((a) => a.title === '크기')?.answer ?? '크기를 선택해주세요.'
+  const size = answers?.find((a) => a.title === '크기')?.answer ?? '케이크 사이즈를 선택해주세요.'
 
   const setState = useOrderStore((state) => state.setState)
 
@@ -46,7 +46,7 @@ const SizeSelector = (props: Props) => {
             : 'body-m-m mt-2 flex w-full justify-between rounded-[4px] border border-gray-200 px-4 py-[14px] text-gray-400'
         }
       >
-        <p>{size}</p>
+        <p className={size ? 'text-gray-700' : 'text-gray-400'}>{size}</p>
         <DropDownIcon height={24} width={24} />
       </div>
       {isSizeDropBoxOpen && (
