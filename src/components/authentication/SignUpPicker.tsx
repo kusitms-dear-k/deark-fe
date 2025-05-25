@@ -90,7 +90,7 @@ const SignUpPicker = (props: Props) => {
     // 전송
     customerSignUp(formData)
     setState({ isWelcomeModalOpen: true })
-    router.push('/home')
+    router.push('/')
   }
 
   return (

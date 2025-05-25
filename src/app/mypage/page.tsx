@@ -4,7 +4,6 @@ import {
   BlueCheckCircleIcon,
   BlueClipboardIcon,
   BluePencilIcon,
-  BlueSendIcon,
   LogoutIcon,
 } from '@/assets/svgComponents'
 import { useRouter } from 'next/navigation'
@@ -14,20 +13,22 @@ import { RecommendType } from '@/types/search'
 import { useSearchStore } from '@/store/searchStore'
 import { getDesignRecommendData } from '@/api/searchAPI'
 import { ResponseType } from '@/types/common'
-import RecommendCard from '@/components/search/RecommendCard'
 import RecommendCardSkeleton from '@/components/skeleton/RecommendCardSkeleton'
 import DesignCard from '@/components/search/DesignCard'
-import { useOrderStore } from '@/store/orderStore'
-import Order from '@/components/order/Order'
 import Cookies from 'js-cookie'
-import { PencilIcon } from 'lucide-react'
 import LogoutModal from '@/components/mypage/LogoutModal'
+import { useLoginStore } from '@/store/authStore'
+import RequireLoginModal from '@/components/mypage/RequireLoginModal'
 
 const MyPage = () => {
   const router = useRouter()
   const [recommendResults, setRecommendResults] = useState<RecommendType[]>()
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
+  const user = useLoginStore((state) => state.user)
+  const setState = useLoginStore((state) => state.setState)
+  const token = Cookies.get('ACCESS_TOKEN')
+
 
   useEffect(() => {
     // 1. 초기 상태 실행
@@ -44,11 +45,14 @@ const MyPage = () => {
     Cookies.remove('ACCESS_TOKEN')
     Cookies.remove('kakaoAccessToken')
     Cookies.remove('ROLE')
+    router.push('/')
+    setState({user: null})
   }
 
   return (
     <main className="relative">
       {isLogoutModalOpen && <LogoutModal onClick={() => setIsLogoutModalOpen(false)} handleLogout={handleLogout} />}
+      {!token && <RequireLoginModal onClick={() => {}}/>}
       {/* 프로필 관련 */}
       <div className="bg-gray-100 px-5 pb-6">
         <header className="title-xl pt-[74px] pb-[27px]">마이페이지</header>
@@ -56,7 +60,7 @@ const MyPage = () => {
           <div className="relative h-[34px] w-[34px]">
             <Image src={'/common/profile.svg'} alt="케이크" fill className="object-cover"></Image>
           </div>
-          <p className="title-m">리무진님 안녕하세요!</p>
+          <p className="title-m">{user && user.nickname}님 안녕하세요!</p>
         </div>
         <div className="relative mt-4 rounded-[8px] bg-white px-5 py-4">
           <Image src={'/common/glitter-group-icon.svg'} alt="글리터" fill className="object-cover px-[25px]" />
