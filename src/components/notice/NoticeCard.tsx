@@ -6,7 +6,6 @@ import { NoticeResponseType, NoticeType } from '@/types/notice'
 import { deleteNotices, getNotices, putNotices } from '@/api/noticeAPI'
 import { OrderMenuType } from '@/types/mypage'
 import { Dispatch, SetStateAction } from 'react'
-import { ResponseType } from '@/types/common'
 import { formatTimeAgo } from '@/utils/common/function'
 import { useOrderStore } from '@/store/orderStore'
 
@@ -36,7 +35,6 @@ const NoticeCard = ({
   totalOrderStatus,
   setNoticeData,
   setDeleteAlarmIdList,
-  readAlarmIdList,
   setReadAlarmIdList,
                       setIsRejectedMessageModalOpen,
   setIsAcceptedRequestModalOpen,
