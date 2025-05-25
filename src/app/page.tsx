@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <GATracker />
-      {step === 'Onboarding' && <Onboarding onNext={() => setStep('Home')} />}
+      {step === 'Onboarding' && <Onboarding onSkip={() => setStep('Home')} />}
       {step === 'Home' && <HomePage />}
     </>
   )
