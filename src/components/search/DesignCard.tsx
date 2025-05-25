@@ -74,15 +74,13 @@ const DesignCard = ({
         )}
 
         <section className={'flex gap-x-[4px]'}>
-          {heartCount && (
-            <div className={'flex items-center gap-x-[2px]'}>
-              <div className={'relative h-[12px] w-[12px]'}>
-                <Image className={'object-cover'} src={'/search/gray-fill-heart.svg'} fill alt={'heart'} />
-              </div>
-              <div className={'caption-m text-[var(--gray-400)]'}>{heartCount}</div>
+          <div className={'flex items-center gap-x-[2px]'}>
+            <div className={'relative h-[12px] w-[12px]'}>
+              <Image className={'object-cover'} src={'/search/gray-fill-heart.svg'} fill alt={'heart'} />
             </div>
-          )}
-          {location && <div className={'caption-m text-[var(--gray-400)]'}>{location}</div>}
+            <div className={'caption-m text-[var(--gray-400)]'}>{heartCount}</div>
+          </div>
+          {location && <div className={'caption-m text-[var(--gray-400)] truncate'}>{location}</div>}
         </section>
       </section>
     </div>
