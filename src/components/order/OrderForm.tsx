@@ -213,7 +213,7 @@ const OrderForm = () => {
     <div className="flex h-screen flex-col z-40">
       <Header
         headerClassname={'fixed bg-white'}
-        title={'주문서'}
+        title={'주문 문의'}
         headerType={'DYNAMIC'}
         className={'pb-3'}
         //제출시 값 초기화
