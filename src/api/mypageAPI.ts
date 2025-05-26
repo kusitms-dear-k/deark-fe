@@ -1,4 +1,4 @@
-import { OrderMenuType, PickupOrderResponse } from '@/types/mypage'
+import { OrderMenuType, PickupOrderResponse, RequestStatusType } from '@/types/mypage'
 import Cookies from 'js-cookie'
 
 /**
@@ -46,7 +46,6 @@ export const getMyOrderDetailData = async (messageId: number) => {
   return data
 }
 
-
 /**
  * 승인된 요청서 상세 조회
  */
@@ -54,8 +53,7 @@ export const getAcceptedOrderDetailData = async (messageId: number) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/request/accepted/${messageId}`, {
     method: 'GET',
     headers: {
-      Authorization:
-        Cookies.get('ACCESS_TOKEN') as string,
+      Authorization: Cookies.get('ACCESS_TOKEN') as string,
     },
   })
 
@@ -213,6 +211,7 @@ export const getPickupDoneData = async (): Promise<PickupOrderResponse> => {
   })
 
   return response.json()
+}
 
 /**
  * 입금 완료/주문 취소 상태를 변경하는 호출
@@ -221,13 +220,14 @@ export const putRequestStatus = async (messageId: number, status: RequestStatusT
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/request/${messageId}?status=${status}`, {
     method: 'PUT',
     headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
     },
   })
 
   const data = await response.json()
   return data
 }
+
 /**
  * 반려된 견적서 사유 조회
  */
@@ -235,7 +235,7 @@ export const getRejectedMessage = async (messageId: number) => {
   const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/request/rejected/${messageId}`, {
     method: 'GET',
     headers: {
-      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
     },
   })
 
