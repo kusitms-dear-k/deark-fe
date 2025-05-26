@@ -8,41 +8,32 @@ interface OnboardingStep2Props {
 
 const OnboardingStep2 = ({ onNext, onSkip }: OnboardingStep2Props) => {
   return (
-    <main className="relative flex min-h-screen w-full flex-col items-center justify-center">
-      <div className="relative flex w-full flex-1 flex-col items-center justify-center border">
-        <div className="absolute top-0 left-0">
-          <div className="relative h-[300px] w-[150px]">
-            <Image src={'/onboarding/card1.png'} fill alt="폰" className="object-cover object-top" />
-          </div>
+    <main className="relative flex min-h-screen w-full flex-col items-center justify-between sm:pt-2 pt-5">
+      {/* 반응형을 위한 기준 박스 */}
+      <div className="relative w-full max-w-[400px] aspect-[3/4]">
+        <div className="absolute left-[0%] top-[0%] w-[40%] aspect-[1/2]">
+          <Image src="/onboarding/card1.png" fill alt="카드1" className="object-cover" />
         </div>
-        <div className="absolute top-0 right-0">
-          <div className="relative h-[400px] w-[300px]">
-            <Image src={'/onboarding/hearts.png'} fill alt="폰" className="object-contain" />
-          </div>
+        <div className="absolute right-[0%] top-[15%] w-[80%] aspect-[3/2]">
+          <Image src="/onboarding/hearts.png" fill alt="하트" className="object-contain" />
         </div>
-        <div className="absolute top-18 right-0">
-          <div className="relative h-[300px] w-[320px]">
-            <Image src={'/onboarding/card2.png'} fill alt="폰" className="object-contain" />
-          </div>
+        <div className="absolute right-[0%] top-[20%] w-[70%] aspect-[4/3]">
+          <Image src="/onboarding/card2.png" fill alt="카드2" className="object-contain" />
         </div>
-
-        <div className="absolute top-80 right-0">
-          <div className="relative h-[300px] w-[150px]">
-            <Image src={'/onboarding/card3.png'} fill alt="폰" className="object-cover object-top" />
-          </div>
+        <div className="absolute right-[0%] top-[60%] w-[40%] aspect-[2/3]">
+          <Image src="/onboarding/card3.png" fill alt="카드3" className="object-cover" />
         </div>
-        <div className="absolute top-80 left-0">
-          <div className="relative h-[300px] w-[220px]">
-            <Image src={'/onboarding/card4.png'} fill alt="폰" className="object-cover object-top" />
-          </div>
+        <div className="absolute left-[0%] top-[60%] w-[50%] aspect-[2/3]">
+          <Image src="/onboarding/card4.png" fill alt="카드4" className="object-cover" />
         </div>
       </div>
-      <div className="h-[300px]" />
+
+      {/* 아래 버튼 */}
       <BottomStepperControls
         step={2}
-        title={'찜으로 쉬워지는 선택'}
-        content1={'가게와 디자인을 찜해두고 비교해'}
-        content2={'최선의 선택지를 마련해보세요.'}
+        title="찜으로 쉬워지는 선택"
+        content1="가게와 디자인을 찜해두고 비교해"
+        content2="최선의 선택지를 마련해보세요."
         onNext={onNext}
         onSkip={onSkip}
       />
