@@ -63,8 +63,8 @@ const OrderForm = () => {
 
   const [isNotFormValidModalOpen, setIsNotFormValidModalOpen] = useState(false)
   const [isSubmitConfirmationModalOpen, setIsSubmitConfirmationModalOpen] = useState(false)
-  const isOrderSubmissionSuccessModalOpen= useOrderStore((state) =>state.isOrderSubmissionSuccessModalOpen)
-  const resetOrderForm = useOrderStore((state) =>state.resetOrderForm)
+  const isOrderSubmissionSuccessModalOpen = useOrderStore((state) => state.isOrderSubmissionSuccessModalOpen)
+  const resetOrderForm = useOrderStore((state) => state.resetOrderForm)
 
   const [blurred, setBlurred] = useState<{
     name: boolean
@@ -80,8 +80,8 @@ const OrderForm = () => {
   let designImageRef = useRef<HTMLInputElement>(null)
   let requestDetailImageRef = useRef<HTMLInputElement>(null)
 
-  const uploadDesignImage = useOrderStore((state) =>state.uploadDesignImage)
-  const uploadRequestDetailImage = useOrderStore((state) =>state.uploadRequestDetailImage)
+  const uploadDesignImage = useOrderStore((state) => state.uploadDesignImage)
+  const uploadRequestDetailImage = useOrderStore((state) => state.uploadRequestDetailImage)
 
   // 제출 완료되면 값을 초기화
   useEffect(() => {
@@ -124,7 +124,7 @@ const OrderForm = () => {
       reader.readAsDataURL(files[0])
       reader.onloadend = () => {
         if (typeof reader.result === 'string') {
-          setState({uploadDesignImage: reader.result})
+          setState({ uploadDesignImage: reader.result })
         }
       }
     }
@@ -139,7 +139,7 @@ const OrderForm = () => {
       reader.readAsDataURL(files[0])
       reader.onloadend = () => {
         if (typeof reader.result === 'string') {
-          setState({uploadRequestDetailImage: reader.result})
+          setState({ uploadRequestDetailImage: reader.result })
         }
       }
     }
@@ -236,7 +236,7 @@ const OrderForm = () => {
 
 
   return (
-    <div className="flex h-screen flex-col z-40">
+    <div className="z-40 flex h-screen flex-col">
       <Header
         headerClassname={'fixed bg-white'}
         title={'주문 문의'}
@@ -276,11 +276,11 @@ const OrderForm = () => {
       <div>
         <form className="z-40 mt-24 flex flex-col gap-y-[16px] overflow-y-scroll px-5 pb-5" onSubmit={handleSubmit}>
           <NameField setBlurred={setBlurred} />
-          {(user?.nickname || (name && blurred.name)) && (
-            <PhoneNumberField blurred={blurred} setBlurred={setBlurred} />
-          )}
-          {(user?.phoneNumber || (phoneNumber && blurred.phoneNumber)) && (
-            <WishPickUpDateField blurred={blurred} />
+          {name && blurred.name && <PhoneNumberField blurred={blurred} setBlurred={setBlurred} />}
+          {phoneNumber && blurred.phoneNumber && (
+            <WishPickUpDateField
+              businessDays={[1, 2, 3, 4, 5, 6]} // 예시: 월~토만 선택 가능, 실제 운영 요일에 맞게 동적으로 전달
+            />
           )}
           {wishPickUpDate && (
             <WishPickUpTimeField businessHours={businessHours} setBlurred={setBlurred} blurred={blurred} />
@@ -314,11 +314,10 @@ const OrderForm = () => {
             <SheetSelector isSheetDropBoxOpen={isSheetDropBoxOpen} setIsSheetDropBoxOpen={setIsSheetDropBoxOpen} />
           )}
           {sheet && <ETCRequestField />}
-
         </form>
         <div className="h-[150px]" />
         {!isFormValid ? (
-          <div className="z-40 border-gray-150 fixed bottom-0 w-full border-t bg-white px-[20px] pt-[20px] pb-[29px]">
+          <div className="border-gray-150 fixed bottom-0 z-40 w-full border-t bg-white px-[20px] pt-[20px] pb-[29px]">
             <button
               onClick={() => {
                 setIsNotFormValidModalOpen(true)
@@ -330,7 +329,7 @@ const OrderForm = () => {
             </button>
           </div>
         ) : (
-          <div className="z-40 border-gray-150 fixed bottom-0 w-full border-t bg-white px-[20px] pt-[20px] pb-[29px]">
+          <div className="border-gray-150 fixed bottom-0 z-40 w-full border-t bg-white px-[20px] pt-[20px] pb-[29px]">
             <button
               type={'button'}
               onClick={() => {

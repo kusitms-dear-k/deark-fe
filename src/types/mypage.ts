@@ -76,6 +76,29 @@ export interface OrderFormSizeType {
   sizeName: string
 }
 
+export interface PickupOrder {
+  messageId: number
+  storeName: string
+  designName: string
+  designUrl: string
+  size: string
+  cream: string
+  sheet: string
+  progressStatus: 'RESERVED' | 'PICKUP_DONE' | string
+  pickupDate: string
+  pickupTime: string
+}
+
+export interface PickupOrderResponse {
+  isSuccess: boolean
+  code: string
+  message: string
+  results: {
+    responseList: PickupOrder[]
+    totalNum: number
+  }
+}
+
 export interface AcceptedOrderDetailType {
   pickUpTime: string
   price: string
@@ -84,3 +107,4 @@ export interface AcceptedOrderDetailType {
   account: string
 }
 export type RequestStatusType = 'CANCELED' | 'PAID' | 'UNRESPONSIVE'
+
