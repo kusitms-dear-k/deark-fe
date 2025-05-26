@@ -21,8 +21,11 @@ import NotFormValidModal from '@/components/order/NotFormValidModal'
 import SubmitConfirmationModal from '@/components/order/SubmitConfirmationModal'
 import { shallow } from 'zustand/shallow'
 import { useStoreWithEqualityFn } from 'zustand/traditional'
+import { useLoginStore } from '@/store/authStore'
 
 const OrderForm = () => {
+  const user = useLoginStore((state) => state.user)
+  console.log('user', user)
   const [isDesignDropBoxOpen, setIsDesignDropBoxOpen] = useState<boolean>(false)
   const selectedDesignContent = useOrderStore((state) => state.selectedDesignContent)
 
@@ -209,11 +212,34 @@ const OrderForm = () => {
     })
   }
 
+  // 처음에 user 의 nickName 이랑 phoneNumber 값 넣기
+  useEffect(() => {
+    if (!user?.nickname || !user?.phoneNumber) return;
+
+    const prevAnswers = useOrderStore.getState().answers ?? []
+
+    const updatedAnswers = [...prevAnswers]
+    const upsert = (title: '이름' | '전화번호', answer: string) => {
+      const idx = updatedAnswers.findIndex((a) => a.title === title)
+      if (idx !== -1) {
+        updatedAnswers[idx] = { ...updatedAnswers[idx], answer }
+      } else {
+        updatedAnswers.push({ title, answer })
+      }
+    }
+
+    upsert('이름', user.nickname)
+    upsert('전화번호', user.phoneNumber)
+
+    setState({ answers: updatedAnswers })
+  }, [user?.nickname, user?.phoneNumber])
+
+
   return (
     <div className="z-40 flex h-screen flex-col">
       <Header
         headerClassname={'fixed bg-white'}
-        title={'주문서'}
+        title={'주문 문의'}
         headerType={'DYNAMIC'}
         className={'pb-3'}
         //제출시 값 초기화

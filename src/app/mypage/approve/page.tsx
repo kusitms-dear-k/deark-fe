@@ -40,9 +40,8 @@ const ApprovePage = () => {
       <Header
         headerType="DYNAMIC"
         title="픽업 확정"
-        className="top-20 items-start"
-        description={'곧 만날 케이크들 이에요!'}
-        headerClassname={'fixed'}
+        // className="top-20 items-start"
+        headerClassname={'fixed bg-white px-5'}
       />
       <section className="mt-[9rem] flex flex-col gap-y-[1.5rem]">
         {/* 픽업 예정 */}

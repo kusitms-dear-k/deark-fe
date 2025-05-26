@@ -6,6 +6,8 @@ export interface LoginType {
   profileImageUrl: string
   role: UserLoginRoleType
   userId: number
+  nickname: string
+  phoneNumber: string
 }
 export interface CustomerSignUpType {
   nickname: string

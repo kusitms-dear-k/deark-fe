@@ -1,12 +1,13 @@
 'use client'
 import SearchInput from '@/components/home/SearchInput'
 import { useRouter } from 'next/navigation'
-import { HeaderType } from '@/types/common'
+import { HeaderType, ResponseType } from '@/types/common'
 import { LeftArrowIcon } from '@/assets/svgComponents'
 import { RefObject, useEffect, useState } from 'react'
 import { useLoginStore } from '@/store/authStore'
 import Cookies from 'js-cookie'
 import dynamic from 'next/dynamic'
+import { getHomeData } from '@/api/homeAPI'
 
 const SvgBellIcon = dynamic(() => import('@/assets/svgComponents/BellIcon'), {
   ssr: false,
@@ -44,10 +45,26 @@ const Header = (props: Props) => {
   const user = useLoginStore((state) => state.user)
   const [isClient, setIsClient] = useState(false)
   const [token, setToken] = useState<string | undefined>()
+  const [isNewAlarm, setIsNewAlarm] = useState<boolean | undefined>()
 
   useEffect(() => {
     setIsClient(true)
     setToken(Cookies.get('ACCESS_TOKEN'))
+  }, [])
+
+  useEffect(() => {
+    if (token && headerType === 'DEFAULT') {
+      getHomeData().then(
+        (
+          response: ResponseType<{
+            userName: string
+            isAlarm: boolean
+          }>
+        ) => {
+          setIsNewAlarm(response.results.isAlarm)
+        }
+      )
+    }
   }, [])
 
   const renderHeaderType = (headerType: HeaderType) => {
@@ -57,8 +74,17 @@ const Header = (props: Props) => {
           <div className="flex w-full flex-col px-5">
             <div className="flex justify-between">
               <h1 className="key-visual-m text-red-400">Dear.k</h1>
-              {isClient && token ? (
-                <SvgBellIcon width={24} height={24} />
+              {isClient && token && user ? (
+                <div className="relative">
+                  <SvgBellIcon
+                    onClick={() => {
+                      router.push('/notice')
+                    }}
+                    width={24}
+                    height={24}
+                  />
+                  {isNewAlarm && <div className="absolute top-0 right-[2px] h-[4px] w-[4px] rounded-full bg-red-400" />}
+                </div>
               ) : isClient ? (
                 <button
                   onClick={() => {
@@ -70,16 +96,18 @@ const Header = (props: Props) => {
                 </button>
               ) : null}
             </div>
-            {isClient && token ? (<div className="body-xl py-1 text-gray-900">안녕하세요,<span
-              className="headline-s">리무진님!</span></div>) : (
+            {isClient && token && user ? (
+              <div className="body-xl py-1 text-gray-900">
+                안녕하세요,<span className="headline-s">{user.nickname}님!</span>
+              </div>
+            ) : (
               <div className="body-xl py-1 text-gray-900">만나서 반가워요 👋🏻</div>
             )}
-
           </div>
         )
       case 'DYNAMIC':
         return (
-          <div className={`absolute right-5 left-5 flex items-center gap-x-2 ${className} bg-white`}>
+          <div className={`absolute flex items-center gap-x-2 px-5 ${className} w-full bg-white`}>
             <LeftArrowIcon
               width={24}
               height={24}

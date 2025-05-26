@@ -30,7 +30,7 @@ export interface QaDetailType {
 }
 
 export interface RequestCountType {
-  status: OrderMenuType
+  orderStatus: OrderMenuType
   count: number
 }
 
@@ -98,3 +98,13 @@ export interface PickupOrderResponse {
     totalNum: number
   }
 }
+
+export interface AcceptedOrderDetailType {
+  pickUpTime: string
+  price: string
+  bankImageUrl: string
+  bankName: string
+  account: string
+}
+export type RequestStatusType = 'CANCELED' | 'PAID' | 'UNRESPONSIVE'
+

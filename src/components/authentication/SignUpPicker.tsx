@@ -9,7 +9,7 @@ import NicknameEditor from '@/components/authentication/sign-up-picker/NicknameE
 import GenderEditor from '@/components/authentication/sign-up-picker/GenderEditor'
 import BirthEditor from '@/components/authentication/sign-up-picker/BirthEditor'
 
-interface SignUpPickerProps {
+interface Props {
   setStep: Dispatch<SetStateAction<StepType>>
   //각 이용약관 상세 페이지 모달창 관리 state
   setIsTermsOfServiceOptionsModalOpen: Dispatch<SetStateAction<boolean>>
@@ -18,19 +18,13 @@ interface SignUpPickerProps {
   setIsThirdPartyAgreementConsentModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
-const SignUpPicker = ({
-  setIsTermsOfServiceOptionsModalOpen,
-  setIsMarketingInformationModalOpen,
-  setIsPersonalInformationModalOpen,
-  setIsThirdPartyAgreementConsentModalOpen,
-}: SignUpPickerProps) => {
+const SignUpPicker = (props: Props) => {
+  const { setStep, setIsTermsOfServiceOptionsModalOpen, setIsMarketingInformationModalOpen, setIsPersonalInformationModalOpen, setIsThirdPartyAgreementConsentModalOpen } = props
   const router = useRouter()
   const [pickerSignUpInfo, setPickerSignUpInfo] = useState<CustomerSignUpType | null>(null)
   const imgRef = useRef<HTMLInputElement>(null)
   const [uploadImage, setUploadImage] = useState<string | ArrayBuffer | null>()
   const [nickNameValidationResult, setNickNameValidationResult] = useState<boolean | null>(null) // true: 중복된게 잇는거,
-  const user = useLoginStore((state) => state.user)
-  const validationNickname = useLoginStore((state) => state.validationNickname)
   const customerSignUp = useLoginStore((state) => state.customerSignUp)
   //이용약관 state
   const [allOptions, setAllOptions] = useState(false)
@@ -94,7 +88,7 @@ const SignUpPicker = ({
     // 전송
     customerSignUp(formData)
     setState({ isWelcomeModalOpen: true })
-    router.push('/home')
+    router.push('/')
   }
 
   return (

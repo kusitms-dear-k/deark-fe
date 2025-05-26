@@ -6,8 +6,8 @@ import { useOrderStore } from '@/store/orderStore'
 
 interface Props extends OrderType {
   status: OrderMenuType
-  setIsRequestModalOpen: Dispatch<SetStateAction<boolean>>
-  isRequestModalOpen: boolean
+  setIsAcceptedRequestModalOpen: Dispatch<SetStateAction<boolean>>
+  setIsRejectedMessageModalOpen: Dispatch<SetStateAction<boolean>>
 }
 
 const OrderCard = (props: Props) => {
@@ -19,15 +19,14 @@ const OrderCard = (props: Props) => {
     designName,
     designImageUrl,
     qaDetails,
-    setIsRequestModalOpen,
-    isRequestModalOpen,
+    setIsAcceptedRequestModalOpen,
+    setIsRejectedMessageModalOpen,
   } = props
-  const pickupDate = qaDetails.find((q: {title: string}) => q.title === 'pickupDate')?.answer || ''
-  const pickupTime = qaDetails.find((q: {title: string}) => q.title === 'pickupTime')?.answer || ''
-  const sheet = qaDetails.find((q: {title: string}) => q.title === 'sheet')?.answer || ''
-  const size = qaDetails.find((q: {title: string}) => q.title === 'size')?.answer || ''
-  const cream = qaDetails.find((q: {title: string}) => q.title === 'cream')?.answer || ''
-
+  const pickupDate = qaDetails.find((q: { title: string }) => q.title === 'pickupDate')?.answer || ''
+  const pickupTime = qaDetails.find((q: { title: string }) => q.title === 'pickupTime')?.answer || ''
+  const sheet = qaDetails.find((q: { title: string }) => q.title === 'sheet')?.answer || ''
+  const size = qaDetails.find((q: { title: string }) => q.title === 'size')?.answer || ''
+  const cream = qaDetails.find((q: { title: string }) => q.title === 'cream')?.answer || ''
 
   const setState = useOrderStore((state) => state.setState)
 
@@ -56,36 +55,32 @@ const OrderCard = (props: Props) => {
     return `${mm}/${dd}(${shortWeekday})`
   }
 
-  const renderStatusButton = (status: OrderMenuType) => {
+  const renderStatusButton = (status: OrderMenuType, messageId: number) => {
     switch (status) {
       case 'ACCEPTED':
         return (
           <button
             onClick={() => {
-              setIsRequestModalOpen(true)
+              setIsAcceptedRequestModalOpen(true)
+              setState({ messageId: messageId })
             }}
             type={'button'}
             className="blue-400-button w-full"
           >
-            사장님 메시지 보러가기
+            메이커 답장 보러가기
           </button>
         )
       case 'REJECTED':
         return (
           <button
             onClick={() => {
-              setIsRequestModalOpen(true)
+              setIsRejectedMessageModalOpen(true)
+              setState({ messageId: messageId })
             }}
             type={'button'}
-            className="blue-400-button w-full"
+            className="gray-200-700-button h-[42px] w-full"
           >
-            사장님 메시지 보러가기
-          </button>
-        )
-      default:
-        return (
-          <button type={'button'} className="gray-200-700-button w-full">
-            응답 대기 중
+            메이커 답장 보러가기
           </button>
         )
     }
@@ -103,10 +98,11 @@ const OrderCard = (props: Props) => {
         <button
           type={'button'}
           onClick={() => {
-            setState({isOrderOpen: true})
-            // setState({messageId: messageId})
+            setState({ isOrderOpen: true })
+            setState({ messageId: messageId })
           }}
-          className="bg-gray-150 body-m-m px- flex h-fit items-center gap-x-[0.25rem] rounded-[0.25rem] px-[0.438rem] py-[0.25rem] text-gray-500">
+          className="bg-gray-150 body-m-m px- flex h-fit items-center gap-x-[0.25rem] rounded-[0.25rem] px-[0.438rem] py-[0.25rem] text-gray-500"
+        >
           주문서 보기
           <GrayRightArrowIcon width={5} height={10} />
         </button>
@@ -123,13 +119,15 @@ const OrderCard = (props: Props) => {
           <p className="body-m-m line-clamp-1 w-[100%] text-gray-400">
             {`${size ? `${size}` : ''}${cream ? ` / [크림] ${cream}` : ''}${sheet ? ` / [시트] ${sheet}` : ''}`}
           </p>
-          <p className="body-m-m text-blue-400">
-            {formatKoreanDate(pickupDate)} {pickupTime} 픽업 희망
-          </p>
+          {pickupTime && pickupDate && (
+            <p className="body-m-m text-blue-400">
+              {formatKoreanDate(pickupDate)} {pickupTime} 픽업 희망
+            </p>
+          )}
         </div>
       </section>
 
-      {renderStatusButton(status)}
+      {renderStatusButton(status, messageId)}
     </div>
   )
 }

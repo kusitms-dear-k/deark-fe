@@ -9,9 +9,9 @@ const OrderMenu = (props: Props) => {
   const { requestCountList } = props
   const orderMenu = useOrderStore((state) => state.status)
   const setState = useOrderStore((state) => state.setState)
-  const pendingCount = requestCountList?.find((q) => q.status === 'PENDING')?.count || ''
-  const acceptedCount = requestCountList?.find((q) => q.status === 'ACCEPTED')?.count || ''
-  const rejectedCount = requestCountList?.find((q) => q.status === 'REJECTED')?.count || ''
+  const pendingCount = requestCountList?.find((q) => q.orderStatus === 'PENDING')?.count || ''
+  const acceptedCount = requestCountList?.find((q) => q.orderStatus === 'ACCEPTED')?.count || ''
+  const rejectedCount = requestCountList?.find((q) => q.orderStatus === 'REJECTED')?.count || ''
 
   const menuContents: { kor: OrderMenuKorType; eng: OrderMenuType }[] = [
     { kor: '응답 대기', eng: 'PENDING' },

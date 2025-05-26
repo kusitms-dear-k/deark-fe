@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const SvgBlueCheckCircleIcon = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 17 17" {...props}><g clipPath="url(#blue-check-circle-icon_svg__a)"><path stroke="#3E98F9" strokeLinecap="round" strokeLinejoin="round" d="m5.952 8.503 2 2 4-4m3.666 2a6.667 6.667 0 1 1-13.333 0 6.667 6.667 0 0 1 13.333 0" /></g><defs><clipPath id="blue-check-circle-icon_svg__a"><path fill="#fff" d="M.952.504h16v16h-16z" /></clipPath></defs></svg>;
+export default SvgBlueCheckCircleIcon;

@@ -1,6 +1,8 @@
 import { useOrderStore } from '@/store/orderStore';
 import { QaDetailTitleType } from '@/types/mypage';
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react'
+import { useStoreWithEqualityFn } from 'zustand/traditional'
+import { shallow } from 'zustand/shallow'
 
 interface Props {
   blurred: {
@@ -13,7 +15,13 @@ interface Props {
 const PhoneNumberField = (props: Props) => {
   const {blurred, setBlurred} = props
 
-  const answers = useOrderStore((state) => state.answers)
+  const { answers } = useStoreWithEqualityFn(
+    useOrderStore,
+    (state) => ({
+      answers: state.answers,
+    }),
+    shallow
+  )
   const phoneNumberAnswer = answers?.find((a) => a.title === '전화번호')?.answer ?? ''
 
   const inputRef = useRef<HTMLInputElement>(null);

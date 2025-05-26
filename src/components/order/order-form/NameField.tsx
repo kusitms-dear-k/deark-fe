@@ -1,18 +1,24 @@
 import { useOrderStore } from '@/store/orderStore';
 import { QaDetailTitleType } from '@/types/mypage';
-import { Dispatch, SetStateAction, useEffect } from 'react'
+import { Dispatch, SetStateAction } from 'react'
+import { useStoreWithEqualityFn } from 'zustand/traditional'
+import { shallow } from 'zustand/shallow'
 
 interface Props {
   setBlurred: Dispatch<SetStateAction<{   name: boolean;  phoneNumber: boolean;   wishPickUpTime: boolean }>>
 }
 const NameField = (props: Props) => {
   const {setBlurred} = props
-  const answers = useOrderStore((state) => state.answers)
+  const { answers } = useStoreWithEqualityFn(
+    useOrderStore,
+    (state) => ({
+      answers: state.answers,
+    }),
+    shallow
+  )
   const nameAnswer = answers?.find((a) => a.title === '이름')?.answer ?? ''
   const setState = useOrderStore((state) => state.setState)
-  useEffect(() => {
-    console.log('🟢 NameField 렌더됨');
-  }, []);
+
   return (
     <section>
       <h5 className="title-m flex gap-x-[2px]">

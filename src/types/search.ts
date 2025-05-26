@@ -29,6 +29,7 @@ export interface DesignType {
 }
 
 export interface DesignDetailType {
+  storeId: number
   storeName: string
   designName: string
   designImageUrl: string

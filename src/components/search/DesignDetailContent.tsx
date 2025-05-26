@@ -20,7 +20,7 @@ const DesignDetailContent = ({ designDetail }: Props) => {
     <DrawerContent>
       <DrawerHeader
         onClick={() => {
-          setSearchParams({ isStoreDetailModalOpen: true, isDesignDetailModalOpen: false })
+          setSearchParams({ isStoreDetailModalOpen: true, isDesignDetailModalOpen: false, storeId: designDetail?.storeId })
         }}
       >
         <DrawerTitle className="title-m  text-center">{designDetail.storeName}</DrawerTitle>
@@ -56,7 +56,7 @@ const DesignDetailContent = ({ designDetail }: Props) => {
       <DrawerFooter className="border-gray-150 border-t bg-white px-[1.25rem] pt-[1.25rem]">
         <button
           onClick={() => {
-            setState({ isOrderFormOpen: true, selectedDesignUrl: designDetail?.designImageUrl, designId: designId, selectedDesignContent: designDetail?.designName }) //TODO: storeId추가하기
+            setState({ isOrderFormOpen: true, selectedDesignUrl: designDetail?.designImageUrl, designId: designId, selectedDesignContent: designDetail?.designName, storeId: designDetail?.storeId }) //TODO: storeId추가하기
             setSearchParams({isDesignDetailModalOpen: false})
           }}
           className="button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white"
