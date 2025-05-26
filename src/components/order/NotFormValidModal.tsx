@@ -6,6 +6,7 @@ interface NotFormValidModalProps {
   onClick: () => void
 }
 
+
 const NotFormValidModal = ({ onClick }: NotFormValidModalProps) => {
   return (
     <div
@@ -16,8 +17,8 @@ const NotFormValidModal = ({ onClick }: NotFormValidModalProps) => {
     >
       <motion.div
         onClick={(e) => e.stopPropagation()}
-        className="absolute right-5 left-5"
         initial={{ y: '100%' }}
+        className="absolute right-5 left-5"
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
         transition={{ type: 'tween', duration: 0.2 }}

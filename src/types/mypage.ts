@@ -30,7 +30,7 @@ export interface QaDetailType {
 }
 
 export interface RequestCountType {
-  status: OrderMenuType
+  orderStatus: OrderMenuType
   count: number
 }
 
@@ -66,6 +66,21 @@ export interface UTEventDesignType {
   designImageUrl: string
   memo: string
 }
-export interface OrderFormCreamType {creamName: string}
-export interface OrderFormSheetType {sheetName: string}
-export interface OrderFormSizeType {sizeName: string}
+export interface OrderFormCreamType {
+  creamName: string
+}
+export interface OrderFormSheetType {
+  sheetName: string
+}
+export interface OrderFormSizeType {
+  sizeName: string
+}
+
+export interface AcceptedOrderDetailType {
+  pickUpTime: string
+  price: string
+  bankImageUrl: string
+  bankName: string
+  account: string
+}
+export type RequestStatusType = 'CANCELED' | 'PAID' | 'UNRESPONSIVE'

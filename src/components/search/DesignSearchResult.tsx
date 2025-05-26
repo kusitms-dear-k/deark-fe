@@ -21,6 +21,7 @@ import { useRouter } from 'next/navigation'
 import { EventApi } from '@/api/eventAPI'
 import { formatDateForApi } from '@/utils/formatDataForApi'
 import { DrawerTrigger } from '@/components/ui/drawer'
+import { addRecentlyViewedDesign } from '@/utils/common/function'
 
 type ModalViewType = 'eventList' | 'newEvent' | 'dateSelect' | 'locationSelect' | null
 
@@ -279,6 +280,13 @@ const DesignSearchResult = () => {
                               storeId: design.storeId,
                               isDesignDetailModalOpen: true,
                             })
+                            addRecentlyViewedDesign(
+                              design.designId,
+                              design.designName,
+                              design.designImageUrl,
+                              design.storeName,
+                              design.isLiked
+                            )
                           }}
                           key={design.designId}
                           img={design.designImageUrl}

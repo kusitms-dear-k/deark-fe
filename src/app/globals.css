@@ -70,7 +70,6 @@
   --main: #d22e2f;
   --sub: #5d95d2;
   --dim: #191919;
-  --background: #fff8eb;
 
   --gray-100: #f8f8f9;
   --gray-150: #f0f0f0;
@@ -724,9 +723,4 @@ body {
   body {
     @apply bg-background text-foreground;
   }
-}
-
-/* 스크롤바 안보이게 */
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
 }

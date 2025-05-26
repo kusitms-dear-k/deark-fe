@@ -2,12 +2,13 @@ import { useRouter } from 'next/navigation'
 import { useSearchStore } from '@/store/searchStore'
 
 interface Props {
-  recommendedSearchList: string[];
+  recommendedSearchList: string[]
+  addRecentKeyword: (keyword: string) => void
 }
 
 const RecommendedSearchList = (props: Props) => {
-  const {recommendedSearchList} = props;
-  const router = useRouter();
+  const { recommendedSearchList, addRecentKeyword } = props
+  const router = useRouter()
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
   return (
     <section className={'flex flex-col gap-y-3'}>
@@ -17,7 +18,8 @@ const RecommendedSearchList = (props: Props) => {
           return (
             <div
               onClick={() => {
-                setSearchParams({keyword: recommendedSearchText})
+                setSearchParams({ keyword: recommendedSearchText })
+                addRecentKeyword(recommendedSearchText)
                 router.push('/search')
               }}
               key={recommendedSearchText}
@@ -25,10 +27,10 @@ const RecommendedSearchList = (props: Props) => {
             >
               {recommendedSearchText}
             </div>
-          );
+          )
         })}
       </div>
     </section>
   )
 }
-export default RecommendedSearchList;
+export default RecommendedSearchList

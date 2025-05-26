@@ -111,7 +111,7 @@ const TotalSearchPage = (props: Props) => {
         }
       />
       <main className={'mt-[9.375rem] flex flex-col gap-y-6 px-5'}>
-        <RecommendedSearchList recommendedSearchList={textList} />
+        <RecommendedSearchList recommendedSearchList={textList} addRecentKeyword={addRecentKeyword}/>
         <RecentSearchList recentSearchList={recentKeywords} onClear={handleClearRecentKeywords} onRemove={handleRemoveKeyword} />
       </main>
     </>

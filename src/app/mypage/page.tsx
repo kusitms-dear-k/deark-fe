@@ -1,6 +1,6 @@
 'use client'
 import Image from 'next/image'
-import { BlueClipboardIcon, BluePencilIcon, BlueSendIcon } from '@/assets/svgComponents'
+import { BlueCheckCircleIcon, BlueClipboardIcon, BluePencilIcon, LogoutIcon } from '@/assets/svgComponents'
 import { useRouter } from 'next/navigation'
 import NavBar from '@/components/common/NavBar'
 import { useEffect, useState } from 'react'
@@ -8,16 +8,72 @@ import { RecommendType } from '@/types/search'
 import { useSearchStore } from '@/store/searchStore'
 import { getDesignRecommendData } from '@/api/searchAPI'
 import { ResponseType } from '@/types/common'
-import RecommendCard from '@/components/search/RecommendCard'
 import RecommendCardSkeleton from '@/components/skeleton/RecommendCardSkeleton'
 import DesignCard from '@/components/search/DesignCard'
-import { useOrderStore } from '@/store/orderStore'
-import Order from '@/components/order/Order'
+import Cookies from 'js-cookie'
+import LogoutModal from '@/components/mypage/LogoutModal'
+import { useLoginStore } from '@/store/authStore'
+import RequireLoginModal from '@/components/mypage/RequireLoginModal'
+import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSuccessModal'
+import { AnimatePresence } from 'framer-motion'
+import Filter from '@/components/common/Filter'
+import StoreDetail from '@/components/search/StoreDetail'
+import DesignDetailContent from '@/components/search/DesignDetailContent'
+import useSearchResult from '@/hooks/useSearchResult'
+import { Drawer } from '@/components/ui/drawer'
+import { addRecentlyViewedDesign } from '@/utils/common/function'
 
 const MyPage = () => {
   const router = useRouter()
   const [recommendResults, setRecommendResults] = useState<RecommendType[]>()
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
+  const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
+  const user = useLoginStore((state) => state.user)
+  const setLoginState = useLoginStore((state) => state.setState)
+  const token = Cookies.get('ACCESS_TOKEN')
+  const [hasMounted, setHasMounted] = useState(false)
+  const [parsedRecentlyViewedDesigns, setParsedRecentlyViewedDesigns] = useState<RecommendType[]>([])
+
+  useEffect(() => {
+    setHasMounted(true)
+
+    if (typeof window !== 'undefined') {
+      const data = localStorage.getItem('recentlyViewedDesigns')
+      if (data) {
+        try {
+          setParsedRecentlyViewedDesigns(JSON.parse(data))
+        } catch (e) {
+          console.error('localStorage 파싱 실패:', e)
+        }
+      }
+    }
+  }, [])
+
+  if (!hasMounted) return null // 서버/초기 hydration 대응
+
+
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
+
+  const {
+    isStoreDetailModalOpen,
+    isDesignDetailModalOpen,
+    isOrderFormOpen,
+    isFilterModalOpen,
+    isOrderSubmissionSuccessModalOpen,
+    setIsFilterModalOpen,
+    selectedFilterType,
+    setSelectedFilterType,
+    storeDetailMenu,
+    setStoreDetailMenu,
+    totalCount,
+    keyword,
+    designDetail,
+    setState,
+    renderFilterContent,
+    resetOrderForm,
+  } = useSearchResult()
 
   useEffect(() => {
     // 1. 초기 상태 실행
@@ -29,113 +85,182 @@ const MyPage = () => {
       .catch(console.error)
   }, [])
 
+  const handleLogout = () => {
+    Cookies.remove('REFRESH_TOKEN')
+    Cookies.remove('ACCESS_TOKEN')
+    Cookies.remove('kakaoAccessToken')
+    Cookies.remove('ROLE')
+    router.push('/')
+    localStorage.removeItem('login-store')
+    localStorage.removeItem('recentlyViewedDesigns')
+  }
+
+  // 2초 후 자동 닫힘 처리
+  useEffect(() => {
+    if (isOrderSubmissionSuccessModalOpen) {
+      const timer = setTimeout(() => {
+        setState({ isOrderSubmissionSuccessModalOpen: false })
+        //초기화
+        resetOrderForm()
+      }, 2000)
+
+      return () => clearTimeout(timer) // cleanup
+    }
+  }, [isOrderSubmissionSuccessModalOpen, setState])
+
+  if (!hasMounted) return null // 또는 로딩 UI
+
   return (
     <main className="relative">
-      <div className="w-full bg-gray-100 px-[1.25rem]">
-        <section className="flex justify-between pt-[4.688rem]">
-          <div className="flex items-center justify-center gap-x-[0.75rem]">
-            <div className="relative h-[2.5rem] w-[2.5rem]">
-              <Image src={'/common/cake1.png'} alt={'케이크'} fill className="rounded-full object-cover" />
-            </div>
-            <p className="title-l">리무진님의 마이페이지</p>
+      <Drawer
+        open={isStoreDetailModalOpen || isDesignDetailModalOpen}
+        onOpenChange={(open) => {
+          if (!open) {
+            if (isStoreDetailModalOpen) {
+              setSearchParams({ isStoreDetailModalOpen: false })
+            }
+            if (isDesignDetailModalOpen) {
+              setSearchParams({ isDesignDetailModalOpen: false })
+            }
+          }
+        }}
+      >
+        {isLogoutModalOpen && <LogoutModal onClick={() => setIsLogoutModalOpen(false)} handleLogout={handleLogout} />}
+        {!token && <RequireLoginModal onClick={() => {}} />}
+        {/* 주문서 문의가 완료될 때 보이는 모달 */}
+        {isOrderSubmissionSuccessModalOpen && (
+          <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })} />
+        )}
+        {/* 필터 모달 */}
+        <AnimatePresence>
+          {isFilterModalOpen && (
+            <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
+          )}
+        </AnimatePresence>
+
+        {/* 가게 상세 페이지 모달 */}
+        {isStoreDetailModalOpen && (
+          <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
+        )}
+
+        {/* 디자인 상세 페이지 모달 */}
+        {isDesignDetailModalOpen && <DesignDetailContent designDetail={designDetail} />}
+      </Drawer>
+
+      {/* 프로필 관련 */}
+      <div className="bg-gray-100 px-5 pb-6">
+        <header className="title-xl pt-[74px] pb-[27px]">마이페이지</header>
+        <div className="flex items-center gap-x-3">
+          <div className="relative h-[34px] w-[34px]">
+            <Image src={'/common/profile.svg'} alt="케이크" fill className="object-cover"></Image>
           </div>
-        </section>
-        <section className="flex flex-col pt-[2.875rem] pb-[4rem]">
-          <p className="title-l text-blue-400">D-13 "큐시즘의 밤!"</p>
-          <p className="body-l-m text-gray-800">
-            <span className="title-l">“큐시즘 밤”</span>만의 특별함을 담아보세요!
-          </p>
-        </section>
+          <p className="title-m">{user && user.nickname}님 안녕하세요!</p>
+        </div>
+        <div className="relative mt-4 rounded-[8px] bg-white px-5 py-4">
+          <Image src={'/common/glitter-group-icon.svg'} alt="글리터" fill className="object-cover px-[25px]" />
+          <div className="title-l text-gray-800">아직 이벤트가 없네요.</div>
+          <p className="body-s-m text-gray-700">이벤트는 찜하기 {'>'} ‘새 이벤트 생성하기’로 만들 수 있어요.</p>
+        </div>
       </div>
-      <section className="border-gray-150 absolute top-[15.313rem] right-5 left-5 flex items-center justify-between justify-center gap-x-[1.25rem] rounded-[0.5rem] border bg-white px-[1.25rem] py-[1rem]">
-        <div
+
+      <div className="border-gray-150 absolute top-68 right-5 left-5 flex items-center justify-between rounded-[8px] border bg-white px-5 py-4">
+        <button
           onClick={() => {
             router.push('/mypage/order')
           }}
-          className="flex w-[5rem] flex-col items-center justify-center gap-y-[0.25rem]"
+          className="flex w-[80px] flex-col items-center gap-y-1"
         >
-          <BlueSendIcon width={16} height={16} />
-          <p className="title-m flex gap-x-[0.25rem]">
-            제작 문의
-          </p>
-        </div>
-        <div className="border-gray-150 h-[2rem] border-r" />
-        <div
+          <BlueClipboardIcon width={16} height={16} />
+          <p className="title-m text-gray-700">문의 내역</p>
+        </button>
+        <div className="border-gray-150 h-[32px] w-[1px] border-r" />
+        <button
           onClick={() => {
             router.push('/mypage/approve')
           }}
-          className="flex w-[5rem] flex-col items-center justify-center gap-y-[0.25rem]"
+          className="flex w-[80px] flex-col items-center gap-y-1"
         >
-          <BlueClipboardIcon width={16} height={16} />
-          <p className="title-m flex gap-x-[0.25rem]">
-            픽업 확정
-          </p>
-        </div>
-        <div className="border-gray-150 h-[2rem] border-r" />
-        <div
+          <BlueCheckCircleIcon width={16} height={16} />
+          <p className="title-m text-gray-700">픽업 확정</p>
+        </button>
+        <div className="border-gray-150 h-[32px] w-[1px] border-r" />
+        <button
           onClick={() => {
             router.push('/mypage/review')
           }}
-          className="flex w-[5rem] flex-col items-center justify-center gap-y-[0.25rem]"
+          className="flex w-[80px] flex-col items-center gap-y-1"
         >
           <BluePencilIcon width={16} height={16} />
-          <p className="title-m flex gap-x-[0.25rem]">
-            리뷰
-          </p>
-        </div>
-      </section>
+          <p className="title-m text-gray-700">리뷰</p>
+        </button>
+      </div>
 
+      {/* 최근 본 케이크 */}
       <section className="mt-[3.75rem] p-[1rem]">
         <h3 className="title-l text-gray-900">최근 본 케이크</h3>
-        <section className="mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
-          <div className="min-w-[12.125rem]">
-            <DesignCard
-              onCardClick={() => {}}
-              description="심플감성 스타일 레터링케이크"
-              storeName="무무케이크"
-              isHeart={false}
-              img={'/common/cake1.png'}
-              enableDayOrder={true}
-            />
-          </div>
-          <div className="min-w-[12.125rem]">
-            <DesignCard
-              onCardClick={() => {}}
-              description="심플감성 스타일 레터링케이크"
-              storeName="무무케이크"
-              isHeart={false}
-              img={'/common/cake1.png'}
-            />
-          </div>
-          <div className="min-w-[12.125rem]">
-            <DesignCard
-              onCardClick={() => {}}
-              description="심플감성 스타일 레터링케이크"
-              storeName="무무케이크"
-              isHeart={false}
-              img={'/common/cake1.png'}
-            />
-          </div>
+        <section className="scrollbar-hide mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
+          {parsedRecentlyViewedDesigns.map(
+            (design: RecommendType) => {
+              return (
+                <div key={design.designId} className="min-w-[12.125rem]">
+                  <DesignCard
+                    onCardClick={() => {
+                      setSearchParams({
+                        designId: design.designId,
+                        isDesignDetailModalOpen: true,
+                        isStoreDetailModalOpen: false,
+                      })
+                      addRecentlyViewedDesign(
+                        design.designId,
+                        design.designName,
+                        design.designImageUrl,
+                        design.storeName,
+                        design.isLiked
+                      )
+                    }}
+                    isHeartContent={false}
+                    description={design.designName}
+                    storeName={design.storeName}
+                    isHeart={design.isLiked}
+                    img={design.designImageUrl}
+                  />
+                </div>
+              )
+            }
+          )}
         </section>
       </section>
 
-      <section className="mb-[6.25rem] p-[1rem]">
+      {/* 추천 케이크 */}
+      <section className="border-b-[7px] border-gray-100 p-[1rem]">
         <h3 className="title-l text-gray-900">추천 케이크</h3>
-        <section className="mt-[0.5rem] grid grid-cols-2 gap-[0.125rem]">
+        <section className="mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
           {recommendResults
             ? recommendResults.map((recommendResult) => {
                 return (
-                  <RecommendCard
-                    isGradient={false}
-                    onCardClick={() => {
-                      setSearchParams({
-                        designId: recommendResult.designId,
-                        isDesignDetailModalOpen: true,
-                      })
-                    }}
-                    {...recommendResult}
-                    key={recommendResult.designId}
-                  />
+                  <div key={recommendResult.designId} className="scrollbar-hide min-w-[12.125rem]">
+                    <DesignCard
+                      onCardClick={() => {
+                        setSearchParams({
+                          designId: recommendResult.designId,
+                          isDesignDetailModalOpen: true,
+                          isStoreDetailModalOpen: false,
+                        })
+                        addRecentlyViewedDesign(
+                          recommendResult.designId,
+                          recommendResult.designName,
+                          recommendResult.designImageUrl,
+                          recommendResult.storeName,
+                          recommendResult.isLiked
+                        )
+                      }}
+                      isHeartContent={false}
+                      description={recommendResult.designName}
+                      storeName={recommendResult.storeName}
+                      isHeart={recommendResult.isLiked}
+                      img={recommendResult.designImageUrl}
+                    />
+                  </div>
                 )
               })
             : //skeleton-ui
@@ -144,6 +269,16 @@ const MyPage = () => {
               })}
         </section>
       </section>
+      <button
+        onClick={() => {
+          setIsLogoutModalOpen(true)
+        }}
+        className="body-m-m mt-1 flex gap-x-1 px-5 py-3 text-gray-700"
+      >
+        <LogoutIcon width={24} height={24} />
+        로그아웃
+      </button>
+      <div className="h-[6.25rem]" />
       <NavBar />
     </main>
   )

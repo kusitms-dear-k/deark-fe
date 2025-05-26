@@ -3,6 +3,7 @@ import { ResponseType } from '@/types/common'
 import { StoreDesignListResponseType } from '@/types/search'
 import { useSearchStore } from '@/store/searchStore'
 import DesignCardSkeleton from '@/components/skeleton/DesignCardSkeleton'
+import { addRecentlyViewedDesign } from '@/utils/common/function'
 
 interface Props {
   sizeNameList: string[]
@@ -47,6 +48,13 @@ const StoreDesign = (props: Props) => {
                   <DesignCard
                     onCardClick={() => {
                       setSearchParams({ designId: design.designId, isDesignDetailModalOpen: true, isStoreDetailModalOpen: false })
+                      addRecentlyViewedDesign(
+                        design.designId,
+                        design.designName,
+                        design.designImageUrl,
+                        design.storeName,
+                        design.isLiked
+                      )
                     }}
                     key={design.designId}
                     description={design.designName}
