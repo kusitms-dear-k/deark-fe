@@ -14,7 +14,7 @@ const OnboardingStep2 = ({ onNext, onSkip }: OnboardingStep2Props) => {
         <div className="absolute left-[0%] top-[0%] w-[40%] aspect-[1/2]">
           <Image src="/onboarding/card1.png" fill alt="카드1" className="object-cover" />
         </div>
-        <div className="absolute right-[0%] top-[15%] w-[80%] aspect-[3/2]">
+        <div className="absolute right-[0%] top-[15%] w-[80%] aspect-[4/3]">
           <Image src="/onboarding/hearts.png" fill alt="하트" className="object-contain" />
         </div>
         <div className="absolute right-[0%] top-[20%] w-[70%] aspect-[4/3]">
