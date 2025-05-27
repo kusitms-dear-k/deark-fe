@@ -22,6 +22,7 @@ import DesignDetailContent from '@/components/search/DesignDetailContent'
 import useSearchResult from '@/hooks/useSearchResult'
 import { Drawer } from '@/components/ui/drawer'
 import { addRecentlyViewedDesign } from '@/utils/common/function'
+import OrderForm from '@/components/order/OrderForm'
 
 const MyPage = () => {
   const router = useRouter()
@@ -107,7 +108,9 @@ const MyPage = () => {
 
   if (!hasMounted) return null // 또는 로딩 UI
 
-  return (
+  return isOrderFormOpen ? (
+    <OrderForm />
+  ) : (
     <main className="relative">
       <Drawer
         open={isStoreDetailModalOpen || isDesignDetailModalOpen}
@@ -149,7 +152,12 @@ const MyPage = () => {
         <header className="title-xl pt-[74px] pb-[27px]">마이페이지</header>
         <div className="flex items-center gap-x-3">
           <div className="relative h-[34px] w-[34px]">
-            <Image src={user ? user.profileImageUrl : '/common/profile_icon.svg'} alt="케이크" fill className="object-cover rounded-full"></Image>
+            <Image
+              src={user ? user.profileImageUrl : '/common/profile_icon.svg'}
+              alt="케이크"
+              fill
+              className="rounded-full object-cover"
+            ></Image>
           </div>
           <p className="title-m">{user && user.nickname}님 안녕하세요!</p>
         </div>
@@ -196,35 +204,33 @@ const MyPage = () => {
       <section className="mt-[3.75rem] p-[1rem]">
         <h3 className="title-l text-gray-900">최근 본 케이크</h3>
         <section className="scrollbar-hide mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
-          {parsedRecentlyViewedDesigns.map(
-            (design: RecommendType) => {
-              return (
-                <div key={design.designId} className="min-w-[12.125rem]">
-                  <DesignCard
-                    onCardClick={() => {
-                      setSearchParams({
-                        designId: design.designId,
-                        isDesignDetailModalOpen: true,
-                        isStoreDetailModalOpen: false,
-                      })
-                      addRecentlyViewedDesign(
-                        design.designId,
-                        design.designName,
-                        design.designImageUrl,
-                        design.storeName,
-                        design.isLiked
-                      )
-                    }}
-                    isHeartContent={false}
-                    description={design.designName}
-                    storeName={design.storeName}
-                    isHeart={design.isLiked}
-                    img={design.designImageUrl}
-                  />
-                </div>
-              )
-            }
-          )}
+          {parsedRecentlyViewedDesigns.map((design: RecommendType) => {
+            return (
+              <div key={design.designId} className="min-w-[12.125rem]">
+                <DesignCard
+                  onCardClick={() => {
+                    setSearchParams({
+                      designId: design.designId,
+                      isDesignDetailModalOpen: true,
+                      isStoreDetailModalOpen: false,
+                    })
+                    addRecentlyViewedDesign(
+                      design.designId,
+                      design.designName,
+                      design.designImageUrl,
+                      design.storeName,
+                      design.isLiked
+                    )
+                  }}
+                  isHeartContent={false}
+                  description={design.designName}
+                  storeName={design.storeName}
+                  isHeart={design.isLiked}
+                  img={design.designImageUrl}
+                />
+              </div>
+            )
+          })}
         </section>
       </section>
 
