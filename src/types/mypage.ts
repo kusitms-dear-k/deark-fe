@@ -18,6 +18,7 @@ export interface OrderType {
   designName: string
   chattingUrl: string
   designImageUrl: string
+  responseStatus: RequestStatusType
   operatingHours: string
   designType: OrderFormDesignType
   qaDetails: QaDetailType[]
