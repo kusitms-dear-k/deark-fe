@@ -8,6 +8,7 @@ import PriceFilterContent from '@/components/search/PriceFilterContent'
 import Filter from '@/components/common/Filter'
 import AddressFilterContent from '@/components/search/AddressFilterContent'
 import SortFilterContent from '@/components/search/SortFilterContent'
+import DateFilterContent from '@/components/search/DateFilterContent'
 
 const useSearchResult = () => {
   // 모달 관련 state
@@ -34,7 +35,7 @@ const useSearchResult = () => {
     { minPrice: number | null; maxPrice: number | null }[]
   >([])
   const setState = useOrderStore((state) => state.setState)
-  const resetOrderForm = useOrderStore((state) =>state.resetOrderForm)
+  const resetOrderForm = useOrderStore((state) => state.resetOrderForm)
 
   /**
    * 스토어,디자인 상세페이지 데이터 불러오기
@@ -105,6 +106,15 @@ const useSearchResult = () => {
               setIsFilterModalOpen={setIsFilterModalOpen}
               selectedFilterType={selectedFilterType}
               setSelectedFilterType={setSelectedFilterType}
+            />
+            <DateFilterContent />
+            <Filter.BottomButton
+              reset={() => {
+                setSearchParams({ startDate: null, endDate: null })
+                setIsFilterModalOpen(false)
+              }}
+              apply={() => setIsFilterModalOpen(false)}
+              totalResultCount={totalCount}
             />
           </section>
         )

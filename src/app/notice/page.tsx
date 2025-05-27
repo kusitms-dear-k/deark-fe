@@ -29,7 +29,7 @@ const NoticePage = () => {
   const [readAlarmIdList, setReadAlarmIdList] = useState<number[]>([])
   const isOrderOpen = useOrderStore((state) => state.isOrderOpen)
   const messageId = useOrderStore((state) => state.messageId)
-  
+
   //모달
   const [acceptedOrderDetailData, setAcceptedOrderDetailData] = useState<AcceptedOrderDetailType>()
   // 승인된 메시지 모달
@@ -112,7 +112,8 @@ const NoticePage = () => {
   return isOrderOpen ? (
     <Order messageId={messageId} />
   ) : (
-    <main className="flex min-h-screen flex-col w-full">
+
+    <main className="flex min-h-screen w-full flex-col">
       {isRejectedMessageModalOpen && <RejectedMessageModal onClick={() => setIsRejectedMessageModalOpen(false)} />}
       {isPaymentCompleteModalOpen && <PaymentCompleteModal onClick={() => setIsPaymentCompleteModalOpen(false)} />}
       {isCancelOrderConfirmModalOpen && (
@@ -212,11 +213,12 @@ const NoticePage = () => {
       <div className="h-[80px]" />
 
       {noticeData && noticeData.responseList.length > 0 && (
-        <section className="flex flex-col gap-y-[6px] px-5 pt-[32.5px] w-full ">
+
+        <section className="flex w-full flex-col gap-y-[6px] px-5 pt-[32.5px]">
           <div className="flex gap-x-[5px]">
             <Switch
               checked={orderStatus === 'ACCEPTED'}
-              onCheckedChange={(checked) => {
+              onCheckedChange={(checked: any) => {
                 setOrderStatus(checked ? 'ACCEPTED' : null)
               }}
             />
@@ -247,7 +249,8 @@ const NoticePage = () => {
         </section>
       )}
 
-      <section className="flex flex-1 flex-col w-full items-center w-full">
+
+      <section className="flex w-full flex-1 flex-col items-center">
         {noticeData ? (
           noticeData.responseList.length > 0 ? (
             noticeData.responseList.map((notice, index) => {

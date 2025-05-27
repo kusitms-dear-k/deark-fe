@@ -72,7 +72,6 @@ const MyPage = () => {
     setHasMounted(true)
   }, [])
 
-
   useEffect(() => {
     // 1. 초기 상태 실행
     getDesignRecommendData(4)
@@ -105,7 +104,6 @@ const MyPage = () => {
       return () => clearTimeout(timer) // cleanup
     }
   }, [isOrderSubmissionSuccessModalOpen, setState])
-
 
   if (!hasMounted) return null // 또는 로딩 UI
 

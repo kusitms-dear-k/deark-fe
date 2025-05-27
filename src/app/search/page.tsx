@@ -76,7 +76,7 @@ const SearchPage = () => {
           <>
             {/* 주문서 문의가 완료될 때 보이는 모달 */}
             {isOrderSubmissionSuccessModalOpen && (
-              <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })}/>
+              <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })} />
             )}
             {/* 필터 모달 */}
             <AnimatePresence>
