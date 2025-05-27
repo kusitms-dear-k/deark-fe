@@ -269,7 +269,7 @@ const DesignSearchResult = () => {
           searchResults.length > 0 ? (
             searchResults.map((item, pageIndex) => {
               return (
-                <section className={item.results.designList.length > 0 ? 'grid grid-cols-2 gap-[2px] gap-y-5' : ''}>
+                <section key={pageIndex} className={item.results.designList.length > 0 ? 'grid grid-cols-2 gap-[2px] gap-y-5' : ''}>
                   {item.results.designList.length > 0 ? (
                     item.results.designList.map((design: DesignType, designIndex: number) => {
                       return (
