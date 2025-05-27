@@ -1,7 +1,6 @@
 import { OrderMenuType, PickupOrderResponse, RequestStatusType } from '@/types/mypage'
 import Cookies from 'js-cookie'
 
-
 /**
  * 내가 작성한 주문서
  */
