@@ -78,37 +78,49 @@ const StoreSearchResult = (props: Props) => {
 
   return (
     <>
-      <section className="flex flex-col gap-y-[1rem] py-[0.5rem] pb-[5.625rem] pl-[1.25rem]">
-        {searchResults ? (
-          searchResults.length > 0 ? (
-            searchResults.map((items) => {
-              return items.results.storeList.map((store) => {
-                return (
-                  <div ref={observerRef} key={store.storeId}>
-                    <StoreCard
-                      onCardClick={() => {
-                        setSearchParams({
-                          storeId: store.storeId,
-                          isStoreDetailModalOpen: true,
-                          isDesignDetailModalOpen: false,
-                        })
-                      }}
-                      {...store}
-                    />
-                  </div>
-                )
-              })
-            })
-          ) : (
-            <NoSearchResults />
-          )
-        ) : (
-          //skeleton-ui
-          [1, 2, 3, 4].map((i) => {
-            return <StoreCardSkeleton key={i} />
+      {searchResults ? (
+        searchResults.length > 0 ? (
+          searchResults.map((items) => {
+            return (
+              <section
+                className={
+                  items.results.storeList.length > 0
+                    ? 'flex flex-col gap-y-[1rem] py-[0.5rem] pb-[5.625rem] pl-[1.25rem]'
+                    : ''
+                }
+              >
+                {items.results.storeList.length > 0 ? (
+                  items.results.storeList.map((store) => {
+                    return (
+                      <div ref={observerRef} key={store.storeId}>
+                        <StoreCard
+                          onCardClick={() => {
+                            setSearchParams({
+                              storeId: store.storeId,
+                              isStoreDetailModalOpen: true,
+                              isDesignDetailModalOpen: false,
+                            })
+                          }}
+                          {...store}
+                        />
+                      </div>
+                    )
+                  })
+                ) : (
+                  <NoSearchResults />
+                )}
+              </section>
+            )
           })
-        )}
-      </section>
+        ) : (
+          <NoSearchResults />
+        )
+      ) : (
+        //skeleton-ui
+        [1, 2, 3, 4].map((i) => {
+          return <StoreCardSkeleton key={i} />
+        })
+      )}
     </>
   )
 }
