@@ -145,7 +145,7 @@ const NoticeCard = ({
                   className={
                     orderStatus === 'ACCEPTED'
                       ? `body-s-m rounded-[27px] bg-blue-100 px-[6px] ${isRead ? 'text-blue-300' : 'text-blue-400'}`
-                      : `body-s-m rounded-[27px] bg-red-100 px-[6px] ${isRead ? 'text-red-200' : 'text-red-400'}`
+                      : `body-s-m rounded-[27px] bg-[#FCF1F1] px-[6px] ${isRead ? 'text-[#E99697]' : 'text-red-400'}`
                   }
                 >
                   {orderStatus === 'ACCEPTED' ? '수락' : '반려'}
