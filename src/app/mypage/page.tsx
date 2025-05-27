@@ -34,28 +34,6 @@ const MyPage = () => {
   const [hasMounted, setHasMounted] = useState(false)
   const [parsedRecentlyViewedDesigns, setParsedRecentlyViewedDesigns] = useState<RecommendType[]>([])
 
-  useEffect(() => {
-    setHasMounted(true)
-
-    if (typeof window !== 'undefined') {
-      const data = localStorage.getItem('recentlyViewedDesigns')
-      if (data) {
-        try {
-          setParsedRecentlyViewedDesigns(JSON.parse(data))
-        } catch (e) {
-          console.error('localStorage 파싱 실패:', e)
-        }
-      }
-    }
-  }, [])
-
-  if (!hasMounted) return null // 서버/초기 hydration 대응
-
-
-  useEffect(() => {
-    setHasMounted(true)
-  }, [])
-
   const {
     isStoreDetailModalOpen,
     isDesignDetailModalOpen,
@@ -74,6 +52,26 @@ const MyPage = () => {
     renderFilterContent,
     resetOrderForm,
   } = useSearchResult()
+
+  useEffect(() => {
+    setHasMounted(true)
+
+    if (typeof window !== 'undefined') {
+      const data = localStorage.getItem('recentlyViewedDesigns')
+      if (data) {
+        try {
+          setParsedRecentlyViewedDesigns(JSON.parse(data))
+        } catch (e) {
+          console.error('localStorage 파싱 실패:', e)
+        }
+      }
+    }
+  }, [])
+
+  useEffect(() => {
+    setHasMounted(true)
+  }, [])
+
 
   useEffect(() => {
     // 1. 초기 상태 실행
@@ -107,6 +105,7 @@ const MyPage = () => {
       return () => clearTimeout(timer) // cleanup
     }
   }, [isOrderSubmissionSuccessModalOpen, setState])
+
 
   if (!hasMounted) return null // 또는 로딩 UI
 
@@ -152,7 +151,7 @@ const MyPage = () => {
         <header className="title-xl pt-[74px] pb-[27px]">마이페이지</header>
         <div className="flex items-center gap-x-3">
           <div className="relative h-[34px] w-[34px]">
-            <Image src={'/common/profile.svg'} alt="케이크" fill className="object-cover"></Image>
+            <Image src={user ? user.profileImageUrl : '/common/profile_icon.svg'} alt="케이크" fill className="object-cover rounded-full"></Image>
           </div>
           <p className="title-m">{user && user.nickname}님 안녕하세요!</p>
         </div>

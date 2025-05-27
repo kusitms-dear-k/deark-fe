@@ -4,10 +4,9 @@ import Image from 'next/image'
 
 interface OnboardingStep1Props {
   onNext: () => void
-  onSkip: () => void
 }
 
-const OnboardingStep1 = ({ onSkip, onNext }: OnboardingStep1Props) => {
+const OnboardingStep1 = ({ onNext }: OnboardingStep1Props) => {
   return (
     <main className="relative flex min-h-screen w-full flex-col items-center justify-center">
       {/* 오버레이 이미지 - main 기준으로 절대 위치 */}
@@ -38,7 +37,6 @@ const OnboardingStep1 = ({ onSkip, onNext }: OnboardingStep1Props) => {
         content1="유연한 검색과 맞춤형 필터로"
         content2="원하는 가게와 디자인을 쉽게 찾아보세요."
         onNext={onNext}
-        onSkip={onSkip}
       />
     </main>
   )

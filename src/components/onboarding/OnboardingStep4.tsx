@@ -1,11 +1,10 @@
 import BottomStepperControls from '@/components/onboarding/BottomStepperControls'
 import Image from 'next/image'
+import { useLoginStore } from '@/store/authStore'
 
-interface OnboardingStep4Props {
-  onNext: () => void;
-  onSkip: () => void;
-}
-const OnboardingStep4 = ({onNext, onSkip} : OnboardingStep4Props) => {
+const OnboardingStep4 = () => {
+  const setState = useLoginStore((state) => state.setState)
+
   return (
     <main className="relative flex min-h-screen w-full flex-col items-center justify-center">
       {/* 오버레이 이미지 - main 기준으로 절대 위치 */}
@@ -35,8 +34,7 @@ const OnboardingStep4 = ({onNext, onSkip} : OnboardingStep4Props) => {
         title="한눈에 보이는 제작 현황"
         content1="제작 현황부터 픽업 일정까지,"
         content2="단계별로 확인하고 안심해요."
-        onNext={onNext}
-        onSkip={onSkip}
+        onNext={() => setState({isGuardianModalOpen: false})}
         buttonContent="디어케이와 추억 쌓으러 가기"
         skipButtonContent="로그인"
       />

@@ -3,10 +3,9 @@ import Image from 'next/image'
 
 interface OnboardingStep3Props {
   onNext: () => void
-  onSkip: () => void
 }
 
-const OnboardingStep3 = ({ onNext, onSkip }: OnboardingStep3Props) => {
+const OnboardingStep3 = ({ onNext }: OnboardingStep3Props) => {
   return (
     <main className="relative flex min-h-screen w-full flex-col items-center justify-center">
       <div className="relative flex w-full flex-col items-center justify-center">
@@ -21,7 +20,6 @@ const OnboardingStep3 = ({ onNext, onSkip }: OnboardingStep3Props) => {
         content1={'보기 쉬운 질문형 옵션과 정돈된 양식으로'}
         content2={'직관적인 주문을 경험할 수 있어요.'}
         onNext={onNext}
-        onSkip={onSkip}
       />
     </main>
   )

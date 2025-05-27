@@ -3,10 +3,9 @@ import Image from 'next/image'
 
 interface OnboardingStep2Props {
   onNext: () => void
-  onSkip: () => void
 }
 
-const OnboardingStep2 = ({ onNext, onSkip }: OnboardingStep2Props) => {
+const OnboardingStep2 = ({ onNext }: OnboardingStep2Props) => {
   return (
     <main className="relative flex min-h-screen w-full flex-col items-center justify-between sm:pt-2 pt-5">
       {/* 반응형을 위한 기준 박스 */}
@@ -35,7 +34,6 @@ const OnboardingStep2 = ({ onNext, onSkip }: OnboardingStep2Props) => {
         content1="가게와 디자인을 찜해두고 비교해"
         content2="최선의 선택지를 마련해보세요."
         onNext={onNext}
-        onSkip={onSkip}
       />
     </main>
   )

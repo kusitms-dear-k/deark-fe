@@ -43,6 +43,7 @@ const AuthenticationPage = () => {
                 if (response.results.role === 'GUEST') {
                   setStep('SelectRole')
                 } else {
+                  setState({isGuardianModalOpen: true})
                   router.push('/')
                 }
               })

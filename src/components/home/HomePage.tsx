@@ -1,3 +1,5 @@
+'use client'
+
 import Header from '@/components/common/Header'
 import NavBar from '@/components/common/NavBar'
 import SearchInput from '@/components/home/SearchInput'
@@ -18,6 +20,7 @@ import OrderForm from '@/components/order/OrderForm'
 import { useSearchStore } from '@/store/searchStore'
 import { Drawer } from '@/components/ui/drawer'
 import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSuccessModal'
+import Onboarding from '@/components/onboarding/Onboarding'
 
 const HomePage = () => {
   const isTotalSearchPageOpen = useSearchStore((state) => state.isTotalSearchPageOpen)
@@ -51,7 +54,7 @@ const HomePage = () => {
     if (isWelcomeModalOpen) {
       const timer = setTimeout(() => {
         setLoginState({ isWelcomeModalOpen: false, isGuardianModalOpen: true })
-      }, 3000)
+      }, 2000)
 
       return () => clearTimeout(timer) // cleanup
     }
@@ -85,7 +88,7 @@ const HomePage = () => {
 
   return isGuardianModalOpen ? (
     <AnimatePresence>
-      <GuardianModal onClick={() => setLoginState({ isGuardianModalOpen: false })} />
+      <Onboarding />
     </AnimatePresence>
   ) : isTotalSearchPageOpen ? (
     <TotalSearchPage keyword={keyword} />
