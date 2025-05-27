@@ -77,15 +77,16 @@ const StoreSearchResult = (props: Props) => {
   }, [searchResults])
 
   return (
-    <>
+    <div className="pb-[5.625rem]">
       {searchResults ? (
         searchResults.length > 0 ? (
-          searchResults.map((items) => {
+          searchResults.map((items, index) => {
             return (
               <section
+                key={index}
                 className={
                   items.results.storeList.length > 0
-                    ? 'flex flex-col gap-y-[1rem] py-[0.5rem] pb-[5.625rem] pl-[1.25rem]'
+                    ? 'flex flex-col gap-y-[1rem] py-[0.5rem] pl-[1.25rem]'
                     : ''
                 }
               >
@@ -121,7 +122,7 @@ const StoreSearchResult = (props: Props) => {
           return <StoreCardSkeleton key={i} />
         })
       )}
-    </>
+    </div>
   )
 }
 export default StoreSearchResult
