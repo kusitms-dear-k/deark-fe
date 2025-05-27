@@ -165,7 +165,7 @@ const MyPage = () => {
           </div>
           <p className="title-m">{user && user.nickname}님 안녕하세요!</p>
         </div>
-        <UpcomingEventBanner upcomingEvent={upcomingEvent}/>
+        <UpcomingEventBanner upcomingEvent={upcomingEvent} />
       </div>
 
       <div className="border-gray-150 absolute top-68 right-5 left-5 flex items-center justify-between rounded-[8px] border bg-white px-5 py-4">
@@ -202,36 +202,40 @@ const MyPage = () => {
 
       {/* 최근 본 케이크 */}
       <section className="mt-[3.75rem] p-[1rem]">
-        <h3 className="title-l text-gray-900">최근 본 케이크</h3>
-        <section className="scrollbar-hide mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
-          {parsedRecentlyViewedDesigns.map((design: RecommendType) => {
-            return (
-              <div key={design.designId} className="min-w-[12.125rem]">
-                <DesignCard
-                  onCardClick={() => {
-                    setSearchParams({
-                      designId: design.designId,
-                      isDesignDetailModalOpen: true,
-                      isStoreDetailModalOpen: false,
-                    })
-                    addRecentlyViewedDesign(
-                      design.designId,
-                      design.designName,
-                      design.designImageUrl,
-                      design.storeName,
-                      design.isLiked
-                    )
-                  }}
-                  isHeartContent={false}
-                  description={design.designName}
-                  storeName={design.storeName}
-                  isHeart={design.isLiked}
-                  img={design.designImageUrl}
-                />
-              </div>
-            )
-          })}
-        </section>
+        {parsedRecentlyViewedDesigns.length > 0 && (
+          <>
+            <h3 className="title-l text-gray-900">최근 본 케이크</h3>
+            <section className="scrollbar-hide mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
+              {parsedRecentlyViewedDesigns.map((design: RecommendType) => {
+                return (
+                  <div key={design.designId} className="min-w-[12.125rem]">
+                    <DesignCard
+                      onCardClick={() => {
+                        setSearchParams({
+                          designId: design.designId,
+                          isDesignDetailModalOpen: true,
+                          isStoreDetailModalOpen: false,
+                        })
+                        addRecentlyViewedDesign(
+                          design.designId,
+                          design.designName,
+                          design.designImageUrl,
+                          design.storeName,
+                          design.isLiked
+                        )
+                      }}
+                      isHeartContent={false}
+                      description={design.designName}
+                      storeName={design.storeName}
+                      isHeart={design.isLiked}
+                      img={design.designImageUrl}
+                    />
+                  </div>
+                )
+              })}
+            </section>
+          </>
+        )}
       </section>
 
       {/* 추천 케이크 */}
