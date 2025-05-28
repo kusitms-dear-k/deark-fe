@@ -269,7 +269,7 @@ const NoticePage = () => {
             })
           ) : (
             //noticeData 의 List 가 빈 경우
-            <section className="flex h-full flex-col items-center justify-center gap-y-[0.938rem]">
+            <section className="flex h-full flex-1 flex-col items-center justify-center gap-y-[0.938rem]">
               <Image src={'/search/memo.svg'} width={28} height={32} alt={'메모'} />
               <div className="flex flex-col items-center justify-center text-center">
                 <div className="title-l text-gray-500">새로운 소식이 없어요</div>
