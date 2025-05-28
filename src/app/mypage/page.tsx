@@ -170,7 +170,8 @@ const MyPage = () => {
         <UpcomingEventBanner upcomingEvent={upcomingEvent} />
       </div>
 
-      <div className="border-gray-150 absolute top-68 right-5 left-5 flex items-center justify-between rounded-[8px] border bg-white px-5 py-4">
+      {/* 메뉴 */}
+      <section className="border-gray-150 absolute top-68 right-5 left-5 flex items-center justify-between rounded-[8px] border bg-white px-5 py-4">
         <button
           onClick={() => {
             router.push('/mypage/order')
@@ -200,7 +201,7 @@ const MyPage = () => {
           <BluePencilIcon width={16} height={16} />
           <p className="title-m text-gray-700">리뷰</p>
         </button>
-      </div>
+      </section>
 
       {/* 최근 본 케이크 */}
       <section className="mt-[3.75rem] p-[1rem]">

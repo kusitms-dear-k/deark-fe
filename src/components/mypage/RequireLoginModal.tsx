@@ -6,7 +6,7 @@ interface RequireLoginModalProps {
   onClick: () => void
 }
 
-const RequireLoginModal = ({onClick}: RequireLoginModalProps) => {
+const RequireLoginModal = ({ onClick }: RequireLoginModalProps) => {
   const router = useRouter()
   return (
     <div
@@ -16,7 +16,7 @@ const RequireLoginModal = ({onClick}: RequireLoginModalProps) => {
     >
       <motion.div
         onClick={(e) => e.stopPropagation()}
-        className="absolute right-5 left-5 "
+        className="absolute right-5 left-5"
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
@@ -30,8 +30,9 @@ const RequireLoginModal = ({onClick}: RequireLoginModalProps) => {
         </section>
         <button
           onClick={() => router.push('/login')}
-          className="flex gap-x-2 items-center justify-center bg-[#FADD0E] text-gray-900 button-m rounded-b-[8px] h-[42px] w-full">
-          <KakaoIcon width={19} height={17}/>
+          className="button-m flex h-[42px] w-full items-center justify-center gap-x-2 rounded-b-[8px] bg-[#FADD0E] text-gray-900"
+        >
+          <KakaoIcon width={19} height={17} />
           카카오톡으로 쉬운 시작
         </button>
       </motion.div>
