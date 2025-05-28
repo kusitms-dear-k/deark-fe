@@ -4,12 +4,14 @@ import { Gray700HeartIcon, HeartIconFill } from '@/assets/svgComponents'
 import { useOrderStore } from '@/store/orderStore'
 import { DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
 import { useSearchStore } from '@/store/searchStore'
+import Cookies from 'js-cookie'
 
 interface Props {
   designDetail: DesignDetailType | undefined
 }
 
 const DesignDetailContent = ({ designDetail }: Props) => {
+  const token = Cookies.get('ACCESS_TOKEN')
   const setState = useOrderStore((state) => state.setState)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
   const designId = useSearchStore((state) => state.designId) //선택된 designId
@@ -17,13 +19,17 @@ const DesignDetailContent = ({ designDetail }: Props) => {
   if (!designDetail) return null
 
   return (
-    <DrawerContent>
+    <DrawerContent >
       <DrawerHeader
         onClick={() => {
-          setSearchParams({ isStoreDetailModalOpen: true, isDesignDetailModalOpen: false, storeId: designDetail?.storeId })
+          setSearchParams({
+            isStoreDetailModalOpen: true,
+            isDesignDetailModalOpen: false,
+            storeId: designDetail?.storeId,
+          })
         }}
       >
-        <DrawerTitle className="title-m  text-center">{designDetail.storeName}</DrawerTitle>
+        <DrawerTitle className="title-m text-center">{designDetail.storeName}</DrawerTitle>
       </DrawerHeader>
 
       <div className="overflow-y-scroll">
@@ -35,7 +41,11 @@ const DesignDetailContent = ({ designDetail }: Props) => {
           <div className="flex items-center justify-between">
             <h4 className="title-l">{designDetail.designName}</h4>
             <div className="flex items-center gap-x-1">
-              {designDetail.isLiked ? <HeartIconFill width={24} height={24} /> : <Gray700HeartIcon width={20} height={18} />}
+              {designDetail.isLiked ? (
+                <HeartIconFill width={24} height={24} />
+              ) : (
+                <Gray700HeartIcon width={20} height={18} />
+              )}
               <p className="caption-m text-gray-700">{designDetail.likeCount}</p>
             </div>
           </div>
@@ -56,8 +66,18 @@ const DesignDetailContent = ({ designDetail }: Props) => {
       <DrawerFooter className="border-gray-150 border-t bg-white px-[1.25rem] pt-[1.25rem]">
         <button
           onClick={() => {
-            setState({ isOrderFormOpen: true, selectedDesignUrl: designDetail?.designImageUrl, designId: designId, selectedDesignContent: designDetail?.designName, storeId: designDetail?.storeId }) //TODO: storeId추가하기
-            setSearchParams({isDesignDetailModalOpen: false})
+            if (token) {
+              setState({
+                isOrderFormOpen: true,
+                selectedDesignUrl: designDetail?.designImageUrl,
+                designId: designId,
+                selectedDesignContent: designDetail?.designName,
+                storeId: designDetail?.storeId,
+              })
+              setSearchParams({ isDesignDetailModalOpen: false })
+            } else {
+              setState({ isLoginRequiredForOrderFormOpen: true })
+            }
           }}
           className="button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white"
           type="button"

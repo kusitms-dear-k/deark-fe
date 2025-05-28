@@ -215,6 +215,7 @@ const NoticePage = () => {
         <section className="flex w-full flex-col gap-y-[6px] px-5 pt-[32.5px]">
           <div className="flex gap-x-[5px]">
             <Switch
+              className="data-[state=checked]:bg-blue-400 bg-gray-300"
               checked={orderStatus === 'ACCEPTED'}
               onCheckedChange={(checked: any) => {
                 setOrderStatus(checked ? 'ACCEPTED' : null)

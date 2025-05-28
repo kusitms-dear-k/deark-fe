@@ -20,6 +20,7 @@ interface OrderStoreType extends OrderFormType {
   isOrderOpen: boolean
   isOrderSubmissionSuccessModalOpen: boolean
   isOrderExitConfirmModalOpen: boolean
+  isLoginRequiredForOrderFormOpen: boolean
   uploadDesignImage: (string | ArrayBuffer | null)
   uploadRequestDetailImage: (string | ArrayBuffer | null)
   messageId: number
@@ -41,6 +42,7 @@ interface OrderStoreType extends OrderFormType {
     isOrderOpen?: boolean
     isOrderSubmissionSuccessModalOpen?: boolean
     isOrderExitConfirmModalOpen?: boolean
+    isLoginRequiredForOrderFormOpen?: boolean
     uploadDesignImage?: (string | ArrayBuffer | null)
     uploadRequestDetailImage?: (string | ArrayBuffer | null)
     messageId?: number
@@ -70,6 +72,8 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
   isOrderOpen: false,
   isOrderSubmissionSuccessModalOpen: false,
   isOrderExitConfirmModalOpen: false,
+  isLoginRequiredForOrderFormOpen: false,
+
   // 상태 업데이트 함수
   uploadDesignImage: null,
   uploadRequestDetailImage: null,
@@ -91,6 +95,7 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
     isOrderOpen?: boolean
     isOrderSubmissionSuccessModalOpen?: boolean
     isOrderExitConfirmModalOpen?: boolean
+    isLoginRequiredForOrderFormOpen?: boolean
     uploadDesignImage?: (string | ArrayBuffer | null)
     uploadRequestDetailImage?: (string | ArrayBuffer | null)
     messageId?: number

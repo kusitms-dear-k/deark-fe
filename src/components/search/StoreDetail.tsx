@@ -9,21 +9,23 @@ import { useSearchStore } from '@/store/searchStore'
 import { getStoreDetailData } from '@/api/searchAPI'
 import { ResponseType } from '@/types/common'
 import { useInfiniteStoreDesign } from '@/api/hooks/search/useInfiniteStoreDesign'
-import { useOrderStore } from '@/store/orderStore';
+import { useOrderStore } from '@/store/orderStore'
 import { DrawerContent, DrawerDescription, DrawerFooter, DrawerTitle } from '@/components/ui/drawer'
+import Cookies from 'js-cookie'
 interface Props {
   storeDetailMenu: '디자인' | '가게 정보' | '리뷰'
   setStoreDetailMenu: Dispatch<SetStateAction<'디자인' | '가게 정보' | '리뷰'>>
 }
 
 const StoreDetail = (props: Props) => {
+  const token = Cookies.get('ACCESS_TOKEN')
   const { storeDetailMenu, setStoreDetailMenu } = props
   const [storeDetail, setStoreDetail] = useState<StoreDetailType>() // 가게 상세 페이지 데이터
   const storeId = useSearchStore((state) => state.storeId) //선택된 storeId
   const sizeName = useSearchStore((state) => state.sizeName) //케이크 필터
 
-  const setState = useOrderStore((state) =>state.setState)
-  const setSearchParams = useSearchStore((state) =>state.setSearchParams)
+  const setState = useOrderStore((state) => state.setState)
+  const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   // 무한스크롤 훅 호출
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteStoreDesign({
@@ -123,7 +125,7 @@ const StoreDetail = (props: Props) => {
 
   return (
     <div className="h-screen">
-      <DrawerContent className="flex flex-col h-full">
+      <DrawerContent className="flex h-full flex-col">
         <DrawerTitle className="sr-only">{storeDetail?.storeName || '상세 정보'}</DrawerTitle>
         <DrawerDescription className="sr-only">{storeDetail ? '가게 상세 페이지' : '로딩 중'}</DrawerDescription>
         {storeDetail ? (
@@ -144,8 +146,12 @@ const StoreDetail = (props: Props) => {
                 <DrawerFooter className="border-gray-150 fixed bottom-0 z-10 w-full border-t bg-white px-[1.25rem] pt-[1.25rem]">
                   <button
                     onClick={() => {
-                      setState({ isOrderFormOpen: true, storeId: storeDetail?.storeId })
-                      setSearchParams({isStoreDetailModalOpen: false})
+                      if (token) {
+                        setState({ isOrderFormOpen: true, storeId: storeDetail?.storeId })
+                        setSearchParams({ isStoreDetailModalOpen: false })
+                      } else {
+                        setState({ isLoginRequiredForOrderFormOpen: true })
+                      }
                     }}
                     className="button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white"
                   >
@@ -161,7 +167,6 @@ const StoreDetail = (props: Props) => {
         )}
       </DrawerContent>
     </div>
-
   )
 }
 export default StoreDetail

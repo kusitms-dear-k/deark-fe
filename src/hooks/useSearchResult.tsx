@@ -16,6 +16,7 @@ const useSearchResult = () => {
   const isDesignDetailModalOpen = useSearchStore((state) => state.isDesignDetailModalOpen)
   const isOrderFormOpen = useOrderStore((state) => state.isOrderFormOpen)
   const isOrderSubmissionSuccessModalOpen = useOrderStore((state) => state.isOrderSubmissionSuccessModalOpen)
+  const isLoginRequiredForOrderFormOpen = useOrderStore((state) => state.isLoginRequiredForOrderFormOpen)
   // 필터 관련 state
   const [isFilterModalOpen, setIsFilterModalOpen] = useState(false)
   const [selectedFilterType, setSelectedFilterType] = useState<FilterType>('ADDRESS')
@@ -183,6 +184,7 @@ const useSearchResult = () => {
     designDetail,
     renderFilterContent,
     hasUserSelectedPrice,
+    isLoginRequiredForOrderFormOpen,
   }
 }
 export default useSearchResult

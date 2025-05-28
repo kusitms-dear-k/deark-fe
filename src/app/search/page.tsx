@@ -15,6 +15,7 @@ import useScrollDirection from '@/hooks/useScrollDirection'
 import { Drawer } from '@/components/ui/drawer'
 import { useEffect } from 'react'
 import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSuccessModal'
+import RequireLoginModal from '@/components/mypage/RequireLoginModal'
 
 const SearchPage = () => {
   const router = useRouter()
@@ -34,6 +35,7 @@ const SearchPage = () => {
     setSearchParams,
     designDetail,
     renderFilterContent,
+    isLoginRequiredForOrderFormOpen,
     setState,
     resetOrderForm,
     hasUserSelectedPrice,
@@ -75,6 +77,14 @@ const SearchPage = () => {
           <OrderForm />
         ) : (
           <>
+            {/* 로그인 안할 경우 주문서 대신 로그인 요구 모달 */}
+            {isLoginRequiredForOrderFormOpen && (
+              <RequireLoginModal
+                title={'주문하기'}
+                onClick={() => setState({ isLoginRequiredForOrderFormOpen: false })}
+                onCancelClick={() => setState({ isLoginRequiredForOrderFormOpen: false })}
+              />
+            )}
             {/* 주문서 문의가 완료될 때 보이는 모달 */}
             {isOrderSubmissionSuccessModalOpen && (
               <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })} />

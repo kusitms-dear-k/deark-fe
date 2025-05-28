@@ -132,7 +132,7 @@ const MyPage = () => {
         }}
       >
         {isLogoutModalOpen && <LogoutModal onClick={() => setIsLogoutModalOpen(false)} handleLogout={handleLogout} />}
-        {!token && <RequireLoginModal onClick={() => {}} />}
+        {!token && <RequireLoginModal onClick={() => setState({isLoginRequiredForOrderFormOpen: false})}/>}
         {/* 주문서 문의가 완료될 때 보이는 모달 */}
         {isOrderSubmissionSuccessModalOpen && (
           <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })} />

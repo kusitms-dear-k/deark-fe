@@ -23,6 +23,8 @@ import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSucce
 import Onboarding from '@/components/onboarding/Onboarding'
 import OrderExitConfirmModal from '@/components/mypage/OrderExitConfirmModal'
 import { useOrderStore } from '@/store/orderStore'
+import RequireLoginModal from '@/components/mypage/RequireLoginModal'
+import Cookies from 'js-cookie'
 
 const HomePage = () => {
   const isTotalSearchPageOpen = useSearchStore((state) => state.isTotalSearchPageOpen)
@@ -47,6 +49,7 @@ const HomePage = () => {
     renderFilterContent,
     keyword,
     isOrderSubmissionSuccessModalOpen,
+    isLoginRequiredForOrderFormOpen,
     setState,
     resetOrderForm,
     hasUserSelectedPrice,
@@ -112,6 +115,15 @@ const HomePage = () => {
           }
         }}
       >
+        {/* 로그인 안할 경우 주문서 대신 로그인 요구 모달 */}
+        {isLoginRequiredForOrderFormOpen && (
+          <RequireLoginModal
+            title={'주문하기'}
+            onClick={() => setState({ isLoginRequiredForOrderFormOpen: false })}
+            onCancelClick={() => setState({ isLoginRequiredForOrderFormOpen: false })}
+          />
+        )}
+
         {/* 주문서 문의가 완료될 때 보이는 모달 */}
         {isOrderSubmissionSuccessModalOpen && (
           <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })} />
