@@ -79,7 +79,7 @@ const PickUpStatusCard: React.FC<PickUpStatusCardProps> = ({
   const formatDate = (date: string) => {
     return date
   }
-
+  
   return (
     <div
       className="relative flex flex-col gap-y-[0.75rem] rounded-[0.25rem] bg-white"

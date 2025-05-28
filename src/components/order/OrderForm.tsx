@@ -280,7 +280,7 @@ const OrderForm = () => {
             <PhoneNumberField blurred={blurred} setBlurred={setBlurred} />
           )}
           {(user?.phoneNumber || (phoneNumber && blurred.phoneNumber)) && (
-            <WishPickUpDateField />
+            <WishPickUpDateField businessDays={[1, 2, 3, 4, 5, 6]} />
           )}
           {wishPickUpDate && (
             <WishPickUpTimeField businessHours={businessHours} setBlurred={setBlurred} blurred={blurred} />
