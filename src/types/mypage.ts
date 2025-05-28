@@ -18,6 +18,7 @@ export interface OrderType {
   designName: string
   chattingUrl: string
   designImageUrl: string
+  responseStatus: RequestStatusType
   operatingHours: string
   designType: OrderFormDesignType
   qaDetails: QaDetailType[]
@@ -107,3 +108,9 @@ export interface AcceptedOrderDetailType {
   account: string
 }
 export type RequestStatusType = 'CANCELED' | 'PAID' | 'UNRESPONSIVE'
+
+//다가오는 이벤트 타입
+export interface UpcomingEventType {
+  eventTitle: string
+  dDay: number
+}

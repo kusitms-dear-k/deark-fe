@@ -112,7 +112,6 @@ const NoticePage = () => {
   return isOrderOpen ? (
     <Order messageId={messageId} />
   ) : (
-
     <main className="flex min-h-screen w-full flex-col">
       {isRejectedMessageModalOpen && <RejectedMessageModal onClick={() => setIsRejectedMessageModalOpen(false)} />}
       {isPaymentCompleteModalOpen && <PaymentCompleteModal onClick={() => setIsPaymentCompleteModalOpen(false)} />}
@@ -213,7 +212,6 @@ const NoticePage = () => {
       <div className="h-[80px]" />
 
       {noticeData && noticeData.responseList.length > 0 && (
-
         <section className="flex w-full flex-col gap-y-[6px] px-5 pt-[32.5px]">
           <div className="flex gap-x-[5px]">
             <Switch
@@ -248,7 +246,6 @@ const NoticePage = () => {
           </div>
         </section>
       )}
-
 
       <section className="flex w-full flex-1 flex-col items-center">
         {noticeData ? (

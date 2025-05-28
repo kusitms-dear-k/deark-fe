@@ -267,44 +267,50 @@ const DesignSearchResult = () => {
       <section>
         {searchResults ? (
           searchResults.length > 0 ? (
-            <section className={'grid grid-cols-2 gap-[2px] gap-y-5'}>
-              {searchResults.map((item, pageIndex) => {
-                return item.results.designList.map((design: DesignType, designIndex: number) => {
-                  return (
-                    <div key={design.designId} ref={observerRef}>
-                      <DrawerTrigger className="w-full">
-                        <DesignCard
-                          onCardClick={() => {
-                            setSearchParams({
-                              designId: design.designId,
-                              storeId: design.storeId,
-                              isDesignDetailModalOpen: true,
-                            })
-                            addRecentlyViewedDesign(
-                              design.designId,
-                              design.designName,
-                              design.designImageUrl,
-                              design.storeName,
-                              design.isLiked
-                            )
-                          }}
-                          key={design.designId}
-                          img={design.designImageUrl}
-                          enableDayOrder={design.isSameDayOrder}
-                          storeName={design.storeName}
-                          isHeart={design.isLiked}
-                          description={design.designName}
-                          startPrice={design.price}
-                          heartCount={design.likeCount}
-                          location={design.address}
-                          onHeartClick={() => handleHeartClick(design.designId, 'design')}
-                        />
-                      </DrawerTrigger>
-                    </div>
-                  )
-                })
-              })}
-            </section>
+            searchResults.map((item, pageIndex) => {
+              return (
+                <section key={pageIndex} className={item.results.designList.length > 0 ? 'grid grid-cols-2 gap-[2px] gap-y-5' : ''}>
+                  {item.results.designList.length > 0 ? (
+                    item.results.designList.map((design: DesignType, designIndex: number) => {
+                      return (
+                        <div key={design.designId} ref={observerRef}>
+                          <DrawerTrigger className="w-full">
+                            <DesignCard
+                              onCardClick={() => {
+                                setSearchParams({
+                                  designId: design.designId,
+                                  storeId: design.storeId,
+                                  isDesignDetailModalOpen: true,
+                                })
+                                addRecentlyViewedDesign(
+                                  design.designId,
+                                  design.designName,
+                                  design.designImageUrl,
+                                  design.storeName,
+                                  design.isLiked
+                                )
+                              }}
+                              key={design.designId}
+                              img={design.designImageUrl}
+                              enableDayOrder={design.isSameDayOrder}
+                              storeName={design.storeName}
+                              isHeart={design.isLiked}
+                              description={design.designName}
+                              startPrice={design.price}
+                              heartCount={design.likeCount}
+                              location={design.address}
+                              onHeartClick={() => handleHeartClick(design.designId, 'design')}
+                            />
+                          </DrawerTrigger>
+                        </div>
+                      )
+                    })
+                  ) : (
+                    <NoSearchResults />
+                  )}
+                </section>
+              )
+            })
           ) : (
             <NoSearchResults />
           )

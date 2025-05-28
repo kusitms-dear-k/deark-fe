@@ -1,7 +1,6 @@
 import { OrderMenuType, PickupOrderResponse, RequestStatusType } from '@/types/mypage'
 import Cookies from 'js-cookie'
 
-
 /**
  * 내가 작성한 주문서
  */
@@ -46,6 +45,22 @@ export const getMyOrderDetailData = async (messageId: number) => {
   const data = await response.json()
   return data
 }
+
+/**
+ * 승인된 요청서 상세 조회
+ */
+export const getAcceptedOrderDetailData = async (messageId: number) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/request/accepted/${messageId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: Cookies.get('ACCESS_TOKEN') as string,
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
+
 
 /**
  * 승인된 요청서 상세 조회
@@ -244,3 +259,77 @@ export const getRejectedMessage = async (messageId: number) => {
   const data = await response.json()
   return data
 }
+
+/**
+ * 픽업 예정 주문서 조회
+ */
+export const getPickupExpectData = async (): Promise<PickupOrderResponse> => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/pickup/scheduled`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+    },
+  })
+
+  return response.json()
+}
+
+/**
+ * 픽업 완료 주문서 조회
+ */
+export const getPickupDoneData = async (): Promise<PickupOrderResponse> => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/pickup/completed`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+    },
+  })
+
+  return response.json()
+}
+
+/**
+ * 입금 완료/주문 취소 상태를 변경하는 호출
+ */
+export const putRequestStatus = async (messageId: number, status: RequestStatusType) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/request/${messageId}?status=${status}`, {
+    method: 'PUT',
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
+
+/**
+ * 반려된 견적서 사유 조회
+ */
+export const getRejectedMessage = async (messageId: number) => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/request/rejected/${messageId}`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
+
+/**
+ * 다가오는 이벤트 조회
+ */
+export const getUpcomingEvent = async () => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/event/upcoming`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
+

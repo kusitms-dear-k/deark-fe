@@ -54,7 +54,7 @@ export const useSearchStore = create<SearchStoreType>((set) => ({
   //filter-state
   pageParam: 0,
   count: 6,
-  sortType: 'ACCURACY',
+  sortType: 'POPULARITY',
   keyword: null,
   isSameDayOrder: null,
   locationList: null,
