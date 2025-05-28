@@ -61,6 +61,7 @@ export const getAcceptedOrderDetailData = async (messageId: number) => {
   return data
 }
 
+
 /**
  * 주문서 작성시 가게별 디자인 조회
  */
@@ -242,3 +243,19 @@ export const getRejectedMessage = async (messageId: number) => {
   const data = await response.json()
   return data
 }
+
+/**
+ * 다가오는 이벤트 조회
+ */
+export const getUpcomingEvent = async () => {
+  const response = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/mypage/event/upcoming`, {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+    },
+  })
+
+  const data = await response.json()
+  return data
+}
+

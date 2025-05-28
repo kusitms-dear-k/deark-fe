@@ -276,11 +276,11 @@ const OrderForm = () => {
       <div>
         <form className="z-40 mt-24 flex flex-col gap-y-[16px] overflow-y-scroll px-5 pb-5" onSubmit={handleSubmit}>
           <NameField setBlurred={setBlurred} />
-          {name && blurred.name && <PhoneNumberField blurred={blurred} setBlurred={setBlurred} />}
-          {phoneNumber && blurred.phoneNumber && (
-            <WishPickUpDateField
-              businessDays={[1, 2, 3, 4, 5, 6]} // 예시: 월~토만 선택 가능, 실제 운영 요일에 맞게 동적으로 전달
-            />
+          {(user?.nickname || (name && blurred.name)) && (
+            <PhoneNumberField blurred={blurred} setBlurred={setBlurred} />
+          )}
+          {(user?.phoneNumber || (phoneNumber && blurred.phoneNumber)) && (
+            <WishPickUpDateField businessDays={[1, 2, 3, 4, 5, 6]} />
           )}
           {wishPickUpDate && (
             <WishPickUpTimeField businessHours={businessHours} setBlurred={setBlurred} blurred={blurred} />
