@@ -49,7 +49,7 @@ const SearchPage = () => {
         setState({ isOrderSubmissionSuccessModalOpen: false })
         //초기화
         resetOrderForm()
-      }, 2000)
+      }, 3000)
 
       return () => clearTimeout(timer) // cleanup
     }

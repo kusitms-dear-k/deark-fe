@@ -61,14 +61,14 @@ const HomePage = () => {
     }
   }, [isWelcomeModalOpen, setState])
 
-  // 2초 후 자동 닫힘 처리
+  // 3초 후 자동 닫힘 처리
   useEffect(() => {
     if (isOrderSubmissionSuccessModalOpen) {
       const timer = setTimeout(() => {
         setState({ isOrderSubmissionSuccessModalOpen: false })
         //초기화
         resetOrderForm()
-      }, 2000)
+      }, 3000)
 
       return () => clearTimeout(timer) // cleanup
     }
