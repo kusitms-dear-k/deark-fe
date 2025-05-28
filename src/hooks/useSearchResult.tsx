@@ -22,6 +22,7 @@ const useSearchResult = () => {
   const [selectedFilterContents, setSelectedFilterContents] = useState<string[]>([]) //위치 필터 값
   const [minPrice, setMinPrice] = useState<null | number>(null) //최소 가격 필터 값
   const [maxPrice, setMaxPrice] = useState<null | number>(null) //최대 가격 필터 값
+  const [hasUserSelectedPrice, setHasUserSelectedPrice] = useState(false) //가격 필터를 선택 했는지 안했는지 판단하는 state
   //가게 상세보기
   const [storeDetailMenu, setStoreDetailMenu] = useState<'가게 정보' | '디자인' | '리뷰'>('가게 정보')
   const designId = useSearchStore((state) => state.designId) //선택된 designId
@@ -129,13 +130,18 @@ const useSearchResult = () => {
             <PriceFilterContent
               selectedPriceRanges={selectedPriceRanges}
               setSelectedPriceRanges={setSelectedPriceRanges}
+              minPrice={minPrice}
+              maxPrice={maxPrice}
               setMinPrice={setMinPrice}
               setMaxPrice={setMaxPrice}
+              setHasUserSelectedPrice={setHasUserSelectedPrice}
             />
             <Filter.BottomButton
               reset={() => {
                 setMinPrice(null)
                 setMaxPrice(null)
+                setSelectedPriceRanges([]) // 선택된 가격 범위 초기화
+                setHasUserSelectedPrice(false) // 사용자 선택 여부도 초기화
                 setSearchParams({ minPrice: null, maxPrice: null })
                 setIsFilterModalOpen(false)
               }}
@@ -176,6 +182,7 @@ const useSearchResult = () => {
     setSearchParams,
     designDetail,
     renderFilterContent,
+    hasUserSelectedPrice,
   }
 }
 export default useSearchResult

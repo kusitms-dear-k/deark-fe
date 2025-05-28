@@ -47,6 +47,7 @@ const HomePage = () => {
     isOrderSubmissionSuccessModalOpen,
     setState,
     resetOrderForm,
+    hasUserSelectedPrice,
   } = useSearchResult()
 
   // ✅ 3초 후 자동 닫힘 처리
@@ -170,6 +171,7 @@ const HomePage = () => {
           }`}
         >
           <SearchContent
+            hasUserSelectedPrice={hasUserSelectedPrice}
             searchMenuClassname={
               !isAtTop ? 'transition-all duration-300 fixed top-23' : 'transition-all duration-300 fixed top-60'
             }

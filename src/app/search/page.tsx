@@ -36,6 +36,7 @@ const SearchPage = () => {
     renderFilterContent,
     setState,
     resetOrderForm,
+    hasUserSelectedPrice,
   } = useSearchResult()
 
   const scrollDirection = useScrollDirection()
@@ -124,6 +125,7 @@ const SearchPage = () => {
               setSelectedFilterType={setSelectedFilterType}
               setIsFilterModalOpen={setIsFilterModalOpen}
               totalCount={totalCount}
+              hasUserSelectedPrice={hasUserSelectedPrice}
             />
           </>
         )}

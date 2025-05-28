@@ -16,10 +16,11 @@ interface Props {
   setIsFilterModalOpen: Dispatch<SetStateAction<boolean>>
   setSelectedFilterType: Dispatch<SetStateAction<FilterType>>
   totalCount: number
+  hasUserSelectedPrice: boolean
 }
 
 const SearchContent = (props: Props) => {
-  const {searchMenuClassname, FilterPanelClassname, SearchSummaryPanelClassname, isFilterModalOpen, selectedFilterType, setIsFilterModalOpen, setSelectedFilterType, totalCount} = props
+  const {searchMenuClassname, FilterPanelClassname, SearchSummaryPanelClassname, isFilterModalOpen, selectedFilterType, setIsFilterModalOpen, setSelectedFilterType, totalCount, hasUserSelectedPrice} = props
 
   const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
   const sortType = useSearchStore((state) => state.sortType)
@@ -28,6 +29,7 @@ const SearchContent = (props: Props) => {
     <>
       <SearchMenu className={searchMenuClassname} searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
       <FilterPanel
+        hasUserSelectedPrice={hasUserSelectedPrice}
         className={FilterPanelClassname}
         isFilterModalOpen={isFilterModalOpen}
         selectedFilterType={selectedFilterType}
