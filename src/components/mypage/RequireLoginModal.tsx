@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { useRouter } from 'next/navigation'
 import { KakaoIcon } from '@/assets/svgComponents'
+import NavBar from '@/components/common/NavBar'
 interface RequireLoginModalProps {
   onClick: () => void
 }
@@ -36,6 +37,7 @@ const RequireLoginModal = ({ onClick }: RequireLoginModalProps) => {
           카카오톡으로 쉬운 시작
         </button>
       </motion.div>
+      <NavBar />
     </div>
   )
 }
