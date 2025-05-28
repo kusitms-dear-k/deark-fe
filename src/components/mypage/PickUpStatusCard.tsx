@@ -114,7 +114,7 @@ const PickUpStatusCard: React.FC<PickUpStatusCardProps> = ({
             className="rounded-[0.25rem] object-cover"
           />
         </div>
-        <div>
+        <div className="truncate overflow-hidden">
           <h3 className="title-l">{storeName}</h3>
           <p className="body-m-m mt-[0.375rem] text-gray-700">{designName}</p>
           <p className="body-m-m text-gray-400">
