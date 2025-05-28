@@ -4,10 +4,27 @@ import { useState } from 'react'
 import { DesignItem } from '@/types/event'
 import Image from 'next/image'
 import { HeartIconFill } from '@/assets/svgComponents'
+import { EventApi } from '@/api/eventAPI'
 
-export default function DesignCarousel({ designs }: { designs: DesignItem[] }) {
+interface DesignCarouselProps {
+  designs: DesignItem[]
+  eventId: number
+}
+
+export default function DesignCarousel({ designs, eventId }: DesignCarouselProps) {
   // 각 디자인별 메모 상태를 따로 관리 (designId를 key로)
   const [memoMap, setMemoMap] = useState<{ [designId: number]: string }>({})
+
+  // 메모 저장 API 호출
+  const handleMemoBlur = async (designId: number) => {
+    try {
+      const memo = memoMap[designId] ?? ''
+      await EventApi.updateDesignMemo(eventId, designId, memo)
+      // 저장 후, 필요하다면 피드백/알림 처리
+    } catch (e) {
+      console.error('design slid error', e)
+    }
+  }
 
   if (!designs.length) {
     return (
@@ -54,6 +71,7 @@ export default function DesignCarousel({ designs }: { designs: DesignItem[] }) {
                       const val = e.target.value.slice(0, maxLen)
                       setMemoMap((prev) => ({ ...prev, [design.designId]: val }))
                     }}
+                    onBlur={() => handleMemoBlur(design.designId)}
                   />
                   <span className="caption-m absolute right-2 bottom-1 text-[13px] font-medium text-stone-300">
                     {memo.length}/{maxLen}

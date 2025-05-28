@@ -25,8 +25,7 @@ export const EventApi = {
     const res = await fetch(`${API_BASE}/event/${eventId}`, {
       method: 'GET',
       headers: {
-        Authorization:
-          'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
       },
     })
     return handleResponse<EventDetail>(res)
@@ -37,9 +36,7 @@ export const EventApi = {
     const res = await fetch(`${API_BASE}/event`, {
       method: 'POST',
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
@@ -52,9 +49,7 @@ export const EventApi = {
     const res = await fetch(`${API_BASE}/event/${eventId}`, {
       method: 'PUT',
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
@@ -67,9 +62,7 @@ export const EventApi = {
     const res = await fetch(`${API_BASE}/event/${eventId}`, {
       method: 'DELETE',
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
       },
     })
     return handleResponse<void>(res)
@@ -80,9 +73,7 @@ export const EventApi = {
     const res = await fetch(`${API_BASE}/event/store/mapping`, {
       method: 'PUT',
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
@@ -95,9 +86,7 @@ export const EventApi = {
     const res = await fetch(`${API_BASE}/event/design/mapping`, {
       method: 'PUT',
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
         'Content-Type': 'application/json',
       },
       body: JSON.stringify(body),
@@ -110,9 +99,7 @@ export const EventApi = {
     const res = await fetch(`${API_BASE}/event/${eventId}/stores`, {
       method: 'GET',
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
       },
     })
     return handleResponse<StoreItem[]>(res)
@@ -123,9 +110,7 @@ export const EventApi = {
     const res = await fetch(`${API_BASE}/event/${eventId}/designs`, {
       method: 'GET',
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
       },
     })
     return handleResponse<DesignItem[]>(res)
@@ -136,9 +121,7 @@ export const EventApi = {
     const res = await fetch(`${API_BASE}/event/my_events`, {
       method: 'GET',
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
       },
     })
     return handleResponse<EventDetail[]>(res)
@@ -148,9 +131,7 @@ export const EventApi = {
   getCheckedEventsByStore: async (storeId: number): Promise<EventCheckItem[]> => {
     const res = await fetch(`${API_BASE}/event/my_events/with-check/store?storeId=${storeId}`, {
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
       },
     })
     return handleResponse<EventCheckItem[]>(res)
@@ -160,9 +141,7 @@ export const EventApi = {
   getCheckedEventsByDesign: async (designId: number): Promise<EventCheckItem[]> => {
     const res = await fetch(`${API_BASE}/event/my_events/with-check/design?designId=${designId}`, {
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
       },
     })
     return handleResponse<EventCheckItem[]>(res)
@@ -173,9 +152,7 @@ export const EventApi = {
     const res = await fetch(`${API_BASE}/event/${eventId}/stores/${storeId}`, {
       method: 'DELETE',
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
       },
     })
     return handleResponse<void>(res)
@@ -186,11 +163,32 @@ export const EventApi = {
     const res = await fetch(`${API_BASE}/event/${eventId}/designs/${designId}`, {
       method: 'DELETE',
       headers: {
-        Authorization:
-          'Bearer ' +
-          'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJpYXQiOjE3NDc0NTIxMzEsImV4cCI6MTc0ODY2MTczMSwiaXNzIjoiZGVhcmsiLCJzdWIiOiIxIiwicm9sZSI6IkNVU1RPTUVSIn0.GlbM-c1tqKH90LhzAc67ZUYWT0zXYoXFylWZ2jnOGaqfm_beK_WptwH2dRAXBDfjsAcBqu7ebRn-FrpFI-_JLw',
-
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
       },
+    })
+    return handleResponse<void>(res)
+  },
+
+  updateStoreMemo: async (eventId: number, storeId: number, memo: string): Promise<void> => {
+    const res = await fetch(`${API_BASE}/event/${eventId}/stores/${storeId}/memo`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ memo }),
+    })
+    return handleResponse<void>(res)
+  },
+
+  updateDesignMemo: async (eventId: number, designId: number, memo: string): Promise<void> => {
+    const res = await fetch(`${API_BASE}/event/${eventId}/designs/${designId}/memo`, {
+      method: 'PATCH',
+      headers: {
+        Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ memo }),
     })
     return handleResponse<void>(res)
   },

@@ -54,7 +54,7 @@ export default function EventDetailPage() {
       <section className="mx-auto mt-4 w-[21.875rem]">
         <div className="mb-2 text-base font-bold text-zinc-800">디자인</div>
         {designs.length > 0 ? (
-          <DesignCarousel designs={designs} />
+          <DesignCarousel designs={designs} eventId={eventDetail.eventId} />
         ) : (
           <EmptySection
             title="아직 저장된 디자인이 없어요."
@@ -73,7 +73,7 @@ export default function EventDetailPage() {
         {stores.length > 0 ? (
           <div className="flex flex-col gap-4">
             {stores.map((store) => (
-              <EventDetailStoreCard key={store.storeId} store={store} />
+              <EventDetailStoreCard key={store.storeId} store={store} eventId={eventDetail.eventId} />
             ))}
           </div>
         ) : (

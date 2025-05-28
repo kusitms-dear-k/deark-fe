@@ -10,16 +10,15 @@ interface EventCardProps {
   onMenuClick: () => void
 }
 
-function getThumbnails(stores: StoreItem[], designs: DesignItem[]) {
-  const images = [...stores.map((s) => s.storeImageUrl), ...designs.map((d) => d.designImageUrl)]
-  if (images.length === 0) return []
-  if (images.length < 4) return [images[0]]
-  return images.slice(0, 4)
-}
+// function getThumbnails(stores: StoreItem[], designs: DesignItem[]) {
+//   const images = [...stores.map((s) => s.storeImageUrl), ...designs.map((d) => d.designImageUrl)]
+//   if (images.length === 0) return []
+//   if (images.length < 4) return [images[0]]
+//   return images.slice(0, 4)
+// }
 
 export default function EventCard({ event, stores, designs, onMenuClick }: EventCardProps) {
   const router = useRouter()
-  const thumbnails = getThumbnails(stores, designs)
 
   const handleCardClick = (e: React.MouseEvent) => {
     // 케밥 메뉴 클릭 시 이벤트 전파 방지
@@ -30,23 +29,14 @@ export default function EventCard({ event, stores, designs, onMenuClick }: Event
     router.push(`/event/${event.eventId}`)
   }
 
-  if (!thumbnails.length) return
+  if (!event.thumbnailUrl) return
 
   return (
     <div className="shadow-middlemodal h-[15.125rem] w-[10.5rem] rounded-sm bg-white px-2 py-4">
-      <div
-        className={`mb-2 ${thumbnails.length > 1 ? 'grid grid-cols-2 grid-rows-2 gap-1' : ''}`}
-        onClick={handleCardClick}
-      >
+      <div className="mb-2" onClick={handleCardClick}>
         <div className="relative aspect-square overflow-hidden rounded">
           <Image src={event.thumbnailUrl} alt={event.title} fill className="object-cover" />
         </div>
-
-        {/* {thumbnails.map((url, i) => (
-          <div key={i} className="relative aspect-square overflow-hidden rounded">
-            <Image src={url} alt={event.title} fill className="object-cover" />
-          </div>
-        ))} */}
       </div>
 
       <div className="flex justify-between">

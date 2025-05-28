@@ -82,7 +82,6 @@ const PickUpStatusCard: React.FC<PickUpStatusCardProps> = ({
   }
 
   const setOrderState = useOrderStore((state) =>state.setState)
-
   return (
     <div
       className="relative flex flex-col gap-y-[0.75rem] rounded-[0.25rem] bg-white"

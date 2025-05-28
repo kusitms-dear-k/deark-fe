@@ -11,9 +11,9 @@ export interface EventDetail {
 export interface StoreItem {
   storeId: number
   storeName: string
-  storeImageUrl: string
   storeAddress: string
   memo: string
+  designImageUrls: string[]
 }
 
 // 디자인 아이템

@@ -109,6 +109,7 @@ export interface AcceptedOrderDetailType {
 }
 export type RequestStatusType = 'CANCELED' | 'PAID' | 'UNRESPONSIVE'
 
+
 //다가오는 이벤트 타입
 export interface UpcomingEventType {
   eventTitle: string
