@@ -24,7 +24,8 @@ const LogoutModal = ({onClick, handleLogout}: LogoutModalProps) => {
       >
         <section className="flex flex-col items-center justify-center rounded-t-[8px] bg-white">
           <div className="mt-[40px] mb-[32px] flex flex-col items-center justify-center gap-y-1">
-            <h2 className="headline-s text-gray-900">로그아웃 하시겠어요?</h2>
+            <h2 className="headline-s text-gray-900">정말 로그아웃 하시겠어요?</h2>
+            <p className="body-s text-gray-500">언제든 다시 찾아주세요!</p>
           </div>
         </section>
         <section className="flex">
