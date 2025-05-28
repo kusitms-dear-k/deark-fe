@@ -43,6 +43,7 @@ const ApprovePage = () => {
         // className="top-20 items-start"
         headerClassname={'fixed bg-white px-5'}
       />
+
       <section className="mt-[9rem] flex flex-col gap-y-[1.5rem]">
         {/* 픽업 예정 */}
         <section className="px-[1.25rem]">

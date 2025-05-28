@@ -22,6 +22,10 @@ import DesignDetailContent from '@/components/search/DesignDetailContent'
 import useSearchResult from '@/hooks/useSearchResult'
 import { Drawer } from '@/components/ui/drawer'
 import { addRecentlyViewedDesign } from '@/utils/common/function'
+import OrderForm from '@/components/order/OrderForm'
+import UpcomingEventBanner from '@/components/mypage/UpcomingEventBanner'
+import { getUpcomingEvent } from '@/api/mypageAPI'
+import { UpcomingEventType } from '@/types/mypage'
 
 const MyPage = () => {
   const router = useRouter()
@@ -29,10 +33,26 @@ const MyPage = () => {
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false)
   const user = useLoginStore((state) => state.user)
-  const setLoginState = useLoginStore((state) => state.setState)
   const token = Cookies.get('ACCESS_TOKEN')
   const [hasMounted, setHasMounted] = useState(false)
   const [parsedRecentlyViewedDesigns, setParsedRecentlyViewedDesigns] = useState<RecommendType[]>([])
+  const [upcomingEvent, setUpcomingEvent] = useState<UpcomingEventType>()
+
+  const {
+    isStoreDetailModalOpen,
+    isDesignDetailModalOpen,
+    isOrderFormOpen,
+    isFilterModalOpen,
+    isOrderSubmissionSuccessModalOpen,
+    setIsFilterModalOpen,
+    selectedFilterType,
+    storeDetailMenu,
+    setStoreDetailMenu,
+    designDetail,
+    setState,
+    renderFilterContent,
+    resetOrderForm,
+  } = useSearchResult()
 
   useEffect(() => {
     setHasMounted(true)
@@ -49,31 +69,9 @@ const MyPage = () => {
     }
   }, [])
 
-  if (!hasMounted) return null // 서버/초기 hydration 대응
-
-
   useEffect(() => {
     setHasMounted(true)
   }, [])
-
-  const {
-    isStoreDetailModalOpen,
-    isDesignDetailModalOpen,
-    isOrderFormOpen,
-    isFilterModalOpen,
-    isOrderSubmissionSuccessModalOpen,
-    setIsFilterModalOpen,
-    selectedFilterType,
-    setSelectedFilterType,
-    storeDetailMenu,
-    setStoreDetailMenu,
-    totalCount,
-    keyword,
-    designDetail,
-    setState,
-    renderFilterContent,
-    resetOrderForm,
-  } = useSearchResult()
 
   useEffect(() => {
     // 1. 초기 상태 실행
@@ -83,6 +81,10 @@ const MyPage = () => {
         setRecommendResults(res.results.designList)
       })
       .catch(console.error)
+    getUpcomingEvent().then((res: ResponseType<UpcomingEventType>) => {
+      console.log('다가오는 이벤트', res)
+      setUpcomingEvent(res.results)
+    })
   }, [])
 
   const handleLogout = () => {
@@ -110,7 +112,9 @@ const MyPage = () => {
 
   if (!hasMounted) return null // 또는 로딩 UI
 
-  return (
+  return isOrderFormOpen ? (
+    <OrderForm />
+  ) : (
     <main className="relative">
       <Drawer
         open={isStoreDetailModalOpen || isDesignDetailModalOpen}
@@ -152,15 +156,16 @@ const MyPage = () => {
         <header className="title-xl pt-[74px] pb-[27px]">마이페이지</header>
         <div className="flex items-center gap-x-3">
           <div className="relative h-[34px] w-[34px]">
-            <Image src={'/common/profile.svg'} alt="케이크" fill className="object-cover"></Image>
+            <Image
+              src={user ? user.profileImageUrl : '/common/profile_icon.svg'}
+              alt="케이크"
+              fill
+              className="rounded-full object-cover"
+            ></Image>
           </div>
           <p className="title-m">{user && user.nickname}님 안녕하세요!</p>
         </div>
-        <div className="relative mt-4 rounded-[8px] bg-white px-5 py-4">
-          <Image src={'/common/glitter-group-icon.svg'} alt="글리터" fill className="object-cover px-[25px]" />
-          <div className="title-l text-gray-800">아직 이벤트가 없네요.</div>
-          <p className="body-s-m text-gray-700">이벤트는 찜하기 {'>'} ‘새 이벤트 생성하기’로 만들 수 있어요.</p>
-        </div>
+        <UpcomingEventBanner upcomingEvent={upcomingEvent} />
       </div>
 
       <div className="border-gray-150 absolute top-68 right-5 left-5 flex items-center justify-between rounded-[8px] border bg-white px-5 py-4">
@@ -197,38 +202,40 @@ const MyPage = () => {
 
       {/* 최근 본 케이크 */}
       <section className="mt-[3.75rem] p-[1rem]">
-        <h3 className="title-l text-gray-900">최근 본 케이크</h3>
-        <section className="scrollbar-hide mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
-          {parsedRecentlyViewedDesigns.map(
-            (design: RecommendType) => {
-              return (
-                <div key={design.designId} className="min-w-[12.125rem]">
-                  <DesignCard
-                    onCardClick={() => {
-                      setSearchParams({
-                        designId: design.designId,
-                        isDesignDetailModalOpen: true,
-                        isStoreDetailModalOpen: false,
-                      })
-                      addRecentlyViewedDesign(
-                        design.designId,
-                        design.designName,
-                        design.designImageUrl,
-                        design.storeName,
-                        design.isLiked
-                      )
-                    }}
-                    isHeartContent={false}
-                    description={design.designName}
-                    storeName={design.storeName}
-                    isHeart={design.isLiked}
-                    img={design.designImageUrl}
-                  />
-                </div>
-              )
-            }
-          )}
-        </section>
+        {parsedRecentlyViewedDesigns.length > 0 && (
+          <>
+            <h3 className="title-l text-gray-900">최근 본 케이크</h3>
+            <section className="scrollbar-hide mt-[0.5rem] flex flex-nowrap gap-x-[0.125rem] overflow-x-scroll">
+              {parsedRecentlyViewedDesigns.map((design: RecommendType) => {
+                return (
+                  <div key={design.designId} className="min-w-[12.125rem]">
+                    <DesignCard
+                      onCardClick={() => {
+                        setSearchParams({
+                          designId: design.designId,
+                          isDesignDetailModalOpen: true,
+                          isStoreDetailModalOpen: false,
+                        })
+                        addRecentlyViewedDesign(
+                          design.designId,
+                          design.designName,
+                          design.designImageUrl,
+                          design.storeName,
+                          design.isLiked
+                        )
+                      }}
+                      isHeartContent={false}
+                      description={design.designName}
+                      storeName={design.storeName}
+                      isHeart={design.isLiked}
+                      img={design.designImageUrl}
+                    />
+                  </div>
+                )
+              })}
+            </section>
+          </>
+        )}
       </section>
 
       {/* 추천 케이크 */}

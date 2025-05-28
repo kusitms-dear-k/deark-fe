@@ -13,9 +13,9 @@ const SortFilterContent = (props: Props) => {
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   const sortContents: { filterContent: '정확도' | '최신순' | '인기순'; sortType: SortType }[] = [
-    { filterContent: '정확도', sortType: 'ACCURACY' },
-    { filterContent: '최신순', sortType: 'LATEST' },
     { filterContent: '인기순', sortType: 'POPULARITY' },
+    { filterContent: '최신순', sortType: 'LATEST' },
+    { filterContent: '정확도', sortType: 'ACCURACY' },
   ]
 
   return (

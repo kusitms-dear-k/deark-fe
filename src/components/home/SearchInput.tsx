@@ -1,3 +1,5 @@
+'use client'
+
 import { useSearchStore } from '@/store/searchStore'
 import { RefObject, useState } from 'react'
 

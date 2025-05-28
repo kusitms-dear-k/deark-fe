@@ -1,3 +1,4 @@
+'use client'
 import { DropDownIcon } from '@/assets/svgComponents';
 import { useOrderStore } from '@/store/orderStore';
 import { OrderFormCreamType, OrderFormSizeType, QaDetailTitleType } from '@/types/mypage';
