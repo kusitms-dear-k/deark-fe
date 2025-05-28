@@ -214,6 +214,7 @@ const FilterPanel = (props: Props) => {
           )}
         </div>
       </button>
+      <div className="fixed z-40 right-0 w-[70px] h-[40px] bg-gradient-to-l from-white to-transparent" />
     </section>
   )
 }
