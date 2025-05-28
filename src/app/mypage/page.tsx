@@ -37,6 +37,7 @@ const MyPage = () => {
   const [hasMounted, setHasMounted] = useState(false)
   const [parsedRecentlyViewedDesigns, setParsedRecentlyViewedDesigns] = useState<RecommendType[]>([])
   const [upcomingEvent, setUpcomingEvent] = useState<UpcomingEventType>()
+  const setLoginStoreState = useLoginStore((state) => state.setState)
 
   const {
     isStoreDetailModalOpen,
@@ -95,6 +96,7 @@ const MyPage = () => {
     router.push('/')
     localStorage.removeItem('login-store')
     localStorage.removeItem('recentlyViewedDesigns')
+    setLoginStoreState({ user: null })
   }
 
   // 2초 후 자동 닫힘 처리
