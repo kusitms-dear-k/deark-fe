@@ -21,6 +21,8 @@ import { useSearchStore } from '@/store/searchStore'
 import { Drawer } from '@/components/ui/drawer'
 import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSuccessModal'
 import Onboarding from '@/components/onboarding/Onboarding'
+import OrderExitConfirmModal from '@/components/mypage/OrderExitConfirmModal'
+import { useOrderStore } from '@/store/orderStore'
 
 const HomePage = () => {
   const isTotalSearchPageOpen = useSearchStore((state) => state.isTotalSearchPageOpen)

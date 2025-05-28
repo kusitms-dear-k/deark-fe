@@ -1,15 +1,11 @@
-import { create, createStore } from 'zustand/index'
+import { create } from 'zustand/index'
 import {
   OrderFormDesignType,
   OrderFormRequestDetailType,
   OrderFormType,
   OrderMenuType,
-  OrderType,
   QaDetailType,
 } from '@/types/mypage'
-import { ResponseType } from '@/types/common'
-import { getMyOrder } from '@/api/mypageAPI'
-import { RefObject, useRef } from 'react'
 
 interface OrderStoreType extends OrderFormType {
   isLoading: boolean
@@ -23,6 +19,7 @@ interface OrderStoreType extends OrderFormType {
   selectedDesignContent: string | undefined,
   isOrderOpen: boolean
   isOrderSubmissionSuccessModalOpen: boolean
+  isOrderExitConfirmModalOpen: boolean
   uploadDesignImage: (string | ArrayBuffer | null)
   uploadRequestDetailImage: (string | ArrayBuffer | null)
   messageId: number
@@ -43,6 +40,7 @@ interface OrderStoreType extends OrderFormType {
     isOrderFormOpen?: boolean
     isOrderOpen?: boolean
     isOrderSubmissionSuccessModalOpen?: boolean
+    isOrderExitConfirmModalOpen?: boolean
     uploadDesignImage?: (string | ArrayBuffer | null)
     uploadRequestDetailImage?: (string | ArrayBuffer | null)
     messageId?: number
@@ -71,6 +69,7 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
   isOrderFormOpen: false,
   isOrderOpen: false,
   isOrderSubmissionSuccessModalOpen: false,
+  isOrderExitConfirmModalOpen: false,
   // 상태 업데이트 함수
   uploadDesignImage: null,
   uploadRequestDetailImage: null,
@@ -91,6 +90,7 @@ export const useOrderStore = create<OrderStoreType>((set) => ({
     isOrderFormOpen?: boolean
     isOrderOpen?: boolean
     isOrderSubmissionSuccessModalOpen?: boolean
+    isOrderExitConfirmModalOpen?: boolean
     uploadDesignImage?: (string | ArrayBuffer | null)
     uploadRequestDetailImage?: (string | ArrayBuffer | null)
     messageId?: number
