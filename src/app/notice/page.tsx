@@ -103,7 +103,7 @@ const NoticePage = () => {
     if (isPaymentCompleteModalOpen) {
       const timer = setTimeout(() => {
         setIsPaymentCompleteModalOpen(false)
-      }, 2000)
+      }, 3000)
 
       return () => clearTimeout(timer) // cleanup
     }
