@@ -19,6 +19,10 @@ import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSucce
 import OrderForm from '@/components/order/OrderForm'
 import { Gray700HeartIcon, HeartIconFill, LeftArrowIcon } from '@/assets/svgComponents'
 import { useHeartClick } from '@/hooks/useHeartClick'
+import { EventApi } from '@/api/eventAPI'
+import EventModal from '@/components/event/EventModal'
+import EventSelectionContent from '@/components/event/EventSelectContent'
+import ToastMsg from '@/components/event/ToastMsg'
 
 const StoreDetail = () => {
   const params = useParams()
@@ -37,6 +41,29 @@ const StoreDetail = () => {
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
   const resetOrderForm = useOrderStore((state) => state.resetOrderForm)
 
+  const {
+    modalView,
+    setModalView,
+    eventList,
+    handleHeartClick,
+    selectedEventIds,
+    toastMessage,
+    showToast,
+    setShowToast,
+  } = useHeartClick('store')
+
+  // 모달 닫힐 때 API 호출
+  const handleModalClose = async (selectedIds: number[]) => {
+    if (storeId) {
+      await EventApi.mapStoreToEvents({
+        store_id: storeId,
+        event_ids: selectedIds,
+      })
+      setShowToast(true)
+    }
+    setModalView(null)
+  }
+
   useEffect(() => {
     if (storeId) {
       setSearchParams({ storeId: storeId }) // 페이지 로드시 자동으로 설정
@@ -50,10 +77,6 @@ const StoreDetail = () => {
     storeId: parseInt(params.id as string),
     sizeName: sizeName,
   })
-
-  const {
-    handleHeartClick,
-  } = useHeartClick('store')
 
   //Intersection Observer 로 스크롤 끝 감지
   const observerRef = useRef<HTMLDivElement>(null)
@@ -180,7 +203,7 @@ const StoreDetail = () => {
             <>
               <header className="fixed z-30 flex w-full items-center justify-center bg-white px-5 pt-[75px] pb-[13px]">
                 <LeftArrowIcon width={24} height={24} className="cursor-pointer" onClick={() => router.back()} />
-                <div className="absolute left-1/2 -translate-x-1/2 text-center whitespace-nowrap title-l">
+                <div className="title-l absolute left-1/2 -translate-x-1/2 text-center whitespace-nowrap">
                   {storeDetail?.storeName}
                 </div>
                 <section
@@ -236,6 +259,16 @@ const StoreDetail = () => {
           </div>
         </div>
       )}
+
+      <EventModal isOpenModal={modalView === 'eventList'} onClose={() => setModalView(null)}>
+        <EventSelectionContent
+          events={eventList}
+          initialSelected={selectedEventIds}
+          onAddNew={() => setModalView('newEvent')}
+          onClose={handleModalClose}
+        />
+      </EventModal>
+      <ToastMsg message={toastMessage} isVisible={showToast} onClose={() => setShowToast(false)} />
     </div>
   )
 }
