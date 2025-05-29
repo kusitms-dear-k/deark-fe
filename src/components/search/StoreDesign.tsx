@@ -4,19 +4,22 @@ import { StoreDesignListResponseType } from '@/types/search'
 import { useSearchStore } from '@/store/searchStore'
 import DesignCardSkeleton from '@/components/skeleton/DesignCardSkeleton'
 import { addRecentlyViewedDesign } from '@/utils/common/function'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   sizeNameList: string[]
   searchResults: ResponseType<StoreDesignListResponseType>[] | undefined
 }
 
-const StoreDesign = (props: Props) => {
+const  StoreDesign = (props: Props) => {
   const { sizeNameList, searchResults } = props
   const selectedSizeName = useSearchStore((state) => state.sizeName)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
+  const router = useRouter();
+
   return (
     <div className="flex flex-col h-full min-h-0">
-      <section className="shrink-0 scrollbar-hide flex w-full justify-start gap-x-[0.5rem] overflow-x-scroll px-[1.25rem] py-[0.75rem] whitespace-nowrap">
+      <section className="fixed top-78 z-10 bg-white scrollbar-hide flex w-full justify-start gap-x-[0.5rem] overflow-x-scroll px-[1.25rem] pt-[16px] pb-[12px] whitespace-nowrap">
         <button
           onClick={() => {
             setSearchParams({ sizeName: '전체' })
@@ -39,7 +42,7 @@ const StoreDesign = (props: Props) => {
           )
         })}
       </section>
-      <section className="flex-1 min-h-0 overflow-y-auto w-full">
+      <section className="mt-14 flex-1 min-h-0 overflow-y-auto w-full">
         <div className="grid grid-cols-2 gap-x-[0.125rem]">
           {searchResults
             ? searchResults.map((results) => {
@@ -47,6 +50,7 @@ const StoreDesign = (props: Props) => {
                 return (
                   <DesignCard
                     onCardClick={() => {
+                      router.push(`/design/${design.designId}`)
                       setSearchParams({ designId: design.designId, isDesignDetailModalOpen: true, isStoreDetailModalOpen: false })
                       addRecentlyViewedDesign(
                         design.designId,

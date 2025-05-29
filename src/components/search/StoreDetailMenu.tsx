@@ -11,7 +11,7 @@ const StoreDetailMenu = (props: Props) => {
   const storeDetailMenuContents: ('가게 정보' | '디자인' | '리뷰')[] = ['가게 정보', '디자인', '리뷰']
 
   return (
-    <div className="mt-[1.625rem] flex w-full">
+    <div className="fixed top-68 flex w-full bg-white">
       {storeDetailMenuContents.map((storeDetailMenuContent: '가게 정보' | '디자인' | '리뷰') => {
         return (
           <button
@@ -21,7 +21,7 @@ const StoreDetailMenu = (props: Props) => {
             }}
             className={
               storeDetailMenu === storeDetailMenuContent
-                ? 'title-l h-[2.75rem] w-full border-b-[0.25rem] border-red-500 text-red-500'
+                ? 'title-l h-[2.75rem] w-full border-b-[0.25rem] border-red-400 text-red-400'
                 : 'body-l h-[2.75rem] w-full border-b-[0.25rem] border-gray-300 text-gray-300'
             }
           >

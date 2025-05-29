@@ -238,7 +238,7 @@ const OrderForm = () => {
   }, [user?.nickname, user?.phoneNumber])
 
   return (
-    <div className="fixed inset-0 z-40 flex h-screen flex-col overflow-y-scroll">
+    <div className="flex h-screen flex-col overflow-y-scroll">
       {isOrderExitConfirmModalOpen && (
         <OrderExitConfirmModal
           onClick={() => setState({ isOrderExitConfirmModalOpen: false })}

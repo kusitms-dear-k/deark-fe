@@ -250,11 +250,13 @@ const StoreSearchResult = (props: Props) => {
                 }
               >
                 {items.results.storeList.length > 0 ? (
-                  items.results.storeList.map((store) => {
+                  items.results.storeList.map((store, i, arr) => {
+                    const isLastItem = i === arr.length - 1
                     return (
-                      <div ref={observerRef} key={store.storeId}>
+                      <div ref={isLastItem ? observerRef : null} key={store.storeId}>
                         <StoreCard
                           onCardClick={() => {
+                            router.push(`/store/${store.storeId}`)
                             setSearchParams({
                               storeId: store.storeId,
                               isStoreDetailModalOpen: true,

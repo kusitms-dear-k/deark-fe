@@ -266,9 +266,10 @@ const DesignSearchResult = () => {
                     item.results.designList.map((design: DesignType, designIndex: number) => {
                       return (
                         <div key={design.designId} ref={observerRef}>
-                          <DrawerTrigger className="w-full">
+                          <div className="w-full">
                             <DesignCard
                               onCardClick={() => {
+                                router.push(`/design/${design.designId}`)
                                 setSearchParams({
                                   designId: design.designId,
                                   storeId: design.storeId,
@@ -296,7 +297,7 @@ const DesignSearchResult = () => {
                                 handleHeartClick(design.designId)
                               }}
                             />
-                          </DrawerTrigger>
+                          </div>
                         </div>
                       )
                     })

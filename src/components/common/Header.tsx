@@ -107,19 +107,22 @@ const Header = (props: Props) => {
         )
       case 'DYNAMIC':
         return (
-          <div className={`absolute flex items-center gap-x-2 px-5 ${className} w-full bg-white`}>
-            <LeftArrowIcon
-              width={24}
-              height={24}
-              className="cursor-pointer"
-              onClick={() => {
-                onBack ? onBack() : router.back()
-              }}
-            />
-            <div className="flex flex-col">
-              {title && <h2 className="title-l">{title}</h2>}
-              {description && <p className="body-s-m text-gray-400">{description}</p>}
+          <div className={`absolute flex items-center px-5 ${className} w-full bg-white`}>
+            <div className='flex gap-x-2 items-center bg-white items-start'>
+              <LeftArrowIcon
+                width={24}
+                height={24}
+                className="cursor-pointer"
+                onClick={() => {
+                  onBack ? onBack() : router.back()
+                }}
+              />
+              <div className="flex flex-col">
+                {title && <h2 className="title-l">{title}</h2>}
+                {description && <p className="body-s-m text-gray-400">{description}</p>}
+              </div>
             </div>
+            {RightIcon ? RightIcon : null}
           </div>
         )
       case 'SEARCH':
