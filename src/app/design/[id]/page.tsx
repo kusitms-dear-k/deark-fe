@@ -130,7 +130,7 @@ const DesignDetail = () => {
           </div>
           <div className="flex px-5 py-2 border-b border-gray-150">
             <button
-              className="flex gap-x-1 items-center caption-m"
+              className="flex gap-x-1 items-center body-m text-gray-600"
               onClick={() => {
                 setSearchParams({
                   storeId: designDetail?.storeId,
@@ -139,7 +139,7 @@ const DesignDetail = () => {
               }}
             >
               {designDetail.storeName}
-              <div className={'relative h-[6px] w-[3px]'}>
+              <div className={'relative h-[8px] w-[4px]'}>
                 <Image className={'object-cover'} src={'/search/right-arrow.svg'} fill alt={'arrow'} />
               </div>
             </button>
