@@ -16,6 +16,9 @@ import LocationSelectionContent from '@/components/event/LocationSelectionConten
 import ToastMsg from '@/components/event/ToastMsg'
 import { formatDateForApi } from '@/utils/formatDataForApi'
 import { formatDateForDisplay } from '@/components/event/EventEditModal'
+import Cookies from 'js-cookie'
+import MiddleModal from '@/components/common/MiddleModal'
+import { KakaoIcon } from '@/assets/svgComponents'
 
 interface EventWithItems {
   event: EventDetail
@@ -47,6 +50,8 @@ export default function FavoriteMain() {
   const [editModalView, setEditModalView] = useState<'main' | 'dateSelect' | 'locationSelect'>('main')
   const [editEvent, setEditEvent] = useState({ name: '', date: '', location: '' })
 
+  const [isGoLoginModal, setIsGoLoginModal] = useState(false)
+
   useEffect(() => {
     const fetchAll = async () => {
       try {
@@ -70,6 +75,10 @@ export default function FavoriteMain() {
       }
     }
     fetchAll()
+
+    if (!Cookies.get('ACCESS_TOKEN')) {
+      setIsGoLoginModal(true)
+    }
   }, [])
 
   const handleMenuClick = (event: EventDetail) => {
@@ -301,6 +310,29 @@ export default function FavoriteMain() {
           )}
         </EventModal>
       )}
+
+      <MiddleModal
+        isOpenModal={isGoLoginModal}
+        onClose={() => setIsGoLoginModal(false)}
+        preventCloseOnOutsideClick={true}
+      >
+        <div className="flex flex-col">
+          <div>
+            <p className="mb-1 text-center text-[1rem] font-bold">찜하기는 로그인 후 이용이 가능해요.</p>
+            <p className="body-s text-center">30초만에 로그인하고 계속 해볼까요?</p>
+          </div>
+          <button
+            className="bg-kakao absolute bottom-0 left-0 flex h-[2.625rem] w-full items-center justify-center gap-2 rounded-b-lg text-center"
+            onClick={() => {
+              setIsGoLoginModal(false)
+              router.push('/login')
+            }}
+          >
+            <KakaoIcon width={19} height={17} />
+            카카오톡으로 쉬운 시작
+          </button>
+        </div>
+      </MiddleModal>
 
       {/* 토스트 메시지 */}
       <ToastMsg message={toastMessage} isVisible={showToast} onClose={() => setShowToast(false)} />

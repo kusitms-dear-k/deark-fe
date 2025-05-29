@@ -5,16 +5,28 @@ interface MiddleModalProps {
   onClose: () => void
   children: React.ReactNode
   className?: string
+  preventCloseOnOutsideClick?: boolean
 }
 
-const MiddleModal = ({ isOpenModal, onClose, children, className }: MiddleModalProps) => {
+const MiddleModal = ({
+  isOpenModal,
+  onClose,
+  children,
+  className,
+  preventCloseOnOutsideClick = false,
+}: MiddleModalProps) => {
   if (!isOpenModal) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50" onClick={onClose}>
+    <div
+      className="fixed inset-0 z-10 flex items-center justify-center bg-black/50"
+      onClick={() => {
+        if (!preventCloseOnOutsideClick) onClose() // 조건 추가
+      }}
+    >
       <div
-        className={`shadow-middlemodal relative h-[8.563rem] w-80 rounded-lg bg-white px-5 pt-[1.875rem] pb-0 ${className}`}
-        onClick={(e) => e.stopPropagation}
+        className={`shadow-middlemodal relative h-[8.563rem] w-[390px] rounded-lg bg-white px-5 pt-[1.875rem] pb-0 ${className}`}
+        onClick={(e) => e.stopPropagation()} // 수정: 함수 호출 형태로 변경
       >
         {children}
       </div>
