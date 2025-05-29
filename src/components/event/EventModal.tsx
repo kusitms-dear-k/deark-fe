@@ -11,7 +11,7 @@ const EventModal = ({ isOpenModal, onClose, children, title }: EventModalProps) 
   if (!isOpenModal) return null
 
   return (
-    <div className="fixed inset-0 z-50 flex flex-col bg-black/50" onClick={onClose}>
+    <div className="fixed inset-0 z-200 flex flex-col bg-black/50" onClick={onClose}>
       <div
         className="absolute bottom-0 left-0 flex min-h-[30rem] w-full flex-col gap-2.5 rounded-t-2xl bg-white"
         onClick={(e) => e.stopPropagation()}
