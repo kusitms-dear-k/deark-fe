@@ -2,14 +2,30 @@
 
 import { HeartIconEmpty, HeartIconFill, PlusIcon } from '@/assets/svgComponents'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 
 interface EventSelectionContentProps {
   events: { id: number; name: string; icon: string; isLiked: boolean }[]
-  onSelect: (eventId: number) => void
+  initialSelected: number[] // 초기 선택된 이벤트 ID 배열
   onAddNew: () => void
+  onClose: (selectedIds: number[]) => void
 }
 
-const EventSelectionContent = ({ events, onSelect, onAddNew }: EventSelectionContentProps) => {
+const EventSelectionContent = ({ events, initialSelected, onAddNew, onClose }: EventSelectionContentProps) => {
+  const [selectedIds, setSelectedIds] = useState<number[]>(initialSelected)
+
+  // 개별 이벤트 토글 핸들러
+  const handleSelect = (eventId: number) => {
+    setSelectedIds((prev) => (prev.includes(eventId) ? prev.filter((id) => id !== eventId) : [...prev, eventId]))
+  }
+
+  // 모달 바깥 클릭 시 자동 저장
+  useEffect(() => {
+    return () => {
+      onClose(selectedIds) // 컴포넌트 언마운트 시 선택된 ID 전달
+    }
+  }, [selectedIds])
+
   return (
     <div className="divide-y divide-gray-100">
       <button
@@ -26,7 +42,7 @@ const EventSelectionContent = ({ events, onSelect, onAddNew }: EventSelectionCon
         <button
           key={event.id}
           className="border-b-gray-150 flex h-14 w-full items-center justify-between border-b-1 px-3 hover:bg-gray-200"
-          onClick={() => onSelect(event.id)}
+          onClick={() => handleSelect(event.id)}
         >
           <div className="body-l-1 flex items-center gap-3">
             <div className="h-9 w-9 overflow-hidden rounded-full bg-gray-200">
@@ -35,7 +51,11 @@ const EventSelectionContent = ({ events, onSelect, onAddNew }: EventSelectionCon
             <span className={event.id === 2 ? 'font-bold' : ''}>{event.name}</span>
           </div>
           <span>
-            {event.isLiked ? <HeartIconFill width={24} height={24} /> : <HeartIconEmpty width={24} height={24} />}
+            {selectedIds.includes(event.id) ? (
+              <HeartIconFill width={24} height={24} />
+            ) : (
+              <HeartIconEmpty width={24} height={24} />
+            )}
           </span>
         </button>
       ))}

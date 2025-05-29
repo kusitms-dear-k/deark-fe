@@ -101,18 +101,19 @@ const TotalSearchPage = (props: Props) => {
           setSearchParams({ isTotalSearchPageOpen: false })
         }}
         RightIcon={
-          <div
-            onClick={handleSearchConfirm}
-            className="flex items-center gap-x-[0.75rem]"
-          >
+          <div onClick={handleSearchConfirm} className="flex items-center gap-x-[0.75rem]">
             <div className="h-[1rem] border-l border-gray-300" />
             <SearchIconRed width={24} height={24} />
           </div>
         }
       />
       <main className={'mt-[9.375rem] flex flex-col gap-y-6 px-5'}>
-        <RecommendedSearchList recommendedSearchList={textList} addRecentKeyword={addRecentKeyword}/>
-        <RecentSearchList recentSearchList={recentKeywords} onClear={handleClearRecentKeywords} onRemove={handleRemoveKeyword} />
+        <RecommendedSearchList recommendedSearchList={textList} addRecentKeyword={addRecentKeyword} />
+        <RecentSearchList
+          recentSearchList={recentKeywords}
+          onClear={handleClearRecentKeywords}
+          onRemove={handleRemoveKeyword}
+        />
       </main>
     </>
   )

@@ -22,6 +22,7 @@ import { EventApi } from '@/api/eventAPI'
 import { formatDateForApi } from '@/utils/formatDataForApi'
 import { DrawerTrigger } from '@/components/ui/drawer'
 import { addRecentlyViewedDesign } from '@/utils/common/function'
+import { useHeartClick } from '@/hooks/useHeartClick'
 
 type ModalViewType = 'eventList' | 'newEvent' | 'dateSelect' | 'locationSelect' | null
 
@@ -97,11 +98,22 @@ const DesignSearchResult = () => {
   }, [searchResults])
 
   // 이벤트 관련
-  const [isGoLoginModal, setIsGoLoginModal] = useState<boolean>(true)
-  const [isLogin, setIsLogin] = useState<boolean>(true)
-
-  const [selectedDesign, setSelectedDesign] = useState<number | null>(null)
-  const [modalView, setModalView] = useState<ModalViewType>(null)
+  const {
+    isGoLoginModal,
+    setIsGoLoginModal,
+    isLogin,
+    modalView,
+    setModalView,
+    eventList,
+    setEventList,
+    handleHeartClick,
+    selectedItem,
+    selectedEventIds,
+    toastMessage,
+    setToastMessage,
+    showToast,
+    setShowToast,
+  } = useHeartClick('design')
 
   const [newEvent, setNewEvent] = useState({
     name: '',
@@ -109,48 +121,18 @@ const DesignSearchResult = () => {
     location: '',
   })
 
-  const [showToast, setShowToast] = useState<boolean>(false)
-  const [toastMessage, setToastMessage] = useState<string>('')
-
-  const [eventList, setEventList] = useState<{ id: number; name: string; icon: string; isLiked: boolean }[]>([])
-  const handleHeartClick = async (itemId: number, type: 'design' | 'store') => {
-    const loginCheck = !!Cookies.get('ACCESS_TOKEN')
-    setIsLogin(loginCheck)
-
-    if (!loginCheck) {
-      setIsGoLoginModal(true)
-      return
+  const handleModalClose = async (selectedIds: number[]) => {
+    if (selectedItem) {
+      // selectedItem은 디자인/스토어 ID
+      try {
+        await EventApi.mapDesignToEvents({
+          design_id: selectedItem,
+          event_ids: selectedIds,
+        })
+      } catch (error) {
+        console.error('디자인 이벤트 폴더 저장 실패', error)
+      }
     }
-    const events = await EventApi.getMyEvents()
-    const checkedEvents =
-      type === 'design'
-        ? await EventApi.getCheckedEventsByDesign(itemId)
-        : await EventApi.getCheckedEventsByStore(itemId)
-
-    const merged = events.map((event) => ({
-      id: event.eventId,
-      name: event.title,
-      icon: event.thumbnailUrl,
-      isLiked: checkedEvents.some((ce) => ce.eventId === event.eventId && ce.isChecked),
-    }))
-    setEventList(merged)
-
-    setSelectedDesign(itemId)
-    setModalView('eventList')
-  }
-
-  const handleEventSelect = async (eventId: number) => {
-    console.log(`디자인 ${selectedDesign}을 이벤트 ${eventId}에 추가`)
-
-    await EventApi.mapDesignToEvents({
-      design_id: selectedDesign!,
-      event_ids: [eventId],
-    })
-
-    setModalView(null)
-
-    setToastMessage('아이템을 폴더에 추가했어요')
-    setShowToast(true)
   }
 
   const handleAddNewEvent = () => {
@@ -193,9 +175,9 @@ const DesignSearchResult = () => {
         setNewEvent({ name: '', date: '', location: '' })
 
         // 선택한 디자인을 새 이벤트에 바로 추가하고 싶다면
-        if (selectedDesign) {
+        if (selectedItem) {
           await EventApi.mapDesignToEvents({
-            design_id: selectedDesign,
+            design_id: selectedItem,
             event_ids: [newEventId],
           })
           setToastMessage('아이템을 새 폴더에 추가했어요')
@@ -211,7 +193,7 @@ const DesignSearchResult = () => {
   const getModalTitle = () => {
     switch (modalView) {
       case 'eventList':
-        return ''
+        return '이벤트 폴더 선택'
       case 'newEvent':
         return '새 이벤트 추가'
       case 'dateSelect':
@@ -226,7 +208,14 @@ const DesignSearchResult = () => {
   const renderModalContent = () => {
     switch (modalView) {
       case 'eventList':
-        return <EventSelectionContent events={eventList} onSelect={handleEventSelect} onAddNew={handleAddNewEvent} />
+        return (
+          <EventSelectionContent
+            events={eventList}
+            onClose={handleModalClose}
+            onAddNew={handleAddNewEvent}
+            initialSelected={selectedEventIds}
+          />
+        )
       case 'newEvent':
         return (
           <NewEventContent
@@ -269,7 +258,10 @@ const DesignSearchResult = () => {
           searchResults.length > 0 ? (
             searchResults.map((item, pageIndex) => {
               return (
-                <section key={pageIndex} className={item.results.designList.length > 0 ? 'grid grid-cols-2 gap-[2px] gap-y-5' : ''}>
+                <section
+                  key={pageIndex}
+                  className={item.results.designList.length > 0 ? 'grid grid-cols-2 gap-[2px] gap-y-5' : ''}
+                >
                   {item.results.designList.length > 0 ? (
                     item.results.designList.map((design: DesignType, designIndex: number) => {
                       return (
@@ -299,7 +291,10 @@ const DesignSearchResult = () => {
                               startPrice={design.price}
                               heartCount={design.likeCount}
                               location={design.address}
-                              onHeartClick={() => handleHeartClick(design.designId, 'design')}
+                              onHeartClick={(e: React.MouseEvent<HTMLDivElement>) => {
+                                e.stopPropagation()
+                                handleHeartClick(design.designId)
+                              }}
                             />
                           </DrawerTrigger>
                         </div>

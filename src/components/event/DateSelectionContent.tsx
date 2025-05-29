@@ -7,6 +7,7 @@ import { ko } from 'date-fns/locale'
 import 'react-day-picker/dist/style.css'
 import EventButtons from './EventButtons'
 import { ChevronLeftIcon, ChevronRightIcon } from '@/assets/svgComponents'
+import Calendar from '../search/CustomCalendar'
 
 interface DateSelectionContentProps {
   onSelect: (date: string) => void
@@ -14,14 +15,8 @@ interface DateSelectionContentProps {
 }
 
 const DateSelectionContent = ({ onSelect, onCancel }: DateSelectionContentProps) => {
-  const [selectedDate, setSelectedDate] = useState<Date | undefined>(new Date())
+  const [selectedDate, setSelectedDate] = useState<Date | null>(new Date())
   const [month, setMonth] = useState<Date>(new Date())
-
-  const handleDateSelect = (date: Date | undefined) => {
-    if (date) {
-      setSelectedDate(date)
-    }
-  }
 
   const handleConfirm = () => {
     if (selectedDate) {
@@ -36,7 +31,13 @@ const DateSelectionContent = ({ onSelect, onCancel }: DateSelectionContentProps)
   return (
     <div className="flex flex-col items-center border-t border-t-gray-200">
       <div className="body-l-1 mb-[4.625rem] flex justify-center pt-[1.625rem]">
-        <DayPicker
+        <Calendar
+          mode="single"
+          value={selectedDate}
+          setValue={setSelectedDate}
+          businessDays={[0, 1, 2, 3, 4, 5, 6]} // 모든 요일 허용
+        />
+        {/* <DayPicker
           mode="single"
           selected={selectedDate}
           onSelect={handleDateSelect}
@@ -67,7 +68,7 @@ const DateSelectionContent = ({ onSelect, onCancel }: DateSelectionContentProps)
                 <ChevronRightIcon width={24} height={24} />
               ),
           }}
-        />
+        /> */}
       </div>
 
       <hr className="w-full border-t border-gray-200" />

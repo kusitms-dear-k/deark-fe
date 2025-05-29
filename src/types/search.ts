@@ -52,6 +52,7 @@ export interface StoreDetailType {
   is24hSelfService: false
   isLunchBoxCake: true
   isBookmarkedInEvent: false
+  isLiked: boolean
   businessHours: BusinessHourType[]
   pickUpHours: PickUpHourType[]
   ownerName: string

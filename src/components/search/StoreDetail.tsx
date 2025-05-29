@@ -135,6 +135,8 @@ const StoreDetail = (props: Props) => {
               storeAddress={storeDetail.storeAddress}
               likeCount={storeDetail.likeCount}
               storeImageUrl={storeDetail.storeImageUrl}
+              isLiked={storeDetail.isLiked}
+              storeId={storeDetail.storeId}
             />
             <StoreDetailMenu storeDetailMenu={storeDetailMenu} setStoreDetailMenu={setStoreDetailMenu} />
             {renderStoreDetailContent(storeDetailMenu)}

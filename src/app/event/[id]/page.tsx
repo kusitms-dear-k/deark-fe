@@ -46,7 +46,7 @@ export default function EventDetailPage() {
   if (!eventDetail) return <div className="mt-10 text-center">이벤트를 찾을 수 없습니다.</div>
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen overflow-y-auto bg-white pb-26">
       <HeaderWithBack headerText="찜하기" />
       <EventHeader event={eventDetail} />
 
@@ -59,7 +59,7 @@ export default function EventDetailPage() {
           <EmptySection
             title="아직 저장된 디자인이 없어요."
             description="새로운 디자인을 찾아볼까요?"
-            buttonText="디자인 탐색"
+            buttonText="디자인 둘러보러 가기"
             pathname="/search?tab=design"
           />
         )}
@@ -80,7 +80,7 @@ export default function EventDetailPage() {
           <EmptySection
             title="아직 저장된 스토어가 없어요."
             description="새로운 스토어를 찾아볼까요?"
-            buttonText="스토어 탐색"
+            buttonText="스토어 둘러보러 가기"
             pathname="/search?tab=store"
           />
         )}

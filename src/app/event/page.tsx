@@ -196,9 +196,9 @@ export default function FavoriteMain() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 pb-16">
-      <HeaderWithBack headerText="찜하기" subText={`마음에 드는 케이크와 스토어를 '찜'해두세요!`} />
-      <AddEventBtn className="mx-auto mt-10" onClick={handleEventAddBtnClick} />
+    <div className="min-h-screen bg-gray-50 pb-26">
+      <HeaderWithBack headerText="찜하기" subText={`마음에 드는 케이크와 스토어를 '찜'해두세요!`} enableBack={false} />
+      <AddEventBtn className="mx-auto mt-16" onClick={handleEventAddBtnClick} />
       <main className="mx-auto mt-[1.125rem] grid w-[21.875rem] grid-cols-2 gap-[0.875rem]">
         {eventList.map(({ event, stores, designs }) => (
           <EventCard
@@ -233,7 +233,7 @@ export default function FavoriteMain() {
       )}
 
       {modalView === 'newEvent' && (
-        <EventModal isOpenModal={true} onClose={() => setModalView(null)} title="새 이벤트 추가">
+        <EventModal isOpenModal={true} onClose={() => setModalView(null)} title="새 이벤트 폴더 추가">
           <NewEventContent
             event={newEvent}
             setEvent={setNewEvent}

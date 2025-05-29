@@ -45,11 +45,11 @@ export default function EventActionSheet({ event, onClose, onEdit, onDelete }: E
 
         <button className="mx-auto flex h-[3rem] w-[21.875rem] items-center gap-2 py-3 text-left" onClick={onDelete}>
           <TrashIcon width={24} height={24} />
-          <span className="body-m-m">이벤트 삭제하기</span>
+          <span className="body-m-m">이벤트 폴더 삭제하기</span>
         </button>
         <button className="mx-auto mb-4 flex h-[3rem] w-[21.875rem] items-center gap-2 py-3 text-left" onClick={onEdit}>
           <EditPencilIcon width={24} height={24} />
-          <span className="body-m-m">이벤트 수정하기</span>
+          <span className="body-m-m">이벤트 폴더 수정하기</span>
         </button>
         <button
           className="button-m mx-auto flex h-[3.125rem] w-[21.875rem] items-center justify-center rounded-sm bg-gray-200 text-center"

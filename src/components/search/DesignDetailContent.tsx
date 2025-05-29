@@ -4,7 +4,13 @@ import { Gray700HeartIcon, HeartIconFill } from '@/assets/svgComponents'
 import { useOrderStore } from '@/store/orderStore'
 import { DrawerContent, DrawerFooter, DrawerHeader, DrawerTitle } from '@/components/ui/drawer'
 import { useSearchStore } from '@/store/searchStore'
+import { useHeartClick } from '@/hooks/useHeartClick'
+import { EventApi } from '@/api/eventAPI'
+import EventModal from '../event/EventModal'
+import EventSelectionContent from '../event/EventSelectContent'
+import ToastMsg from '../event/ToastMsg'
 import Cookies from 'js-cookie'
+
 
 interface Props {
   designDetail: DesignDetailType | undefined
@@ -16,52 +22,81 @@ const DesignDetailContent = ({ designDetail }: Props) => {
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
   const designId = useSearchStore((state) => state.designId) //선택된 designId
 
+  const {
+    modalView,
+    setModalView,
+    eventList,
+    handleHeartClick,
+    selectedEventIds,
+    toastMessage,
+    showToast,
+    setShowToast,
+  } = useHeartClick('design')
+
+  const handleModalClose = async (selectedIds: number[]) => {
+    if (designId) {
+      await EventApi.mapDesignToEvents({
+        design_id: designId,
+        event_ids: selectedIds,
+      })
+      setShowToast(true)
+    }
+    setModalView(null)
+  }
+
   if (!designDetail) return null
 
   return (
-    <DrawerContent >
-      <DrawerHeader
-        onClick={() => {
-          setSearchParams({
-            isStoreDetailModalOpen: true,
-            isDesignDetailModalOpen: false,
-            storeId: designDetail?.storeId,
-          })
-        }}
-      >
-        <DrawerTitle className="title-m text-center">{designDetail.storeName}</DrawerTitle>
-      </DrawerHeader>
+    <>
+      <DrawerContent>
+        <DrawerHeader
+          onClick={() => {
+            setSearchParams({
+              isStoreDetailModalOpen: true,
+              isDesignDetailModalOpen: false,
+              storeId: designDetail?.storeId,
+            })
+          }}
+        >
+          <DrawerTitle className="title-m text-center">{designDetail.storeName}</DrawerTitle>
+        </DrawerHeader>
 
-      <div className="overflow-y-scroll">
-        <div className="relative h-[22.5rem] w-full">
-          <Image src={designDetail.designImageUrl} alt="케이크 디자인" fill className="object-cover" priority />
+        <div className="overflow-y-scroll">
+          <div className="relative h-[22.5rem] w-full">
+            <Image src={designDetail.designImageUrl} alt="케이크 디자인" fill className="object-cover" priority />
+          </div>
+          
+          <section className="border-gray-150 border-b p-[1.25rem]">
+            <div className="flex items-center justify-between">
+              <h4 className="title-l">{designDetail.designName}</h4>
+              <div
+                className="flex items-center gap-x-1"
+                onClick={(e) => {
+                  handleHeartClick(designDetail.storeId)
+                }}
+              >
+                {designDetail.isLiked ? (
+                  <HeartIconFill width={24} height={24} />
+                ) : (
+                  <Gray700HeartIcon width={20} height={18} />
+                )}
+                <p className="caption-m text-gray-700">{designDetail.likeCount}</p>
+              </div>
+            </div>
+            <p className="body-m mt-[0.25rem] text-gray-800">{designDetail.description}</p>
+            <p className="title-xl mt-2">{designDetail.price.toLocaleString()}원</p>
+          </section>
+
+          <section className="p-[1.25rem]">
+            <h4 className="title-l">케이크 옵션</h4>
+            <div className="mt-[1rem] flex flex-col gap-y-[1.125rem]">
+              {designDetail.sizeList.length > 0 && <OptionRow title="크기" values={designDetail.sizeList} />}
+              {designDetail.creamList.length > 0 && <OptionRow title="크림 맛" values={designDetail.creamList} />}
+              {designDetail.sheetList.length > 0 && <OptionRow title="시트 맛" values={designDetail.sheetList} />}
+            </div>
+          </section>
         </div>
 
-        <section className="border-gray-150 border-b p-[1.25rem]">
-          <div className="flex items-center justify-between">
-            <h4 className="title-l">{designDetail.designName}</h4>
-            <div className="flex items-center gap-x-1">
-              {designDetail.isLiked ? (
-                <HeartIconFill width={24} height={24} />
-              ) : (
-                <Gray700HeartIcon width={20} height={18} />
-              )}
-              <p className="caption-m text-gray-700">{designDetail.likeCount}</p>
-            </div>
-          </div>
-          <p className="body-m mt-[0.25rem] text-gray-800">{designDetail.description}</p>
-          <p className="title-xl mt-2">{designDetail.price.toLocaleString()}원</p>
-        </section>
-
-        <section className="p-[1.25rem]">
-          <h4 className="title-l">케이크 옵션</h4>
-          <div className="mt-[1rem] flex flex-col gap-y-[1.125rem]">
-            {designDetail.sizeList.length > 0 && <OptionRow title="크기" values={designDetail.sizeList} />}
-            {designDetail.creamList.length > 0 && <OptionRow title="크림 맛" values={designDetail.creamList} />}
-            {designDetail.sheetList.length > 0 && <OptionRow title="시트 맛" values={designDetail.sheetList} />}
-          </div>
-        </section>
-      </div>
 
       <DrawerFooter className="border-gray-150 border-t bg-white px-[1.25rem] pt-[1.25rem]">
         <button
@@ -73,19 +108,30 @@ const DesignDetailContent = ({ designDetail }: Props) => {
                 designId: designId,
                 selectedDesignContent: designDetail?.designName,
                 storeId: designDetail?.storeId,
-              })
+              }) //TODO: storeId추가하기
               setSearchParams({ isDesignDetailModalOpen: false })
-            } else {
-              setState({ isLoginRequiredForOrderFormOpen: true })
-            }
-          }}
-          className="button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white"
-          type="button"
-        >
-          주문 문의하기
-        </button>
-      </DrawerFooter>
-    </DrawerContent>
+              } else {
+                setState({ isLoginRequiredForOrderFormOpen: true })
+              }
+            }}
+            className="button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white"
+            type="button"
+          >
+            주문 문의하기
+          </button>
+        </DrawerFooter>
+      </DrawerContent>
+
+      <EventModal isOpenModal={modalView === 'eventList'} onClose={() => setModalView(null)}>
+        <EventSelectionContent
+          events={eventList}
+          initialSelected={selectedEventIds}
+          onAddNew={() => setModalView('newEvent')}
+          onClose={handleModalClose}
+        />
+      </EventModal>
+      <ToastMsg message={toastMessage} isVisible={showToast} onClose={() => setShowToast(false)} />
+    </>
   )
 }
 
