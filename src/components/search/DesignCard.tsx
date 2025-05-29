@@ -11,7 +11,7 @@ interface DesignCardProps {
   startPrice?: number
   heartCount?: number
   location?: string
-  onHeartClick?: () => void
+  onHeartClick?: (e: React.MouseEvent<HTMLDivElement>) => void
   onCardClick: () => void
 }
 
@@ -48,7 +48,7 @@ const DesignCard = ({
             <div />
           )}
 
-          <div className={'relative h-[24px] w-[24px] cursor-pointer'} onClick={onHeartClick}>
+          <div className={'relative z-20 h-[24px] w-[24px] cursor-pointer'} onClick={onHeartClick}>
             {isHeart ? (
               <HeartIconFill className="bottom-0 object-cover" width="100%" height="100%" />
             ) : (

@@ -5,11 +5,13 @@ import { DrawerTrigger } from '@/components/ui/drawer'
 
 interface Props extends StoreType {
   onCardClick: () => void
+  onHeartClick?: (e: React.MouseEvent<HTMLDivElement>) => void
 }
 
 const StoreCard = (props: Props) => {
   const {
     onCardClick,
+    onHeartClick,
     storeName,
     storeId,
     storeImageUrl,
@@ -22,7 +24,7 @@ const StoreCard = (props: Props) => {
     likeCount,
   } = props
   return (
-    <DrawerTrigger onClick={onCardClick} className="w-full border-gray-150 border-b pb-[1rem]">
+    <DrawerTrigger onClick={onCardClick} className="border-gray-150 w-full border-b pb-[1rem]">
       <section className="flex items-center justify-between pr-[1.25rem]">
         <section className="flex items-center gap-x-[0.75rem]">
           <div className="relative h-[3.625rem] w-[3.625rem]">
@@ -38,7 +40,7 @@ const StoreCard = (props: Props) => {
             </div>
           </div>
         </section>
-        <section className="flex flex-col items-center">
+        <section className="flex flex-col items-center" onClick={onHeartClick}>
           {isLiked ? <HeartIconFill width={24} height={24} /> : <HeartIconEmpty width={24} height={24} />}
 
           <p className="caption-m text-gray-400">{likeCount}</p>
@@ -76,6 +78,6 @@ const StoreCard = (props: Props) => {
         )}
       </section>
     </DrawerTrigger>
-  );
+  )
 }
 export default StoreCard
