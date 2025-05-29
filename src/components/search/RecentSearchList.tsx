@@ -1,6 +1,7 @@
 import { CancelIcon, SearchIconGray } from '@/assets/svgComponents'
 import Image from 'next/image'
 import { useSearchStore } from '@/store/searchStore'
+import { useRouter } from 'next/navigation'
 
 interface Props {
   recentSearchList: string[]
@@ -11,6 +12,7 @@ interface Props {
 const RecentSearchList = (props: Props) => {
   const { recentSearchList, onClear, onRemove } = props
 
+  const router = useRouter()
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   return (
@@ -27,7 +29,10 @@ const RecentSearchList = (props: Props) => {
         recentSearchList.map((recentSearchText) => {
           return (
             <div
-              onClick={() => setSearchParams({ keyword: recentSearchText })}
+              onClick={() => {
+                setSearchParams({ keyword: recentSearchText })
+                router.push('/search')
+              }}
               key={recentSearchText}
               className="flex flex-col gap-y-4 px-4"
             >

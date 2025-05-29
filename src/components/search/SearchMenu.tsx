@@ -1,18 +1,20 @@
-import { Dispatch, SetStateAction } from 'react'
+import { useSearchStore } from '@/store/searchStore'
 
 interface Props {
   className?: string
   searchMenu: '디자인' | '스토어'
-  setSearchMenu: Dispatch<SetStateAction<'디자인' | '스토어'>>
 }
 
 const SearchMenu = (props: Props) => {
-  const { className = 'fixed top-[8.313rem]', searchMenu, setSearchMenu } = props
+  const { className = 'fixed top-[8.313rem]', searchMenu } = props
+
+  const setSearchParams = useSearchStore((state) => state.setSearchParams)
+
   return (
     <div className={`${className ? className : ''} z-30 flex w-full bg-white`}>
       <button
         onClick={() => {
-          setSearchMenu('디자인')
+          setSearchParams({searchMenu : '디자인'})
         }}
         className={
           searchMenu === '디자인'
@@ -24,7 +26,7 @@ const SearchMenu = (props: Props) => {
       </button>
       <button
         onClick={() => {
-          setSearchMenu('스토어')
+          setSearchParams({searchMenu : '스토어'})
         }}
         className={
           searchMenu === '스토어'

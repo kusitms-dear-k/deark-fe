@@ -7,6 +7,7 @@ import { AddressType, ResponseType } from '@/types/common'
 import { getDesignSearchResult } from '@/api/searchAPI'
 import { DesignListResponseType } from '@/types/search'
 import { useSearchStore } from '@/store/searchStore'
+import Skeleton from 'react-loading-skeleton'
 
 interface Props {
   selectedFilterContents: string[] //최종으로 api 요청에 포함될 content
@@ -179,46 +180,52 @@ const AddressFilterContent = (props: Props) => {
       <div className={selectedFilterContents.length > 0 ? 'flex h-[230px]' : 'flex h-[322px]'}>
         {/* 광역지방자치단체, provinces */}
         <section className="w-[150px] overflow-y-scroll border-r border-[var(--gray-150)]">
-          {provinces &&
-            provinces.map((province) => {
-              return (
-                <button
-                  onClick={() => {
-                    provinceButtonOnClick(province)
-                  }}
-                  key={province.addr_name}
-                  className={
-                    selectedProvinceAddrName === province.addr_name
-                      ? 'title-l flex w-full justify-start bg-[var(--blue-100)] px-5 py-[10px]'
-                      : 'body-l flex w-full justify-start px-5 py-[10px] text-[var(--gray-600)]'
-                  }
-                >
-                  {province.addr_name}
-                </button>
-              )
-            })}
+          {provinces && provinces.length > 0
+            ? provinces.map((province) => {
+                return (
+                  <button
+                    onClick={() => {
+                      provinceButtonOnClick(province)
+                    }}
+                    key={province.addr_name}
+                    className={
+                      selectedProvinceAddrName === province.addr_name
+                        ? 'title-l flex w-full justify-start bg-[var(--blue-100)] px-5 py-[10px]'
+                        : 'body-l flex w-full justify-start px-5 py-[10px] text-[var(--gray-600)]'
+                    }
+                  >
+                    {province.addr_name}
+                  </button>
+                )
+              })
+            : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => {
+                return <Skeleton key={value} width={110} height={30} className="ml-3" />
+              })}
         </section>
 
         {/* 시/군/구, districts */}
         <section className="w-[160px] overflow-y-scroll border-r border-[var(--gray-150)]">
-          {districts &&
-            districts.map((district) => {
-              return (
-                <button
-                  onClick={() => {
-                    districtButtonOnClick(district)
-                  }}
-                  key={district.addr_name}
-                  className={
-                    selectedDistrictAddrName === district.addr_name
-                      ? 'title-l flex w-full justify-start bg-[var(--gray-100)] px-5 py-[10px]'
-                      : 'body-l flex w-full justify-start px-5 py-[10px] text-[var(--gray-600)]'
-                  }
-                >
-                  {district.addr_name}
-                </button>
-              )
-            })}
+          {districts && districts.length > 0
+            ? districts.map((district) => {
+                return (
+                  <button
+                    onClick={() => {
+                      districtButtonOnClick(district)
+                    }}
+                    key={district.addr_name}
+                    className={
+                      selectedDistrictAddrName === district.addr_name
+                        ? 'title-l flex w-full justify-start bg-[var(--gray-100)] px-5 py-[10px]'
+                        : 'body-l flex w-full justify-start px-5 py-[10px] text-[var(--gray-600)]'
+                    }
+                  >
+                    {district.addr_name}
+                  </button>
+                )
+              })
+            : [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((value) => {
+                return <Skeleton key={value} width={110} height={30} className="ml-3" />
+              })}
         </section>
 
         {/* 동/읍/면 - towns */}

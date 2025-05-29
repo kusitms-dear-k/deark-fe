@@ -238,7 +238,7 @@ const OrderForm = () => {
   }, [user?.nickname, user?.phoneNumber])
 
   return (
-    <div className="z-40 flex h-screen flex-col">
+    <div className="flex h-screen flex-col overflow-y-scroll">
       {isOrderExitConfirmModalOpen && (
         <OrderExitConfirmModal
           onClick={() => setState({ isOrderExitConfirmModalOpen: false })}
@@ -285,7 +285,7 @@ const OrderForm = () => {
         </AnimatePresence>
       )}
       <div>
-        <form className="z-40 mt-24 flex flex-col gap-y-[16px] overflow-y-scroll px-5 pb-5" onSubmit={handleSubmit}>
+        <form className="z-40 mt-24 flex flex-col flex-1 gap-y-[16px] overflow-y-scroll px-5 pb-5" onSubmit={handleSubmit}>
           <NameField setBlurred={setBlurred} />
           {(user?.nickname || (name && blurred.name)) && (
             <PhoneNumberField blurred={blurred} setBlurred={setBlurred} />

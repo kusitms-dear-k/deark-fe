@@ -17,10 +17,7 @@ import RequireLoginModal from '@/components/mypage/RequireLoginModal'
 import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSuccessModal'
 import { AnimatePresence } from 'framer-motion'
 import Filter from '@/components/common/Filter'
-import StoreDetail from '@/components/search/StoreDetail'
-import DesignDetailContent from '@/components/search/DesignDetailContent'
 import useSearchResult from '@/hooks/useSearchResult'
-import { Drawer } from '@/components/ui/drawer'
 import { addRecentlyViewedDesign } from '@/utils/common/function'
 import OrderForm from '@/components/order/OrderForm'
 import UpcomingEventBanner from '@/components/mypage/UpcomingEventBanner'
@@ -40,16 +37,11 @@ const MyPage = () => {
   const setLoginStoreState = useLoginStore((state) => state.setState)
 
   const {
-    isStoreDetailModalOpen,
-    isDesignDetailModalOpen,
     isOrderFormOpen,
     isFilterModalOpen,
     isOrderSubmissionSuccessModalOpen,
     setIsFilterModalOpen,
     selectedFilterType,
-    storeDetailMenu,
-    setStoreDetailMenu,
-    designDetail,
     setState,
     renderFilterContent,
     resetOrderForm,
@@ -118,40 +110,17 @@ const MyPage = () => {
     <OrderForm />
   ) : (
     <main className="relative">
-      <Drawer
-        open={isStoreDetailModalOpen || isDesignDetailModalOpen}
-        onOpenChange={(open) => {
-          if (!open) {
-            if (isStoreDetailModalOpen) {
-              setSearchParams({ isStoreDetailModalOpen: false })
-            }
-            if (isDesignDetailModalOpen) {
-              setSearchParams({ isDesignDetailModalOpen: false })
-            }
-          }
-        }}
-      >
+      <div>
         {isLogoutModalOpen && <LogoutModal onClick={() => setIsLogoutModalOpen(false)} handleLogout={handleLogout} />}
         {!token && <RequireLoginModal onClick={() => setState({isLoginRequiredForOrderFormOpen: false})}/>}
-        {/* 주문서 문의가 완료될 때 보이는 모달 */}
-        {isOrderSubmissionSuccessModalOpen && (
-          <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })} />
-        )}
+
         {/* 필터 모달 */}
         <AnimatePresence>
           {isFilterModalOpen && (
             <Filter setIsFilterModalOpen={setIsFilterModalOpen}>{renderFilterContent(selectedFilterType)}</Filter>
           )}
         </AnimatePresence>
-
-        {/* 가게 상세 페이지 모달 */}
-        {isStoreDetailModalOpen && (
-          <StoreDetail setStoreDetailMenu={setStoreDetailMenu} storeDetailMenu={storeDetailMenu} />
-        )}
-
-        {/* 디자인 상세 페이지 모달 */}
-        {isDesignDetailModalOpen && <DesignDetailContent designDetail={designDetail} />}
-      </Drawer>
+      </div>
 
       {/* 프로필 관련 */}
       <div className="bg-gray-100 px-5 pb-6">
@@ -214,6 +183,7 @@ const MyPage = () => {
                   <div key={design.designId} className="min-w-[12.125rem]">
                     <DesignCard
                       onCardClick={() => {
+                        router.push(`/design/${design.designId}`)
                         setSearchParams({
                           designId: design.designId,
                           isDesignDetailModalOpen: true,
@@ -251,6 +221,7 @@ const MyPage = () => {
                   <div key={recommendResult.designId} className="scrollbar-hide min-w-[12.125rem]">
                     <DesignCard
                       onCardClick={() => {
+                        router.push(`/design/${recommendResult.designId}`)
                         setSearchParams({
                           designId: recommendResult.designId,
                           isDesignDetailModalOpen: true,

@@ -1,7 +1,6 @@
 import { DropDownIcon, HeartIconEmpty, HeartIconFill } from '@/assets/svgComponents'
 import Image from 'next/image'
 import { StoreType } from '@/types/search'
-import { DrawerTrigger } from '@/components/ui/drawer'
 
 interface Props extends StoreType {
   onCardClick: () => void
@@ -24,7 +23,7 @@ const StoreCard = (props: Props) => {
     likeCount,
   } = props
   return (
-    <DrawerTrigger onClick={onCardClick} className="border-gray-150 w-full border-b pb-[1rem]">
+    <div onClick={onCardClick} className="border-gray-150 w-full border-b pb-[1rem]">
       <section className="flex items-center justify-between pr-[1.25rem]">
         <section className="flex items-center gap-x-[0.75rem]">
           <div className="relative h-[3.625rem] w-[3.625rem]">
@@ -74,7 +73,7 @@ const StoreCard = (props: Props) => {
           </div>
         )}
       </section>
-    </DrawerTrigger>
+    </div>
   )
 }
 export default StoreCard

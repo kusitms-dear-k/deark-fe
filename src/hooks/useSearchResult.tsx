@@ -40,31 +40,6 @@ const useSearchResult = () => {
   const resetOrderForm = useOrderStore((state) => state.resetOrderForm)
 
   /**
-   * 스토어,디자인 상세페이지 데이터 불러오기
-   */
-  useEffect(() => {
-    // 1. 초기 상태 실행
-    getDesignDetailData(designId)
-      .then((res: ResponseType<DesignDetailType>) => {
-        console.log('디자인 상세', res.results)
-        setDesignDetail(res.results)
-      })
-      .catch(console.error)
-
-    // 2. 이후 상태 변화 감지
-    const unsubscribe = useSearchStore.subscribe((currentStatus, prevState) => {
-      getDesignDetailData(currentStatus.designId)
-        .then((res) => {
-          console.log('디자인 상세:', res)
-          setDesignDetail(res.results)
-        })
-        .catch(console.error)
-    })
-
-    return () => unsubscribe()
-  }, [])
-
-  /**
    * 필터 페이지
    * @param filter 정렬, 위치, 날짜, 가격대
    */
