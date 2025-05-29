@@ -167,7 +167,7 @@ const HomePage = () => {
 
         <div
           className={`z-40 w-full px-5 pt-2 pb-4 transition-all duration-300 ${
-            !isAtTop ? 'bg-bg-300 fixed top-0 pt-[1.563rem]' : 'fixed top-40 z-10 bg-transparent'
+            !isAtTop ? 'bg-bg-300 fixed top-0 pt-15' : 'fixed top-40 z-10 bg-transparent'
           }`}
         >
           <SearchInput
@@ -187,10 +187,10 @@ const HomePage = () => {
           <SearchContent
             hasUserSelectedPrice={hasUserSelectedPrice}
             searchMenuClassname={
-              !isAtTop ? 'transition-all duration-300 fixed top-23' : 'transition-all duration-300 fixed top-60'
+              !isAtTop ? 'transition-all duration-300 fixed top-31' : 'transition-all duration-300 fixed top-60'
             }
             FilterPanelClassname={
-              !isAtTop ? 'transition-all duration-300 fixed top-34' : 'transition-all duration-300 fixed top-71'
+              !isAtTop ? 'transition-all duration-300 fixed top-42' : 'transition-all duration-300 fixed top-71'
             }
             SearchSummaryPanelClassname={!isAtTop ? 'mt-5' : 'mt-[9.375rem]'}
             isFilterModalOpen={isFilterModalOpen}
