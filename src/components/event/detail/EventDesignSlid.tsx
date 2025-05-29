@@ -46,8 +46,8 @@ export default function DesignCarousel({ designs, eventId }: DesignCarouselProps
             key={design.designId}
             className="flex w-[140px] flex-none flex-col items-start gap-2 rounded border border-gray-100 bg-white p-2 shadow"
           >
-            <div className="relative h-[112px] w-[112px]">
-              <Image src={design.designImageUrl} alt={design.designName} fill className="rounded object-cover" />
+            <div className="relative h-[112px] w-[120px] mx-auto">
+              <Image src={design.designImageUrl} alt={design.designName} fill className="rounded object-cover"/>
               <div className="absolute top-2 right-2">
                 <HeartIconFill width={20} height={20} className="text-red-500" />
               </div>
