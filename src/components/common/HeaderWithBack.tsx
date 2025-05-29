@@ -15,7 +15,7 @@ const HeaderWithBack = ({ onBack, headerText, subText, enableBack = true, classN
   const router = useRouter()
 
   return (
-    <header className={`${className} mx-auto flex h-[2.813rem] w-[21.875rem] justify-start gap-2 pt-7`}>
+    <header className={`${className} mx-auto flex h-[2.813rem] w-[21.875rem] justify-start gap-2 pt-[74px]`}>
       {enableBack && (
         <LeftArrowIcon
           width={24}
