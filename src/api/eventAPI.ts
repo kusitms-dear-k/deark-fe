@@ -65,7 +65,6 @@ export const EventApi = {
         Authorization: `Bearer ${process.env.NEXT_PUBLIC_TEST_TOKEN}`,
       },
     })
-    return handleResponse<void>(res)
   },
 
   // 스토어-이벤트 매핑
