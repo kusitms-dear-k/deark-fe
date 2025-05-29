@@ -137,8 +137,8 @@ const DesignDetailContent = ({ designDetail }: Props) => {
 
 const OptionRow = ({ title, values }: { title: string; values: string[] }) => (
   <div className="flex items-center gap-x-[0.5rem]">
-    <p className="title-s text-gray-700">{title}</p>
-    <div className="flex flex-wrap gap-x-[0.375rem]">
+    <p className="flex whitespace-nowrap title-s text-gray-700">{title}</p>
+    <div className="flex flex-wrap gap-[0.375rem]">
       {values.map((value) => (
         <div key={value} className="chip-s bg-gray-150 rounded-[0.15rem] px-[0.45rem] py-[0.219rem]">
           {value}
