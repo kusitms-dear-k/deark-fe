@@ -21,7 +21,7 @@ export const useInfiniteStoreDesign = (params: {
     getNextPageParam: (lastPage, allPages) => {
       console.log(lastPage, allPages)
       const currentPage = lastPage.results.page
-      const totalPages = Math.floor(lastPage.results.totalCount / 4)
+      const totalPages = Math.floor(lastPage.results.totalCount / 30)
 
       const hasMore = currentPage < totalPages - 1
       return hasMore ? currentPage + 1 : undefined

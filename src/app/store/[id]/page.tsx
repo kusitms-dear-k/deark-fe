@@ -46,7 +46,7 @@ const StoreDetail = () => {
   // 무한스크롤 훅 호출
   const { data, fetchNextPage, hasNextPage, isFetchingNextPage, status } = useInfiniteStoreDesign({
     pageParam: 0,
-    count: 4,
+    count: 30,
     storeId: parseInt(params.id as string),
     sizeName: sizeName,
   })
