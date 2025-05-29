@@ -27,7 +27,7 @@ export default function DeleteEventModal({ onClose, onConfirm }: DeleteEventModa
             className="button-l w-1/2 rounded-br-lg rounded-bl-none bg-blue-400 py-3 font-semibold text-white"
             onClick={onConfirm}
           >
-            삭제
+            네, 삭제할래요
           </button>
         </div>
       </div>
