@@ -35,7 +35,7 @@ const StoreDetail = () => {
 
   const setState = useOrderStore((state) => state.setState)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
-
+  const resetOrderForm = useOrderStore((state) => state.resetOrderForm)
 
   useEffect(() => {
     if (storeId) {
@@ -112,6 +112,19 @@ const StoreDetail = () => {
 
     return () => unsubscribe()
   }, [storeId])
+
+  // 3초 후 자동 닫힘 처리
+  useEffect(() => {
+    if (isOrderSubmissionSuccessModalOpen) {
+      const timer = setTimeout(() => {
+        setState({ isOrderSubmissionSuccessModalOpen: false })
+        //초기화
+        resetOrderForm()
+      }, 3000)
+
+      return () => clearTimeout(timer) // cleanup
+    }
+  }, [isOrderSubmissionSuccessModalOpen, setState])
 
   /**
    * 가게 상세 페이지
