@@ -128,9 +128,9 @@ const DesignDetail = () => {
           <div className="relative h-[22.5rem] w-full">
             <Image src={designDetail.designImageUrl} alt="케이크 디자인" fill className="object-cover" priority />
           </div>
-          <div className="flex px-5 py-2 border-b border-gray-150">
+          <div className="border-gray-150 flex border-b px-5 py-2">
             <button
-              className="flex gap-x-1 items-center body-m text-gray-600"
+              className="body-m flex items-center gap-x-1 text-gray-600"
               onClick={() => {
                 setSearchParams({
                   storeId: designDetail?.storeId,
