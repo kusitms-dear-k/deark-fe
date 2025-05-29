@@ -60,7 +60,7 @@ const NewEventContent = ({
         </button>
       </div>
 
-      {/* <div className="flex flex-col gap-1">
+      <div className="flex flex-col gap-1">
         <label className="title-m text-gray-700">이벤트 장소</label>
         <button
           className="flex h-[3.125rem] w-[20.375rem] items-center justify-between rounded-sm border border-gray-200 px-4"
@@ -71,7 +71,7 @@ const NewEventContent = ({
           </span>
           <MarkerPinIcon width={24} height={24} />
         </button>
-      </div> */}
+      </div>
 
       <hr className="w-full border-t border-gray-200" />
       <EventButtons onCancel={onCancel} onClickActiveBtn={onSave} eventValue={event.name} activeBtnText="저장하기" />

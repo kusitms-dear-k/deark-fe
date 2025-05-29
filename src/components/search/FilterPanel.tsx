@@ -11,6 +11,7 @@ import {
 import { Dispatch, SetStateAction } from 'react'
 import { FilterType } from '@/types/common'
 import { useSearchStore } from '@/store/searchStore'
+import { format } from 'date-fns'
 
 interface Props {
   className?: string
@@ -22,7 +23,14 @@ interface Props {
 }
 
 const FilterPanel = (props: Props) => {
-  const { className='fixed top-[11.063rem]', isFilterModalOpen, setIsFilterModalOpen, setSelectedFilterType, selectedFilterType, hasUserSelectedPrice } = props
+  const {
+    className = 'fixed top-[11.063rem]',
+    isFilterModalOpen,
+    setIsFilterModalOpen,
+    setSelectedFilterType,
+    selectedFilterType,
+    hasUserSelectedPrice,
+  } = props
 
   const searchState = useSearchStore.getState()
   const isLunchBoxCake = useSearchStore((state) => state.isLunchBoxCake)
@@ -31,23 +39,37 @@ const FilterPanel = (props: Props) => {
   const locationList = useSearchStore((state) => state.locationList)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
+  const startDate = useSearchStore((state) => state.startDate)
+  const endDate = useSearchStore((state) => state.endDate)
+
+  const formatDate = (date: string | null) => (date ? format(new Date(date), 'MM/dd') : null)
+
+  let dateText = '날짜'
+  if (startDate && endDate) {
+    dateText = `${formatDate(startDate)} ~ ${formatDate(endDate)}`
+  } else if (startDate) {
+    dateText = `${formatDate(startDate)} ~`
+  }
+  const isDateSelected = !!startDate || !!endDate
+
   const formatPriceContent = (minPrice: null | number, maxPrice: null | number) => {
     if (minPrice === 0 && maxPrice !== null) return `~${maxPrice.toLocaleString()} 이하`
-    if (minPrice !== 0 && maxPrice !== null && minPrice !== null) return `${minPrice.toLocaleString()}~${maxPrice.toLocaleString()}`
+    if (minPrice !== 0 && maxPrice !== null && minPrice !== null)
+      return `${minPrice.toLocaleString()}~${maxPrice.toLocaleString()}`
     if (minPrice !== 0 && maxPrice === null && minPrice !== null) return `${minPrice.toLocaleString()} 이상`
   }
 
   const handleIsSelfServiceClick = () => {
     if (typeof window.gtag === 'function') {
-      window.gtag('event', 'filter-isSelfService');
+      window.gtag('event', 'filter-isSelfService')
     }
-  };
+  }
 
   const handleIsLunchBoxCakeClick = () => {
     if (typeof window.gtag === 'function') {
-      window.gtag('event', 'filter-isSelfService');
+      window.gtag('event', 'filter-isSelfService')
     }
-  };
+  }
 
   return (
     <section
@@ -117,20 +139,22 @@ const FilterPanel = (props: Props) => {
           setSelectedFilterType('DATE')
         }}
         className={
-          selectedFilterType === 'DATE' && isFilterModalOpen
+          isDateSelected || (selectedFilterType === 'DATE' && isFilterModalOpen)
             ? 'flex h-fit items-center gap-x-[0.125rem] rounded-[1.25rem] border border-blue-400 px-[0.75rem] py-[0.313rem] whitespace-nowrap'
             : 'flex h-fit items-center gap-x-[0.125rem] rounded-[1.25rem] border border-gray-200 px-[0.75rem] py-[0.313rem] whitespace-nowrap'
         }
       >
         <p
           className={
-            selectedFilterType === 'DATE' && isFilterModalOpen ? 'body-m text-blue-400' : 'body-m text-gray-500'
+            isDateSelected || (selectedFilterType === 'DATE' && isFilterModalOpen)
+              ? 'body-m text-blue-400'
+              : 'body-m text-gray-500'
           }
         >
-          날짜
+          {dateText}
         </p>
         <div className="relative h-[1.25rem] w-[1.25rem]">
-          {selectedFilterType === 'DATE' && isFilterModalOpen ? (
+          {isDateSelected || (selectedFilterType === 'DATE' && isFilterModalOpen) ? (
             <BlueDropDownIcon className="object-cover" width="100%" height="100%" />
           ) : (
             <DropDownIcon className="object-cover" width="100%" height="100%" />
@@ -214,7 +238,7 @@ const FilterPanel = (props: Props) => {
           )}
         </div>
       </button>
-      <div className="fixed z-40 right-0 w-[70px] h-[40px] bg-gradient-to-l from-white to-transparent" />
+      <div className="fixed right-0 z-40 h-[40px] w-[70px] bg-gradient-to-l from-white to-transparent" />
     </section>
   )
 }

@@ -93,7 +93,10 @@ const BottomButton = ({
 }) => {
   return (
     <div className="border-gray-150 flex gap-x-[0.5rem] border-t px-[1.25rem] pt-[1.25rem] pb-[0.5rem]">
-      <button onClick={reset} className="flex whitespace-nowrap button-l rounded-[0.25rem] bg-gray-200 px-[1.75rem] py-[0.75rem]">
+      <button
+        onClick={reset}
+        className="button-l flex rounded-[0.25rem] bg-gray-200 px-[1.75rem] py-[0.75rem] whitespace-nowrap"
+      >
         초기화
       </button>
       <button

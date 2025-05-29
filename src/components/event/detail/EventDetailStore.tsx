@@ -7,9 +7,10 @@ import { EventApi } from '@/api/eventAPI'
 interface EventDetailStoreCardProps {
   store: StoreItem
   eventId: number
+  onRemove: (storeId: number) => void
 }
 
-export default function EventDetailStoreCard({ store, eventId }: EventDetailStoreCardProps) {
+export default function EventDetailStoreCard({ store, eventId, onRemove }: EventDetailStoreCardProps) {
   const [memo, setMemo] = useState(store.memo ?? '')
   const [isEditing, setIsEditing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
@@ -37,7 +38,7 @@ export default function EventDetailStoreCard({ store, eventId }: EventDetailStor
             <div className="text-xs text-neutral-700">{store.storeAddress}</div>
           </div>
         </div>
-        <HeartIconFill width={24} height={24} className="text-red-500" />
+        <HeartIconFill width={24} height={24} className="text-red-500" onClick={() => onRemove(store.storeId)} />
       </div>
       {/* 대표 이미지 최대 4장 */}
       <div className="flex gap-1">

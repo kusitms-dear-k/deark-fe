@@ -45,6 +45,17 @@ export default function EventDetailPage() {
   if (error) return <div className="mt-10 text-center text-red-500">{error}</div>
   if (!eventDetail) return <div className="mt-10 text-center">이벤트를 찾을 수 없습니다.</div>
 
+  // 삭제 핸들러
+  const handleRemoveDesign = async (designId: number) => {
+    await EventApi.removeDesignFromEvent(eventId, designId)
+    setDesigns((prev) => prev.filter((d) => d.designId !== designId))
+  }
+
+  const handleRemoveStore = async (storeId: number) => {
+    await EventApi.removeStoreFromEvent(eventId, storeId)
+    setStores((prev) => prev.filter((s) => s.storeId !== storeId))
+  }
+
   return (
     <div className="min-h-screen overflow-y-auto bg-white pb-26">
       <HeaderWithBack headerText={eventDetail.title} />
@@ -54,7 +65,7 @@ export default function EventDetailPage() {
       <section className="mx-auto mt-4 w-[21.875rem]">
         <div className="mb-2 text-base font-bold text-zinc-800">디자인</div>
         {designs.length > 0 ? (
-          <DesignCarousel designs={designs} eventId={eventDetail.eventId} />
+          <DesignCarousel designs={designs} eventId={eventDetail.eventId} onRemove={handleRemoveDesign} />
         ) : (
           <EmptySection
             title="아직 저장된 디자인이 없어요."
@@ -73,7 +84,12 @@ export default function EventDetailPage() {
         {stores.length > 0 ? (
           <div className="flex flex-col gap-4">
             {stores.map((store) => (
-              <EventDetailStoreCard key={store.storeId} store={store} eventId={eventDetail.eventId} />
+              <EventDetailStoreCard
+                key={store.storeId}
+                store={store}
+                eventId={eventDetail.eventId}
+                onRemove={handleRemoveStore}
+              />
             ))}
           </div>
         ) : (
