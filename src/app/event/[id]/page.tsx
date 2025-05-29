@@ -47,7 +47,7 @@ export default function EventDetailPage() {
 
   return (
     <div className="min-h-screen overflow-y-auto bg-white pb-26">
-      <HeaderWithBack headerText="찜하기" />
+      <HeaderWithBack headerText={eventDetail.title} />
       <EventHeader event={eventDetail} />
 
       {/* 디자인 섹션 */}
