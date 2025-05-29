@@ -48,6 +48,7 @@ const HomePage = () => {
   }, [isWelcomeModalOpen, setState])
 
   const scrollDirection = useScrollDirection()
+  const isScrollingDown = scrollDirection === 'down'
 
   const [isAtTop, setIsAtTop] = useState(true)
 
@@ -104,7 +105,7 @@ const HomePage = () => {
         >
           <SearchInput
             onClick={() => {
-              setSearchParams({ isTotalSearchPageOpen: true })
+              setSearchParams({ isTotalSearchPageOpen: true, searchMenu: '디자인' })
             }}
             LeftIcon={<RedSearchIcon width={24} height={24} />}
             className="w-full bg-white"
@@ -121,9 +122,9 @@ const HomePage = () => {
             searchMenuClassname={
               !isAtTop ? 'transition-all duration-300 fixed top-[127px]' : 'transition-all duration-300 fixed top-60'
             }
-            FilterPanelClassname={
-              !isAtTop ? 'transition-all duration-300 fixed top-[171px]' : 'transition-all duration-300 fixed top-71'
-            }
+            FilterPanelClassname={`transition-all duration-300 fixed ${
+              !isAtTop ? 'top-[171px]' : 'top-71'
+            } ${!isAtTop ? (isScrollingDown ? 'opacity-0' : 'opacity-100') : ''}`}
             SearchSummaryPanelClassname={!isAtTop ? 'mt-5' : 'mt-[9.375rem]'}
             isFilterModalOpen={isFilterModalOpen}
             selectedFilterType={selectedFilterType}
