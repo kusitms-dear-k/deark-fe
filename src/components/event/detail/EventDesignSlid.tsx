@@ -9,9 +9,10 @@ import { EventApi } from '@/api/eventAPI'
 interface DesignCarouselProps {
   designs: DesignItem[]
   eventId: number
+  onRemove: (designId: number) => void
 }
 
-export default function DesignCarousel({ designs, eventId }: DesignCarouselProps) {
+export default function DesignCarousel({ designs, eventId, onRemove }: DesignCarouselProps) {
   // 각 디자인별 메모 상태를 따로 관리 (designId를 key로)
   const [memoMap, setMemoMap] = useState<{ [designId: number]: string }>({})
 
@@ -46,9 +47,9 @@ export default function DesignCarousel({ designs, eventId }: DesignCarouselProps
             key={design.designId}
             className="flex w-[140px] flex-none flex-col items-start gap-2 rounded border border-gray-100 bg-white p-2 shadow"
           >
-            <div className="relative h-[112px] w-[120px] mx-auto">
-              <Image src={design.designImageUrl} alt={design.designName} fill className="rounded object-cover"/>
-              <div className="absolute top-2 right-2">
+            <div className="relative mx-auto h-[112px] w-[120px]">
+              <Image src={design.designImageUrl} alt={design.designName} fill className="rounded object-cover" />
+              <div className="absolute top-2 right-2" onClick={() => onRemove(design.designId)}>
                 <HeartIconFill width={20} height={20} className="text-red-500" />
               </div>
             </div>
