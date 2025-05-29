@@ -7,6 +7,7 @@ interface SearchStoreType {
   pageParam: number
   count: number
   sortType: SortType
+  searchMenu: '디자인' | '스토어'
   keyword: string | null
   isSameDayOrder: boolean | null
   locationList: string[] | null
@@ -29,6 +30,7 @@ interface SearchStoreType {
     pageParam?: number
     count?: number
     sortType?: SortType
+    searchMenu?: '디자인' | '스토어'
     keyword?: string | null
     isSameDayOrder?: boolean | null
     locationList?: string[] | null
@@ -55,6 +57,7 @@ export const useSearchStore = create<SearchStoreType>((set) => ({
   pageParam: 0,
   count: 6,
   sortType: 'POPULARITY',
+  searchMenu: '디자인',
   keyword: null,
   isSameDayOrder: null,
   locationList: null,
@@ -81,6 +84,7 @@ export const useSearchStore = create<SearchStoreType>((set) => ({
     pageParam?: number
     count?: number
     sortType?: SortType
+    searchMenu?: '디자인' | '스토어'
     keyword?: string | null
     isSameDayOrder?: boolean | null
     locationList?: string[] | null

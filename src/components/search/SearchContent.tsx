@@ -22,12 +22,12 @@ interface Props {
 const SearchContent = (props: Props) => {
   const {searchMenuClassname, FilterPanelClassname, SearchSummaryPanelClassname, isFilterModalOpen, selectedFilterType, setIsFilterModalOpen, setSelectedFilterType, totalCount, hasUserSelectedPrice} = props
 
-  const [searchMenu, setSearchMenu] = useState<'디자인' | '스토어'>('디자인')
+  const searchMenu = useSearchStore((state) => state.searchMenu)
   const sortType = useSearchStore((state) => state.sortType)
 
   return (
     <>
-      <SearchMenu className={searchMenuClassname} searchMenu={searchMenu} setSearchMenu={setSearchMenu} />
+      <SearchMenu className={searchMenuClassname} searchMenu={searchMenu}/>
       <FilterPanel
         hasUserSelectedPrice={hasUserSelectedPrice}
         className={FilterPanelClassname}

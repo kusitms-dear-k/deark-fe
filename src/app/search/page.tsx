@@ -45,8 +45,7 @@ const SearchPage = () => {
             headerType="SEARCH"
             keyword={keyword}
             onBack={() => {
-              setSearchParams({ keyword: null })
-              setSearchParams({ isTotalSearchPageOpen: false })
+              setSearchParams({ keyword: null, isTotalSearchPageOpen: false, searchMenu: '디자인' })
               router.back()
             }}
             RightIcon={
