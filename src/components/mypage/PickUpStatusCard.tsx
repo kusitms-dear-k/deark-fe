@@ -77,8 +77,34 @@ const PickUpStatusCard: React.FC<PickUpStatusCardProps> = ({
 
   const colorClasses = getColorClasses(1, progressInfo.step, progressInfo.isCompleted)
 
-  const formatDate = (date: string) => {
-    return date
+  const formatPickupDateTime = (pickupDate: string, pickupTime: string): string => {
+    // 요일 한글로 매핑
+    const dayMap = ['일', '월', '화', '수', '목', '금', '토']
+
+    // 1. 날짜에서 년/월/일 추출
+    const match = pickupDate.match(/(\d{4})년 (\d{1,2})월 (\d{1,2})일/)
+    if (!match) return ''
+
+    const [, year, month, day] = match
+    const date = new Date(`${year}-${month.padStart(2, '0')}-${day.padStart(2, '0')}`)
+    const dayOfWeek = dayMap[date.getDay()]
+
+    // 2. 시간에서 시/분 추출
+    const timeMatch = pickupTime.match(/(\d{1,2})시 (\d{2})분/)
+    if (!timeMatch) return ''
+
+    let [_, hourStr, minuteStr] = timeMatch
+    let hour = parseInt(hourStr, 10)
+    const isPM = hour >= 12
+
+    // 3. 12시간제로 변환
+    if (hour === 0) hour = 12
+    if (hour > 12) hour -= 12
+
+    const meridiem = isPM ? '오후' : '오전'
+
+    // 4. 최종 포맷
+    return `${month.padStart(2, '0')}/${day.padStart(2, '0')}(${dayOfWeek}) ${meridiem} ${hour}:${minuteStr}`
   }
 
   const setOrderState = useOrderStore((state) =>state.setState)
@@ -91,7 +117,7 @@ const PickUpStatusCard: React.FC<PickUpStatusCardProps> = ({
         <div className="flex">
           <BlackCalendarIcon width={24} height={24} />
           <h3 className="body-m text-gray-900">
-            <span className="title-l text-gray-700">{formatDate(pickupDate)}</span> {pickupTime}
+            <span className="title-l text-gray-700">{formatPickupDateTime(pickupDate, pickupTime)}</span>
           </h3>
         </div>
         <button

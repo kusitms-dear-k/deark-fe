@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 
 import { MAKER_MENU_LIST, PICKER_MENU_LIST } from '@/utils/common/nav'
 import { UserRoleType } from '@/types/common'
+import { useSearchStore } from '@/store/searchStore'
 
 interface Props {
   navType?: UserRoleType
@@ -14,6 +15,7 @@ interface Props {
 const NavBar = (props: Props) => {
   const { navType = 'PICKER' } = props
   const paramsName = usePathname()
+  const setSearchParams = useSearchStore((state) => state.setSearchParams)
 
   const renderNavBar = (navType: UserRoleType) => {
     switch (navType) {
@@ -23,6 +25,9 @@ const NavBar = (props: Props) => {
             <Link href={menu.path} key={menu.id} className="flex w-[98px] flex-col items-center justify-center py-4">
               {'/' + paramsName.split('/')[1] === menu.path ? (
                 <div
+                  onClick={() => {
+                    setSearchParams({keyword: null, isTotalSearchPageOpen: false})
+                  }}
                   className="relative flex h-[36px] flex-col items-center justify-center gap-y-2"
                   style={{
                     background: 'radial-gradient(circle at center, rgba(210,46,47,0.1) 0%, rgba(210,46,47,0) 70%)',
@@ -35,7 +40,11 @@ const NavBar = (props: Props) => {
                   <div className={'h-[4px] w-[4px] rounded-full bg-[var(--red-400)]'} />
                 </div>
               ) : (
-                <div className={'flex h-[36px] flex-col gap-y-2'}>
+                <div
+                  onClick={() => {
+                    setSearchParams({keyword: null, isTotalSearchPageOpen: false})
+                  }}
+                  className={'flex h-[36px] flex-col gap-y-2'}>
                   <Image
                     src={menu.unClickedIcon}
                     width={24}
