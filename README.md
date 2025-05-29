@@ -6,7 +6,7 @@
 디어케이는 **서로에게 핏-한 가게(메이커)와 고객(피커)를 연결하고 서로에게 집중할 수 있도록** 
 환경을 제공하는 큐레이팅 주문 플랫폼입니다.
 
-##
+## 🗣️ 서비스 소개
 <img width="1522" alt="image" src="https://github.com/user-attachments/assets/6f3dfaa6-248a-477f-8a48-91e928b77b02" />
 <img width="1698" alt="image" src="https://github.com/user-attachments/assets/856bff90-3dec-4e30-8525-117733ff07e0" />
 <img width="1698" alt="image" src="https://github.com/user-attachments/assets/03319df9-a9d4-40d5-98c3-da21899ff65e" />
