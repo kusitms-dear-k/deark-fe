@@ -10,6 +10,7 @@ import EventModal from '../event/EventModal'
 import EventSelectionContent from '../event/EventSelectContent'
 import ToastMsg from '../event/ToastMsg'
 import Cookies from 'js-cookie'
+import { useEffect } from 'react'
 
 
 interface Props {
@@ -43,6 +44,24 @@ const DesignDetailContent = ({ designDetail }: Props) => {
     }
     setModalView(null)
   }
+
+  useEffect(() => {
+    // 현재 스크롤 위치 저장
+    const scrollY = window.scrollY
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${scrollY}px`
+    document.body.style.overflow = 'hidden'
+    document.body.style.width = '100%'
+
+    return () => {
+      // 복원
+      document.body.style.position = ''
+      document.body.style.top = ''
+      document.body.style.overflow = ''
+      document.body.style.width = ''
+      window.scrollTo(0, scrollY)
+    }
+  }, [])
 
   if (!designDetail) return null
 
