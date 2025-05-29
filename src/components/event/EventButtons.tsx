@@ -1,7 +1,7 @@
 interface EventButtonProps {
   onCancel: () => void
   onClickActiveBtn: () => void
-  eventValue: string | Date | undefined
+  eventValue: string | Date | null
   activeBtnText: string
 }
 
