@@ -9,6 +9,7 @@ interface SubmitConfirmationModalProps {
 
 const SubmitConfirmationModal = ({ onClick }: SubmitConfirmationModalProps) => {
   const setState = useOrderStore((state) => state.setState)
+  const resetOrderForm = useOrderStore((state) => state.resetOrderForm)
 
   return (
     <div
@@ -59,6 +60,7 @@ const SubmitConfirmationModal = ({ onClick }: SubmitConfirmationModalProps) => {
               onClick()
               setState({ isOrderFormOpen: false })
               setState({ isOrderSubmissionSuccessModalOpen: true })
+              resetOrderForm() // 기존에 작성한 폼 데이터 초기화
             }}
             className="button-l rounded-t-0 flex w-full flex-1 items-center justify-center rounded-br-[8px] bg-blue-400 py-3 text-white"
           >
