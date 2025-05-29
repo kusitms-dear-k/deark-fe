@@ -18,10 +18,11 @@ interface Props {
   setSelectedFilterType: Dispatch<SetStateAction<FilterType>>
   setIsFilterModalOpen: Dispatch<SetStateAction<boolean>>
   selectedFilterType: FilterType
+  hasUserSelectedPrice: boolean
 }
 
 const FilterPanel = (props: Props) => {
-  const { className='fixed top-[11.063rem]', isFilterModalOpen, setIsFilterModalOpen, setSelectedFilterType, selectedFilterType } = props
+  const { className='fixed top-[11.063rem]', isFilterModalOpen, setIsFilterModalOpen, setSelectedFilterType, selectedFilterType, hasUserSelectedPrice } = props
 
   const searchState = useSearchStore.getState()
   const isLunchBoxCake = useSearchStore((state) => state.isLunchBoxCake)
@@ -49,7 +50,9 @@ const FilterPanel = (props: Props) => {
   };
 
   return (
-    <section className={`${className ? className : ''} scrollbar-hide border-gray-150  z-30 flex w-full items-center gap-x-[0.5rem] overflow-x-scroll border-b bg-white py-[0.75rem] pl-[1.25rem]`}>
+    <section
+      className={`${className ? className : ''} scrollbar-hide border-gray-150 z-30 flex w-full items-center gap-x-[0.5rem] overflow-x-scroll border-b bg-white py-[0.75rem] pl-[1.25rem]`}
+    >
       <button
         onClick={() => {
           setSearchParams({ isSameDayOrder: !searchState.isSameDayOrder })
@@ -141,30 +144,28 @@ const FilterPanel = (props: Props) => {
           setSelectedFilterType('PRICE')
         }}
         className={
-          !(searchState.minPrice === null && searchState.maxPrice === null)
+          hasUserSelectedPrice || (selectedFilterType === 'PRICE' && isFilterModalOpen)
             ? 'flex h-fit items-center gap-x-[0.125rem] rounded-[1.25rem] border border-blue-400 px-[0.75rem] py-[0.313rem] whitespace-nowrap'
-            : selectedFilterType === 'PRICE' && isFilterModalOpen
-              ? 'flex h-fit items-center gap-x-[0.125rem] rounded-[1.25rem] border border-blue-400 px-[0.75rem] py-[0.313rem] whitespace-nowrap'
-              : 'flex h-fit items-center gap-x-[0.125rem] rounded-[1.25rem] border border-gray-200 px-[0.75rem] py-[0.313rem] whitespace-nowrap'
+            : 'flex h-fit items-center gap-x-[0.125rem] rounded-[1.25rem] border border-gray-200 px-[0.75rem] py-[0.313rem] whitespace-nowrap'
         }
       >
         <p
           className={
-            !(searchState.minPrice === null && searchState.maxPrice === null)
+            hasUserSelectedPrice
               ? 'body-m text-blue-400'
               : selectedFilterType === 'PRICE' && isFilterModalOpen
                 ? 'body-m text-blue-400'
                 : 'body-m text-gray-500'
           }
         >
-          {searchState.minPrice === null && searchState.maxPrice === null
-            ? '가격대'
-            : formatPriceContent(searchState.minPrice, searchState.maxPrice)}
+          {!hasUserSelectedPrice
+            ? '가격대' // 초기 상태
+            : searchState.minPrice === null && searchState.maxPrice === null
+              ? '전체'
+              : formatPriceContent(searchState.minPrice, searchState.maxPrice)}
         </p>
         <div className="relative h-[1.25rem] w-[1.25rem]">
-          {!(searchState.minPrice === null && searchState.maxPrice === null) ? (
-            <BlueDropDownIcon className="object-cover" width="100%" height="100%" />
-          ) : selectedFilterType === 'PRICE' && isFilterModalOpen ? (
+          {hasUserSelectedPrice || (selectedFilterType === 'PRICE' && isFilterModalOpen) ? (
             <BlueDropDownIcon className="object-cover" width="100%" height="100%" />
           ) : (
             <DropDownIcon className="object-cover" width="100%" height="100%" />
@@ -213,6 +214,7 @@ const FilterPanel = (props: Props) => {
           )}
         </div>
       </button>
+      <div className="fixed z-40 right-0 w-[70px] h-[40px] bg-gradient-to-l from-white to-transparent" />
     </section>
   )
 }

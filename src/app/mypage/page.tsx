@@ -37,6 +37,7 @@ const MyPage = () => {
   const [hasMounted, setHasMounted] = useState(false)
   const [parsedRecentlyViewedDesigns, setParsedRecentlyViewedDesigns] = useState<RecommendType[]>([])
   const [upcomingEvent, setUpcomingEvent] = useState<UpcomingEventType>()
+  const setLoginStoreState = useLoginStore((state) => state.setState)
 
   const {
     isStoreDetailModalOpen,
@@ -95,6 +96,7 @@ const MyPage = () => {
     router.push('/')
     localStorage.removeItem('login-store')
     localStorage.removeItem('recentlyViewedDesigns')
+    setLoginStoreState({ user: null })
   }
 
   // 2초 후 자동 닫힘 처리
@@ -104,7 +106,7 @@ const MyPage = () => {
         setState({ isOrderSubmissionSuccessModalOpen: false })
         //초기화
         resetOrderForm()
-      }, 2000)
+      }, 3000)
 
       return () => clearTimeout(timer) // cleanup
     }
@@ -130,7 +132,7 @@ const MyPage = () => {
         }}
       >
         {isLogoutModalOpen && <LogoutModal onClick={() => setIsLogoutModalOpen(false)} handleLogout={handleLogout} />}
-        {!token && <RequireLoginModal onClick={() => {}} />}
+        {!token && <RequireLoginModal onClick={() => setState({isLoginRequiredForOrderFormOpen: false})}/>}
         {/* 주문서 문의가 완료될 때 보이는 모달 */}
         {isOrderSubmissionSuccessModalOpen && (
           <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })} />
@@ -168,7 +170,8 @@ const MyPage = () => {
         <UpcomingEventBanner upcomingEvent={upcomingEvent} />
       </div>
 
-      <div className="border-gray-150 absolute top-68 right-5 left-5 flex items-center justify-between rounded-[8px] border bg-white px-5 py-4">
+      {/* 메뉴 */}
+      <section className="border-gray-150 absolute top-68 right-5 left-5 flex items-center justify-between rounded-[8px] border bg-white px-5 py-4">
         <button
           onClick={() => {
             router.push('/mypage/order')
@@ -198,7 +201,7 @@ const MyPage = () => {
           <BluePencilIcon width={16} height={16} />
           <p className="title-m text-gray-700">리뷰</p>
         </button>
-      </div>
+      </section>
 
       {/* 최근 본 케이크 */}
       <section className="mt-[3.75rem] p-[1rem]">

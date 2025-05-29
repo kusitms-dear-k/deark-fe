@@ -3,14 +3,15 @@
 
 @import 'tailwindcss';
 
-@import "tw-animate-css";
+@import 'tw-animate-css';
 
 @custom-variant dark (&:is(.dark *));
 
 @font-face {
   font-family: 'Pretendard Variable';
-  src: url('/fonts/PretendardVariable.ttf') format('opentype');
-  font-style: normal;
+  src: url('/fonts/PretendardVariable.woff2') format('woff2');
+  font-weight: 100 900;
+  font-display: swap;
 }
 @font-face {
   font-family: 'Handsome Pro';

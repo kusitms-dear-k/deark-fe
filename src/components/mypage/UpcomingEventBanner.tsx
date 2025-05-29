@@ -6,10 +6,12 @@ interface UpcomingEventBannerProps {
 }
 
 const UpcomingEventBanner = ({upcomingEvent}: UpcomingEventBannerProps) => {
+  const isToday = upcomingEvent?.dDay === 0
+
   return (
     <div className="relative mt-4 rounded-[8px] bg-white px-5 py-4">
       <Image src={'/common/glitter-group-icon.svg'} alt="글리터" fill className="object-cover px-[25px]" />
-      <div className="title-l text-gray-800">{upcomingEvent ? `D-${upcomingEvent.dDay} "${upcomingEvent.eventTitle}"` : '아직 이벤트가 없네요.'}</div>
+      <div className={`${isToday ? 'text-blue-400' : 'text-gray-800'} title-l`}>{upcomingEvent ? `D-${isToday ? 'Day' : upcomingEvent.dDay} "${upcomingEvent.eventTitle}"` : '아직 이벤트가 없네요.'}</div>
       {upcomingEvent ? (
         <p className="text-gray-700 body-s-m"><span className="title-s">"{upcomingEvent.eventTitle}"</span>만의 특별함을 담아보세요.</p>
         ) : (

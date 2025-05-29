@@ -8,13 +8,15 @@ import { DesignListResponseType } from '@/types/search'
 interface Props {
   selectedPriceRanges: { minPrice: number | null; maxPrice: number | null }[]
   setSelectedPriceRanges: Dispatch<SetStateAction<{ minPrice: number | null; maxPrice: number | null }[]>>
-
+  minPrice: number | null
+  maxPrice: number | null
   setMinPrice: Dispatch<SetStateAction<null | number>>
   setMaxPrice: Dispatch<SetStateAction<null | number>>
+  setHasUserSelectedPrice: Dispatch<SetStateAction<boolean>>
 }
 
 const PriceFilterContent = (props: Props) => {
-  const { selectedPriceRanges, setSelectedPriceRanges, setMinPrice, setMaxPrice } = props
+  const { selectedPriceRanges, setSelectedPriceRanges, setMinPrice, setMaxPrice, minPrice, maxPrice, setHasUserSelectedPrice } = props
   // zustand 상태
   const keyword = useSearchStore((state) => state.keyword)
   const locationList = useSearchStore((state) => state.locationList)
@@ -32,8 +34,6 @@ const PriceFilterContent = (props: Props) => {
     { content: '20,000원 ~ 30,000원', minPrice: 20000, maxPrice: 30000 },
     { content: '40,000원 이상', minPrice: 40000, maxPrice: null },
   ]
-
-  const ALL_RANGE = { minPrice: null, maxPrice: null }
 
   const togglePriceRange = (range: { minPrice: number | null; maxPrice: number | null }) => {
     const isAlreadySelected = selectedPriceRanges.some(
@@ -76,19 +76,30 @@ const PriceFilterContent = (props: Props) => {
   }
 
   useEffect(() => {
-    const prices = selectedPriceRanges.flatMap((r) => [
-      r.minPrice !== null ? r.minPrice : [],
-      r.maxPrice !== null ? r.maxPrice : [],
-    ])
-    const numericPrices = prices.filter((p): p is number => typeof p === 'number')
+    if (selectedPriceRanges.length > 0) {
+      setHasUserSelectedPrice(true)
+    }
 
-    const minPrice = numericPrices.length ? Math.min(...numericPrices) : null
-    const maxPrice = numericPrices.length ? Math.max(...numericPrices) : null
+    const isAllSelected = selectedPriceRanges.some((r) => r.minPrice === null && r.maxPrice === null)
 
-    console.log('최소:', minPrice, '최대:', maxPrice)
+    if (isAllSelected) {
+      // 전체가 선택된 경우
+      setMinPrice(null)
+      setMaxPrice(null)
+    } else {
+      // 개별 구간에서 최소/최대 계산
+      const prices = selectedPriceRanges.flatMap((r) => [
+        r.minPrice !== null ? r.minPrice : [],
+        r.maxPrice !== null ? r.maxPrice : [],
+      ])
+      const numericPrices = prices.filter((p): p is number => typeof p === 'number')
 
-    setMinPrice(minPrice)
-    setMaxPrice(maxPrice)
+      const minPrice = numericPrices.length ? Math.min(...numericPrices) : null
+      const maxPrice = numericPrices.length ? Math.max(...numericPrices) : null
+
+      setMinPrice(minPrice)
+      setMaxPrice(maxPrice)
+    }
 
     getDesignSearchResult({
       pageParam: 0,
@@ -100,8 +111,8 @@ const PriceFilterContent = (props: Props) => {
       isSameDayOrder: isSameDayOrder,
       isLunchBoxCake: isLunchBoxCake,
       isSelfService: isSelfService,
-      maxPrice: maxPrice,
-      minPrice: minPrice,
+      maxPrice: isAllSelected ? null : maxPrice,
+      minPrice: isAllSelected ? null : minPrice,
       locationList: locationList,
     }).then((res: ResponseType<DesignListResponseType>) => {
       setSearchParams({ totalCount: res.results.totalCount })

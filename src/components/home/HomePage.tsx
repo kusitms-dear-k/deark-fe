@@ -21,6 +21,10 @@ import { useSearchStore } from '@/store/searchStore'
 import { Drawer } from '@/components/ui/drawer'
 import OrderSubmissionSuccessModal from '@/components/order/OrderSubmissionSuccessModal'
 import Onboarding from '@/components/onboarding/Onboarding'
+import OrderExitConfirmModal from '@/components/mypage/OrderExitConfirmModal'
+import { useOrderStore } from '@/store/orderStore'
+import RequireLoginModal from '@/components/mypage/RequireLoginModal'
+import Cookies from 'js-cookie'
 
 const HomePage = () => {
   const isTotalSearchPageOpen = useSearchStore((state) => state.isTotalSearchPageOpen)
@@ -45,8 +49,10 @@ const HomePage = () => {
     renderFilterContent,
     keyword,
     isOrderSubmissionSuccessModalOpen,
+    isLoginRequiredForOrderFormOpen,
     setState,
     resetOrderForm,
+    hasUserSelectedPrice,
   } = useSearchResult()
 
   // ✅ 3초 후 자동 닫힘 처리
@@ -60,14 +66,14 @@ const HomePage = () => {
     }
   }, [isWelcomeModalOpen, setState])
 
-  // 2초 후 자동 닫힘 처리
+  // 3초 후 자동 닫힘 처리
   useEffect(() => {
     if (isOrderSubmissionSuccessModalOpen) {
       const timer = setTimeout(() => {
         setState({ isOrderSubmissionSuccessModalOpen: false })
         //초기화
         resetOrderForm()
-      }, 2000)
+      }, 3000)
 
       return () => clearTimeout(timer) // cleanup
     }
@@ -109,6 +115,15 @@ const HomePage = () => {
           }
         }}
       >
+        {/* 로그인 안할 경우 주문서 대신 로그인 요구 모달 */}
+        {isLoginRequiredForOrderFormOpen && (
+          <RequireLoginModal
+            title={'주문하기'}
+            onClick={() => setState({ isLoginRequiredForOrderFormOpen: false })}
+            onCancelClick={() => setState({ isLoginRequiredForOrderFormOpen: false })}
+          />
+        )}
+
         {/* 주문서 문의가 완료될 때 보이는 모달 */}
         {isOrderSubmissionSuccessModalOpen && (
           <OrderSubmissionSuccessModal onClick={() => setState({ isOrderSubmissionSuccessModalOpen: false })} />
@@ -170,6 +185,7 @@ const HomePage = () => {
           }`}
         >
           <SearchContent
+            hasUserSelectedPrice={hasUserSelectedPrice}
             searchMenuClassname={
               !isAtTop ? 'transition-all duration-300 fixed top-23' : 'transition-all duration-300 fixed top-60'
             }

@@ -33,10 +33,7 @@ const StoreCard = (props: Props) => {
           <div className="flex flex-col items-start">
             <p className="title-l">{storeName}</p>
             <div className="flex">
-              <p className="body-s">{address}</p>
-              <div className="relative h-[1.25rem] w-[1.25rem]">
-                <DropDownIcon width="100%" height="100%" className="object-cover" />
-              </div>
+              <p className="body-s text-gray-600">{address}</p>
             </div>
           </div>
         </section>

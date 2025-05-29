@@ -9,12 +9,15 @@ import { EventApi } from '@/api/eventAPI'
 import EventModal from '../event/EventModal'
 import EventSelectionContent from '../event/EventSelectContent'
 import ToastMsg from '../event/ToastMsg'
+import Cookies from 'js-cookie'
+
 
 interface Props {
   designDetail: DesignDetailType | undefined
 }
 
 const DesignDetailContent = ({ designDetail }: Props) => {
+  const token = Cookies.get('ACCESS_TOKEN')
   const setState = useOrderStore((state) => state.setState)
   const setSearchParams = useSearchStore((state) => state.setSearchParams)
   const designId = useSearchStore((state) => state.designId) //선택된 designId
@@ -62,7 +65,7 @@ const DesignDetailContent = ({ designDetail }: Props) => {
           <div className="relative h-[22.5rem] w-full">
             <Image src={designDetail.designImageUrl} alt="케이크 디자인" fill className="object-cover" priority />
           </div>
-
+          
           <section className="border-gray-150 border-b p-[1.25rem]">
             <div className="flex items-center justify-between">
               <h4 className="title-l">{designDetail.designName}</h4>
@@ -94,9 +97,11 @@ const DesignDetailContent = ({ designDetail }: Props) => {
           </section>
         </div>
 
-        <DrawerFooter className="border-gray-150 border-t bg-white px-[1.25rem] pt-[1.25rem]">
-          <button
-            onClick={() => {
+
+      <DrawerFooter className="border-gray-150 border-t bg-white px-[1.25rem] pt-[1.25rem]">
+        <button
+          onClick={() => {
+            if (token) {
               setState({
                 isOrderFormOpen: true,
                 selectedDesignUrl: designDetail?.designImageUrl,
@@ -105,6 +110,9 @@ const DesignDetailContent = ({ designDetail }: Props) => {
                 storeId: designDetail?.storeId,
               }) //TODO: storeId추가하기
               setSearchParams({ isDesignDetailModalOpen: false })
+              } else {
+                setState({ isLoginRequiredForOrderFormOpen: true })
+              }
             }}
             className="button-l w-full rounded-[0.25rem] bg-blue-400 py-[0.75rem] text-white"
             type="button"

@@ -4,6 +4,8 @@ import Header from '@/components/common/Header'
 import PickUpStatusCard from '@/components/mypage/PickUpStatusCard'
 import { PickupOrder } from '@/types/mypage'
 import { useEffect, useState } from 'react'
+import { useOrderStore } from '@/store/orderStore'
+import Order from '@/components/order/Order'
 
 const ApprovePage = () => {
   const [pickupExpectList, setPickupExpectList] = useState<PickupOrder[]>([])
@@ -11,6 +13,7 @@ const ApprovePage = () => {
   const [pickupExpectTotal, setPickupExpectTotal] = useState<number>(0)
   const [pickupDoneTotal, setPickupDoneTotal] = useState<number>(0)
   const [loading, setLoading] = useState<boolean>(true)
+  const isOrderOpen = useOrderStore((state) => state.isOrderOpen)
 
   useEffect(() => {
     const fetchData = async () => {
@@ -35,15 +38,19 @@ const ApprovePage = () => {
       new Date(b.pickupDate + ' ' + b.pickupTime).getTime() - new Date(a.pickupDate + ' ' + a.pickupTime).getTime()
   )
 
-  return (
+  return isOrderOpen ? (
+    <Order />
+  ) : (
     <main className="flex min-h-screen flex-col">
       <Header
         headerType="DYNAMIC"
         title="픽업 확정"
-        // className="top-20 items-start"
-        headerClassname={'fixed bg-white px-5'}
+        headerClassname={'fixed bg-white '}
+        className={'bg-white items-start '}
+        description={'곧 만날 케이크들이에요!'}
       />
-      <section className="mt-[9rem] flex flex-col gap-y-[1.5rem]">
+
+      <section className="mt-[120px] flex flex-col gap-y-[1.5rem]">
         {/* 픽업 예정 */}
         <section className="px-[1.25rem]">
           <h2 className="title-l p-[0.5rem]">

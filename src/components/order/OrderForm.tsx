@@ -22,6 +22,7 @@ import SubmitConfirmationModal from '@/components/order/SubmitConfirmationModal'
 import { shallow } from 'zustand/shallow'
 import { useStoreWithEqualityFn } from 'zustand/traditional'
 import { useLoginStore } from '@/store/authStore'
+import OrderExitConfirmModal from '@/components/mypage/OrderExitConfirmModal'
 
 const OrderForm = () => {
   const user = useLoginStore((state) => state.user)
@@ -34,6 +35,8 @@ const OrderForm = () => {
   const [isCreamDropBoxOpen, setIsCreamDropBoxOpen] = useState<boolean>(false)
   const [isEventFilterOpen, setIsEventFilterOpen] = useState<boolean>(false)
   const [isEventDesignFilterOpen, setIsEventDesignFilterOpen] = useState<boolean>(false)
+  //나가기 취소하겠냐? -> 모달
+  const isOrderExitConfirmModalOpen = useOrderStore((state) => state.isOrderExitConfirmModalOpen)
   const [businessHours, setBusinessHours] = useState<{ openTime: string; closeTime: string }>()
 
   const designType = useOrderStore((state) => state.designType)
@@ -214,7 +217,7 @@ const OrderForm = () => {
 
   // 처음에 user 의 nickName 이랑 phoneNumber 값 넣기
   useEffect(() => {
-    if (!user?.nickname || !user?.phoneNumber) return;
+    if (!user?.nickname || !user?.phoneNumber) return
 
     const prevAnswers = useOrderStore.getState().answers ?? []
 
@@ -234,9 +237,19 @@ const OrderForm = () => {
     setState({ answers: updatedAnswers })
   }, [user?.nickname, user?.phoneNumber])
 
-
   return (
     <div className="z-40 flex h-screen flex-col">
+      {isOrderExitConfirmModalOpen && (
+        <OrderExitConfirmModal
+          onClick={() => setState({ isOrderExitConfirmModalOpen: false })}
+          onExit={() => {
+            resetOrderForm()
+            if (designImageRef.current) designImageRef.current.value = ''
+            if (requestDetailImageRef.current) requestDetailImageRef.current.value = ''
+            setState({ isOrderFormOpen: false })
+          }}
+        />
+      )}
       <Header
         headerClassname={'fixed bg-white'}
         title={'주문 문의'}
@@ -244,9 +257,7 @@ const OrderForm = () => {
         className={'pb-3'}
         //제출시 값 초기화
         onBack={() => {
-          resetOrderForm()
-          if (designImageRef.current) designImageRef.current.value = ''
-          if (requestDetailImageRef.current) requestDetailImageRef.current.value = ''
+          setState({ isOrderExitConfirmModalOpen: true })
         }}
       />
       {isNotFormValidModalOpen && <NotFormValidModal onClick={() => setIsNotFormValidModalOpen(false)} />}
