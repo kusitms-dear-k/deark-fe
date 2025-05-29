@@ -6,7 +6,7 @@ interface LogoutModalProps {
   handleLogout: () => void
 }
 
-const LogoutModal = ({onClick, handleLogout}: LogoutModalProps) => {
+const LogoutModal = ({ onClick, handleLogout }: LogoutModalProps) => {
   return (
     <div
       onClick={onClick}
@@ -16,7 +16,7 @@ const LogoutModal = ({onClick, handleLogout}: LogoutModalProps) => {
     >
       <motion.div
         onClick={(e) => e.stopPropagation()}
-        className="absolute right-5 left-5 "
+        className="absolute right-5 left-5"
         initial={{ y: '100%' }}
         animate={{ y: 0 }}
         exit={{ y: '100%' }}
@@ -24,20 +24,25 @@ const LogoutModal = ({onClick, handleLogout}: LogoutModalProps) => {
       >
         <section className="flex flex-col items-center justify-center rounded-t-[8px] bg-white">
           <div className="mt-[40px] mb-[32px] flex flex-col items-center justify-center gap-y-1">
-            <h2 className="headline-s text-gray-900">로그아웃 하시겠어요?</h2>
+            <h2 className="headline-s text-gray-900">정말 로그아웃 하시겠어요?</h2>
+            <p className="body-s text-gray-500">언제든 다시 찾아주세요!</p>
           </div>
         </section>
         <section className="flex">
           <button
             onClick={onClick}
-            className="flex flex-1 items-center justify-center bg-gray-200 text-gray-700 button-l rounded-bl-[8px]">취소
+            className="button-l flex flex-1 items-center justify-center rounded-bl-[8px] bg-gray-200 text-gray-700"
+          >
+            취소
           </button>
           <button
             onClick={() => {
               handleLogout()
               onClick()
             }}
-            className="flex flex-1 items-center justify-center py-3 bg-blue-400 text-white button-l w-full rounded-br-[8px] rounded-t-0">로그아웃
+            className="button-l rounded-t-0 flex w-full flex-1 items-center justify-center rounded-br-[8px] bg-blue-400 py-3 text-white"
+          >
+            로그아웃
           </button>
         </section>
       </motion.div>

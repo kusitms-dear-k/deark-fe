@@ -103,7 +103,7 @@ const NoticePage = () => {
     if (isPaymentCompleteModalOpen) {
       const timer = setTimeout(() => {
         setIsPaymentCompleteModalOpen(false)
-      }, 2000)
+      }, 3000)
 
       return () => clearTimeout(timer) // cleanup
     }
@@ -215,6 +215,7 @@ const NoticePage = () => {
         <section className="flex w-full flex-col gap-y-[6px] px-5 pt-[32.5px]">
           <div className="flex gap-x-[5px]">
             <Switch
+              className="data-[state=checked]:bg-blue-400 bg-gray-300"
               checked={orderStatus === 'ACCEPTED'}
               onCheckedChange={(checked: any) => {
                 setOrderStatus(checked ? 'ACCEPTED' : null)
@@ -269,7 +270,7 @@ const NoticePage = () => {
             })
           ) : (
             //noticeData 의 List 가 빈 경우
-            <section className="flex h-full flex-col items-center justify-center gap-y-[0.938rem]">
+            <section className="flex h-full flex-1 flex-col items-center justify-center gap-y-[0.938rem]">
               <Image src={'/search/memo.svg'} width={28} height={32} alt={'메모'} />
               <div className="flex flex-col items-center justify-center text-center">
                 <div className="title-l text-gray-500">새로운 소식이 없어요</div>

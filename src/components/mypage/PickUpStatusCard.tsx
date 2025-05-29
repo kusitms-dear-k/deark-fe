@@ -1,6 +1,7 @@
 import { BlackCalendarIcon, GrayRightArrowIcon } from '@/assets/svgComponents'
 import { PickupOrder } from '@/types/mypage'
 import Image from 'next/image'
+import { useOrderStore } from '@/store/orderStore'
 
 interface PickUpStatusCardProps extends PickupOrder {}
 
@@ -79,7 +80,8 @@ const PickUpStatusCard: React.FC<PickUpStatusCardProps> = ({
   const formatDate = (date: string) => {
     return date
   }
-  
+
+  const setOrderState = useOrderStore((state) =>state.setState)
   return (
     <div
       className="relative flex flex-col gap-y-[0.75rem] rounded-[0.25rem] bg-white"
@@ -92,7 +94,11 @@ const PickUpStatusCard: React.FC<PickUpStatusCardProps> = ({
             <span className="title-l text-gray-700">{formatDate(pickupDate)}</span> {pickupTime}
           </h3>
         </div>
-        <button className="bg-gray-150 body-m-m flex h-fit items-center gap-x-[0.25rem] rounded-[0.25rem] px-[0.438rem] py-[0.25rem] text-gray-500">
+        <button
+          onClick={() => {
+            setOrderState({messageId : messageId, isOrderOpen: true})
+          }}
+          className="bg-gray-150 body-m-m flex h-fit items-center gap-x-[0.25rem] rounded-[0.25rem] px-[0.438rem] py-[0.25rem] text-gray-500">
           주문서 보기
           <GrayRightArrowIcon width={5} height={10} />
         </button>
@@ -107,7 +113,7 @@ const PickUpStatusCard: React.FC<PickUpStatusCardProps> = ({
             className="rounded-[0.25rem] object-cover"
           />
         </div>
-        <div>
+        <div className="truncate overflow-hidden">
           <h3 className="title-l">{storeName}</h3>
           <p className="body-m-m mt-[0.375rem] text-gray-700">{designName}</p>
           <p className="body-m-m text-gray-400">
