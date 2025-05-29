@@ -339,7 +339,7 @@ const DesignSearchResult = () => {
               className="bg-kakao absolute bottom-0 left-0 flex h-[2.625rem] w-full items-center justify-center gap-2 rounded-b-lg text-center"
               onClick={() => {
                 setIsGoLoginModal(false)
-                router.push('/sign-up')
+                router.push('/login')
               }}
             >
               <KakaoIcon width={19} height={17} />

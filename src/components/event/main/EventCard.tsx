@@ -29,13 +29,11 @@ export default function EventCard({ event, stores, designs, onMenuClick }: Event
     router.push(`/event/${event.eventId}`)
   }
 
-  if (!event.thumbnailUrl) return
-
   return (
     <div className="shadow-middlemodal h-[15.125rem] w-[10.5rem] rounded-sm bg-white px-2 py-4">
       <div className="mb-2" onClick={handleCardClick}>
         <div className="relative aspect-square overflow-hidden rounded">
-          <Image src={event.thumbnailUrl} alt={event.title} fill className="object-cover" />
+          <Image src={event.thumbnailUrl || '/search/cake_img.png'} alt={event.title} fill className="object-cover" />
         </div>
       </div>
 
