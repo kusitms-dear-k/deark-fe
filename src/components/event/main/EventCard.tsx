@@ -39,9 +39,9 @@ export default function EventCard({ event, stores, designs, onMenuClick }: Event
         </div>
       </div>
 
-      <div className="flex justify-between">
+      <div className="flex justify-between pl-2">
         <div>
-          <div className="caption-m text-gray-700">{event.eventDate.replace(/-/g, '.')}</div>
+          <div className="caption-m text-gray-700">{event.eventDate?.replace(/-/g, '.') ?? ''}</div>
           <div className="title-s text-gray-900">{event.title}</div>
           <div className="caption-m line-clamp-1 text-gray-400">{event.address}</div>
         </div>
