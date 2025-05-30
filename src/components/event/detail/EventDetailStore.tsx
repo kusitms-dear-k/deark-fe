@@ -15,7 +15,6 @@ interface EventDetailStoreCardProps {
 
 export default function EventDetailStoreCard({ store, eventId, onRemove }: EventDetailStoreCardProps) {
   const [memo, setMemo] = useState(store.memo ?? '')
-  const [isEditing, setIsEditing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const maxLen = 20
 
@@ -25,7 +24,6 @@ export default function EventDetailStoreCard({ store, eventId, onRemove }: Event
     setIsSaving(true)
     try {
       await EventApi.updateStoreMemo(eventId, store.storeId, memo)
-      setIsEditing(false)
     } catch (e) {
       // 에러 처리
     } finally {
@@ -39,8 +37,8 @@ export default function EventDetailStoreCard({ store, eventId, onRemove }: Event
         <div className="flex items-center gap-3">
           <Image src={store.designImageUrls[0]} alt={store.storeName} width={36} height={36} className="rounded-full" />
           <div>
-            <div className="text-sm font-bold text-zinc-900">{store.storeName}</div>
-            <div className="text-xs text-neutral-700">{store.storeAddress}</div>
+            <div className="title-m text-gray-900">{store.storeName}</div>
+            <div className="body-s-m text-gray-700">{store.storeAddress}</div>
           </div>
         </div>
         <HeartIconFill width={24} height={24} className="text-red-500" onClick={() => onRemove(store.storeId)} />
@@ -52,28 +50,19 @@ export default function EventDetailStoreCard({ store, eventId, onRemove }: Event
         ))}
       </div>
       {/* 메모 */}
-      <div className="cpation-m relative rounded-sm bg-stone-50 p-2 text-neutral-500">
-        {isEditing ? (
-          <>
-            <input
-              className="w-full bg-transparent text-[#707070] outline-none placeholder:text-stone-300"
-              maxLength={maxLen}
-              value={memo}
-              onChange={(e) => setMemo(e.target.value.slice(0, maxLen))}
-              onBlur={handleMemoBlur}
-              disabled={isSaving}
-              autoFocus
-              placeholder="메모를 입력해주세요..."
-            />
-            <span className="absolute right-2 bottom-1 text-[13px] font-medium text-stone-300">
-              {memo.length}/{maxLen}
-            </span>
-          </>
-        ) : (
-          <span className={store.memo ? '' : 'cursor-pointer text-stone-300'} onClick={() => setIsEditing(true)}>
-            {store.memo || '메모를 입력해주세요...'}
-          </span>
-        )}
+      <div className="caption-m relative rounded-sm bg-stone-50 p-2 text-neutral-500">
+        <input
+          className="w-full bg-transparent text-gray-500 outline-none placeholder:text-stone-300"
+          placeholder="메모를 입력해주세요..."
+          maxLength={maxLen}
+          value={memo}
+          onChange={(e) => setMemo(e.target.value.slice(0, maxLen))}
+          onBlur={handleMemoBlur}
+          disabled={isSaving}
+        />
+        <span className="absolute right-2 bottom-1 text-gray-300">
+          {memo.length}/{maxLen}
+        </span>
       </div>
     </div>
   )

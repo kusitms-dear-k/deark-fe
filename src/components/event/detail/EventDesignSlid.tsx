@@ -1,5 +1,3 @@
-'use client'
-
 import { useState } from 'react'
 import { DesignItem } from '@/types/event'
 import Image from 'next/image'
@@ -15,7 +13,14 @@ interface DesignCarouselProps {
 
 export default function DesignCarousel({ designs, eventId, onRemove }: DesignCarouselProps) {
   // 각 디자인별 메모 상태를 따로 관리 (designId를 key로)
-  const [memoMap, setMemoMap] = useState<{ [designId: number]: string }>({})
+  const [memoMap, setMemoMap] = useState<{ [designId: number]: string }>(() => {
+    // 초기값: 디자인에 이미 메모가 있으면 반영
+    const initial: { [designId: number]: string } = {}
+    designs.forEach((design) => {
+      if (design.memo) initial[design.designId] = design.memo
+    })
+    return initial
+  })
 
   const router = useRouter()
 
@@ -42,8 +47,9 @@ export default function DesignCarousel({ designs, eventId, onRemove }: DesignCar
   return (
     <div className="scrollbar-hide flex gap-2 overflow-x-auto pb-2">
       {designs.map((design) => {
-        const memo = memoMap[design.designId] ?? ''
         const maxLen = 20
+        // 항상 memoMap에 값이 있으면 그걸, 없으면 design.memo를 보여줌
+        const memo = memoMap[design.designId] ?? design.memo ?? ''
 
         return (
           <div
@@ -55,7 +61,13 @@ export default function DesignCarousel({ designs, eventId, onRemove }: DesignCar
               onClick={() => router.push(`/design/${design.designId}`)}
             >
               <Image src={design.designImageUrl} alt={design.designName} fill className="rounded object-cover" />
-              <div className="absolute top-2 right-2" onClick={() => onRemove(design.designId)}>
+              <div
+                className="absolute top-2 right-2"
+                onClick={(e) => {
+                  e.stopPropagation()
+                  onRemove(design.designId)
+                }}
+              >
                 <HeartIconFill width={20} height={20} className="text-red-500" />
               </div>
             </div>
@@ -64,27 +76,20 @@ export default function DesignCarousel({ designs, eventId, onRemove }: DesignCar
               <div className="text-[10px] text-neutral-500">{design.storeName}</div>
             </div>
             <div className="relative h-[2.75rem] w-[7.5rem] rounded-sm bg-stone-50 p-1.5 text-xs text-neutral-500">
-              {/* 메모가 이미 있으면 텍스트로, 없으면 입력창 */}
-              {design.memo ? (
-                <span>{design.memo}</span>
-              ) : (
-                <>
-                  <input
-                    className="caption-m w-full bg-transparent text-[#707070] outline-none placeholder:text-stone-300"
-                    placeholder="메모를 입력해주세요..."
-                    maxLength={maxLen}
-                    value={memo}
-                    onChange={(e) => {
-                      const val = e.target.value.slice(0, maxLen)
-                      setMemoMap((prev) => ({ ...prev, [design.designId]: val }))
-                    }}
-                    onBlur={() => handleMemoBlur(design.designId)}
-                  />
-                  <span className="caption-m absolute right-2 bottom-1 text-[13px] font-medium text-stone-300">
-                    {memo.length}/{maxLen}
-                  </span>
-                </>
-              )}
+              <input
+                className="caption-m w-full bg-transparent text-[#707070] outline-none placeholder:text-stone-300"
+                placeholder="메모를 입력해주세요..."
+                maxLength={maxLen}
+                value={memo}
+                onChange={(e) => {
+                  const val = e.target.value.slice(0, maxLen)
+                  setMemoMap((prev) => ({ ...prev, [design.designId]: val }))
+                }}
+                onBlur={() => handleMemoBlur(design.designId)}
+              />
+              <span className="caption-m absolute right-2 bottom-1 text-[13px] font-medium text-stone-300">
+                {memo.length}/{maxLen}
+              </span>
             </div>
           </div>
         )
