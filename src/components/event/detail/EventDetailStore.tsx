@@ -1,8 +1,11 @@
+'use client'
+
 import { useState } from 'react'
 import { StoreItem } from '@/types/event'
 import Image from 'next/image'
 import { HeartIconFill } from '@/assets/svgComponents'
 import { EventApi } from '@/api/eventAPI'
+import { useRouter } from 'next/navigation'
 
 interface EventDetailStoreCardProps {
   store: StoreItem
@@ -15,6 +18,8 @@ export default function EventDetailStoreCard({ store, eventId, onRemove }: Event
   const [isEditing, setIsEditing] = useState(false)
   const [isSaving, setIsSaving] = useState(false)
   const maxLen = 20
+
+  const router = useRouter()
 
   const handleMemoBlur = async () => {
     setIsSaving(true)
@@ -30,7 +35,7 @@ export default function EventDetailStoreCard({ store, eventId, onRemove }: Event
 
   return (
     <div className="flex flex-col gap-2.5 rounded border border-gray-100 bg-white p-2.5 shadow">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between" onClick={() => router.push(`/store/${store.storeId}`)}>
         <div className="flex items-center gap-3">
           <Image src={store.designImageUrls[0]} alt={store.storeName} width={36} height={36} className="rounded-full" />
           <div>
@@ -47,7 +52,7 @@ export default function EventDetailStoreCard({ store, eventId, onRemove }: Event
         ))}
       </div>
       {/* 메모 */}
-      <div className="relative rounded-sm bg-stone-50 p-2 text-xs text-neutral-500">
+      <div className="cpation-m relative rounded-sm bg-stone-50 p-2 text-neutral-500">
         {isEditing ? (
           <>
             <input
