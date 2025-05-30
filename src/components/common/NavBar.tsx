@@ -26,7 +26,7 @@ const NavBar = (props: Props) => {
               {'/' + paramsName.split('/')[1] === menu.path ? (
                 <div
                   onClick={() => {
-                    setSearchParams({keyword: null, isTotalSearchPageOpen: false})
+                    setSearchParams({ keyword: null, isTotalSearchPageOpen: false })
                   }}
                   className="relative flex h-[36px] flex-col items-center justify-center gap-y-2"
                   style={{
@@ -42,9 +42,10 @@ const NavBar = (props: Props) => {
               ) : (
                 <div
                   onClick={() => {
-                    setSearchParams({keyword: null, isTotalSearchPageOpen: false})
+                    setSearchParams({ keyword: null, isTotalSearchPageOpen: false })
                   }}
-                  className={'flex h-[36px] flex-col gap-y-2'}>
+                  className={'flex h-[36px] flex-col gap-y-2'}
+                >
                   <Image
                     src={menu.unClickedIcon}
                     width={24}
@@ -91,15 +92,15 @@ const NavBar = (props: Props) => {
           )
         })
     }
-  };
+  }
 
   return (
     <nav
       style={{ boxShadow: '0px -6px 16px 0px rgba(134, 134, 134, 0.05)' }}
-      className="fixed bottom-0 z-20 flex w-full items-center justify-center rounded-t-[16px] bg-white pb-[20px]"
+      className="fixed bottom-0 z-50 flex w-full items-center justify-center rounded-t-[16px] bg-white pb-[20px]"
     >
       {renderNavBar(navType)}
     </nav>
-  );
-};
-export default NavBar;
+  )
+}
+export default NavBar
