@@ -237,10 +237,6 @@ const StoreSearchResult = (props: Props) => {
     }
   }
 
-  useEffect(() => {
-    console.log('스토어 데이터', data)
-  }, [data])
-
   return (
     <div className="pb-[5.625rem]">
       {searchResults ? (

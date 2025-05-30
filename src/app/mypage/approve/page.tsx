@@ -46,7 +46,7 @@ const ApprovePage = () => {
         headerType="DYNAMIC"
         title="픽업 확정"
         headerClassname={'fixed bg-white '}
-        className={'bg-white items-start pt-20 pb-3'}
+        className={'items-start bg-white pt-20 pb-3'}
         description={'곧 만날 케이크들이에요!'}
       />
 
