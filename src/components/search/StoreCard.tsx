@@ -1,4 +1,4 @@
-import { DropDownIcon, HeartIconEmpty, HeartIconFill } from '@/assets/svgComponents'
+import { HeartIconEmpty, HeartIconFill } from '@/assets/svgComponents'
 import Image from 'next/image'
 import { StoreType } from '@/types/search'
 
@@ -39,7 +39,7 @@ const StoreCard = (props: Props) => {
         <section className="flex flex-col items-center" onClick={onHeartClick}>
           {isLiked ? <HeartIconFill width={24} height={24} /> : <HeartIconEmpty width={24} height={24} />}
 
-          <p className="caption-m text-gray-400">{likeCount}</p>
+          <p className="caption-m text-gray-400">{isLiked}</p>
         </section>
       </section>
 

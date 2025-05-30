@@ -78,6 +78,8 @@ const PickUpStatusCard: React.FC<PickUpStatusCardProps> = ({
   const colorClasses = getColorClasses(1, progressInfo.step, progressInfo.isCompleted)
 
   const formatPickupDateTime = (pickupDate: string, pickupTime: string): string => {
+    if (!pickupDate || !pickupTime) return '시간이 입력되지 않았어요'
+
     // 요일 한글로 매핑
     const dayMap = ['일', '월', '화', '수', '목', '금', '토']
 
@@ -107,7 +109,7 @@ const PickUpStatusCard: React.FC<PickUpStatusCardProps> = ({
     return `${month.padStart(2, '0')}/${day.padStart(2, '0')}(${dayOfWeek}) ${meridiem} ${hour}:${minuteStr}`
   }
 
-  const setOrderState = useOrderStore((state) =>state.setState)
+  const setOrderState = useOrderStore((state) => state.setState)
   return (
     <div
       className="relative flex flex-col gap-y-[0.75rem] rounded-[0.25rem] bg-white"
@@ -122,9 +124,10 @@ const PickUpStatusCard: React.FC<PickUpStatusCardProps> = ({
         </div>
         <button
           onClick={() => {
-            setOrderState({messageId : messageId, isOrderOpen: true})
+            setOrderState({ messageId: messageId, isOrderOpen: true })
           }}
-          className="bg-gray-150 body-m-m flex h-fit items-center gap-x-[0.25rem] rounded-[0.25rem] px-[0.438rem] py-[0.25rem] text-gray-500">
+          className="bg-gray-150 body-m-m flex h-fit items-center gap-x-[0.25rem] rounded-[0.25rem] px-[0.438rem] py-[0.25rem] text-gray-500"
+        >
           주문서 보기
           <GrayRightArrowIcon width={5} height={10} />
         </button>

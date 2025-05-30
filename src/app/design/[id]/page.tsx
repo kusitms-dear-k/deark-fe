@@ -48,6 +48,7 @@ const DesignDetail = () => {
     handleHeartClick,
     selectedEventIds,
     toastMessage,
+    setToastMessage,
     showToast,
     setShowToast,
   } = useHeartClick('design')
@@ -58,6 +59,7 @@ const DesignDetail = () => {
         design_id: designId,
         event_ids: selectedIds,
       })
+      setToastMessage('이벤트 폴더에 추가됐습니다')
       setShowToast(true)
     }
     setModalView(null)
