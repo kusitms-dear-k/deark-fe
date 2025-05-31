@@ -1,0 +1,4 @@
+import * as React from "react";
+import type { SVGProps } from "react";
+const SvgCopyIcon = (props: SVGProps<SVGSVGElement>) => <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" fill="none" viewBox="0 0 25 24" {...props}><path stroke="#fff" strokeLinecap="round" strokeLinejoin="round" d="M5.532 15c-.932 0-1.398 0-1.765-.152a2 2 0 0 1-1.083-1.083c-.152-.367-.152-.833-.152-1.765V5.2c0-1.12 0-1.68.218-2.108a2 2 0 0 1 .874-.874C4.052 2 4.612 2 5.732 2h6.8c.932 0 1.398 0 1.766.152a2 2 0 0 1 1.082 1.083c.152.367.152.833.152 1.765m-2.8 17h6.6c1.12 0 1.68 0 2.108-.218a2 2 0 0 0 .874-.874c.218-.428.218-.988.218-2.108v-6.6c0-1.12 0-1.68-.218-2.108a2 2 0 0 0-.874-.874C21.012 9 20.452 9 19.332 9h-6.6c-1.12 0-1.68 0-2.108.218a2 2 0 0 0-.874.874c-.218.428-.218.988-.218 2.108v6.6c0 1.12 0 1.68.218 2.108a2 2 0 0 0 .874.874c.428.218.988.218 2.108.218" /></svg>;
+export default SvgCopyIcon;

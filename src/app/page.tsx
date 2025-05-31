@@ -1,13 +1,13 @@
-"use client";
+'use client'
 
-import LandingPage from '@/components/landing/LandingPage';
-import GATracker from '@/components/GATracker';
+import GATracker from '@/components/GATracker'
+import HomePage from '@/components/home/HomePage'
 
 export default function Home() {
   return (
     <>
       <GATracker />
-      <LandingPage />
+      <HomePage />
     </>
   )
 }
