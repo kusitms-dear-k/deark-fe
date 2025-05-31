@@ -15,7 +15,7 @@ const Filter = ({
       onClick={() => {
         setIsFilterModalOpen(false)
       }}
-      className="fixed inset-0 z-50 flex min-h-screen flex-col gap-y-2 bg-[rgba(0,0,0,0.6)]"
+      className="fixed inset-0 z-70 flex min-h-screen flex-col gap-y-2 bg-[rgba(0,0,0,0.6)]"
     >
       <motion.div
         onClick={(e) => e.stopPropagation()}
