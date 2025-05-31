@@ -140,7 +140,7 @@ const WishPickUpDateField = ({ businessDays }: Props) => {
               <div className="border-gray-150 flex gap-x-[0.5rem] border-t px-[1.25rem] pt-[1.25rem] pb-[0.5rem]">
                 <button
                   onClick={handleReset}
-                  className="button-l w-[7.125rem] rounded-[0.25rem] bg-gray-200 px-[1.75rem] py-[0.75rem]"
+                  className="button-l w-[7.125rem] rounded-[0.25rem] bg-gray-200 px-[1.75rem] py-[0.75rem] whitespace-nowrap"
                 >
                   초기화
                 </button>
