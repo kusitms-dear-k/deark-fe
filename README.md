@@ -62,14 +62,13 @@ src
 │   ├── design
 │   │   └── [id]
 │   ├── event
-│   │   ├── [id]
-│   │   ├── landing
-│   │   ├── login
-│   │   └── mypage
-│   │       ├── approve
-│   │       ├── order
-│   │       └── review
+│   │   └── [id]
+│   ├── landing
+│   ├── login
 │   ├── mypage
+│   │   ├── approve     
+│   │   ├── order
+│   │   └── review
 │   ├── notice
 │   ├── search
 │   ├── sign-up
